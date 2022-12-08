@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import s from '../Cards/Cards.module.css'
+import { hover } from '@testing-library/user-event/dist/hover';
 
 type Props = {
     name: string,
@@ -13,10 +14,12 @@ type Props = {
 export default function Cards(props: Props) {
 
     return (
-            <Card sx={{ maxWidth: 345 }}>
-                <CardMedia component="img" alt="Bariloche" height="345" image={props.img}>
-                </CardMedia>
-                <h2>{props.name}</h2>
+            <Card className={s.card} >
+                
+                <CardMedia component="img" alt="Provincia"  width="333" height="250" image={props.img}></CardMedia>
+                
+                <Typography  className={s.typography} gutterBottom align="center" variant="h4">{props.name}</Typography>  
+
             </Card>
     );
 }
