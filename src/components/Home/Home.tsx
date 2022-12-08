@@ -5,6 +5,9 @@ import { Grid, Box, Link, Container } from '@mui/material';
 import s from './Home.module.css'
 import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters"
+import { Link } from "react-router-dom";
+import Cards from "../Cards/Cards";
+import Banner from "../Banner/Banner"
 
 
 export default function Home() {
@@ -112,7 +115,6 @@ export default function Home() {
 
     return (
         <>
-            <NavBar />
             <Banner />
             <Filters/>
             <Box>
