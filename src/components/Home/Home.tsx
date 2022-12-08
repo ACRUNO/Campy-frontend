@@ -6,7 +6,8 @@ import { Grid, Box, Link, Container } from '@mui/material';
 import s from './Home.module.css'
 import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters"
-import {RootState} from '../../store/index'
+import { RootState } from '../../store/index'
+import Footer from "../Footer";
 
 
 
@@ -14,30 +15,31 @@ import {RootState} from '../../store/index'
 
 export default function Home() {
 
-const allProvincias = useSelector((state:RootState) => state.allProvincias) 
+    const allProvincias = useSelector((state: RootState) => state.allProvincias)
 
 
     return (
         <>
             <Banner />
-            <Filters/>
+            <Filters />
             <Box>
                 <Grid className={s.grid} container >
 
                     {
-                        allProvincias?.map((e:{name: string, img: string }) => {
+                        allProvincias?.map((e: { name: string, img: string }) => {
                             return (
-                                    <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.name}>
-                                        <Link href="/booking" >
-                                            <Cards name={e.name} img={e.img} />
+                                <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.name}>
+                                    <Link href="/booking" >
+                                        <Cards name={e.name} img={e.img} />
 
-                                        </Link>
-                                    </Grid>
+                                    </Link>
+                                </Grid>
                             )
                         })
                     }
                 </Grid>
             </Box>
+            <Footer />
         </>
     )
 }
