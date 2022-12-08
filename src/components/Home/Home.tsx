@@ -1,7 +1,11 @@
+import { Container } from "@mui/material";
 import React from "react";
+import NavBar from "../NavBar/NavBar";
 
 export default function Home() {
     return (
-        <h1>Esto es el Home</h1>
+        <>
+            <NavBar />
+        </>
     )
 }
