@@ -1,8 +1,8 @@
 import { Toolbar, AppBar, Button, Typography, Box, Link } from "@mui/material";
 import styles from './NavBar.module.css'
 
-const pages: string[] = ['Blog', 'Campings', 'Map'];
-const logo = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
+const pages: string[] = ['blog', 'booking', 'map'];
+const logo : string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
 
@@ -32,7 +32,7 @@ export default function NavBar() {
                         {
                             pages.map(page => {
                                 return (
-                                    <Link href={`/${page}`} >
+                                    <Link href={`/${page}`} key={page}>
                                         <Button
                                             className={styles.btns}
                                             variant='text'
@@ -53,7 +53,7 @@ export default function NavBar() {
                             mr: "1%"
                         }}
                     >
-                        <Link href='/Login'>
+                        <Link href='/login'>
                             <Button
                                 className={styles.login}
                                 variant='text'

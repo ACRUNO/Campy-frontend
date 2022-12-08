@@ -11,6 +11,7 @@ import {RootState} from '../../store/index'
 
 
 
+
 export default function Home() {
 
 const allProvincias = useSelector((state:RootState) => state.allProvincias) 
@@ -26,14 +27,12 @@ const allProvincias = useSelector((state:RootState) => state.allProvincias)
                     {
                         allProvincias?.map((e:{name: string, img: string }) => {
                             return (
-                                <>
-                                    <Grid className={s.item} sm={12} md={6} lg={4} xl={3} >
+                                    <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.name}>
                                         <Link href="/booking" >
                                             <Cards name={e.name} img={e.img} />
 
                                         </Link>
                                     </Grid>
-                                </>
                             )
                         })
                     }
