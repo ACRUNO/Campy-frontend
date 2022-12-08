@@ -2,13 +2,14 @@ import './App.css';
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import Home from './components/Home/Home'
+import Booking from "./components/Booking"
 
 function App() {
   return (
     <React.Fragment>
       <Routes>
         <Route path = "/" element={ <Home/> } />
-        <Route path = "/booking" />
+        <Route path = "/booking" element={ <Booking/> }/>
         <Route path = "/booking/camping/:id" />
         <Route path = "/login" />
         <Route path = "/map" />
