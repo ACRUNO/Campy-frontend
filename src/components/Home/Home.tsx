@@ -1,11 +1,8 @@
-import { Container } from "@mui/material";
-import React from "react";
 import { Link } from "react-router-dom";
 import Cards from "../Cards/Cards";
 import Banner from "../Banner/Banner"
-import { Grid, Box } from '@mui/material';
-import s from './Home.module.css'
-import NavBar from "../NavBar/NavBar";
+
+
 
 
 export default function Home() {
@@ -31,7 +28,6 @@ export default function Home() {
 
     return (
         <>
-            <NavBar />
             <Banner />
             {
                 infoCard?.map(e => {
@@ -43,7 +39,7 @@ export default function Home() {
                         </>
                     )
                 })
-            }         
+            }        
         </>
     )
 }
