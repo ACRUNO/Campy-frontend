@@ -11,7 +11,7 @@ export default function FiltrosLaterales() {
   };
     return (
 
-        <Box sx={{ backgroundColor : "#A4BE7B" , height:"100%", pl: 1, mr: 4}}>
+        <Box sx={{ backgroundColor : "#A4BE7B" , height:"100%", pl: 3, mr: 4, pr: 4}}>
             <Typography>Filtrar por:</Typography>
             <Typography>Precio</Typography>
             <Slider
