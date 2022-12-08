@@ -10,7 +10,6 @@ import theme from './themeConfig'
 import Map from './components/Map/Map';
 import Blog from './components/Blog/Blog';
 
-
 function App() {
   return (
     <React.Fragment>
