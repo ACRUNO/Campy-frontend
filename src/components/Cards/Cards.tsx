@@ -13,13 +13,10 @@ type Props = {
 export default function Cards(props: Props) {
 
     return (
-        <Box className={s.card}>
             <Card sx={{ maxWidth: 345 }}>
                 <CardMedia component="img" alt="Bariloche" height="345" image={props.img}>
                 </CardMedia>
                 <h2>{props.name}</h2>
             </Card>
-        </Box>
-
     );
 }
