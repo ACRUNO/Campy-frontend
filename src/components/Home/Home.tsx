@@ -1,15 +1,14 @@
+import { Container } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import Cards from "../Cards/Cards";
 import Banner from "../Banner/Banner"
 import { Grid, Box } from '@mui/material';
 import s from './Home.module.css'
+import NavBar from "../NavBar/NavBar";
 
 
 export default function Home() {
-
-
-
 
     const infoCard: { name: string, img: string }[] = [
         {
@@ -32,7 +31,7 @@ export default function Home() {
 
     return (
         <>
-            <h1>NAVBAR</h1>
+            <NavBar />
             <Banner />
             {
                 infoCard?.map(e => {
@@ -44,7 +43,7 @@ export default function Home() {
                         </>
                     )
                 })
-            } 
+            }         
         </>
     )
 }
