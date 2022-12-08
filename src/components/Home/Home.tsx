@@ -5,9 +5,6 @@ import { Grid, Box, Link, Container } from '@mui/material';
 import s from './Home.module.css'
 import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters"
-import { Link } from "react-router-dom";
-import Cards from "../Cards/Cards";
-import Banner from "../Banner/Banner"
 
 
 export default function Home() {
@@ -123,13 +120,11 @@ export default function Home() {
                     {
                         infoCard?.map(e => {
                             return (
-                                <>
-                                    <Grid className={s.item} sm={12} md={6} lg={4} xl={3} >
+                                    <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.name}>
                                         <Link href="/booking" >
                                             <Cards name={e.name} img={e.img} />
                                         </Link>
                                     </Grid>
-                                </>
                             )
                         })
                     }

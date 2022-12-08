@@ -6,6 +6,8 @@ import LogIn from './components/LogIn/LogIn';
 import NavBar from './components/NavBar/NavBar';
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './themeConfig'
+import Map from './components/Map/Map';
+import Blog from './components/Blog/Blog';
 
 function App() {
   return (
@@ -17,8 +19,8 @@ function App() {
           <Route path="/booking" />
           <Route path="/booking/camping/:id" />
           <Route path="/login" element={<LogIn />} />
-          <Route path="/map" />
-          <Route path="/blog" />
+          <Route path="/map" element={<Map/>}/>
+          <Route path="/blog" element={<Blog/>}/>
           <Route path="/create" />
           <Route path="/about" />
         </Routes>
