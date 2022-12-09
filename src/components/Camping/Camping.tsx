@@ -167,7 +167,7 @@ export default function Camping() {
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        label="estadia"
+                        label="estadia "
                         color="secondary"
                         >
                        
