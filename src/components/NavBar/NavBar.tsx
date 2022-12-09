@@ -1,7 +1,7 @@
 import { Toolbar, AppBar, Button, Typography, Box, Link } from "@mui/material";
 import styles from './NavBar.module.css'
 
-const pages: string[] = ['blog', 'booking', 'map'];
+const pages: string[] = ['blog', 'booking', 'map', "create"];
 const logo : string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {

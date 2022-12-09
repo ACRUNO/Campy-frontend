@@ -9,6 +9,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import theme from './themeConfig'
 import Map from './components/Map/Map';
 import Blog from './components/Blog/Blog';
+import CreateCamping from './components/CreateCamping/CreateCamping';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/map" element={<Map/>}/>
           <Route path="/blog" element={<Blog/>}/>
-          <Route path="/create" />
+          <Route path="/create" element={<CreateCamping/>} />
           <Route path="/about" />
         </Routes>
       </ThemeProvider>
