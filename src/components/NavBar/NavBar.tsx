@@ -1,7 +1,8 @@
 import { Toolbar, AppBar, Button, Typography, Box, Link } from "@mui/material";
 import styles from './NavBar.module.css'
+import LoginIcon from '@mui/icons-material/Login';
 
-const pages: string[] = ['blog', 'booking', 'map'];
+const pages: string[] = ['blog', 'booking', 'map', "create"];
 const logo : string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
@@ -58,7 +59,10 @@ export default function NavBar() {
                                 className={styles.login}
                                 variant='text'
                                 color="info">
-                                <Typography component='div'>Log in</Typography>
+                                {/* <Typography component='div'>Log in</Typography> */}
+                                <LoginIcon
+                                    fontSize="large"
+                                />
                             </Button>
                         </Link>
                     </Box>
