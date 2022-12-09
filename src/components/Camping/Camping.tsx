@@ -125,7 +125,7 @@ export default function Camping() {
        <Box className={Style.btn1} > 
         <Stack direction="row" spacing={2}>
           
-          <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" value={price} color="info">
+          <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" value={price} color="warning">
             Generar Cotizacion
           </Button>
           

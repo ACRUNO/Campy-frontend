@@ -1,11 +1,8 @@
-import { Toolbar, AppBar, Button, Typography, Box } from "@mui/material";
+import { Toolbar, AppBar, Button, Typography, Box, Link } from "@mui/material";
 import styles from './NavBar.module.css'
-import { Link } from "react-router-dom";
 
-
-
-const pages: string[] = ['Blog', 'Campings', 'Map'];
-
+const pages: string[] = ['blog', 'booking', 'map'];
+const logo : string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
 
@@ -13,22 +10,33 @@ export default function NavBar() {
         <>
             <AppBar className={styles.appbar} component='nav' position="fixed">
                 <Toolbar>
-                    <Box 
+                    <Link href='/'>
+                        <Box
+                            component="img"
+                            sx={{
+                                ml: "4%"
+                            }}
+                            alt="Logo"
+                            src={logo}
+                        />
+                    </Link>
+                    <Box
                         component='span'
                         sx={{
                             flexGrow: 1,
                             display: "flex",
-                            justifyContent: "space-evenly",
+                            justifyContent: "center",
+                            gap: "8%"
                         }}
                     >
                         {
                             pages.map(page => {
                                 return (
-                                    <Link to={`/${page}`}>
+                                    <Link href={`/${page}`} key={page}>
                                         <Button
                                             className={styles.btns}
                                             variant='text'
-                                            color="secondary"
+                                            color="info"
                                         >
                                             <Typography
                                                 component='div'
@@ -39,23 +47,24 @@ export default function NavBar() {
                             })
                         }
                     </Box>
-                    <Box 
+                    <Box
                         component="span"
-                        sx = {{
-                            mr: 5
+                        sx={{
+                            mr: "1%"
                         }}
                     >
-                        <Link to='/Login'>
-                            <Button 
-                                className={styles.login} 
-                                variant='text' 
-                                color="secondary">
+                        <Link href='/login'>
+                            <Button
+                                className={styles.login}
+                                variant='text'
+                                color="info">
                                 <Typography component='div'>Log in</Typography>
                             </Button>
                         </Link>
                     </Box>
                 </Toolbar>
             </AppBar>
+            <Toolbar/>
         </>
     )
 }
