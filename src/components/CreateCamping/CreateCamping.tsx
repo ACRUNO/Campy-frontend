@@ -15,8 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
-// import PaymentForm from './PaymentForm';
-// import Review from './Review';
+
 
 function Copyright() {
   return (
@@ -41,14 +40,12 @@ function getStepContent(step: number) {
       return <Page2 />;
     case 2:
       return <Page3/>
-    // case 2:
-    //   return <Review />;
     default:
       throw new Error('Unknown step');
   }
 }
 
-const theme = createTheme();
+//const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -62,29 +59,18 @@ export default function Checkout() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {/* <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar> 
-      </AppBar> */}
+    <Box>
+    {/* <ThemeProvider 
+    theme={theme}
+    > */}
+       {/* <CssBaseline />  */}
+      
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Nuevo Camping
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5}}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -94,13 +80,9 @@ export default function Checkout() {
           {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
-                {/* Thank you for your order. */}
                 Gracias por formar parte de la comunidad de CAMPY
               </Typography>
               <Typography variant="subtitle1">
-                {/* Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped. */}
                 Tu camping ha sido creado. A la brevedad estará disponible en nuestra página, 
                 te enviaremos un mail de confirmación
               </Typography>
@@ -127,6 +109,7 @@ export default function Checkout() {
         </Paper>
         <Copyright />
       </Container>
-    </ThemeProvider>
+      </Box>
+    // </ThemeProvider>
   );
 }
