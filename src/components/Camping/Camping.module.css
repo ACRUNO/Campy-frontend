@@ -41,7 +41,7 @@
 
 .booking{
 
-    /* background-color: #196b3410; */
+    background-color: #0d993c10;
     width: 92%;
     height: 25rem;
     display: flex;
@@ -58,7 +58,7 @@
 
 .galery {
 margin-left: 1rem;
-width : 35rem;
+width : 40rem;
 border-radius : 1%;
 }
 
