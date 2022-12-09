@@ -3,12 +3,12 @@ import {Box, Card, Grid, Typography, CardContent, CardMedia, } from '@mui/materi
 
 export default function CardCamping() {
     return (
-    // <Grid container direction="row" justifyContent="right"  xs={12} sm={8} md={10}>
+    
         
     <Card sx={{ display: 'flex', mt: 2, mb:2, height:200 , width:1000}}>
         <CardMedia
         component="img"
-        sx={{ width: 180 }}
+        sx={{ width: 400 }}
         image="https://thehotelfactory.com/wp-content/uploads/2018/09/Camping-portada.jpeg"
         alt="Camping"
         />
@@ -22,10 +22,10 @@ export default function CardCamping() {
           </Typography>
         </CardContent>
       </Box>
-      <Box>
+      <Box >
       <Typography variant="subtitle1" color="text.secondary" component="div">Precio</Typography>
         </Box>
       
     </Card>
-    // </Grid>
+    
     )}

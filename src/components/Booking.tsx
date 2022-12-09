@@ -12,7 +12,7 @@ export default function Booking() {
     let campings: Array<number> = [1, 2, 3, 4, 5, 6]
 
     return (
-        //aca va el navbar primero
+        
         <Box>
 
             <FiltrosPrincipales></FiltrosPrincipales>
