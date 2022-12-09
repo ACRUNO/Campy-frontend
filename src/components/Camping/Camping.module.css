@@ -1,0 +1,113 @@
+.imagencita{
+   width: 100%;
+   filter: blur(0px);
+   transition: .5s;
+   border-radius: 0px 0px 10px 10px;
+   box-shadow: 5px 5px 10px 1px #000;
+}
+
+.imagencita:hover {
+    filter: blur(2px);
+    transition: .5s;
+}
+
+.portadacont{
+   
+    width : 100%;
+    
+   position: relative;
+   display: inline-block;
+   text-align: start;
+}
+
+
+.text{
+    text-shadow: 5px 2px 36px #070707;
+    position: absolute;
+    top : 60%;
+    margin-left : 1rem;
+}
+
+.ranking{
+    font-size: 2rem;
+    margin: 0;
+    margin-left: 6rem;
+    font-weight: 400;
+    
+    line-height: 1.334;
+    color: yellow;
+}
+
+
+.booking{
+
+    background-color: #196b3410;
+    width: 92%;
+    height: 25rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 3%;
+    align-items: center;
+    align-content: flex-start;
+}
+
+.galery {
+margin-left: 1rem;
+width : 35rem;
+border-radius : 1%;
+}
+
+.all{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lugar{
+    margin-top : .5rem;
+    margin-left : 1rem;
+}
+
+.imageplace {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: space-between;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 3%;
+    align-items: center; 
+}
+
+
+.rankingcont{
+    display: flex;
+    margin-left: 1rem;
+}
+
+.inputCont{
+    margin-left: 5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.input{
+    display: flex;
+    margin-top: 1rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.btn1{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    flex-wrap: wrap;
+}
