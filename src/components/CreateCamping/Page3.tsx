@@ -1,11 +1,18 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material'; 
+import Cloudinary from "./Cloudinary";
 
-export default function Page1() {
+export default function Page3() {
+
+  
+  const [imagenes, setImagenes] = React.useState({
+    array:[]
+  });
+
+  let img:Array<string> = ["1","2","3","4"]
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -54,69 +61,35 @@ export default function Page1() {
             variant="standard"
           />
         </Grid>
-        {/* <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="País"
-            name="País"
-            label="País"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
+        <Grid container columnSpacing={2} justifyContent="center"  sx={{mt:4, ml:0}}>
+        {img.map(m=>(
+          <Grid item key={m}>
+          <Box
+            id={m}
+            component="img"
+            sx={{
+              ml: "1%",
+              bgcolor: "white",
+              height:200,
+              width:200
+            }}
+            alt="Logo"
+            src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"}/>
+          </Grid> 
+        ))}
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="Categoría"
-            name="Categoría"
-            label="Categoría"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
+        <Cloudinary></Cloudinary>
         
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="Nombre de contacto"
-            name="Nombre de contacto"
-            label="Nombre de contacto"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="Teléfono de contacto"
-            name="Teléfono de contacto"
-            label="Teléfono de contacto"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid> */}
-        <Grid item xs={12}>
-          <TextField
-            id="IMAGENES - CONECTAR CLOUDINARY"
-            name="IMAGENES - CONECTAR CLOUDINARY"
-            label="IMAGENES - CONECTAR CLOUDINARY"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
-        {/* <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
-          />
-        </Grid> */}
+        
+        
+        
+        
       </Grid>
+      
     </React.Fragment>
+    
   );
+  
 }
+
 

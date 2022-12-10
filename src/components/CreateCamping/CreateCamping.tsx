@@ -92,12 +92,13 @@ export default function Checkout() {
               {getStepContent(activeStep)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                  <Button variant="contained" onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
                     Anterior
                   </Button>
                 )}
                 <Button
                   variant="contained"
+                  color='secondary'
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
