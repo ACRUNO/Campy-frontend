@@ -1,10 +1,10 @@
 import React from "react";
-import {Box, Card, Grid, Typography, CardContent, CardMedia, } from '@mui/material';
+import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material';
 
 export default function CardCamping() {
     return (
     
-        
+        <Link href="/booking/camping/8">
     <Card sx={{ display: 'flex', mt: 2, mb:2, height:200 , width:1000}}>
         <CardMedia
         component="img"
@@ -27,5 +27,6 @@ export default function CardCamping() {
         </Box>
       
     </Card>
+    </Link>
     
     )}
