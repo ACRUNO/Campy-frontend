@@ -11,6 +11,7 @@ import Map from './components/Map/Map';
 import Blog from './components/Blog/Blog';
 import CreateCamping from './components/CreateCamping/CreateCamping';
 
+
 function App() {
   return (
     <React.Fragment>
@@ -24,7 +25,7 @@ function App() {
           <Route path="/map" element={<Map/>}/>
           <Route path="/blog" element={<Blog/>}/>
           <Route path="/create" element={<CreateCamping/>} />
-          <Route path="/about" />
+          <Route path="/about"  />
         </Routes>
       </ThemeProvider>
     </React.Fragment>
