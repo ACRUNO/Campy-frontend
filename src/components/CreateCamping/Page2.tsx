@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function Page2() {
+export default function Page2({ setInput }: { setInput: any }) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -30,7 +30,7 @@ export default function Page2() {
           <TextField
             required
             id="Superficie m2"
-            name="Superficie m2"
+            name="superficie"
             label="Superficie m2"
             fullWidth
             autoComplete="given-name"
@@ -47,7 +47,7 @@ export default function Page2() {
           <TextField
             required
             id="Cantidad de baños"
-            name="Cantidad de baños"
+            name="cant_banios"
             label="Cantidad de baños"
             fullWidth
             autoComplete="family-name"
@@ -59,7 +59,7 @@ export default function Page2() {
           <TextField
             required
             id="Cantidad de duchas"
-            name="Cantidad de duchas"
+            name="cant_duchas"
             label="Cantidad de duchas"
             fullWidth
             autoComplete="shipping address-level2"
@@ -69,7 +69,7 @@ export default function Page2() {
         <Grid item xs={12}>
           <TextField
             id="Período de agua caliente"
-            name="Período de agua caliente"
+            name="periodo_agua"
             label="Período de agua caliente"
             fullWidth
             autoComplete="shipping address-line2"
