@@ -9,6 +9,7 @@ export const GET_ALLCAMPINGS: string = 'GET_ALLCAMPINGS'
 export const GET_LOCALIDADES: string = 'GET_LOCALIDADES'
 export const GET_CAMPINGS_PROVINCIAS: string = 'GET_CAMPINGS_PROVINCIAS'
 export const GET_CAMPINGS_LOCALIDADES: string = 'GET_CAMPINGS_LOCALIDADES'
+export const CREATE_CAMPING: string = 'CREATE_CAMPING'
 export const FILTER_PROVINCIA: string = 'FILTER_PROVINCIA'
 export const FILTER_LOCALIDAD: string = 'FILTER_LOCALIDAD'
 
@@ -16,7 +17,7 @@ export const FILTER_LOCALIDAD: string = 'FILTER_LOCALIDAD'
 
 
 
- 
+
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch:AppDispatch) {
@@ -126,6 +127,22 @@ export function filterLocalidad(id:number): ThunkAction<void, RootState, unknown
 
 
 
+
+
+export function createCamping(camping : any): ThunkAction<void, RootState, unknown, AnyAction> {
+    return async function (dispatch:AppDispatch) {
+        try {
+            var json = await axios.post('http://localhost:3001/api/campings', camping)
+            console.log(json)
+            return dispatch({
+                type: CREATE_CAMPING,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 
 

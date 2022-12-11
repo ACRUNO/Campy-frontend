@@ -8,7 +8,7 @@ export type Campings =
     latitud: string,
     prop_camping_Id: number,
     cerrado_fecha_desde: string, 
-    cerrado_fecha_hasta: string 
+    cerrado_fecha_hasta: string, 
     localidad: string,
     id_localidad:number,
     provincia: string,

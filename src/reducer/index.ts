@@ -1,6 +1,7 @@
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, FILTER_PROVINCIA, FILTER_LOCALIDAD } from "../actions";
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING } from "../actions";
 import { Campings } from './estados';
+
 
 const initialState: {
     provincia: number;
@@ -68,6 +69,10 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 provincia: action.payload,
                 localidad:0
+            }
+        case CREATE_CAMPING:
+            return {
+                ...state
             }
 
         case FILTER_LOCALIDAD:
