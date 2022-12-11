@@ -29,6 +29,19 @@ import Footer from '../Footer';
 
 export default function Camping() {
   
+
+
+
+
+
+
+
+
+
+
+
+
+  ///////////////////////////////////////////
   let detalles = {
     baño : true,
     baño2 : false,
@@ -107,9 +120,6 @@ export default function Camping() {
         <Box className={Style.booking}> 
 
         <Box className={Style.imageplace} >
-        <Box className={Style.lugar}>
-        <Typography   variant="subtitle1" color="black"> <LocationOnIcon /> Calle las piedras al 1233 - Kikin Mendoza</Typography>
-        </Box>
         <Box
                             component="img"
                             className={Style.galery}
@@ -117,6 +127,9 @@ export default function Camping() {
                             src={Galery}
                             />
                             
+        <Box className={Style.lugar}>
+        <Typography   variant="subtitle1" color="black"> <LocationOnIcon /> Calle las piedras al 1233 - Kikin Mendoza</Typography>
+        </Box>
 
                             </Box>
 
