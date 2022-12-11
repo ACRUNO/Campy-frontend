@@ -41,13 +41,13 @@
 
 .booking{
 
-    background-color: #0d993c10;
-    width: 92%;
-    height: 25rem;
+    /* background-color: #0d993cd7; */
+    width: 98%;
+    height: 28rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -79,10 +79,10 @@ border-radius : 1%;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: space-between;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    /* margin-top: 3rem;
+    margin-bottom: 1rem; */
     border-radius: 3%;
-    align-items: center; 
+    align-items: flex-end;
 }
 
 
@@ -110,4 +110,62 @@ border-radius : 1%;
     flex-direction: column;
     align-content: space-around;
     flex-wrap: wrap;
+}
+.btn2{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    flex-wrap: wrap;
+}
+.btn3{
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    flex-wrap: wrap;
+   
+}
+
+.coti{
+    display: flex;
+    justify-content: center;
+}
+.endcont{
+    margin-top : 3rem;
+    margin-bottom: 3rem;
+    width: 94%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-direction: row;
+
+}
+
+
+.resume{
+    
+}
+
+.salidas{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.red:hover{
+    background-color: rgba(255, 0, 0, 0.5);
+
+}
+
+.green:hover{
+    background-color: rgba(13, 224, 94, 0.5);
+ 
+}
+.quini{
+    display : flex;
+    justify-content: flex-end;
 }
