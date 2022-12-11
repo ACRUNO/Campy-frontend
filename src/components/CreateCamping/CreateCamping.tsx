@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
+//import { useHistory } from 'react-router-dom';
 
 
 
@@ -33,14 +34,14 @@ function Copyright() {
 
 const steps = ['Datos generales', 'Comodidades', 'Tarifas/Imágenes'];
 
-function getStepContent(step: number) {
+function getStepContent(step: number, setInput: any) {
   switch (step) {
     case 0:
-      return <Page1 />;
+      return <Page1 setInput={setInput} />;
     case 1:
-      return <Page2 />;
+      return <Page2 setInput={setInput}/>;
     case 2:
-      return <Page3/>
+      return <Page3 setInput={setInput}/>
     default:
       throw new Error('Unknown step');
   }
@@ -50,6 +51,8 @@ function getStepContent(step: number) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+
+  //const history = useHistory();
 
 
   const [input, setInput] = React.useState({
@@ -100,6 +103,10 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  /* const handleSubmit = () => {
+    history.push('/')
+  } */
+
   return (
     <Box>
     {/* <ThemeProvider 
@@ -131,7 +138,7 @@ export default function Checkout() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep)}
+              {getStepContent(activeStep, setInput)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {activeStep !== 0 && (
                   <Button variant="contained" onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -142,7 +149,7 @@ export default function Checkout() {
                   <Button
                   variant="contained"
                   color='secondary'
-                  onClick={handleNext}
+                  //onClick={handleSubmit}
                   sx={{ mt: 3, ml: 1 }}
                 > 'Crear' </Button>
                 :
