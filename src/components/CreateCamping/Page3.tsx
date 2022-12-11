@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material'; 
@@ -12,6 +12,16 @@ export default function Page3({ setInput }: { setInput: any }) {
   });
 
   let img:Array<string> = ["1","2","3","4"]
+
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setInput((inputs: any) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
+  };
 
   return (
     <React.Fragment>
@@ -28,6 +38,7 @@ export default function Page3({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -39,6 +50,7 @@ export default function Page3({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -50,9 +62,11 @@ export default function Page3({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        {/* LUEGO VER EL TEMA DE LAS FECHAS */}
+{/*         <Grid item xs={12} sm={6}>
           <TextField
             id="Periodo abierto - poner calendario?"
             name="Periodo abierto - poner calendario?"
@@ -60,7 +74,7 @@ export default function Page3({ setInput }: { setInput: any }) {
             fullWidth
             variant="standard"
           />
-        </Grid>
+        </Grid> */}
         <Grid container columnSpacing={2} justifyContent="center"  sx={{mt:4, ml:0}}>
         {img.map(m=>(
           <Grid item key={m}>
@@ -78,8 +92,8 @@ export default function Page3({ setInput }: { setInput: any }) {
           </Grid> 
         ))}
         </Grid>
-        <Cloudinary></Cloudinary>
-        
+        <Cloudinary setInput={setInput}></Cloudinary>
+        {/* HABRIA QUE VER EL TEMA DE LATITUD Y LONGITUD */}
         
         
         

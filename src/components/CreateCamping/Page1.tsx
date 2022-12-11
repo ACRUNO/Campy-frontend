@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, ChangeEventHandler } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 
 export default function Page1({ setInput }: { setInput: any }) {
 
@@ -22,8 +23,7 @@ export default function Page1({ setInput }: { setInput: any }) {
   }, [dispatch]);
 
   const [provincia, setProvincia] = useState<number>(0);
-  const [localidad, setLocalidad] = useState<number>(0);
-  const [categoria, setCategoria] = useState<string>('');
+
 
   const categorias: string[] = ['Lujo', 'Normal', 'Berreta'];
 
@@ -31,19 +31,26 @@ export default function Page1({ setInput }: { setInput: any }) {
     e.preventDefault();
     setProvincia(Number(e.target.value) as number);
     dispatch(getLocalidades(Number(e.target.value) as number))
+    setInput((inputs: any) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
   };
 
-  const handleChangeLocalidad = (e: SelectChangeEvent) => {
+  const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setLocalidad(Number(e.target.value) as number);
+    setInput((inputs: any) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
   };
 
-  const handleChangeCategoria = (e: SelectChangeEvent) => {
-    e.preventDefault();
-    setCategoria(e.target.value as string);
-  };
 
-  const handleChangeInput = (e: SelectChangeEvent) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
     setInput((inputs: any) => {
       return {
@@ -68,6 +75,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -79,6 +87,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12}>
@@ -90,6 +99,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -105,8 +115,10 @@ export default function Page1({ setInput }: { setInput: any }) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
             <Select
+              defaultValue=''
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
+              name='provincia'
               label="provincia"
               color="secondary"
               onChange={handleChangeProvincia}>
@@ -127,12 +139,14 @@ export default function Page1({ setInput }: { setInput: any }) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
             <Select
+              defaultValue=''
               disabled={provincia === 0}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
+              name='localidad'
               label="localidad"
               color="secondary"
-              onChange={handleChangeLocalidad}>
+              onChange={handleChangeSelect}>
               {/* <MenuItem value=""><em>None</em></MenuItem> */}
               {allLocalidades?.map(m => (
                 <MenuItem value={m.id}>{m.nombre}</MenuItem>
@@ -166,11 +180,13 @@ export default function Page1({ setInput }: { setInput: any }) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Categoria</InputLabel>
             <Select
+              defaultValue=''
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
-              label="localidad"
+              name='categoria'
+              label="categoria"
               color="secondary"
-              onChange={handleChangeCategoria}>
+              onChange={handleChangeSelect}>
               {/* <MenuItem value=""><em>None</em></MenuItem> */}
               {categorias?.map(m => (
                 <MenuItem value={m}>{m}</MenuItem>
@@ -188,6 +204,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -199,6 +216,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12}>
@@ -211,6 +229,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
+            onChange={handleChangeInput}
           />
         </Grid>
         {/* <Grid item xs={12}>

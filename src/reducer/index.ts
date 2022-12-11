@@ -1,5 +1,5 @@
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES} from "../actions";
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, CREATE_CAMPING} from "../actions";
 import {Campings} from './estados';
 
 const initialState: { 
@@ -43,6 +43,10 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 campings: action.payload
+            }
+        case CREATE_CAMPING:
+            return {
+                ...state
             }
 
         default:

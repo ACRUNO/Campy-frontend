@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Button} from '@mui/material'
-
+ 
 
 class Cloudinary extends Component {
   constructor(props){
@@ -9,7 +9,7 @@ class Cloudinary extends Component {
     
   }
 
-
+  
   componentDidMount(props) {
     const cloudName = "pfcampy"; 
     const uploadPreset = "pfhenry";
@@ -46,6 +46,12 @@ class Cloudinary extends Component {
           this.setState({
             id:(parseInt(this.state.id)+1).toString()})
           console.log(this.state)
+          this.props.setInput((inputs) => {
+            return {
+              ...inputs, 
+              imagenes: [...inputs.imagenes, result.info.secure_url]
+            }
+          })
         }
       }
     );

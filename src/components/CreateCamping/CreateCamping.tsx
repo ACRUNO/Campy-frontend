@@ -15,7 +15,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
 //import { useHistory } from 'react-router-dom';
+import { createCamping } from '../../actions/index'
+import { MouseEvent } from 'react';
 
 
 
@@ -53,7 +57,7 @@ export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
 
   //const history = useHistory();
-
+  const dispatch: AppDispatch = useDispatch()
 
   const [input, setInput] = React.useState({
     nombre_camping: '',
@@ -65,24 +69,24 @@ export default function Checkout() {
     contacto_nombre: '',
     contacto_tel: '',
     descripcion_camping: '',  
-    techado: 0,
-    toma_corriente: 0,
-    agua: 0,
+    techado: false,
+    toma_corriente: false,
+    agua: false,
     superficie: 0,
     cant_banios: 0,
     cant_duchas: 0,
     periodo_agua: '',
-    mascotas: 0,
-    casa_rodante: 0,
-    proveduria: 0,
-    salon_sum: 0,
-    retaurant: 0,
-    vigilancia: 0,
-    pileta: 0,
-    estacionamiento: 0,
-    juegos_infantiles: 0,
-    gimnasio: 0,
-    wifi: 0,
+    mascotas: false,
+    casa_rodante: false,
+    proveduria: false,
+    salon_sum: false,
+    retaurant: false,
+    vigilancia: false,
+    pileta: false,
+    estacionamiento: false,
+    juegos_infantiles: false,
+    gimnasio: false,
+    wifi: false,
     tarifa_por_mayor_dia: 0,
     tarifa_por_menor_dia: 0,
     tarifa_por_casa_rodante: 0,
@@ -93,6 +97,7 @@ export default function Checkout() {
     latitud: '',
   });
   
+  console.log('createcamp',input);
 
 
   const handleNext = () => {
@@ -103,9 +108,13 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  /* const handleSubmit = () => {
-    history.push('/')
-  } */
+  const handleSubmit = (e: MouseEvent<HTMLElement>) => {
+    /* history.push('/') */
+    e.preventDefault();
+    dispatch(createCamping(input))
+  } 
+
+
 
   return (
     <Box>
@@ -149,9 +158,9 @@ export default function Checkout() {
                   <Button
                   variant="contained"
                   color='secondary'
-                  //onClick={handleSubmit}
+                  onClick={handleSubmit}
                   sx={{ mt: 3, ml: 1 }}
-                > 'Crear' </Button>
+                > Crear </Button>
                 :
                 <Button
                   variant="contained"
@@ -159,7 +168,7 @@ export default function Checkout() {
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  'Siguiente'
+                  Siguiente
                 </Button>}
                 
               </Box>
