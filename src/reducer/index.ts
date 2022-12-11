@@ -33,7 +33,8 @@ function rootReducer(state: any = initialState, action: any): any {
         case GET_ALLCAMPINGS:
             return {
                 ...state,
-                allCampings: action.payload
+                allCampings: action.payload,
+               campings: action.payload
             }
         case GET_LOCALIDADES:
             return {
@@ -42,28 +43,31 @@ function rootReducer(state: any = initialState, action: any): any {
             }
         case GET_CAMPINGS_PROVINCIAS:
             const allCamps: Campings[] = state.allCampings
+
             const filteredProv: Campings[] = allCamps.filter(c => {
-               return c.id_provincia === action.payload
+               return (c.id_provincia === state.provincia)
             })
             return {
                 ...state,
-                campings: filteredProv
+                campings: filteredProv,
             }
 
         case GET_CAMPINGS_LOCALIDADES:
             const allCampys: Campings[] = state.allCampings
             const filteredLocal:Campings[] = allCampys.filter(c => {
-                return c.id_localidad === action.payload
+                return c.id_localidad === state.localidad
             })
             return {
                 ...state,
-                campings: filteredLocal
+                campings: filteredLocal,
+                
             }
 
         case FILTER_PROVINCIA:
             return {
                 ...state,
-                provincia: action.payload
+                provincia: action.payload,
+                localidad:0
             }
 
         case FILTER_LOCALIDAD:

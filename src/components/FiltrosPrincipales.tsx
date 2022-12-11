@@ -15,6 +15,9 @@ import { Campings } from "../reducer/estados";
 
 export default function FiltrosPrincipales() {
 
+    
+
+
     const dispatch: AppDispatch = useDispatch()
 
     const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
@@ -22,14 +25,14 @@ export default function FiltrosPrincipales() {
     const provincia: number = useSelector((state: RootState) => state.provincia)
     const localidad: number = useSelector((state: RootState) => state.localidad)
 
+
     useEffect(() => {
         dispatch(getProvincias())
-        dispatch(getAllCampings())
-    }, [dispatch]);
+    }, [dispatch])
 
 
-    /* const [provincia, setProvincia] = useState<number>(0); */
-    /*  const [localidad, setLocalidad] = useState<number>(0); */
+
+
     const [value, setValue] = React.useState<Dayjs | null>(null);
     const [value2, setValue2] = React.useState<Dayjs | null>(null);
 
@@ -39,13 +42,13 @@ export default function FiltrosPrincipales() {
         e.preventDefault();
         dispatch(filterProvincia(Number(e.target.value) as number))
         dispatch(getLocalidades(Number(e.target.value) as number))
-        /* setProvincia(Number(e.target.value) as number); */
+
     };
 
     const handleChangeLocalidad = (e: SelectChangeEvent) => {
         e.preventDefault();
         dispatch(filterLocalidad(Number(e.target.value) as number))
-        /* setLocalidad(Number(e.target.value) as number); */
+
     };
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
@@ -65,6 +68,7 @@ export default function FiltrosPrincipales() {
                         id="demo-simple-select-helper"
                         label="provincia"
                         color="secondary"
+                        value={String(provincia)}
                         onChange={handleChangeProvincia}>
                         {allProvincias?.map(m => (
                             <MenuItem value={m.id}>{m.nombre}</MenuItem>
@@ -76,18 +80,17 @@ export default function FiltrosPrincipales() {
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
 
                     <Select
-                        disabled={provincia === 0}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"
                         color="secondary"
+                        value={String(localidad)}
                         onChange={handleChangeLocalidad}>
-                        {/* <MenuItem value=""><em>None</em></MenuItem> */}
                         {allLocalidades?.map(m => (
                             <MenuItem value={m.id}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
-                    
+
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
@@ -122,7 +125,6 @@ export default function FiltrosPrincipales() {
                         onClick={handleSubmit}
                         variant="contained" color="success"
                         sx={{ m: 0, height: 56 }}
-                        disabled={provincia === 0}
                     >Buscar
                     </Button>
                 </FormControl>
