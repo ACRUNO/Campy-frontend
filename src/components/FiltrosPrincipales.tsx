@@ -1,60 +1,83 @@
 import React from "react";
+import { useEffect,useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from '../store/index';
+import { getProvincias, getLocalidades } from "../actions";
+import { MouseEvent } from 'react';
 import { Box, Select, MenuItem, InputLabel, FormControl, TextField, Button, Grid } from '@mui/material';
+import { SelectChangeEvent} from '@mui/material/Select';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 //import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { Dayjs } from 'dayjs';
+import{getCampingsProvincias,getCampingsLocalidades} from '../actions/index'
+
 
 export default function FiltrosPrincipales() {
 
-    const [provincia, setProvincia] = React.useState('');
-    const [localidad, setLocalidad] = React.useState('');
+    const dispatch: AppDispatch = useDispatch()
+
+    const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
+    const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
+
+
+    useEffect(() => {
+        dispatch(getProvincias())
+    }, [dispatch]);
+
+
+    const [provincia, setProvincia] = useState<number>(0);
+    const [localidad, setLocalidad] = useState<number>(0);
     const [value, setValue] = React.useState<Dayjs | null>(null);
     const [value2, setValue2] = React.useState<Dayjs | null>(null);
 
 
-    let provincias: Array<string> = ["Buenos Aires", "Salta", "Jujuy", "Tucumán", "Chaco", "Formosa", "Santiago del Estero", "Córdoba"]
-    let localidades: Array<string> = ["Mar del Plata", "Chascomus", "San Pedro", "San Antonio de Areco"]
 
-
-    const handleChangeProvincia = (event: any) => {
-        setProvincia(event.target.value);
+    const handleChangeProvincia = (e: SelectChangeEvent) => {
+        e.preventDefault();
+        setProvincia(Number(e.target.value) as number);
+        dispatch(getLocalidades(Number(e.target.value) as number))
     };
 
-    const handleChangeLocalidad = (event: any) => {
-        setLocalidad(event.target.value);
+    const handleChangeLocalidad = (e: SelectChangeEvent) => {
+        e.preventDefault();
+        setLocalidad(Number(e.target.value) as number);
     };
 
+    const handleSubmit=(e: MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        if(provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias(provincia))
+        if(provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades(localidad))
+    }
 
     return (
-        <Box sx={{ mt: 5, backgroundColor: "#E5D9B6" }}>
+        <Box sx={{ pt:1.25, pb:1.25 ,mb:2, boxShadow:"0 0 6px rgb(0 0 0 / 40%)"}}>
             <Grid container direction="row" justifyContent="center" alignItems="center">
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        value={provincia}
                         label="provincia"
                         color="secondary"
                         onChange={handleChangeProvincia}>
-                        {provincias.map(m => (
-                            <MenuItem value={m}>{m}</MenuItem>
+                        {allProvincias?.map(m => (
+                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
                     <Select
+                        disabled={provincia === 0}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
-                        value={localidad}
                         label="localidad"
                         color="secondary"
                         onChange={handleChangeLocalidad}>
                         {/* <MenuItem value=""><em>None</em></MenuItem> */}
-                        {localidades.map(m => (
-                            <MenuItem value={m}>{m}</MenuItem>
+                        {allLocalidades?.map(m => (
+                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
@@ -87,12 +110,15 @@ export default function FiltrosPrincipales() {
                     </LocalizationProvider>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <Button variant="contained" color="success" sx={{ m: 0, height: 56 }}>Buscar</Button>
+                    <Button 
+                    onClick={handleSubmit}
+                    variant="contained" color="success" 
+                    sx={{ m: 0, height: 56 }} 
+                    disabled={provincia === 0}
+                    >Buscar
+                    </Button>
                 </FormControl>
             </Grid>
-
-
-
         </Box>
     )
 }
