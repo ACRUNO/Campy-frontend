@@ -1,4 +1,4 @@
-import { Box } from "@mui/system";
+import { Box} from "@mui/system";
 import Footer from "../Footer";
 
 
@@ -25,3 +25,4 @@ export default function Map() {
     )
 
 }
+
