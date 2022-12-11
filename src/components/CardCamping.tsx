@@ -14,7 +14,7 @@ type Props = {
 export default function CardCamping( props: Props){
     return (
     
-        <Link href={`/booking/camping/${props.id}`}>
+    <Link href={`/booking/camping/${props.id}`}>
     <Card sx={{ display: 'flex', mt: 2, mb:2, height:200 , width:1000}}>
         <CardMedia
         component="img"
