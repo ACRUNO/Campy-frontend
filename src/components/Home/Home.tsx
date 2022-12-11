@@ -8,7 +8,7 @@ import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
 import Footer from "../Footer";
-import getProvincias from "../../actions";
+import {getProvincias} from "../../actions";
 
 
 

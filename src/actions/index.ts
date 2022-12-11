@@ -5,12 +5,13 @@ import { ThunkAction } from 'redux-thunk'
 
 
 export const GET_PROVINCIAS: string = 'GET_PROVINCIAS'
+export const GET_ALLCAMPINGS: string = 'GET_ALLCAMPINGS'
 
 
 
 
  
-function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
+export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch:AppDispatch) {
         try {
@@ -27,7 +28,28 @@ function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
 }
 
 
-export default getProvincias
+
+
+export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch:AppDispatch) {
+        try {
+            var json = await axios.get('http://localhost:3001/api/campings');
+            console.log(json)
+            return dispatch({
+                type: GET_ALLCAMPINGS,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+
+
+
 
 
 
