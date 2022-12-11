@@ -7,7 +7,7 @@ export default function CardCamping()
     return (
     
         <Link href="/booking/camping/8">
-        {/* <Link href="/booking/camping/id"> */}
+        {/* <Link href="/booking/camping/`${id}`"> */}
     <Card sx={{ display: 'flex', mt: 2, mb:2, height:200 , width:1000}}>
         <CardMedia
         component="img"
