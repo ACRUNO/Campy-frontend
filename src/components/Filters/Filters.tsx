@@ -1,13 +1,19 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useEffect, useState } from "react";
+import { Button, Box, Grid, InputLabel, MenuItem, FormControl, InputBase } from '@mui/material';
+import Select, { SelectChangeEvent} from '@mui/material/Select';
+import { MouseEvent } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from '@mui/material/styles';
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from '../../store/index';
+import { getProvincias, getLocalidades,getCampingsProvincias,getCampingsLocalidades } from "../../actions";
+
+
+
+
+
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -52,58 +58,56 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function BasicSelect() {
-    const [provincia, setProvincia] = React.useState('');
-    const [localidad, setLocalidad] = React.useState('');
 
-    const handleChangeProvincia = (event: SelectChangeEvent) => {
-        setProvincia(event.target.value as string);
+    const dispatch: AppDispatch = useDispatch()
+
+
+
+
+    const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
+    const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
+
+    useEffect(() => {
+        dispatch(getProvincias())
+    }, [dispatch]);
+
+    
+
+
+    const [provincia, setProvincia] = useState<number>(0);
+    const [localidad, setLocalidad] = useState<number>(0);
+
+    const handleChangeProvincia = (e: SelectChangeEvent) => {
+        e.preventDefault();
+        setProvincia(Number(e.target.value) as number);
+        dispatch(getLocalidades(Number(e.target.value) as number))
     };
 
-    const handleChangeLocalidad = (event: SelectChangeEvent) => {
-        setProvincia(event.target.value as string);
+    const handleChangeLocalidad = (e: SelectChangeEvent) => {
+        e.preventDefault();
+        setLocalidad(Number(e.target.value) as number);
+
     };
+
+    const handleSubmit=(e: MouseEvent<HTMLElement> ) => {
+        e.preventDefault();
+        if(provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias(provincia))
+        if(provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades(localidad))
+    }
+
 
     // const handleInputChange = (event: ChangeEvent) => {
     //     return event.target.value as string;
     // }
 
-    let provincias: Array<string> = ["Buenos Aires", "Salta", "Jujuy", "Tucumán", "Chaco", "Formosa", "Santiago del Estero", "Córdoba"]
-    let localidades: Array<string> = ["Mar del Plata", "Chascomus", "San Pedro", "San Antonio de Areco"]
 
+    
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center" }}>
-            <Grid container direction="row" justifyContent="center" alignItems="center" sx={{ pb: '1%' }}>
-                <FormControl sx={{ m: 1, minWidth: "10rem" }}>
-                    <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        value={provincia}
-                        label="provincia"
-                        color="secondary"
-                        onChange={handleChangeProvincia}>
-                        {provincias.map(m => (
-                            <MenuItem value={m}>{m}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <FormControl sx={{ m: 1, minWidth: "10rem" }}>
-                    <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        value={localidad}
-                        label="localidad"
-                        color="secondary"
-                        onChange={handleChangeLocalidad}>
-                        {/* <MenuItem value=""><em>None</em></MenuItem> */}
-                        {localidades.map(m => (
-                            <MenuItem value={m}>{m}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <Search>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow:"0 0 6px rgb(0 0 0 / 40%)",pt:1.25,pb:1.25,mb:"3%"}}>
+            <Grid container direction="row" justifyContent="center" alignItems="center" >
+
+                <Search> 
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
@@ -112,6 +116,44 @@ export default function BasicSelect() {
                         inputProps={{ 'aria-label': 'search' }}
                     />
                 </Search>
+
+
+                <FormControl sx={{ m: 1, minWidth: "10rem" }}>
+                    <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        label="provincia"
+                        color="secondary"
+                        onChange={handleChangeProvincia}>
+                        {allProvincias?.map(m => (
+                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+
+                <FormControl sx={{ m: 1, minWidth: "10rem"}}>
+                    <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
+                    <Select
+                        disabled={provincia === 0}
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        label="localidad"
+                        color="secondary"
+                        onChange={handleChangeLocalidad}>
+                        {/* <MenuItem value=""><em>None</em></MenuItem> */}
+                        {allLocalidades?.map(m => (
+                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <Button onClick={handleSubmit} variant="contained" color="success" sx={{ m: 0, height: 56 }} disabled={provincia === 0}>Buscar</Button>
+                </FormControl>
+
             </Grid>
         </Box>
     );
