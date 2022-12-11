@@ -20,10 +20,39 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import Details from './Details';
+import Salidas from './Salidas';
+import Resume from './Resume';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Footer from '../Footer';
 
 
 export default function Camping() {
+  
+  let detalles = {
+    baño : true,
+    baño2 : false,
+    baño3 : true,
+    baño4 : true,
+    baño5: false,
+    baño6: "tengo 4"
+ }
+ let today = new Date();
+ 
+
+ let now = today.toLocaleDateString('es-US');
+
+  let detalles1 = {
+    baño : true,
+    baño2 : false,
+    baño3 : true,
+    baño4 : true,
+    baño5: false,
+
+    
+   
+  }
+
     const [value, setValue] = React.useState<number | null>(5);
     const [stay, setStay] = React.useState('');
     const [price, setPrice] = React.useState("")
@@ -45,13 +74,14 @@ export default function Camping() {
     };
     const handleCotizacion = (e : any) => {
             setPrice("5000$" as string) 
-            console.log(price)
+            
     }
     let navigate : any = useNavigate ();
     const handleReserv = () => {
        navigate('../../');
     }
     return(
+      <Box>
         <Box className={Style.all}>
 
             <Box className={Style.portadacont}>
@@ -78,7 +108,7 @@ export default function Camping() {
 
         <Box className={Style.imageplace} >
         <Box className={Style.lugar}>
-        <Typography   variant="subtitle2" color="black">(iconLugar) Calle las piedras al 1233 - Kikin Mendoza</Typography>
+        <Typography   variant="subtitle1" color="black"> <LocationOnIcon /> Calle las piedras al 1233 - Kikin Mendoza</Typography>
         </Box>
         <Box
                             component="img"
@@ -92,7 +122,7 @@ export default function Camping() {
 
         <Box className={Style.inputCont}>
             <Box>
-        <Typography  variant="h5" color="black"> Cotiza tu estadia al mejor precio</Typography>
+        <Typography className={Style.coti} variant="h5" color="black"> Cotiza tu estadia al mejor precio</Typography>
             </Box>
             <Box>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -178,7 +208,7 @@ export default function Camping() {
                     </FormControl>
         </Box>
 
-       <Box className={Style.btn1} > 
+       <Box className={Style.btn2} > 
         <Stack direction="row" spacing={2}>
           
           <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" value={price} color="warning">
@@ -191,9 +221,10 @@ export default function Camping() {
         
             {price.length > 0 ? <Box> 
                 <Box className={Style.btn1} > 
-        <Stack direction="row" spacing={2}>
+              <Typography variant="subtitle1"> Precio valido hasta el {now}  a las 24:00Hs</Typography>
+        <Stack className={Style.btn3} direction="row" spacing={2}>
           
-          <Button sx={{ minWidth: 250 , minHeight : 70, fontSize : 25 }} onClick={handleClickOpen} variant="contained"  color="success">
+          <Button  sx={{ minWidth: 250 , minHeight : 70, fontSize : 25 }} onClick={handleClickOpen} variant="contained"  color="success">
             5000$ Reserva ya! 
            </Button>
           
@@ -203,10 +234,7 @@ export default function Camping() {
         </Box>
         </Box>
         <div>
-          <Button color="info" variant="outlined" onClick={handleClickOpen}>
-            Open alert dialog
-          </Button>
-          <Dialog
+                   <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
@@ -217,20 +245,40 @@ export default function Camping() {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Solo resta reservar y armar las valijas.
-                <Typography variant="h4">  El valor es de {price} </Typography>
+                Solo resta reservar y armar las valijas para vivir TU sueño por solo
+                <Typography className={Style.quini} variant="h4" color="secondary">   {price} </Typography>
                
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button color="info" onClick={handleClose}>Seguir mirando</Button>
-              <Button  color="info" onClick={handleClose} autoFocus>
+              <Button className={Style.red} color="info" onClick={handleClose}>Seguir mirando</Button>
+              <Button className={Style.green} color="info" onClick={handleClose} autoFocus>
                 Reservar!
               </Button>
             </DialogActions>
           </Dialog>
         </div>
-   
+
+       
+        <Details detalles={detalles}></Details>
+        
+
+
+
+
+        <Box className={Style.endcont}>
+
+          <Box className={Style.resume}>
+              <Resume></Resume>
+          </Box>
+          <Box className={Style.salidas}>
+              <Salidas></Salidas>
+          </Box>
+
+        </Box>
+        
+        </Box>
+        <Footer/>
          </Box>         
                 
     )}

@@ -1,0 +1,7 @@
+.cont{
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
