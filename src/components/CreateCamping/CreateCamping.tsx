@@ -17,6 +17,7 @@ import Page2 from './Page2';
 import Page3 from './Page3';
 
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -49,6 +50,47 @@ function getStepContent(step: number) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+
+
+  const [input, setInput] = React.useState({
+    nombre_camping: '',
+    telefono: '',
+    direccion: '',
+    provincia: '',
+    localidad: '',
+    categoria: '',
+    contacto_nombre: '',
+    contacto_tel: '',
+    descripcion_camping: '',  
+    techado: 0,
+    toma_corriente: 0,
+    agua: 0,
+    superficie: 0,
+    cant_banios: 0,
+    cant_duchas: 0,
+    periodo_agua: '',
+    mascotas: 0,
+    casa_rodante: 0,
+    proveduria: 0,
+    salon_sum: 0,
+    retaurant: 0,
+    vigilancia: 0,
+    pileta: 0,
+    estacionamiento: 0,
+    juegos_infantiles: 0,
+    gimnasio: 0,
+    wifi: 0,
+    tarifa_por_mayor_dia: 0,
+    tarifa_por_menor_dia: 0,
+    tarifa_por_casa_rodante: 0,
+    cerrado_fecha_desde: '',
+    cerrado_fecha_hasta: '',
+    imagenes: [],      
+    longitud: '',
+    latitud: '',
+  });
+  
+
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -96,14 +138,23 @@ export default function Checkout() {
                     Anterior
                   </Button>
                 )}
+                  {activeStep === steps.length - 1 ? 
+                  <Button
+                  variant="contained"
+                  color='secondary'
+                  onClick={handleNext}
+                  sx={{ mt: 3, ml: 1 }}
+                > 'Crear' </Button>
+                :
                 <Button
                   variant="contained"
                   color='secondary'
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length - 1 ? 'Crear' : 'Siguiente'}
-                </Button>
+                  'Siguiente'
+                </Button>}
+                
               </Box>
             </React.Fragment>
           )}
