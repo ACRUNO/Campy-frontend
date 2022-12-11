@@ -6,6 +6,7 @@ import FiltrosPrincipales from "./FiltrosPrincipales";
 import CardCamping from "./CardCamping";
 import { Box, Grid } from '@mui/material'
 import { useDispatch, useSelector} from "react-redux";
+import {getAllCampings,filterProvincia,getCampingsProvincias,getCampingsLocalidades} from "../actions/index"
 import { useEffect, useState } from "react";
 import * as actions from "../actions";
 import { AppDispatch, RootState } from '../store/index';
@@ -14,20 +15,41 @@ import {Campings} from '../reducer/estados';
 
 export default function Booking() {
 
+    
+
     const dispatch: AppDispatch = useDispatch()
     const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings)
+
+
+        useEffect(()=>{
+            if(!allCampings.length) dispatch(getAllCampings())
+          },[dispatch]
+          )
+
+    
+    
+    const campings:Campings[] = useSelector((state: RootState) => state.campings)
+    const provincia:number = useSelector((state: RootState) => state.provincia)
+    const localidad:number = useSelector((state: RootState) => state.localidad)
+
+
+    console.log(provincia)
+
+
+
+
 
     const [currentPage,setCurrentPage]=useState(1);
     const [campingsxPage,setCampingsxPage]=useState(5);
     const indexLastCamping : number = currentPage * campingsxPage;
     const indexFirstCamping : number = indexLastCamping - campingsxPage;
-    const currentCampings:Campings[]= allCampings.slice(indexFirstCamping,indexLastCamping)
+    /* const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping); */
+
+    const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping) 
+
     
 
-    useEffect(()=>{
-        dispatch(actions.getAllCampings())
-      },[dispatch]
-      )
+
 
     return (
         
@@ -47,7 +69,8 @@ export default function Booking() {
                     ))}  
                 </Grid>
             </Grid>
-                <Paginado campingsxPage={campingsxPage} 
+                <Paginado 
+                campingsxPage={campingsxPage} 
                 allCampings={allCampings.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -57,6 +80,15 @@ export default function Booking() {
 
     )
 }
+
+
+
+  
+
+
+    
+
+
 
 
 

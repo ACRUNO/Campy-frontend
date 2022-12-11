@@ -1,18 +1,24 @@
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES} from "../actions";
-import {Campings} from './estados';
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, FILTER_PROVINCIA, FILTER_LOCALIDAD } from "../actions";
+import { Campings } from './estados';
 
-const initialState: { 
-    allProvincias: {id:number ,nombre: string, imagen: string }[];
+const initialState: {
+    provincia: number;
+    localidad: number;
+    allProvincias: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
-    campings: { id: number, nombre: string, localidad: string, provincia: string, imagen: string }[]} = {
+    campings:Campings[]
+} = {
 
     //ESTADOS GLOBALES
     allProvincias: [],
-    allCampings:[],
+    allCampings: [],
     allLocalidades: [],
-    campings: []
+    campings: [],
+    provincia: 0,
+    localidad: 0
+
 
 };
 
@@ -25,31 +31,54 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
         case GET_ALLCAMPINGS:
-            console.log(action.payload)
             return {
                 ...state,
-                allCampings: action.payload}
+                allCampings: action.payload,
+               campings: action.payload
+            }
         case GET_LOCALIDADES:
             return {
                 ...state,
                 allLocalidades: action.payload
             }
         case GET_CAMPINGS_PROVINCIAS:
+            const allCamps: Campings[] = state.allCampings
+
+            const filteredProv: Campings[] = allCamps.filter(c => {
+               return (c.id_provincia === state.provincia)
+            })
             return {
                 ...state,
-                campings: action.payload
-            }
-        case GET_CAMPINGS_LOCALIDADES:
-            return {
-                ...state,
-                campings: action.payload
+                campings: filteredProv,
             }
 
+        case GET_CAMPINGS_LOCALIDADES:
+            const allCampys: Campings[] = state.allCampings
+            const filteredLocal:Campings[] = allCampys.filter(c => {
+                return c.id_localidad === state.localidad
+            })
+            return {
+                ...state,
+                campings: filteredLocal,
+                
+            }
+
+        case FILTER_PROVINCIA:
+            return {
+                ...state,
+                provincia: action.payload,
+                localidad:0
+            }
+
+        case FILTER_LOCALIDAD:
+            return {
+                ...state,
+                localidad: action.payload
+            }
         default:
             return {
                 ...state
             }
-
     }
 
 }

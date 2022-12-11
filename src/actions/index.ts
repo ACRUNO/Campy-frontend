@@ -9,6 +9,8 @@ export const GET_ALLCAMPINGS: string = 'GET_ALLCAMPINGS'
 export const GET_LOCALIDADES: string = 'GET_LOCALIDADES'
 export const GET_CAMPINGS_PROVINCIAS: string = 'GET_CAMPINGS_PROVINCIAS'
 export const GET_CAMPINGS_LOCALIDADES: string = 'GET_CAMPINGS_LOCALIDADES'
+export const FILTER_PROVINCIA: string = 'FILTER_PROVINCIA'
+export const FILTER_LOCALIDAD: string = 'FILTER_LOCALIDAD'
 
 
 
@@ -46,11 +48,11 @@ export function getLocalidades(id:number):ThunkAction<void, RootState, unknown, 
 }
 
 
-export function getCampingsProvincias(id:number):ThunkAction<void, RootState, unknown, AnyAction> {
+export function getCampingsProvincias():ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch:AppDispatch) {
         try {
-            var json = await axios.get(`/api/campings/provincias/${id}`);
+            var json = await axios.get(`/api/campings`);
             return dispatch({
                 type: GET_CAMPINGS_PROVINCIAS,
                 payload: json.data
@@ -61,11 +63,11 @@ export function getCampingsProvincias(id:number):ThunkAction<void, RootState, un
     }
 }
 
-export function getCampingsLocalidades(id:number):ThunkAction<void, RootState, unknown, AnyAction> {
+export function getCampingsLocalidades():ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch:AppDispatch) {
         try {
-            var json = await axios.get(`/api/campings/localidades/${id}`);
+            var json = await axios.get(`/api/campings`);
             return dispatch({
                 type: GET_CAMPINGS_LOCALIDADES,
                 payload: json.data
@@ -81,8 +83,7 @@ export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyActio
 
     return async function (dispatch:AppDispatch) {
         try {
-            var json = await axios.get('http://localhost:3001/api/campings');
-            console.log(json)
+            var json = await axios.get('/api/campings');
             return dispatch({
                 type: GET_ALLCAMPINGS,
                 payload: json.data
@@ -92,6 +93,39 @@ export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyActio
         }
     }
 }
+
+export function filterProvincia(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch:AppDispatch) {
+        try {
+            return dispatch({
+                type: FILTER_PROVINCIA,
+                payload: id
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export function filterLocalidad(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch:AppDispatch) {
+        try {
+            return dispatch({
+                type: FILTER_LOCALIDAD,
+                payload: id
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+
+
 
 
 
