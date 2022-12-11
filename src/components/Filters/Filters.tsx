@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { Button, Box, Grid, InputLabel, MenuItem, FormControl, InputBase } from '@mui/material';
-import Select, { SelectChangeEvent} from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MouseEvent } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades,getCampingsProvincias,getCampingsLocalidades } from "../../actions";
+import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades } from "../../actions";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 
 
@@ -60,6 +63,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function BasicSelect() {
 
     const dispatch: AppDispatch = useDispatch()
+    const navigate = useNavigate()
 
 
 
@@ -71,7 +75,7 @@ export default function BasicSelect() {
         dispatch(getProvincias())
     }, [dispatch]);
 
-    
+
 
 
     const [provincia, setProvincia] = useState<number>(0);
@@ -89,10 +93,12 @@ export default function BasicSelect() {
 
     };
 
-    const handleSubmit=(e: MouseEvent<HTMLElement> ) => {
+    const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        if(provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias(provincia))
-        if(provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades(localidad))
+        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
+        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        navigate("/booking")
+
     }
 
 
@@ -101,13 +107,13 @@ export default function BasicSelect() {
     // }
 
 
-    
+
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow:"0 0 6px rgb(0 0 0 / 40%)",pt:1.25,pb:1.25,mb:"3%"}}>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 40%)", pt: 1.25, pb: 1.25, mb: "3%" }}>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
 
-                <Search> 
+                <Search>
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
@@ -133,7 +139,7 @@ export default function BasicSelect() {
                 </FormControl>
 
 
-                <FormControl sx={{ m: 1, minWidth: "10rem"}}>
+                <FormControl sx={{ m: 1, minWidth: "10rem" }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
                     <Select
                         disabled={provincia === 0}

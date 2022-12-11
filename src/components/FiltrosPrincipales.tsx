@@ -11,6 +11,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 //import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { Dayjs } from 'dayjs';
 import{getCampingsProvincias,getCampingsLocalidades} from '../actions/index'
+import { Campings } from "../reducer/estados";
 
 
 export default function FiltrosPrincipales() {
@@ -19,7 +20,7 @@ export default function FiltrosPrincipales() {
 
     const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
     const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
-
+    const campings: Campings [] = useSelector((state: RootState) => state.campings)
 
     useEffect(() => {
         dispatch(getProvincias())
@@ -35,6 +36,7 @@ export default function FiltrosPrincipales() {
 
     const handleChangeProvincia = (e: SelectChangeEvent) => {
         e.preventDefault();
+
         setProvincia(Number(e.target.value) as number);
         dispatch(getLocalidades(Number(e.target.value) as number))
     };
@@ -46,8 +48,8 @@ export default function FiltrosPrincipales() {
 
     const handleSubmit=(e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        if(provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias(provincia))
-        if(provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades(localidad))
+        if(provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
+        if(provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
     }
 
     return (

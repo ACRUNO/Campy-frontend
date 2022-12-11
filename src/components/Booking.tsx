@@ -1,15 +1,15 @@
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector} from "react-redux";
 import Footer from "./Footer";
 import Paginado from "./Paginado";
 import FiltrosLaterales from "./FiltrosLaterales";
 import FiltrosPrincipales from "./FiltrosPrincipales";
 import CardCamping from "./CardCamping";
 import { Box, Grid } from '@mui/material'
-import { useDispatch, useSelector} from "react-redux";
-import { useEffect } from "react";
-import * as actions from "../actions";
-import { AppDispatch, RootState } from '../store/index';
-import {Campings} from '../reducer/estados';
+import { AppDispatch, RootState } from "../store";
+import { Campings } from "../reducer/estados";
+
 
 
 export default function Booking() {
@@ -22,9 +22,6 @@ export default function Booking() {
         dispatch(actions.getAllCampings())
       },[dispatch]
       )
-
-
-
 
     // let campings: Array<number> = [1, 2, 3, 4, 5, 6]
 

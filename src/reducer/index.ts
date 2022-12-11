@@ -2,7 +2,8 @@
 import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES} from "../actions";
 import {Campings} from './estados';
 
-const initialState: { 
+const initialState: {
+    provincia: {id:number}
     allProvincias: {id:number ,nombre: string, imagen: string }[];
     allCampings: Campings[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
@@ -12,7 +13,9 @@ const initialState: {
     allProvincias: [],
     allCampings:[],
     allLocalidades: [],
-    campings: []
+    campings: [],
+    provincia:{id:0}
+
 
 };
 
@@ -35,19 +38,23 @@ function rootReducer(state: any = initialState, action: any): any {
                 allLocalidades: action.payload
             }
         case GET_CAMPINGS_PROVINCIAS:
+            const allCamps: Campings[] = state.allCampings
+            const filteredProv = allCamps.filter(c => {
+                c.id_provincia === action.payload
+            })
             return {
                 ...state,
-                campings: action.payload
-            }
-        case GET_CAMPINGS_LOCALIDADES:
-            return {
-                ...state,
-                campings: action.payload
+                campings: filteredProv
             }
 
-        default:
+        case GET_CAMPINGS_LOCALIDADES:
+            const allCampys: Campings[] = state.allCampings
+            const filteredLocal = allCampys.filter(c => {
+                c.id_localidad === action.payload
+            })
             return {
-                ...state
+                ...state,
+                campings: filteredLocal
             }
 
     }
