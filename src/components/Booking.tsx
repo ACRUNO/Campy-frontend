@@ -7,7 +7,7 @@ import CardCamping from "./CardCamping";
 import { Box, Grid } from '@mui/material'
 import { useDispatch, useSelector} from "react-redux";
 import { useEffect } from "react";
-import * as actions from "../actions";
+import {getAllCampings} from "../actions/index"
 import { AppDispatch, RootState } from '../store/index';
 import {Campings} from '../reducer/estados';
 
@@ -19,7 +19,7 @@ export default function Booking() {
     
 
     useEffect(()=>{
-        dispatch(actions.getAllCampings())
+        dispatch(getAllCampings())
       },[dispatch]
       )
 
