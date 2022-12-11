@@ -1,0 +1,67 @@
+.cont {
+    display : flex;
+    flex-direction: column;
+    width: 225px;
+    height: 150px;
+    overflow: hidden;
+    margin: 10px;
+    position: relative;
+    transition: .5s;
+ 
+}
+.cont > .crop {
+    position:absolute;
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
+    margin: auto;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.cont:hover{
+    filter :blur(1px);
+    opacity: 0.5;
+  filter: blur(3%);
+  -webkit-transition: opacity 500ms;
+  -moz-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  -ms-transition: opacity 500ms;
+  transition: opacity 500ms;
+   
+}
+
+.divimagen {
+  display:inline-block;
+  position:relative;
+ transition : 1s
+}
+
+.divimagen > div {
+    font-size: 3rem;
+    font-weight: 900;
+  position:absolute;
+  top:15%;
+  left:7%;
+  z-index:-1;
+  padding:0px;
+  margin:0;
+  
+}
+
+.desvanecer:hover {
+  opacity: 0.5;
+  filter: blur(3%);
+  -webkit-transition: opacity 500ms;
+  -moz-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  -ms-transition: opacity 500ms;
+  transition: opacity 500ms;
+}
+
+.total{
+    display: flex;
+    flex-direction: column;
+    
+}

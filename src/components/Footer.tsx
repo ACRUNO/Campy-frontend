@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import {CardMedia, Avatar, Grid} from '@mui/material';
 
 import Link from '@mui/material/Link';
-import "./footer.modules.css"
+import Style from "./footer.module.css"
 
 
 function Copyright(props: any) {
@@ -26,9 +26,9 @@ export default function Footer() {
 
 
   return (
-    <Box sx={{ p: 6 }} component="footer" className="footer">
+    <Box sx={{ p: 5 }} component="footer" className={Style.footer}>
         <Grid container direction="row"  justifyContent="center" sx={{mt: 5}}>
-        <Box
+        <Box className={Style.img}
           component="img"
           sx={{
             ml: "1%",
