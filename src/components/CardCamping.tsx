@@ -1,40 +1,46 @@
 import React from "react";
 import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material';
 
-export default function CardCamping()
-  //nombre, id, localidad, provincia, descripcion, categoria, imagen,precio
-   {
+type Props = {
+  id:number,
+  nombre: string,
+  localidad: string,
+  provincia:string,
+  descripcion:string,
+  categoria: string,
+  imagenes:Array<string>
+}
+
+export default function CardCamping( props: Props){
     return (
     
-        <Link href="/booking/camping/8">
-        {/* <Link href="/booking/camping/`${id}`"> */}
+        <Link href={`/booking/camping/${props.id}`}>
     <Card sx={{ display: 'flex', mt: 2, mb:2, height:200 , width:1000}}>
         <CardMedia
         component="img"
-        sx={{ width: 400 }}
-        image="https://thehotelfactory.com/wp-content/uploads/2018/09/Camping-portada.jpeg"
-        // image={imagen}
+        width="400px"
+        image={props.imagenes[0]}
         alt="Camping"
         />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
-            Nombre del Camping
-            {/* {nombre} */}
+            {props.nombre}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            Localidad, Provincia ------Categoría
-            {/* {localidad}{provincia}----{categoria} */}
+            <strong>Ubicación: </strong>{props.localidad},{props.provincia}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
-            Descripcion
-            {/* {descripcion} */}
+            <strong>Categoría: </strong>{props.categoria}
+          </Typography>
+          <Typography variant="subtitle1" color="text.secondary" component="div">
+            {props.descripcion}
           </Typography>
         </CardContent>
       </Box>
-      <Box >
+      {/* <Box >
       <Typography variant="subtitle1" color="text.secondary" component="div">Precio</Typography>
-        </Box>
+        </Box> */}
       
     </Card>
     </Link>
