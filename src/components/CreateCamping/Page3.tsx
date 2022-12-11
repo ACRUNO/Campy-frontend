@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox';
 import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material'; 
 import Cloudinary from "./Cloudinary";
 
-export default function Page3() {
+export default function Page3({ setInput }: { setInput: any }) {
 
   
   const [imagenes, setImagenes] = React.useState({
@@ -23,7 +23,7 @@ export default function Page3() {
           <TextField
             required
             id="Tarifa por mayor por día "
-            name="Tarifa por mayor por día "
+            name="tarifa_por_mayor_dia"
             label="Tarifa por mayor por día "
             fullWidth
             autoComplete="given-name"
@@ -34,7 +34,7 @@ export default function Page3() {
           <TextField
             required
             id="Tarifa por menor por día"
-            name="Tarifa por menor por día"
+            name="tarifa_por_menor_dia"
             label="Tarifa por menor por día"
             fullWidth
             autoComplete="family-name"
@@ -45,7 +45,7 @@ export default function Page3() {
           <TextField
             required
             id="Tarifa por casa rodante por día"
-            name="Tarifa por casa rodante por día"
+            name="tarifa_por_casa_rodante"
             label="Tarifa por casa rodante por día"
             fullWidth
             autoComplete="shipping address-level2"
