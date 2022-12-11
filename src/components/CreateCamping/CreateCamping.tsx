@@ -20,6 +20,7 @@ import { AppDispatch } from "../../store";
 //import { useHistory } from 'react-router-dom';
 import { createCamping } from '../../actions/index'
 import { MouseEvent } from 'react';
+import { url } from "inspector";
 
 
 
@@ -43,9 +44,9 @@ function getStepContent(step: number, setInput: any) {
     case 0:
       return <Page1 setInput={setInput} />;
     case 1:
-      return <Page2 setInput={setInput}/>;
+      return <Page2 setInput={setInput} />;
     case 2:
-      return <Page3 setInput={setInput}/>
+      return <Page3 setInput={setInput} />
     default:
       throw new Error('Unknown step');
   }
@@ -68,7 +69,7 @@ export default function Checkout() {
     categoria: '',
     contacto_nombre: '',
     contacto_tel: '',
-    descripcion_camping: '',  
+    descripcion_camping: '',
     techado: false,
     toma_corriente: false,
     agua: false,
@@ -92,12 +93,12 @@ export default function Checkout() {
     tarifa_por_casa_rodante: 0,
     cerrado_fecha_desde: '',
     cerrado_fecha_hasta: '',
-    imagenes: [],      
+    imagenes: [],
     longitud: '',
     latitud: '',
   });
-  
-  console.log('createcamp',input);
+
+  console.log('createcamp', input);
 
 
   const handleNext = () => {
@@ -108,27 +109,30 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  const redirect : any = (url: any) => window.location.href = url
+
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
     /* history.push('/') */
     e.preventDefault();
     dispatch(createCamping(input))
-  } 
+    redirect('http://localhost:3000')
+  }
 
 
 
   return (
     <Box>
-    {/* <ThemeProvider 
+      {/* <ThemeProvider 
     theme={theme}
     > */}
-       {/* <CssBaseline />  */}
-      
+      {/* <CssBaseline />  */}
+
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Nuevo Camping
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5}}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -141,7 +145,7 @@ export default function Checkout() {
                 Gracias por formar parte de la comunidad de CAMPY
               </Typography>
               <Typography variant="subtitle1">
-                Tu camping ha sido creado. A la brevedad estará disponible en nuestra página, 
+                Tu camping ha sido creado. A la brevedad estará disponible en nuestra página,
                 te enviaremos un mail de confirmación
               </Typography>
             </React.Fragment>
@@ -154,30 +158,30 @@ export default function Checkout() {
                     Anterior
                   </Button>
                 )}
-                  {activeStep === steps.length - 1 ? 
+                {activeStep === steps.length - 1 ?
                   <Button
-                  variant="contained"
-                  color='secondary'
-                  onClick={handleSubmit}
-                  sx={{ mt: 3, ml: 1 }}
-                > Crear </Button>
-                :
-                <Button
-                  variant="contained"
-                  color='secondary'
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Siguiente
-                </Button>}
-                
+                    variant="contained"
+                    color='secondary'
+                    onClick={handleSubmit}
+                    sx={{ mt: 3, ml: 1 }}
+                  > Crear </Button>
+                  :
+                  <Button
+                    variant="contained"
+                    color='secondary'
+                    onClick={handleNext}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                    Siguiente
+                  </Button>}
+
               </Box>
             </React.Fragment>
           )}
         </Paper>
         <Copyright />
       </Container>
-      </Box>
+    </Box>
     // </ThemeProvider>
   );
 }
