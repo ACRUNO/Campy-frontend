@@ -16,17 +16,12 @@ export default function Booking() {
 
     const dispatch: AppDispatch = useDispatch()
     const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings)
-    console.log(allCampings)
+    
 
     useEffect(()=>{
         dispatch(actions.getAllCampings())
       },[dispatch]
       )
-
-
-
-
-    // let campings: Array<number> = [1, 2, 3, 4, 5, 6]
 
     return (
         
@@ -39,15 +34,11 @@ export default function Booking() {
                     <FiltrosLaterales></FiltrosLaterales>
                 </Grid>
                 <Grid item justifyContent="right" xs={12} sm={8} md={10}>
-                    {/* {allCampings?.map((c: Campings)=>(
+                    {allCampings?.map((c: Campings)=>(
                        <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                        localidad={c.localidad} provincia={c.provincia}
-                       categoria={c.categoria} imagen={c.imagenes}></CardCamping> 
-                    ))}   */}
-
-                    {/* { {campings.map(c => (
-                        <CardCamping key={c}></CardCamping>
-                    ))} } */}
+                       categoria={c.categoria} imagenes={c.imagenes}></CardCamping> 
+                    ))}  
                 </Grid>
             </Grid>
             <Paginado></Paginado>
