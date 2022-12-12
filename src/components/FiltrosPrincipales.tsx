@@ -92,7 +92,7 @@ export default function FiltrosPrincipales() {
                     </Select>
 
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl color="secondary" sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <DatePicker
                             label="Ingreso"
@@ -106,7 +106,7 @@ export default function FiltrosPrincipales() {
                         />
                     </LocalizationProvider>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl  color="secondary"sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Egreso"
