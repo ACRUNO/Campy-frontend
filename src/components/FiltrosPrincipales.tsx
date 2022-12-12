@@ -58,7 +58,7 @@ export default function FiltrosPrincipales() {
     }
 
     return (
-        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)" }}>
+        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)"}}>
             <Grid container direction="row" justifyContent="center" alignItems="center">
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
@@ -92,7 +92,7 @@ export default function FiltrosPrincipales() {
                     </Select>
 
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl color="secondary" sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <DatePicker
                             label="Ingreso"
@@ -106,7 +106,7 @@ export default function FiltrosPrincipales() {
                         />
                     </LocalizationProvider>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl  color="secondary"sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Egreso"

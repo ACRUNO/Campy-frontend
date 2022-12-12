@@ -67,7 +67,7 @@ export default function Page3({ setInput }: { setInput: any }) {
             onChange={handleChangeInput}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12}>
           <TextField
             required
             id="Tarifa por casa rodante por día"

@@ -132,8 +132,7 @@ export function filterLocalidad(id:number): ThunkAction<void, RootState, unknown
 export function createCamping(camping : any): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch:AppDispatch) {
         try {
-            var json = await axios.post('http://localhost:3001/api/campings', camping)
-            console.log(json)
+            var json = await axios.post('/api/campings', camping)
             return dispatch({
                 type: CREATE_CAMPING,
                 payload: json.data
