@@ -30,7 +30,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { useParams } from 'react-router-dom';
-import Carousel from './Carousel'
+import Carousel from './Carousel'  
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
