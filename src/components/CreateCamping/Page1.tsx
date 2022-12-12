@@ -25,7 +25,8 @@ export default function Page1({ setInput }: { setInput: any }) {
   const [provincia, setProvincia] = useState<number>(0);
 
 
-  const categorias: string[] = ['Lujo', 'Normal', 'Berreta'];
+  const categorias: number[] = [1, 2, 3];
+  
 
   const handleChangeProvincia = (e: SelectChangeEvent) => {
     e.preventDefault();
@@ -68,24 +69,29 @@ export default function Page1({ setInput }: { setInput: any }) {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
+            margin="normal"
             required
-            id="Nombre"
-            name="nombre_camping"
-            label="Nombre"
             fullWidth
-            autoComplete="given-name"
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            color='secondary'
             variant="standard"
             onChange={handleChangeInput}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            margin='normal'
             required
-            id="Teléfono"
-            name="telefono"
-            label="Teléfono"
             fullWidth
+            id="Teléfono"
+            label="Teléfono"
+            name="telefono"
             autoComplete="family-name"
+            color='secondary'
             variant="standard"
             onChange={handleChangeInput}
           />
@@ -93,11 +99,12 @@ export default function Page1({ setInput }: { setInput: any }) {
         <Grid item xs={12}>
           <TextField
             required
-            id="Dirección"
-            name="direccion"
-            label="Dirección"
             fullWidth
+            id="Dirección"
+            label="Dirección"
+            name="direccion"
             autoComplete="shipping address-line1"
+            color='secondary'
             variant="standard"
             onChange={handleChangeInput}
           />
@@ -143,7 +150,7 @@ export default function Page1({ setInput }: { setInput: any }) {
               disabled={provincia === 0}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
-              name='localidad'
+              name='LocalidadeId'
               label="localidad"
               color="secondary"
               onChange={handleChangeSelect}>
@@ -183,7 +190,7 @@ export default function Page1({ setInput }: { setInput: any }) {
               defaultValue=''
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
-              name='categoria'
+              name='CategoriaCampingId'
               label="categoria"
               color="secondary"
               onChange={handleChangeSelect}>
@@ -204,6 +211,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            color='secondary'
             onChange={handleChangeInput}
           />
         </Grid>
@@ -216,6 +224,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            color='secondary'
             onChange={handleChangeInput}
           />
         </Grid>
@@ -229,6 +238,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
+            color='secondary'
             onChange={handleChangeInput}
           />
         </Grid>
