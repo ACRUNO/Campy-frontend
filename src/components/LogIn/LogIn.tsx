@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,6 +31,9 @@ const logInPhotos: string [] = ["https://res.cloudinary.com/pfcampy/image/upload
 const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)]
 
 export default function SignIn() {
+
+    const [typeOfSign, setTypeOfSign] = useState('signin');
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -39,6 +42,12 @@ export default function SignIn() {
             password: data.get('password'),
         });
     };
+
+    const handleChangeSign = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+
+        setTypeOfSign(type => type === 'signin' ? 'signup' : 'signin')
+    }
 
     return (
             <Grid container component="main" sx={{ height: '92vh' }}>
@@ -71,7 +80,7 @@ export default function SignIn() {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in
+                            {typeOfSign.toUpperCase()}
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField
@@ -100,6 +109,9 @@ export default function SignIn() {
                                 control={<Checkbox value="remember" color="secondary" />}
                                 label="Remember me"
                             />
+                            <Link onClick={handleChangeSign} color="inherit" href="http://localhost:3000/login">
+                                {typeOfSign === 'signin' ? 'sign up' : 'sign in'}?
+                            </Link>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -107,7 +119,7 @@ export default function SignIn() {
                                 sx={{ mt: 3, mb: 2 }}
                                 color='secondary'
                             >
-                                Sign In
+                                {typeOfSign === 'signin' ? 'sign in' : 'sign up'}
                             </Button>
                             <Grid container>
                                 <Grid item xs>
