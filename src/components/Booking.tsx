@@ -65,7 +65,7 @@ export default function Booking() {
                     {currentCampings?.map((c: Campings)=>(
                        <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                        localidad={c.localidad} provincia={c.provincia}
-                       categoria={c.categoria} imagenes={c.imagenes}></CardCamping> 
+                       categoria={c.categoria} imagenes={c.imagenes} estrellas={c.cantidad_estrellas}></CardCamping> 
                     ))}  
                 </Grid>
             </Grid>

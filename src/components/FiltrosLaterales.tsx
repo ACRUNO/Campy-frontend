@@ -14,7 +14,7 @@ export default function FiltrosLaterales() {
         <Box sx={{ backgroundColor: "#5F8D4E", height: "100%", pl: 3, mr: 4, pr: 4 ,boxShadow:"0 0 6px rgb(0 0 0 / 40%)"}}>
             <Box sx={{ width: "10rem", height: "1rem", backgroundColor: "#5F8D4E"}}>
             </Box>
-            <Box sx={{ width: "15rem", height: "4rem", backgroundColor: "white",mb:"2rem"}}>
+            <Box sx={{ width: "20rem", height: "4rem", backgroundColor: "white",mb:"2rem"}}>
             <Typography align="center" variant="h5" > Funcionalidad en desarrollo </Typography>
             </Box>
             <Typography>Filtrar por:</Typography>
