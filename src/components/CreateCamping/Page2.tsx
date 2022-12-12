@@ -11,7 +11,7 @@ export default function Page2({ setInput }: { setInput: any }) {
 
 
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+    //e.preventDefault();
     setInput((inputs: any) => {
       return {
         ...inputs,
@@ -49,16 +49,16 @@ export default function Page2({ setInput }: { setInput: any }) {
       </Typography>
       <Grid item xs={12}>
         <FormControlLabel
-          control={<Checkbox color="secondary" name="techado" onChange={handleCheckBox} />}
+          control={<Checkbox color="secondary" name="techada" onChange={handleCheckBox} />}
           label="Techada"
         />
         <FormControlLabel
-          control={<Checkbox color="secondary" name="toma_corriente" onChange={handleCheckBox} />}
+          control={<Checkbox color="secondary" name="iluminacion_toma_corriente" onChange={handleCheckBox} />}
           label="Toma corriente"
         />
         <FormControlLabel
-          control={<Checkbox color="secondary" name="agua" onChange={handleCheckBox} />}
-          label="Agua"
+          control={<Checkbox color="secondary" name="agua_en_parcela" onChange={handleCheckBox} />}
+          label="Agua en parcela"
         />
       </Grid>
       <Grid container spacing={3}>
@@ -85,7 +85,7 @@ export default function Page2({ setInput }: { setInput: any }) {
           <TextField
             required
             id="Cantidad de baños"
-            name="cant_banios"
+            name="baños"
             label="Cantidad de baños"
             fullWidth
             autoComplete="family-name"
@@ -99,7 +99,7 @@ export default function Page2({ setInput }: { setInput: any }) {
         <TextField
           required
           id="Cantidad de duchas"
-          name="cant_duchas"
+          name="duchas"
           label="Cantidad de duchas"
           fullWidth
           autoComplete="shipping address-level2"
@@ -124,7 +124,7 @@ export default function Page2({ setInput }: { setInput: any }) {
               defaultValue=''
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
-              name='periodo_agua'
+              name='PeriodoAguaCalienteId'
               label="Período de agua caliente"
               color="secondary"
               onChange={handleChangeSelect}>
@@ -143,7 +143,7 @@ export default function Page2({ setInput }: { setInput: any }) {
           label="Mascotas"
         />
         <FormControlLabel
-          control={<Checkbox color="secondary" name="casa_rodante" onChange={handleCheckBox} />}
+          control={<Checkbox color="secondary" name="rodantes" onChange={handleCheckBox} />}
           label="Casa Rodante"
         />
         <FormControlLabel
@@ -157,7 +157,7 @@ export default function Page2({ setInput }: { setInput: any }) {
           label="Salón SUM"
         />
         <FormControlLabel
-          control={<Checkbox color="secondary" name="retaurant" onChange={handleCheckBox} />}
+          control={<Checkbox color="secondary" name="restaurant" onChange={handleCheckBox} />}
           label="Restaurant"
         />
         <FormControlLabel
@@ -181,7 +181,7 @@ export default function Page2({ setInput }: { setInput: any }) {
       </Grid>
       <Grid item xs={12}>
         <FormControlLabel
-          control={<Checkbox color="secondary" name="gimnasio" onChange={handleCheckBox} />}
+          control={<Checkbox color="secondary" name="maquinas_gimnasia" onChange={handleCheckBox} />}
           label="Gimnasio"
         />
         <FormControlLabel

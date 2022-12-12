@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-import { Box, Card, Grid, Typography, CardContent, CardMedia, Link } from '@mui/material';
+import { Box, Card, Grid, Typography, CardContent, CardMedia, Link, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Cloudinary from "./Cloudinary";
 
 export default function Page3({ setInput }: { setInput: any }) {
@@ -13,7 +13,19 @@ export default function Page3({ setInput }: { setInput: any }) {
 
   let img: Array<string> = ["1", "2", "3", "4"]
 
+  const abierto_periodo : number[] = [1, 2, 3];
+
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setInput((inputs: any) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
+  };
+
+  const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
     setInput((inputs: any) => {
       return {
@@ -60,7 +72,7 @@ export default function Page3({ setInput }: { setInput: any }) {
             required
             id="Tarifa por casa rodante por día"
             name="tarifa_por_casa_rodante"
-            label="Tarifa por casa rodante por día"
+            label="Tarifa casa rodante por día"
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
@@ -69,15 +81,24 @@ export default function Page3({ setInput }: { setInput: any }) {
           />
         </Grid>
         {/* LUEGO VER EL TEMA DE LAS FECHAS */}
-        {/*         <Grid item xs={12} sm={6}>
-          <TextField
-            id="Periodo abierto - poner calendario?"
-            name="Periodo abierto - poner calendario?"
-            label="Periodo abierto - poner calendario?"
-            fullWidth
-            variant="standard"
-          />
-        </Grid> */}
+        <Grid item xs={12} sm={6}>
+          <FormControl sx={{ m: 1, minWidth: "15rem" }}>
+            <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo Abierto</InputLabel>
+            <Select
+              defaultValue=''
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              name='AbiertoPeriodoId'
+              label="Período Abierto"
+              color="secondary"
+              onChange={handleChangeSelect}>
+              {/* <MenuItem value=""><em>None</em></MenuItem> */}
+              {abierto_periodo?.map(m => (
+                <MenuItem value={m}>{m}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid> 
         <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
           {img.map(m => (
             <Grid item key={m}>
