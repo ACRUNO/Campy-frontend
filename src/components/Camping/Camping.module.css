@@ -4,8 +4,31 @@
    transition: .5s;
    border-radius: 0px 0px 10px 10px;
    box-shadow: 5px 5px 10px 1px #000;
+   width: 100vw;
+   height: 250px;
+   overflow: hidden;
 }
-
+.cont {
+    display : flex;
+    flex-direction: column;
+    width: 225px;
+    height: 150px;
+    overflow: hidden;
+    margin: 10px;
+    position: relative;
+    transition: .5s;
+ 
+}
+/* .imagencita > .crop {
+    position:absolute;
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
+    margin: auto;
+    min-height: 100%;
+    min-width: 100%;
+} */
 .imagencita:hover {
     filter: blur(2px);
     transition: .5s;
@@ -24,7 +47,7 @@
 .text{
     text-shadow: 5px 2px 36px #070707;
     position: absolute;
-    top : 60%;
+    top : 30%;
     margin-left : 1rem;
 }
 
@@ -43,7 +66,7 @@
 
     /* background-color: #0d993cd7; */
     width: 98%;
-    height: 28rem;
+    height: 32rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -53,7 +76,7 @@
     margin-bottom: 1rem;
     border-radius: 3%;
     align-items: center;
-    align-content: flex-start;
+    align-content: space-around;
 }
 
 .galery {
@@ -69,8 +92,8 @@ border-radius : 1%;
 }
 
 .lugar{
-    margin-top : .5rem;
-    margin-left : 1rem;
+    /* margin-top : .5rem;
+    margin-left : 1rem; */
 }
 
 .imageplace {
@@ -79,10 +102,9 @@ border-radius : 1%;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: space-between;
-    /* margin-top: 3rem;
-    margin-bottom: 1rem; */
     border-radius: 3%;
-    align-items: flex-end;
+    align-items: center;
+    margin-top: 4rem;
 }
 
 
@@ -92,9 +114,14 @@ border-radius : 1%;
 }
 
 .inputCont{
-    margin-left: 5rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    /* border: solid rgba(0, 0, 0, 0.275); */
+    border-radius: 1%;
+    border-width: 0.2rem;
+   
+     margin-top: 3rem;
+    /* margin-bottom: 1rem;  */
+    width: 35rem;
+    
 }
 
 .input{
@@ -105,20 +132,22 @@ border-radius : 1%;
 }
 
 .btn1{
-    margin: 2rem;
-    display: flex;
+    margin-bottom : 2rem;
+    margin-top : .2rem;
+        display: flex;
     flex-direction: column;
     align-content: space-around;
     flex-wrap: wrap;
 }
 .btn2{
-    margin: 2rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     align-content: space-around;
     flex-wrap: wrap;
 }
 .btn3{
+    /* margin-bottom: rem; */
     margin-left: 2rem;
     display: flex;
     flex-direction: column;
@@ -128,6 +157,7 @@ border-radius : 1%;
 }
 
 .coti{
+    margin-top : 1 rem;
     display: flex;
     justify-content: center;
 }

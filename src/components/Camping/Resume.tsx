@@ -2,9 +2,13 @@ import * as React from 'react';
 import { Box } from '@mui/material';
 import Style from "./Camping.module.css"
 import { Typography , TextField } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 
 export default function Resume () {
+
+let camp = useSelector((state : any) => state.detailCamping)
+
 let lugar = {
     localidad : "Villa Patito",
     provincia : "Mendoza"
@@ -17,7 +21,7 @@ let info = {
 
     return (
         <Box sx={{maxWidth : 850}}>
-            <Typography variant="h3" > Queres conocer mas de {lugar.localidad}  y {lugar.provincia} ? </Typography>
+            <Typography variant="h3" > Queres conocer mas de {camp?.localidad}  y {camp?.provincia} ? </Typography>
             <Typography sx={{ marginTop : 1}} variant="body1"> {info.localidad} </Typography>
             <Typography sx={{ marginTop : 1 }} variant="body1"> {info.provincia} </Typography>
         </Box>

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Box } from '@mui/material';
+import { Box , Typography , TextField } from '@mui/material';
 import Portada from "./banner1.webp"
 import Style from "./Camping.module.css"
-import { Typography , TextField } from '@mui/material';
 import Galery from "./portada.jpg"
+import Paper from '@mui/material/Paper';
 import Rating from '@mui/material/Rating';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -25,116 +25,126 @@ import Salidas from './Salidas';
 import Resume from './Resume';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Footer from '../Footer';
-
+import { getDetails } from '../../actions';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { useParams } from 'react-router-dom';
+import Carousel from './Carousel'
 
 export default function Camping() {
-  
+  const dispatch: AppDispatch = useDispatch()
+  const params = useParams()
+  let camp = useSelector((state : any) => state.detailCamping)
+  let today = new Date();
+  let now = today.toLocaleDateString('es-US');
+  let navigate : any = useNavigate ();
+  const [value, setValue] = React.useState(0);
+  const [stay, setStay] = React.useState(0);
+  const [travellers, setTravellers] = React.useState(0);
+  const [kids, setKids] = React.useState(0);
+  const [price, setPrice] = React.useState(0)
+  const [value1, setValue1] = React.useState<Dayjs | null>(null);
+  const [value2, setValue2] = React.useState<Dayjs | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const [valid , setValid] =React.useState(true);
 
-
-
-
-
-
-
-
-
-
-
-
-  ///////////////////////////////////////////
-  let detalles = {
-    baño : true,
-    baño2 : false,
-    baño3 : true,
-    baño4 : true,
-    baño5: false,
-    baño6: "tengo 4"
- }
- let today = new Date();
- 
-
- let now = today.toLocaleDateString('es-US');
-
-  let detalles1 = {
-    baño : true,
-    baño2 : false,
-    baño3 : true,
-    baño4 : true,
-    baño5: false,
-
+useEffect(() => {
+     dispatch(getDetails(params.id));
+    }, [dispatch , params.id])
     
-   
-  }
+setTimeout(function(){
+      setValue(camp.cantidad_estrellas)
+  }, 1000); //try to resolve better
 
-    const [value, setValue] = React.useState<number | null>(5);
-    const [stay, setStay] = React.useState('');
-    const [price, setPrice] = React.useState("")
-    const [value1, setValue1] = React.useState<Dayjs | null>(null);
-    const [value2, setValue2] = React.useState<Dayjs | null>(null);
-    const [open, setOpen] = React.useState(false);
-    const valor :number = 500
-    const handleClickOpen = () => {
+const handleClickOpen = () => {
       setOpen(true);
+     
+
     };
-  
-    const handleClose = () => {
+
+const handleClose = () => {
       setOpen(false);
+      setPrice(0)
     };
 
+const handleCloseR = () => {
+  navigate("/booking")   
+      }; 
+    
+const handleCloseM = () => {
+        navigate("/create")   
+            }; 
+   
 
-       const handleChange = (event: SelectChangeEvent) => {
-      setStay(event.target.value as string);
-    };
-    const handleCotizacion = (e : any) => {
-            setPrice("5000$" as string) 
-            
-    }
-    let navigate : any = useNavigate ();
-    const handleReserv = () => {
+const handleCotizacion = (e : any) => {
+   
+    let day1 : any = value1?.date();
+   let day2 : any = value2?.date();
+   let rest = day2 - day1 
+   let total = 1
+   if(rest > 0 ) { total = rest}
+      let final = (500 * stay) + (200 * kids) + (350 * travellers) 
+      
+    setPrice(final * total)
+    
+  
+ 
+   }
+
+const handleValidate = ( e : any) => {
+if(stay > 0 && travellers > 0){
+  setValid(false)
+}
+}
+  
+const handleReserv = () => {
        navigate('../../');
     }
-    return(
-      <Box>
-        <Box className={Style.all}>
 
-            <Box className={Style.portadacont}>
-               
-         <Box
-                            component="img"
-                            className={Style.imagencita}
-                            alt="Logo"
-                            src={Portada}
-                            />
-                            <Box className={Style.text}> 
 
-            <Typography  variant="h1" color="primary"> CAMPING LAGUNA  </Typography>
-            <Box className={Style.rankingcont}>
-            <Typography   color="primary" component="legend">Ranking</Typography>
-            <Rating     name="read-only" value={value} readOnly />
-            </Box>
-           
-                
-                            </Box>
-                            </Box>
-
-        <Box className={Style.booking}> 
-
-        <Box className={Style.imageplace} >
+return(
+  <Box>
+    <Box className={Style.all}>
+      <Box className={Style.portadacont}>
         <Box
-                            component="img"
-                            className={Style.galery}
-                            alt="Logo"
-                            src={Galery}
-                            />
-                            
-        <Box className={Style.lugar}>
-        <Typography   variant="subtitle1" color="black"> <LocationOnIcon /> Calle las piedras al 1233 - Kikin Mendoza</Typography>
-        </Box>
+         component="img"
+         className={Style.imagencita}
+         alt="Logo"
+         src={Portada}
+         />
+         <Box className={Style.text}>                   
+           <Typography  variant="h1" color="primary"> {camp.nombre_camping}  </Typography>
+             <Box className={Style.rankingcont}>
+              <Typography   color="primary" component="legend">Ranking</Typography>
+              <Rating     name="read-only" value={value} readOnly />
+           </Box>
+          </Box>
+         </Box>    
+          
+          <Box className={Style.booking}> 
+          <Box className={Style.imageplace} >
+          
+            {/* <Box className={Style.carousel}> */}
+            <Carousel/>          
+            {/* </Box> */}
+          </Box>                 
 
-                            </Box>
-
+                           
+          <Box className={Style.inputCont}
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            '& > :not(style)': {
+              m: 1,
+              width: 600,
+             
+            },
+          }}
+        >
+         <Paper elevation={3} > 
         <Box className={Style.inputCont}>
-            <Box>
+            <Box sx={{marginTop : 4}}>
         <Typography className={Style.coti} variant="h5" color="black"> Cotiza tu estadia al mejor precio</Typography>
             </Box>
             <Box>
@@ -148,6 +158,7 @@ export default function Camping() {
                             onChange={(newValue) => {
                                 setValue1(newValue);
                             }}
+                           
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
@@ -159,26 +170,31 @@ export default function Camping() {
                             openTo="day"
                             views={['year', 'month', 'day']}
                             value={value2}
-                            onChange={(newValue) => {
+                                 onChange={(newValue) => {
                                 setValue2(newValue);
                             }}
+                            
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
                 </FormControl>
             </Box>
            <Box className={Style.input}>
-           <FormControl sx={{ m: 1, minWidth: 120 }}>
+           <FormControl  sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Estadia</InputLabel>
                     <Select
+                         onChange={(e) => {setStay(e.target.value as number) }}
+                         onClick={handleValidate}
+                        value={stay}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="estadia"
                         color="secondary"
                         >
-                       
-              <MenuItem value={"Carpa"}>Zona Carpas</MenuItem>
-              <MenuItem value={"Trailer"}>Trailer Park</MenuItem>
+                      
+              <MenuItem value={1}>Zona Carpas</MenuItem>
+              { camp.rodantes > 0 ? <MenuItem value={2}>Trailer Park</MenuItem> : <></> }
+         
        
                     </Select>
                     </FormControl>
@@ -190,16 +206,22 @@ export default function Camping() {
         <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Viajeros</InputLabel>
                     <Select
+                     onChange={(e) => {setTravellers(e.target.value as number)}}
+                     onClick={handleValidate}
+                     value={travellers}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         
                         label="Viajeros"
                         color="secondary"
                         >
-                       
-              <MenuItem value={"Carpa"}>1-2 Personas</MenuItem>
-              <MenuItem value={"Trailer"}>3-4 Personas</MenuItem>
-              <MenuItem value={"Trailer"}>5+ Personas</MenuItem>
+                       {/* { travellers >= 1 ?  <h1> {travellers}</h1> : <h1>nono</h1>} */}
+              <MenuItem value={1}>1 Persona</MenuItem>
+              <MenuItem value={2}>2 Personas</MenuItem>
+              <MenuItem value={3}>3 Personas</MenuItem>                        
+              <MenuItem value={4}>4 Personas</MenuItem>
+              <MenuItem value={5}>5 Personas</MenuItem>
+              <MenuItem value={6}>6 Personas</MenuItem>
                     </Select>
                     </FormControl>
 
@@ -208,14 +230,20 @@ export default function Camping() {
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Menores</InputLabel>
                     <Select
+                    onChange={(e) => {setKids(e.target.value as number)}}
+                    onClick={handleValidate}
+                    value={kids}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="estadia "
                         color="secondary"
                         >
-                       
-              <MenuItem value={"Carpa"}>1</MenuItem>
-              <MenuItem value={"Trailer"}>2</MenuItem>
+              <MenuItem value={0}>Sin menores</MenuItem>
+              <MenuItem value={1}>1 menor</MenuItem>
+              <MenuItem value={2}>2 menores</MenuItem>
+              <MenuItem value={3}>3 menores</MenuItem>                        
+              <MenuItem value={4}>4 menores</MenuItem>
+              <MenuItem value={5}>5 menores</MenuItem>
        
                     </Select>
                     </FormControl>
@@ -223,28 +251,33 @@ export default function Camping() {
 
        <Box className={Style.btn2} > 
         <Stack direction="row" spacing={2}>
-          
-          <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" value={price} color="warning">
+         { price == 0 ? <Button disabled={valid} sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" value={price} color="warning">
             Generar Cotizacion
-          </Button>
+          </Button> : <></>
+}
           
         </Stack>
        </Box>
         
         
-            {price.length > 0 ? <Box> 
+            {price > 0 ? <Box> 
                 <Box className={Style.btn1} > 
               <Typography variant="subtitle1"> Precio valido hasta el {now}  a las 24:00Hs</Typography>
         <Stack className={Style.btn3} direction="row" spacing={2}>
           
           <Button  sx={{ minWidth: 250 , minHeight : 70, fontSize : 25 }} onClick={handleClickOpen} variant="contained"  color="success">
-            5000$ Reserva ya! 
+           ${price} Reserva ya! 
            </Button>
           
         </Stack>
        </Box></Box> : <></>}
         
         </Box>
+        </Paper>
+         </Box>
+         <Box className={Style.lugar}>
+            <Typography   variant="subtitle1" color="black"> <LocationOnIcon /> {camp.direccion} - {camp.provincia} </Typography>
+            </Box>
         </Box>
         <div>
                    <Dialog
@@ -259,13 +292,13 @@ export default function Camping() {
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 Solo resta reservar y armar las valijas para vivir TU sueño por solo
-                <Typography className={Style.quini} variant="h4" color="secondary">   {price} </Typography>
+                <Typography className={Style.quini} variant="h4" color="secondary">  ${price} </Typography>
                
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button className={Style.red} color="info" onClick={handleClose}>Seguir mirando</Button>
-              <Button className={Style.green} color="info" onClick={handleClose} autoFocus>
+              <Button className={Style.red} color="info" onClick={handleCloseR}>Seguir mirando</Button>
+              <Button className={Style.green} color="info" onClick={handleCloseM} autoFocus>
                 Reservar!
               </Button>
             </DialogActions>
@@ -273,10 +306,9 @@ export default function Camping() {
         </div>
 
        
-        <Details detalles={detalles}></Details>
+        <Details/>
         
-
-
+      
 
 
         <Box className={Style.endcont}>
@@ -289,9 +321,15 @@ export default function Camping() {
           </Box>
 
         </Box>
-        
         </Box>
+         
+      
+
+         
+      
+
         <Footer/>
+       
          </Box>         
                 
     )}

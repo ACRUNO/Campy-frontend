@@ -9,7 +9,7 @@ export const GET_ALLCAMPINGS: string = 'GET_ALLCAMPINGS'
 export const GET_LOCALIDADES: string = 'GET_LOCALIDADES'
 export const GET_CAMPINGS_PROVINCIAS: string = 'GET_CAMPINGS_PROVINCIAS'
 export const GET_CAMPINGS_LOCALIDADES: string = 'GET_CAMPINGS_LOCALIDADES'
-
+export const GET_DETAILS: string ="GET_DETAILS"
 
 
 
@@ -90,6 +90,21 @@ export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyActio
         } catch (error) {
             console.log(error);
         }
+    }
+}
+
+
+export function getDetails(id : any): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch:AppDispatch) {
+        try {
+            let details = await axios.get(`http://localhost:3001/api/campings/${id}`);
+            
+            return dispatch({
+                type: GET_DETAILS,
+                payload: details.data
+            })
+        } catch (error : any) {console.log(error.message)}
     }
 }
 
