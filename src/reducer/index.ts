@@ -1,6 +1,8 @@
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING } from "../actions";
+
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING } from "../actions";
 import { Campings } from './estados';
+
 
 
 const initialState: {
@@ -8,13 +10,16 @@ const initialState: {
     localidad: number;
     allProvincias: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
+    detailCamping : Campings[]
     allLocalidades: { id: number, nombre: string, imagen: string }[];
     campings:Campings[]
 } = {
 
     //ESTADOS GLOBALES
     allProvincias: [],
-    allCampings: [],
+
+    detailCamping: [],
+    allCampings:[],
     allLocalidades: [],
     campings: [],
     provincia: 0,
@@ -63,6 +68,12 @@ function rootReducer(state: any = initialState, action: any): any {
                 campings: filteredLocal,
                 
             }
+        case GET_DETAILS:
+            return{
+                ...state,
+                detailCamping : action.payload
+
+            }
 
         case FILTER_PROVINCIA:
             return {
@@ -75,6 +86,7 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state
             }
 
+
         case FILTER_LOCALIDAD:
             return {
                 ...state,
@@ -84,6 +96,7 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state
             }
+
     }
 
 }
