@@ -11,7 +11,7 @@ export default function Page2({ setInput }: { setInput: any }) {
 
 
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+    //e.preventDefault();
     setInput((inputs: any) => {
       return {
         ...inputs,
