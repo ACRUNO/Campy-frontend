@@ -6,7 +6,8 @@ import FiltrosPrincipales from "./FiltrosPrincipales";
 import CardCamping from "./CardCamping";
 import { Box, Grid } from '@mui/material'
 import { useDispatch, useSelector} from "react-redux";
-import { useEffect } from "react";
+import {getAllCampings,filterProvincia,getCampingsProvincias,getCampingsLocalidades} from "../actions/index"
+import { useEffect, useState } from "react";
 import * as actions from "../actions";
 import { AppDispatch, RootState } from '../store/index';
 import {Campings} from '../reducer/estados';
@@ -14,19 +15,41 @@ import {Campings} from '../reducer/estados';
 
 export default function Booking() {
 
+    
+
     const dispatch: AppDispatch = useDispatch()
     const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings)
-    console.log(allCampings)
-
-    useEffect(()=>{
-        dispatch(actions.getAllCampings())
-      },[dispatch]
-      )
 
 
+        useEffect(()=>{
+            if(!allCampings.length) dispatch(getAllCampings())
+          },[dispatch]
+          )
+
+    
+    
+    const campings:Campings[] = useSelector((state: RootState) => state.campings)
+    const provincia:number = useSelector((state: RootState) => state.provincia)
+    const localidad:number = useSelector((state: RootState) => state.localidad)
 
 
-    // let campings: Array<number> = [1, 2, 3, 4, 5, 6]
+    console.log(provincia)
+
+
+
+
+
+    const [currentPage,setCurrentPage]=useState(1);
+    const [campingsxPage,setCampingsxPage]=useState(5);
+    const indexLastCamping : number = currentPage * campingsxPage;
+    const indexFirstCamping : number = indexLastCamping - campingsxPage;
+    /* const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping); */
+
+    const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping) 
+
+    
+
+
 
     return (
         
@@ -39,23 +62,33 @@ export default function Booking() {
                     <FiltrosLaterales></FiltrosLaterales>
                 </Grid>
                 <Grid item justifyContent="right" xs={12} sm={8} md={10}>
-                    {/* {allCampings?.map((c: Campings)=>(
+                    {currentCampings?.map((c: Campings)=>(
                        <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                        localidad={c.localidad} provincia={c.provincia}
-                       categoria={c.categoria} imagen={c.imagenes}></CardCamping> 
-                    ))}   */}
-
-                    {/* { {campings.map(c => (
-                        <CardCamping key={c}></CardCamping>
-                    ))} } */}
+                       categoria={c.categoria} imagenes={c.imagenes} estrellas={c.cantidad_estrellas}></CardCamping> 
+                    ))}  
                 </Grid>
             </Grid>
-            <Paginado></Paginado>
+                <Paginado 
+                campingsxPage={campingsxPage} 
+                allCampings={allCampings.length}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                />
             <Footer />
         </Box>
 
     )
 }
+
+
+
+  
+
+
+    
+
+
 
 
 

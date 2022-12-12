@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { Button, Box, Grid, InputLabel, MenuItem, FormControl, InputBase } from '@mui/material';
-import Select, { SelectChangeEvent} from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MouseEvent } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades,getCampingsProvincias,getCampingsLocalidades } from "../../actions";
+import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades,filterProvincia,filterLocalidad,getAllCampings} from "../../actions";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 
 
@@ -60,54 +63,50 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function BasicSelect() {
 
     const dispatch: AppDispatch = useDispatch()
+    const navigate = useNavigate()
 
 
-
-
+   
+    
     const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
     const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
+    const provincia: number = useSelector((state: RootState) => state.provincia)
+    const localidad: number = useSelector((state: RootState) => state.localidad)
 
     useEffect(() => {
         dispatch(getProvincias())
+        dispatch(getAllCampings())
     }, [dispatch]);
 
-    
 
 
-    const [provincia, setProvincia] = useState<number>(0);
-    const [localidad, setLocalidad] = useState<number>(0);
 
     const handleChangeProvincia = (e: SelectChangeEvent) => {
         e.preventDefault();
-        setProvincia(Number(e.target.value) as number);
+        dispatch(filterProvincia(Number(e.target.value) as number))
         dispatch(getLocalidades(Number(e.target.value) as number))
+
     };
 
     const handleChangeLocalidad = (e: SelectChangeEvent) => {
         e.preventDefault();
-        setLocalidad(Number(e.target.value) as number);
-
+        dispatch(filterLocalidad(Number(e.target.value) as number))
     };
 
-    const handleSubmit=(e: MouseEvent<HTMLElement> ) => {
+    const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        if(provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias(provincia))
-        if(provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades(localidad))
+        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
+        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        navigate("/booking")
+        document.documentElement.scrollTop = 0
     }
 
 
-    // const handleInputChange = (event: ChangeEvent) => {
-    //     return event.target.value as string;
-    // }
-
-
-    
-
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow:"0 0 6px rgb(0 0 0 / 40%)",pt:1.25,pb:1.25,mb:"3%"}}>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 40%)", pt: 1.25, pb: 1.25, mb: "3%" }}>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
 
-                <Search> 
+{/*                 <Search>
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
@@ -115,11 +114,12 @@ export default function BasicSelect() {
                         placeholder="Search…"
                         inputProps={{ 'aria-label': 'search' }}
                     />
-                </Search>
+                </Search> */}
 
 
                 <FormControl sx={{ m: 1, minWidth: "10rem" }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
+
                     <Select
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
@@ -133,7 +133,7 @@ export default function BasicSelect() {
                 </FormControl>
 
 
-                <FormControl sx={{ m: 1, minWidth: "10rem"}}>
+                <FormControl sx={{ m: 1, minWidth: "10rem" }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
                     <Select
                         disabled={provincia === 0}
@@ -142,7 +142,6 @@ export default function BasicSelect() {
                         label="localidad"
                         color="secondary"
                         onChange={handleChangeLocalidad}>
-                        {/* <MenuItem value=""><em>None</em></MenuItem> */}
                         {allLocalidades?.map(m => (
                             <MenuItem value={m.id}>{m.nombre}</MenuItem>
                         ))}
