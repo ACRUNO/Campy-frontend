@@ -21,14 +21,15 @@ import { AppDispatch } from "../../store";
 import { createCamping } from '../../actions/index'
 import { MouseEvent } from 'react';
 import { url } from "inspector";
+import { height } from "@mui/system";
 
 
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="white" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="primary" href="https://mui.com/">
         CAMPY S.A.
       </Link>{' '}
       {new Date().getFullYear()}
@@ -118,16 +119,19 @@ export default function Checkout() {
     redirect('http://localhost:3000')
   }
 
+const logInPhotos: string [] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536215/Fotos/Misiones.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
+
+const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)]
 
 
   return (
-    <Box>
+    <Box sx={{backgroundColor:"#16161F" ,paddingTop:"3rem",boxShadow: "0 0 6px rgb(0 0 0 / 80%)"}}>
       {/* <ThemeProvider 
     theme={theme}
     > */}
       {/* <CssBaseline />  */}
 
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="sm">
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Nuevo Camping
@@ -179,7 +183,7 @@ export default function Checkout() {
             </React.Fragment>
           )}
         </Paper>
-        <Copyright />
+        <Copyright/>
       </Container>
     </Box>
     // </ThemeProvider>
