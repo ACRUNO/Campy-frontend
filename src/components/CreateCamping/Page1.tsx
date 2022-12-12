@@ -72,10 +72,10 @@ export default function Page1({ setInput }: { setInput: any }) {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="nombre_camping"
+            label="Nombre Camping"
+            name="nombre_camping"
+            autoComplete="nombre_camping"
             autoFocus
             color='secondary'
             variant="standard"
