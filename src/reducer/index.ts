@@ -10,10 +10,9 @@ const initialState: {
     localidad: number;
     allProvincias: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
-    detailCamping : Campings[]
+    detailCamping : Campings[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
-    campings:Campings[]
-} = {
+    campings:Campings[]} = {
 
     //ESTADOS GLOBALES
     allProvincias: [],
