@@ -13,6 +13,7 @@ import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterP
 import { Campings } from "../reducer/estados";
 
 
+
 export default function FiltrosPrincipales() {
 
     
@@ -24,6 +25,7 @@ export default function FiltrosPrincipales() {
     const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
     const provincia: number = useSelector((state: RootState) => state.provincia)
     const localidad: number = useSelector((state: RootState) => state.localidad)
+    const campings:Campings[] = useSelector((state: RootState) => state.campings)
 
 
     useEffect(() => {
@@ -53,8 +55,8 @@ export default function FiltrosPrincipales() {
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
-        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias());
+        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades());
     }
 
     return (

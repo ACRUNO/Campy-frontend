@@ -1,6 +1,6 @@
 
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING } from "../actions";
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING } from "../actions";
 import { Campings } from './estados';
 
 
@@ -10,10 +10,9 @@ const initialState: {
     localidad: number;
     allProvincias: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
-    detailCamping : Campings[]
+    detailCamping : Campings[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
-    campings:Campings[]
-} = {
+    campings:Campings[]} = {
 
     //ESTADOS GLOBALES
     allProvincias: [],
