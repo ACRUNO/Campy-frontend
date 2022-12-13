@@ -1,0 +1,15 @@
+.grid{
+    display: flex;
+    justify-content: center;
+    padding-left: 2rem;
+    padding-right:2rem ; 
+}
+
+.item{
+    display: flex;
+    justify-content: center;
+}
+
+.link{
+    text-decoration: none;
+}
