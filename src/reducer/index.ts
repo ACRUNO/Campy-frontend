@@ -1,29 +1,30 @@
 
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING } from "../actions";
-import { Campings } from './estados';
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER } from "../actions";
+import { Campings, User } from './estados';
 
 
 
 const initialState: {
-    provincia: number;
-    localidad: number;
+    user: User | null;
     allProvincias: { id: number, nombre: string, imagen: string }[];
+    allLocalidades: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
     detailCamping : Campings[];
-    allLocalidades: { id: number, nombre: string, imagen: string }[];
-    campings:Campings[]} = {
+    campings: Campings[]
+    provincia: number;
+    localidad: number;
+} = {
 
     //ESTADOS GLOBALES
+    user: null,
     allProvincias: [],
-
     detailCamping: [],
     allCampings:[],
     allLocalidades: [],
     campings: [],
     provincia: 0,
     localidad: 0
-
 
 };
 
@@ -34,7 +35,6 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 allProvincias: action.payload
             }
-
         case GET_ALLCAMPINGS:
             return {
                 ...state,
@@ -56,7 +56,6 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 campings: filteredProv,
             }
-
         case GET_CAMPINGS_LOCALIDADES:
             const allCampys: Campings[] = state.allCampings
             const filteredLocal:Campings[] = allCampys.filter(c => {
@@ -64,8 +63,7 @@ function rootReducer(state: any = initialState, action: any): any {
             })
             return {
                 ...state,
-                campings: filteredLocal,
-                
+                campings: filteredLocal,           
             }
         case GET_DETAILS:
             return{
@@ -73,7 +71,6 @@ function rootReducer(state: any = initialState, action: any): any {
                 detailCamping : action.payload
 
             }
-
         case FILTER_PROVINCIA:
             return {
                 ...state,
@@ -81,21 +78,19 @@ function rootReducer(state: any = initialState, action: any): any {
                 localidad:0
             }
         case CREATE_CAMPING:
-            return {
-                ...state
-            }
-
-
+            return { ...state }
         case FILTER_LOCALIDAD:
             return {
                 ...state,
                 localidad: action.payload
             }
-        default:
-            return {
-                ...state
-            }
+        case LOGIN_USER: 
+            const { remember, token }: { remember: boolean, token: string } = action.payload;
+            remember && localStorage.setItem('token', token);
 
+            return { ...state, user: action.payload }
+
+        default: return { ...state }
     }
 
 }

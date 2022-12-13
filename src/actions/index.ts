@@ -13,6 +13,7 @@ export const GET_DETAILS: string ="GET_DETAILS"
 export const CREATE_CAMPING: string = 'CREATE_CAMPING'
 export const FILTER_PROVINCIA: string = 'FILTER_PROVINCIA'
 export const FILTER_LOCALIDAD: string = 'FILTER_LOCALIDAD'
+export const LOGIN_USER: string = 'LOGIN_USER'
 
 
 
@@ -148,13 +149,29 @@ export function getDetails(id : any): ThunkAction<void, RootState, unknown, AnyA
 
     return async function (dispatch:AppDispatch) {
         try {
-            let details = await axios.get(`http://localhost:3001/api/campings/${id}`);
+            let details = await axios.get(`/api/campings/${id}`);
             
             return dispatch({
                 type: GET_DETAILS,
                 payload: details.data
             })
         } catch (error : any) {console.log(error.message)}
+    }
+}
+
+export function loginUser(data: {
+        email: string, 
+        clave: string,     
+    }, remember: boolean): ThunkAction<void, RootState, unknown, AnyAction> {
+    return async function (dispatch:AppDispatch) {
+        try {
+            let result = await axios.post('/api/login', data);
+
+            return dispatch({
+                type: LOGIN_USER,
+                payload: {...result.data, remember}
+            })
+        } catch(error: any) {console.log(error.response.data)}
     }
 }
 

@@ -35,4 +35,16 @@ export type Campings =
     parcela_superficie: number,
     descripcion_periodo: string,
     descripcion_periodo_agua: string
-    imagenes: Array<string>}
+    imagenes: Array<string>
+}
+
+export type User = {
+    id: number,
+    nombre_completo: string, 
+    email: string,
+    numero_celular: string,
+    dni: string,
+    direccion: string,
+    tipo: number,
+    token: string
+}
