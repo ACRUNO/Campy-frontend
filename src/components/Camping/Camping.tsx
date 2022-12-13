@@ -73,7 +73,7 @@ const handleCloseR = () => {
       }; 
     
 const handleCloseM = () => {
-        navigate("/create")   
+        navigate("/")   
             }; 
    
 
