@@ -19,6 +19,7 @@ export default function MaxWidthDialog(props:Props) {
 
   useEffect(()=>{
         setOpen(props.estadoopen)
+  
   }
 )
   
