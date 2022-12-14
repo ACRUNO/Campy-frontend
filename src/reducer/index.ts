@@ -1,6 +1,6 @@
 
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER } from "../actions";
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO } from "../actions";
 import { Campings, User } from './estados';
 
 
@@ -10,22 +10,33 @@ const initialState: {
     allProvincias: { id: number, nombre: string, imagen: string }[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
-    detailCamping : Campings[];
+    detailCamping: Campings[];
     campings: Campings[]
     provincia: number;
     localidad: number;
+    allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[];
+    categoria: number;
+    allPeriodoAgua: { id: number, periodo_agua: string }[];
+    periodoAgua: number;
+    allPeriodoAbierto: { id: number, periodo_abierto: string }[];
+    periodoAbierto: number;
 } = {
 
     //ESTADOS GLOBALES
     user: null,
     allProvincias: [],
     detailCamping: [],
-    allCampings:[],
+    allCampings: [],
     allLocalidades: [],
     campings: [],
     provincia: 0,
-    localidad: 0
-
+    localidad: 0,
+    allCategorias: [],
+    categoria: 0,
+    allPeriodoAgua: [],
+    periodoAgua: 0,
+    allPeriodoAbierto: [],
+    periodoAbierto: 0
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -39,7 +50,7 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 allCampings: action.payload,
-               campings: action.payload
+                campings: action.payload
             }
         case GET_LOCALIDADES:
             return {
@@ -50,7 +61,7 @@ function rootReducer(state: any = initialState, action: any): any {
             const allCamps: Campings[] = state.allCampings
 
             const filteredProv: Campings[] = allCamps.filter(c => {
-               return (c.id_provincia === state.provincia)
+                return (c.id_provincia === state.provincia)
             })
             return {
                 ...state,
@@ -58,24 +69,24 @@ function rootReducer(state: any = initialState, action: any): any {
             }
         case GET_CAMPINGS_LOCALIDADES:
             const allCampys: Campings[] = state.allCampings
-            const filteredLocal:Campings[] = allCampys.filter(c => {
+            const filteredLocal: Campings[] = allCampys.filter(c => {
                 return c.id_localidad === state.localidad
             })
             return {
                 ...state,
-                campings: filteredLocal,           
+                campings: filteredLocal,
             }
         case GET_DETAILS:
-            return{
+            return {
                 ...state,
-                detailCamping : action.payload
+                detailCamping: action.payload
 
             }
         case FILTER_PROVINCIA:
             return {
                 ...state,
                 provincia: action.payload,
-                localidad:0
+                localidad: 0
             }
         case CREATE_CAMPING:
             return { ...state }
@@ -84,13 +95,43 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 localidad: action.payload
             }
-        case LOGIN_USER: 
+        case LOGIN_USER:
             const { remember, token }: { remember: boolean, token: string } = action.payload;
             remember && localStorage.setItem('token', token);
 
             return { ...state, user: action.payload }
 
         default: return { ...state }
+        case GET_CATEGORIAS:
+            return {
+                ...state,
+                allCategorias: action.payload
+            }
+        case FILTER_CATEGORIA:
+            return {
+                ...state,
+                categoria: action.payload
+            }
+        case GET_PERIODO_AGUA:
+            return {
+                ...state,
+                allPeriodoAgua: action.payload
+            }
+        case FILTER_PERIODO_AGUA:
+            return {
+                ...state,
+                periodoAgua: action.payload
+            }
+        case GET_PERIODO_ABIERTO:
+            return {
+                ...state,
+                allPeriodoAbierto: action.payload
+            }
+        case FILTER_PERIODO_ABIERTO:
+            return {
+                ...state,
+                periodoAbierto: action.payload
+            }
     }
 
 }
