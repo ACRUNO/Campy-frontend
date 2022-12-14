@@ -5,11 +5,13 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Inputs } from './CreateCamping';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAgua } from '../../actions';
 
-export default function Page2({ setInput }: { setInput: any }) {
+
+export default function Page2({ setInput }: { setInput : React.Dispatch<React.SetStateAction<Inputs>> }) {
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -34,7 +36,7 @@ export default function Page2({ setInput }: { setInput: any }) {
 
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     //e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.checked
@@ -44,7 +46,7 @@ export default function Page2({ setInput }: { setInput: any }) {
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -54,7 +56,7 @@ export default function Page2({ setInput }: { setInput: any }) {
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value

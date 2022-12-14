@@ -29,7 +29,7 @@ export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction
 
     return async function (dispatch:AppDispatch) {
         try {
-            var json = await axios.get('api/provincias/1');
+            var json = await axios.get('/api/provincias/1');
             return dispatch({
                 type: GET_PROVINCIAS,
                 payload: json.data
