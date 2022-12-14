@@ -43,13 +43,13 @@ export default function CardCamping( props: Props){
         </CardContent>
       </Box>
       <Box flexDirection="column" display="flex" component="div" justifyContent="space-between" alignItems="flex-end">
-      <Box className={Style.rankingcont} display="flex" alignContent="flex-end" sx={{mt:1, mr:1, ml:0}}>
-            <Typography  color="secondary" component="legend">review/puntuacion??</Typography>
+      <Box className={Style.rankingcont} display="flex" alignContent="flex-end">
+            <Typography  color="secondary" component="legend">Puntuación de usuarios</Typography>
             {/* <Rating  name="read-only" value={props.estrellas} readOnly /> */}
       </Box>
       <Box display="flex" flexDirection="column"  justifyContent="flex-end" component="div" >
       <Typography variant="subtitle1" color="text.secondary" component="div" align="right">1 noche, 1 adulto</Typography>
-      <Typography variant="h4" color="text.secondary" component="div" align="right">Desde <strong>${props.precio}</strong></Typography>
+      <Typography variant="h4"  component="div" align="right">Desde <strong>${props.precio}</strong></Typography>
       <Typography variant="body2" color="text.secondary" component="div" align="right">Incluye impuestos y cargos</Typography>
       </Box>
       </Box>
