@@ -34,7 +34,8 @@ export type Campings =
     parcela_iluminacion_toma_corriente: number,
     parcela_superficie: number,
     descripcion_periodo: string,
-    descripcion_periodo_agua: string
+    descripcion_periodo_agua: string,
+    precio: number,
     imagenes: Array<string>
 }
 
