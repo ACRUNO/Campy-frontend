@@ -53,15 +53,56 @@ function getStepContent(step: number, setInput: any) {
   }
 }
 
+
+export interface Inputs {
+  nombre_camping: string,
+  descripcion_camping: string,
+  direccion: string,
+  telefono: string,
+  contacto_nombre: string,
+  contacto_tel: string,
+  CategoriaCampingId: number,
+  LocalidadeId: number,
+  provincia: number,
+  wifi: boolean,
+  duchas: number,
+  baños: number,
+  mascotas: boolean,
+  rodantes: boolean,
+  proveduria: boolean,
+  salon_sum: boolean,
+  restaurant: boolean,
+  vigilancia: boolean,
+  pileta: boolean,
+  estacionamiento: boolean,
+  juegos_infantiles: boolean,
+  maquinas_gimnasia: boolean,
+  AbiertoPeriodoId: number,
+  PeriodoAguaCalienteId: number,
+  techada: boolean,
+  agua_en_parcela: boolean,
+  iluminacion_toma_corriente: boolean,
+  superficie: number,
+  imagenes: string[],
+  tarifa_por_mayor_dia: number,
+  tarifa_por_menor_dia: number,
+  tarifa_por_casa_rodante: number,
+  cerrado_fecha_desde: string,
+  cerrado_fecha_hasta: string,
+  longitud: string,
+  latitud: string,
+}
+
 //const theme = createTheme();
 
 export default function Checkout() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
 
   //const history = useHistory();
   const dispatch: AppDispatch = useDispatch()
 
-  const [input, setInput] = React.useState({
+
+  const [input, setInput] = React.useState<Inputs>({
     nombre_camping: '',
     descripcion_camping: '',
     direccion: '',
@@ -91,15 +132,11 @@ export default function Checkout() {
     iluminacion_toma_corriente: false,
     superficie: 0,
     imagenes: [],
-
-    
-        
     tarifa_por_mayor_dia: 0,
     tarifa_por_menor_dia: 0,
     tarifa_por_casa_rodante: 0,
     cerrado_fecha_desde: '',
     cerrado_fecha_hasta: '',
-    
     longitud: '5',
     latitud: '5',
   });

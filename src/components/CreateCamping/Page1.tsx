@@ -10,8 +10,9 @@ import { AppDispatch, RootState } from '../../store/index';
 import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { setUncaughtExceptionCaptureCallback } from 'process';
+import { Inputs } from './CreateCamping';
 
-export default function Page1({ setInput }: { setInput: any }) {
+export default function Page1({ setInput }: { setInput: React.Dispatch<React.SetStateAction<Inputs>> }) {
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -32,7 +33,7 @@ export default function Page1({ setInput }: { setInput: any }) {
     e.preventDefault();
     setProvincia(Number(e.target.value) as number);
     dispatch(getLocalidades(Number(e.target.value) as number))
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -42,7 +43,7 @@ export default function Page1({ setInput }: { setInput: any }) {
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -53,7 +54,7 @@ export default function Page1({ setInput }: { setInput: any }) {
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value

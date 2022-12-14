@@ -3,8 +3,9 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import { Box, Card, Grid, Typography, CardContent, CardMedia, Link, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Cloudinary from "./Cloudinary";
+import { Inputs } from './CreateCamping';
 
-export default function Page3({ setInput }: { setInput: any }) {
+export default function Page3({ setInput }: { setInput: React.Dispatch<React.SetStateAction<Inputs>> }) {
 
 
   const [imagenes, setImagenes] = React.useState({
@@ -17,7 +18,7 @@ export default function Page3({ setInput }: { setInput: any }) {
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -27,7 +28,7 @@ export default function Page3({ setInput }: { setInput: any }) {
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
