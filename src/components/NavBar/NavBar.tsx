@@ -57,6 +57,7 @@ export default function NavBar() {
                             pages.map(page => {
                                 return (
                                     <Link className={s.links} to={`/${page}`} key={page} onClick={handleClick}>
+                                    <Link className={s.links} to={`/${page}`} key={page} onClick={handleClick}>
                                         <Button
                                             className={styles.btns}
                                             variant='text'
