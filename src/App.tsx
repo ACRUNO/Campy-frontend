@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Camping from './components/Camping/Camping'
@@ -8,15 +8,30 @@ import LogIn from './components/LogIn/LogIn';
 import NavBar from './components/NavBar/NavBar';
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './themeConfig'
-import Map from './components/Map/Map';
+import Mapa from './components/Map/Map';
 import Blog from './components/Blog/Blog';
 import CreateCamping from './components/CreateCamping/CreateCamping';
 import DashUsuario from './components/Dashboards/DashUsuario/DashUsuario';
 import DashDueño from './components/Dashboards/DashDueño/DashDueño';
 import Dashboard from './components/Dashboards/DashAdmin/DashAdmin';
+import { AppDispatch, RootState } from './store';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUserWithToken } from './actions';
+
+
 
 
 function App() {
+
+  const dispatch: AppDispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if(token) dispatch(loginUserWithToken({token}));
+  }, [])
+
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
@@ -26,7 +41,7 @@ function App() {
           <Route path = "/booking" element={ <Booking/> }/>
           <Route path="/booking/camping/:id" element={<Camping/>} />
           <Route path="/login" element={<LogIn />} />
-          <Route path="/map" element={<Map/>}/>
+          <Route path="/map" element={<Mapa/>}/>
           <Route path="/blog" element={<Blog/>}/>
           <Route path="/create" element={<CreateCamping/>} />
           <Route path="/about"  />
