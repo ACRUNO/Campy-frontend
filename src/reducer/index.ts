@@ -1,6 +1,6 @@
 
 
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING } from "../actions";
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, FILTER_CATEGORIA } from "../actions";
 import { Campings } from './estados';
 
 
@@ -10,15 +10,16 @@ const initialState: {
     localidad: number;
     allProvincias: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
-    detailCamping : Campings[];
+    detailCamping: Campings[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
-    campings:Campings[]} = {
+    campings: Campings[]
+} = {
 
     //ESTADOS GLOBALES
     allProvincias: [],
 
     detailCamping: [],
-    allCampings:[],
+    allCampings: [],
     allLocalidades: [],
     campings: [],
     provincia: 0,
@@ -39,7 +40,7 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 allCampings: action.payload,
-               campings: action.payload
+                campings: action.payload
             }
         case GET_LOCALIDADES:
             return {
@@ -50,7 +51,7 @@ function rootReducer(state: any = initialState, action: any): any {
             const allCamps: Campings[] = state.allCampings
 
             const filteredProv: Campings[] = allCamps.filter(c => {
-               return (c.id_provincia === state.provincia)
+                return (c.id_provincia === state.provincia)
             })
             return {
                 ...state,
@@ -59,18 +60,18 @@ function rootReducer(state: any = initialState, action: any): any {
 
         case GET_CAMPINGS_LOCALIDADES:
             const allCampys: Campings[] = state.allCampings
-            const filteredLocal:Campings[] = allCampys.filter(c => {
+            const filteredLocal: Campings[] = allCampys.filter(c => {
                 return c.id_localidad === state.localidad
             })
             return {
                 ...state,
                 campings: filteredLocal,
-                
+
             }
         case GET_DETAILS:
-            return{
+            return {
                 ...state,
-                detailCamping : action.payload
+                detailCamping: action.payload
 
             }
 
@@ -78,8 +79,22 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 provincia: action.payload,
-                localidad:0
+                localidad: 0
             }
+
+        case FILTER_CATEGORIA:
+            const campys: Campings[] = state.campings
+            const filterCampys = campys.filter(c => {
+                return c.id_categoria === action.payload
+            })
+
+            return {
+                ...state,
+                campings: filterCampys
+
+            }
+
+
         case CREATE_CAMPING:
             return {
                 ...state

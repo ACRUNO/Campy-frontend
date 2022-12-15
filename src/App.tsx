@@ -8,9 +8,10 @@ import LogIn from './components/LogIn/LogIn';
 import NavBar from './components/NavBar/NavBar';
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './themeConfig'
-import Map from './components/Map/Map';
+import Mapa from './components/Map/Map';
 import Blog from './components/Blog/Blog';
 import CreateCamping from './components/CreateCamping/CreateCamping';
+
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path = "/booking" element={ <Booking/> }/>
           <Route path="/booking/camping/:id" element={<Camping/>} />
           <Route path="/login" element={<LogIn />} />
-          <Route path="/map" element={<Map/>}/>
+          <Route path="/map" element={<Mapa/>}/>
           <Route path="/blog" element={<Blog/>}/>
           <Route path="/create" element={<CreateCamping/>} />
           <Route path="/about"  />
