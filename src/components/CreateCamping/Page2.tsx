@@ -1,18 +1,42 @@
-import React, { ChangeEvent, MouseEventHandler } from 'react';
+import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Inputs } from './CreateCamping';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { getPeriodoAgua } from '../../actions';
 
-export default function Page2({ setInput }: { setInput: any }) {
 
+export default function Page2({ setInput }: { setInput : React.Dispatch<React.SetStateAction<Inputs>> }) {
 
+  const dispatch: AppDispatch = useDispatch();
+
+  const allPeriodoAgua: { id: number, descripcion_periodo_agua: string }[] = useSelector((state: RootState) => state.allPeriodoAgua)
+
+  useEffect(() => {
+    dispatch(getPeriodoAgua())
+  }, [dispatch]);
+
+  const [periodoAgua, setPeriodoAgua] = useState<number>(0);
+
+  const handlePeriodoAgua = (e: SelectChangeEvent) => {
+    e.preventDefault();
+    setPeriodoAgua(Number(e.target.value) as number);
+    setInput((inputs: any) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
+  };
 
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     //e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.checked
@@ -22,7 +46,7 @@ export default function Page2({ setInput }: { setInput: any }) {
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -32,7 +56,7 @@ export default function Page2({ setInput }: { setInput: any }) {
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -127,10 +151,10 @@ export default function Page2({ setInput }: { setInput: any }) {
               name='PeriodoAguaCalienteId'
               label="Período de agua caliente"
               color="secondary"
-              onChange={handleChangeSelect}>
+              onChange={handlePeriodoAgua}>
               {/* <MenuItem value=""><em>None</em></MenuItem> */}
-              {periodo_agua?.map(m => (
-                <MenuItem value={m}>{m}</MenuItem>
+              {allPeriodoAgua?.map(m => (
+                <MenuItem value={m.id}>{m.descripcion_periodo_agua}</MenuItem>
               ))}
             </Select>
           </FormControl>
