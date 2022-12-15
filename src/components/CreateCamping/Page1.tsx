@@ -7,31 +7,48 @@ import Checkbox from '@mui/material/Checkbox';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades } from "../../actions";
+import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades, getAllCategorias } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { setUncaughtExceptionCaptureCallback } from 'process';
+import { Inputs } from './CreateCamping';
 
-export default function Page1({ setInput }: { setInput: any }) {
+interface InputProps {
+  setInput: React.Dispatch<React.SetStateAction<Inputs>>,
+  input: Inputs
+}
+
+export default function Page1({ setInput, input }: InputProps) {
 
   const dispatch: AppDispatch = useDispatch()
 
   const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
   const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
+  const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
 
   useEffect(() => {
     dispatch(getProvincias())
+    dispatch(getAllCategorias())
   }, [dispatch]);
 
   const [provincia, setProvincia] = useState<number>(0);
+  const [categoria, setCategoria] = useState<number>(0);
 
-
-  const categorias: number[] = [1, 2, 3];
-  
 
   const handleChangeProvincia = (e: SelectChangeEvent) => {
     e.preventDefault();
     setProvincia(Number(e.target.value) as number);
     dispatch(getLocalidades(Number(e.target.value) as number))
+    setInput((inputs: Inputs) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
+  };
+
+  const handleChangeCategoria = (e: SelectChangeEvent) => {
+    e.preventDefault();
+    setCategoria(Number(e.target.value) as number);
     setInput((inputs: any) => {
       return {
         ...inputs,
@@ -42,7 +59,7 @@ export default function Page1({ setInput }: { setInput: any }) {
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -53,7 +70,7 @@ export default function Page1({ setInput }: { setInput: any }) {
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -72,6 +89,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             margin="normal"
             required
             fullWidth
+            value={input.nombre_camping}
             id="nombre_camping"
             label="Nombre Camping"
             name="nombre_camping"
@@ -87,6 +105,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             margin='normal'
             required
             fullWidth
+            value={input.telefono}
             id="Teléfono"
             label="Teléfono"
             name="telefono"
@@ -100,6 +119,7 @@ export default function Page1({ setInput }: { setInput: any }) {
           <TextField
             required
             fullWidth
+            value={input.direccion}
             id="Dirección"
             label="Dirección"
             name="direccion"
@@ -122,7 +142,7 @@ export default function Page1({ setInput }: { setInput: any }) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
             <Select
-              defaultValue=''
+              value={`${input.provincia}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='provincia'
@@ -148,6 +168,7 @@ export default function Page1({ setInput }: { setInput: any }) {
             <Select
               defaultValue=''
               disabled={provincia === 0}
+              value={`${input.LocalidadeId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='LocalidadeId'
@@ -188,15 +209,16 @@ export default function Page1({ setInput }: { setInput: any }) {
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Categoria</InputLabel>
             <Select
               defaultValue=''
+              value={`${input.CategoriaCampingId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='CategoriaCampingId'
               label="categoria"
               color="secondary"
-              onChange={handleChangeSelect}>
+              onChange={handleChangeCategoria}>
               {/* <MenuItem value=""><em>None</em></MenuItem> */}
-              {categorias?.map(m => (
-                <MenuItem value={m}>{m}</MenuItem>
+              {allCategorias?.map(m => (
+                <MenuItem value={m.id}>{m.categoria}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -205,6 +227,7 @@ export default function Page1({ setInput }: { setInput: any }) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
+            value={input.contacto_nombre}
             id="Nombre de contacto"
             name="contacto_nombre"
             label="Nombre de contacto"
@@ -218,6 +241,7 @@ export default function Page1({ setInput }: { setInput: any }) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
+            value={input.contacto_tel}
             id="Teléfono de contacto"
             name="contacto_tel"
             label="Teléfono de contacto"
@@ -232,6 +256,7 @@ export default function Page1({ setInput }: { setInput: any }) {
           <TextField
             multiline
             rows={6}
+            value={input.descripcion_camping}
             id="Descripción"
             name="descripcion_camping"
             label="Descripción"

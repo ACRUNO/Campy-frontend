@@ -40,28 +40,72 @@ function Copyright() {
 
 const steps = ['Datos generales', 'Comodidades', 'Tarifas/Imágenes'];
 
-function getStepContent(step: number, setInput: any) {
+function getStepContent(step: number, setInput: React.Dispatch<React.SetStateAction<Inputs>>, input: Inputs) {
   switch (step) {
     case 0:
-      return <Page1 setInput={setInput} />;
+      return <Page1 setInput ={setInput}
+                      input={input} />;
     case 1:
-      return <Page2 setInput={setInput} />;
+      return <Page2 setInput={setInput}
+                    input={input} />;
     case 2:
-      return <Page3 setInput={setInput} />
+      return <Page3 setInput={setInput} 
+                    input={input}/>
     default:
       throw new Error('Unknown step');
   }
 }
 
+
+export interface Inputs {
+  nombre_camping: string,
+  descripcion_camping: string,
+  direccion: string,
+  telefono: string,
+  contacto_nombre: string,
+  contacto_tel: string,
+  CategoriaCampingId: number,
+  LocalidadeId: number,
+  provincia: number,
+  wifi: boolean,
+  duchas: number,
+  baños: number,
+  mascotas: boolean,
+  rodantes: boolean,
+  proveduria: boolean,
+  salon_sum: boolean,
+  restaurant: boolean,
+  vigilancia: boolean,
+  pileta: boolean,
+  estacionamiento: boolean,
+  juegos_infantiles: boolean,
+  maquinas_gimnasia: boolean,
+  AbiertoPeriodoId: number,
+  PeriodoAguaCalienteId: number,
+  techada: boolean,
+  agua_en_parcela: boolean,
+  iluminacion_toma_corriente: boolean,
+  superficie: number,
+  imagenes: string[],
+  tarifa_por_mayor_dia: number,
+  tarifa_por_menor_dia: number,
+  tarifa_por_casa_rodante: number,
+  cerrado_fecha_desde: string,
+  cerrado_fecha_hasta: string,
+  longitud: string,
+  latitud: string,
+}
+
 //const theme = createTheme();
 
 export default function Checkout() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
 
   //const history = useHistory();
   const dispatch: AppDispatch = useDispatch()
 
-  const [input, setInput] = React.useState({
+
+  const [input, setInput] = React.useState<Inputs>({
     nombre_camping: '',
     descripcion_camping: '',
     direccion: '',
@@ -91,20 +135,36 @@ export default function Checkout() {
     iluminacion_toma_corriente: false,
     superficie: 0,
     imagenes: [],
-
-    
-        
     tarifa_por_mayor_dia: 0,
     tarifa_por_menor_dia: 0,
     tarifa_por_casa_rodante: 0,
     cerrado_fecha_desde: '',
     cerrado_fecha_hasta: '',
-    
     longitud: '5',
     latitud: '5',
   });
 
-  console.log('createcamp', input);
+  let disabled =
+    !(
+      input.nombre_camping.length &&
+      input.descripcion_camping.length &&
+      input.direccion.length &&
+      input.telefono.length &&
+      input.contacto_nombre.length &&
+      input.contacto_tel.length &&
+      input.imagenes.length 
+    ) ||
+    input.CategoriaCampingId === 0 || 
+    input.LocalidadeId === 0 ||
+    input.provincia === 0 ||
+    input.duchas === 0 ||
+    input.baños === 0 ||
+    input.AbiertoPeriodoId === 0 ||
+    input.PeriodoAguaCalienteId === 0 ||
+    input.superficie === 0 ;
+
+
+
 
 
   const handleNext = () => {
@@ -115,7 +175,7 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  const redirect : any = (url: any) => window.location.href = url
+  const redirect: any = (url: any) => window.location.href = url
 
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
     /* history.push('/') */
@@ -124,13 +184,13 @@ export default function Checkout() {
     redirect('http://localhost:3000')
   }
 
-const logInPhotos: string [] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536215/Fotos/Misiones.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
+  const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536215/Fotos/Misiones.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
 
-const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)]
+  const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)]
 
 
   return (
-    <Box sx={{backgroundColor:"#16161F" ,paddingTop:"3rem",boxShadow: "0 0 6px rgb(0 0 0 / 80%)"}}>
+    <Box sx={{ backgroundColor: "#16161F", paddingTop: "3rem", boxShadow: "0 0 6px rgb(0 0 0 / 80%)" }}>
       {/* <ThemeProvider 
     theme={theme}
     > */}
@@ -160,7 +220,7 @@ const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.le
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep, setInput)}
+              {getStepContent(activeStep, setInput, input)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {activeStep !== 0 && (
                   <Button variant="contained" onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -173,6 +233,7 @@ const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.le
                     color='secondary'
                     onClick={handleSubmit}
                     sx={{ mt: 3, ml: 1 }}
+                    disabled={disabled}
                   > Crear </Button>
                   :
                   <Button
@@ -188,7 +249,7 @@ const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.le
             </React.Fragment>
           )}
         </Paper>
-        <Copyright/>
+        <Copyright />
       </Container>
     </Box>
     // </ThemeProvider>
