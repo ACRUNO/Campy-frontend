@@ -25,18 +25,14 @@ export default function Booking() {
 
 
         useEffect(()=>{
-            
             if(!allCampings.length){ 
             dispatch(getAllCampings())}
             if(!campings.length){
-                setOpen(true)
-                }
+                setOpen(true)}
           },[dispatch,campings]
         )
-
     
-    
-    
+        console.log(open)
     const provincia:number = useSelector((state: RootState) => state.provincia)
     const localidad:number = useSelector((state: RootState) => state.localidad)
 
@@ -45,7 +41,6 @@ export default function Booking() {
     const [campingsxPage,setCampingsxPage]=useState(5);
     const indexLastCamping : number = currentPage * campingsxPage;
     const indexFirstCamping : number = indexLastCamping - campingsxPage;
-    /* const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping); */
 
     const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping) 
 
@@ -60,19 +55,21 @@ export default function Booking() {
                     <FiltrosLaterales></FiltrosLaterales>
                 </Grid>
                 <Grid item justifyContent="right" xs={12} sm={8} md={10}>
-                    {currentCampings.length>0?currentCampings.map((c: Campings)=>(
+                    {currentCampings.length>0? currentCampings.map((c: Campings)=>(
                        <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                        localidad={c.localidad} provincia={c.provincia}
-                       categoria={c.categoria} imagenes={c.imagenes} estrellas={c.cantidad_estrellas}></CardCamping> 
-                    )):<Alert_busqueda estadoopen={open} setestadoopen={setOpen}/>}
+                       categoria={c.categoria} imagenes={c.imagenes} estrellas={c.cantidad_estrellas} precio={c.precio}></CardCamping> 
+                    )): <Alert_busqueda estadoopen={open} setestadoopen={setOpen}/>}
                 </Grid>
             </Grid>
                 <Paginado 
                 campingsxPage={campingsxPage} 
-                allCampings={allCampings.length}
+                allCampings={campings.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 />
+                <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+            <div className="elfsight-app-d17e10b2-0548-4182-bee0-0eccaa8d4ba2"></div>
             <Footer />
         </Box>
 
@@ -97,3 +94,27 @@ export default function Booking() {
 
 
 
+ interface filtrosBack {
+    id_provincia: number
+    id_localidad: number
+    abierto_fecha_desde: Date
+    abierto_fecha_hast: Date
+    precio:[min:number,max:number],
+    reviews:[],
+    id_categoria:[],
+    parcela_superficie:[],
+    parcela_techada: number,
+    parcela_agua_en_parcela: number,
+    parcela_iluminacion_toma_corriente: number,
+    mascotas: number,
+    rodantes: number,
+    proveduria: number,
+    restaurant: number,
+    pileta: number,
+    vigilancia: number,
+    maquinas_gimnasia: number,
+    juegos_infantiles: number,
+    salon_sum: number,
+    wifi: number,
+    estacionamiento: number,
+} 
