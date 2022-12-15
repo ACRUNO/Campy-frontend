@@ -1,7 +1,12 @@
 import { Toolbar, AppBar, Button, Typography, Box} from "@mui/material";
-import {Link} from 'react-router-dom'
-import styles from './NavBar.module.css'
-import LoginIcon from '@mui/icons-material/Login';
+import {Link} from 'react-router-dom';
+import styles from './NavBar.module.css';
+import {Login as LoginIcon, Logout as LogoutIcon} from '@mui/icons-material';
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { ROJO, VERDE } from "../helpers/colors";
+import { useAuth0 } from "@auth0/auth0-react";
+import { logoutUser } from "../../actions";
 import s from './NavBar.module.css'
 
 const pages: string[] = ['blog', 'booking', 'map', "create"];
@@ -9,6 +14,17 @@ const logo : string = "https://res.cloudinary.com/pfcampy/image/upload/v16704660
 
 export default function NavBar() {
 
+    const dispatch: AppDispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.user);
+    const { logout, isAuthenticated } = useAuth0();
+
+    const handlerLogoutUser = (e: any) => {
+        localStorage.removeItem('token')
+        
+        if(isAuthenticated) return logout();
+
+        dispatch(logoutUser());
+    } 
 
     function handleClick(){
         document.documentElement.scrollTop = 0
@@ -41,6 +57,7 @@ export default function NavBar() {
                             pages.map(page => {
                                 return (
                                     <Link className={s.links} to={`/${page}`} key={page} onClick={handleClick}>
+                                    <Link className={s.links} to={`/${page}`} key={page} onClick={handleClick}>
                                         <Button
                                             className={styles.btns}
                                             variant='text'
@@ -61,15 +78,24 @@ export default function NavBar() {
                             mr: "1%"
                         }}
                     >
-                        <Link className={s.links} to='/login' onClick={handleClick}>
+                        <Link to='/login' onClick={handlerLogoutUser}>
                             <Button
                                 className={styles.login}
                                 variant='text'
                                 color="info">
                                 {/* <Typography component='div'>Log in</Typography> */}
-                                <LoginIcon
+                                {
+                                    user ?
+                                    <LogoutIcon 
                                     fontSize="large"
-                                />
+                                    sx={{fill: ROJO}}
+                                     />
+                                    :
+                                    <LoginIcon
+                                    fontSize="large"
+                                    sx={{fill: VERDE}}
+                                     />
+                                }
                             </Button>
                         </Link>
                     </Box>
