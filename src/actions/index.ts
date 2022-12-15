@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { RootState, AppDispatch } from '../store'
-import{ AnyAction} from 'redux'
+import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
 
@@ -9,7 +9,7 @@ export const GET_ALLCAMPINGS: string = 'GET_ALLCAMPINGS'
 export const GET_LOCALIDADES: string = 'GET_LOCALIDADES'
 export const GET_CAMPINGS_PROVINCIAS: string = 'GET_CAMPINGS_PROVINCIAS'
 export const GET_CAMPINGS_LOCALIDADES: string = 'GET_CAMPINGS_LOCALIDADES'
-export const GET_DETAILS: string ="GET_DETAILS"
+export const GET_DETAILS: string = "GET_DETAILS"
 export const CREATE_CAMPING: string = 'CREATE_CAMPING'
 export const FILTER_PROVINCIA: string = 'FILTER_PROVINCIA'
 export const FILTER_LOCALIDAD: string = 'FILTER_LOCALIDAD'
@@ -27,7 +27,7 @@ export const FILTER_PERIODO_ABIERTO: string = 'FILTER_PERIODO_ABIERTO'
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get('/api/provincias/1');
             return dispatch({
@@ -40,9 +40,9 @@ export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction
     }
 }
 
-export function getLocalidades(id:number):ThunkAction<void, RootState, unknown, AnyAction> {
+export function getLocalidades(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get(`/api/localidades/${id}`);
             return dispatch({
@@ -56,9 +56,9 @@ export function getLocalidades(id:number):ThunkAction<void, RootState, unknown, 
 }
 
 
-export function getCampingsProvincias():ThunkAction<void, RootState, unknown, AnyAction> {
+export function getCampingsProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get(`/api/campings`);
             return dispatch({
@@ -71,9 +71,9 @@ export function getCampingsProvincias():ThunkAction<void, RootState, unknown, An
     }
 }
 
-export function getCampingsLocalidades():ThunkAction<void, RootState, unknown, AnyAction> {
+export function getCampingsLocalidades(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get(`/api/campings`);
             return dispatch({
@@ -89,7 +89,7 @@ export function getCampingsLocalidades():ThunkAction<void, RootState, unknown, A
 
 export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get('/api/campings');
             return dispatch({
@@ -102,9 +102,9 @@ export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyActio
     }
 }
 
-export function filterProvincia(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function filterProvincia(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             return dispatch({
                 type: FILTER_PROVINCIA,
@@ -117,9 +117,9 @@ export function filterProvincia(id:number): ThunkAction<void, RootState, unknown
 }
 
 
-export function filterLocalidad(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function filterLocalidad(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             return dispatch({
                 type: FILTER_LOCALIDAD,
@@ -132,12 +132,8 @@ export function filterLocalidad(id:number): ThunkAction<void, RootState, unknown
 }
 
 
-
-
-
-
-export function createCamping(camping : any): ThunkAction<void, RootState, unknown, AnyAction> {
-    return async function (dispatch:AppDispatch) {
+export function createCamping(camping: any): ThunkAction<void, RootState, unknown, AnyAction> {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.post('/api/campings', camping)
             return dispatch({
@@ -151,19 +147,20 @@ export function createCamping(camping : any): ThunkAction<void, RootState, unkno
 }
 
 
-export function getDetails(id : any): ThunkAction<void, RootState, unknown, AnyAction> {
+export function getDetails(id: any): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             let details = await axios.get(`/api/campings/${id}`);
-            
+
             return dispatch({
                 type: GET_DETAILS,
                 payload: details.data
             })
-        } catch (error : any) {console.log(error.message)}
+        } catch (error: any) { console.log(error.message) }
     }
 }
+
 
 export function loginUser(data: {
         email: string, 
@@ -267,6 +264,7 @@ export function filterPeriodoAbierto(id:number): ThunkAction<void, RootState, un
         }
     }
 }
+
 
 
 

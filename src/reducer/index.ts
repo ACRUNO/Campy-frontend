@@ -1,7 +1,6 @@
-
-
 import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO } from "../actions";
 import { Campings, User } from './estados';
+
 
 
 
@@ -88,6 +87,20 @@ function rootReducer(state: any = initialState, action: any): any {
                 provincia: action.payload,
                 localidad: 0
             }
+
+        case FILTER_CATEGORIA:
+            const campys: Campings[] = state.campings
+            const filterCampys = campys.filter(c => {
+                return c.id_categoria === action.payload
+            })
+
+            return {
+                ...state,
+                campings: filterCampys
+
+            }
+
+
         case CREATE_CAMPING:
             return { ...state }
         case FILTER_LOCALIDAD:

@@ -41,7 +41,6 @@ export default function Booking() {
     const [campingsxPage,setCampingsxPage]=useState(5);
     const indexLastCamping : number = currentPage * campingsxPage;
     const indexFirstCamping : number = indexLastCamping - campingsxPage;
-    /* const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping); */
 
     const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping) 
 
@@ -95,3 +94,27 @@ export default function Booking() {
 
 
 
+ interface filtrosBack {
+    id_provincia: number
+    id_localidad: number
+    abierto_fecha_desde: Date
+    abierto_fecha_hast: Date
+    precio:[min:number,max:number],
+    reviews:[],
+    id_categoria:[],
+    parcela_superficie:[],
+    parcela_techada: number,
+    parcela_agua_en_parcela: number,
+    parcela_iluminacion_toma_corriente: number,
+    mascotas: number,
+    rodantes: number,
+    proveduria: number,
+    restaurant: number,
+    pileta: number,
+    vigilancia: number,
+    maquinas_gimnasia: number,
+    juegos_infantiles: number,
+    salon_sum: number,
+    wifi: number,
+    estacionamiento: number,
+} 
