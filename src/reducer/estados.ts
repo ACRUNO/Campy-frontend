@@ -7,8 +7,8 @@ export type Campings =
     longitud: string,
     latitud: string,
     prop_camping_Id: number,
-    cerrado_fecha_desde: string, 
-    cerrado_fecha_hasta: string, 
+    abierto_fecha_desde: string, 
+    abierto_fecha_hasta: string, 
     localidad: string,
     id_localidad:number,
     provincia: string,
@@ -34,5 +34,18 @@ export type Campings =
     parcela_iluminacion_toma_corriente: number,
     parcela_superficie: number,
     descripcion_periodo: string,
-    descripcion_periodo_agua: string
-    imagenes: Array<string>}
+    descripcion_periodo_agua: string,
+    precio: number,
+    imagenes: Array<string>
+}
+
+export type User = {
+    id: number,
+    nombre_completo: string, 
+    email: string,
+    numero_celular: string,
+    dni: string,
+    direccion: string,
+    tipo: number,
+    token: string
+}

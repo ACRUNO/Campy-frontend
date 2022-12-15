@@ -36,18 +36,14 @@ export default function Booking() {
 
 
         useEffect(()=>{
-            
             if(!allCampings.length){ 
             dispatch(getAllCampings())}
             if(!campings.length){
-                setOpen(true)
-                }
+                setOpen(true)}
           },[dispatch,campings]
         )
-
     
-    
-    
+        console.log(open)
     const provincia:number = useSelector((state: RootState) => state.provincia)
     const localidad:number = useSelector((state: RootState) => state.localidad)
 
@@ -73,16 +69,18 @@ export default function Booking() {
                     {currentCampings.length>0? currentCampings.map((c: Campings)=>(
                        <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                        localidad={c.localidad} provincia={c.provincia}
-                       categoria={c.categoria} imagenes={c.imagenes} estrellas={c.cantidad_estrellas}></CardCamping> 
-                    )):<Alert_busqueda estadoopen={open} setestadoopen={setOpen}/>}
+                       categoria={c.categoria} imagenes={c.imagenes} estrellas={c.cantidad_estrellas} precio={c.precio}></CardCamping> 
+                    )): <Alert_busqueda estadoopen={open} setestadoopen={setOpen}/>}
                 </Grid>
             </Grid>
                 <Paginado 
                 campingsxPage={campingsxPage} 
-                allCampings={allCampings.length}
+                allCampings={campings.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 />
+                <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+            <div className="elfsight-app-d17e10b2-0548-4182-bee0-0eccaa8d4ba2"></div>
             <Footer />
         </Box>
 
