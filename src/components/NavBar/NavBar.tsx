@@ -1,7 +1,8 @@
-import { Toolbar, AppBar, Button, Typography, Box} from "@mui/material";
-import {Link} from 'react-router-dom';
+import { Toolbar, AppBar, Button, Typography, Box } from "@mui/material";
+import { Link } from 'react-router-dom';
+import { Link as LinkMaterial } from "@mui/material";
 import styles from './NavBar.module.css';
-import {Login as LoginIcon, Logout as LogoutIcon} from '@mui/icons-material';
+import { Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { ROJO, VERDE } from "../helpers/colors";
@@ -10,7 +11,7 @@ import { logoutUser } from "../../actions";
 import s from './NavBar.module.css'
 
 const pages: string[] = ['blog', 'booking', 'map', "create"];
-const logo : string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
+const logo: string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
 
@@ -20,13 +21,13 @@ export default function NavBar() {
 
     const handlerLogoutUser = (e: any) => {
         localStorage.removeItem('token')
-        
-        if(isAuthenticated) return logout();
+
+        if (isAuthenticated) return logout();
 
         dispatch(logoutUser());
-    } 
+    }
 
-    function handleClick(){
+    function handleClick() {
         document.documentElement.scrollTop = 0
     }
 
@@ -57,7 +58,6 @@ export default function NavBar() {
                             pages.map(page => {
                                 return (
                                     <Link className={s.links} to={`/${page}`} key={page} onClick={handleClick}>
-                                    <Link className={s.links} to={`/${page}`} key={page} onClick={handleClick}>
                                         <Button
                                             className={styles.btns}
                                             variant='text'
@@ -78,7 +78,7 @@ export default function NavBar() {
                             mr: "1%"
                         }}
                     >
-                        <Link to='/login' onClick={handlerLogoutUser}>
+                        <LinkMaterial href='/login' onClick={handlerLogoutUser}>
                             <Button
                                 className={styles.login}
                                 variant='text'
@@ -86,22 +86,22 @@ export default function NavBar() {
                                 {/* <Typography component='div'>Log in</Typography> */}
                                 {
                                     user ?
-                                    <LogoutIcon 
-                                    fontSize="large"
-                                    sx={{fill: ROJO}}
-                                     />
-                                    :
-                                    <LoginIcon
-                                    fontSize="large"
-                                    sx={{fill: VERDE}}
-                                     />
+                                        <LogoutIcon
+                                            fontSize="large"
+                                            sx={{ fill: ROJO }}
+                                        />
+                                        :
+                                        <LoginIcon
+                                            fontSize="large"
+                                            sx={{ fill: VERDE }}
+                                        />
                                 }
                             </Button>
-                        </Link>
+                        </LinkMaterial>
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Toolbar/>
+            <Toolbar />
         </>
     )
 }
