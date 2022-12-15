@@ -1,17 +1,24 @@
-import { Toolbar, AppBar, Button, Typography, Box, Link } from "@mui/material";
+import { Toolbar, AppBar, Button, Typography, Box} from "@mui/material";
+import {Link} from 'react-router-dom'
 import styles from './NavBar.module.css'
 import LoginIcon from '@mui/icons-material/Login';
+import s from './NavBar.module.css'
 
 const pages: string[] = ['blog', 'booking', 'map', "create"];
 const logo : string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
 
+
+    function handleClick(){
+        document.documentElement.scrollTop = 0
+    }
+
     return (
         <>
             <AppBar className={styles.appbar} component='nav' position="fixed">
                 <Toolbar>
-                    <Link href='/'>
+                    <Link className={s.links} to='/' onClick={handleClick}>
                         <Box
                             component="img"
                             sx={{
@@ -33,7 +40,7 @@ export default function NavBar() {
                         {
                             pages.map(page => {
                                 return (
-                                    <Link href={`/${page}`} key={page}>
+                                    <Link className={s.links} to={`/${page}`} key={page} onClick={handleClick}>
                                         <Button
                                             className={styles.btns}
                                             variant='text'
@@ -54,7 +61,7 @@ export default function NavBar() {
                             mr: "1%"
                         }}
                     >
-                        <Link href='/login'>
+                        <Link className={s.links} to='/login' onClick={handleClick}>
                             <Button
                                 className={styles.login}
                                 variant='text'
