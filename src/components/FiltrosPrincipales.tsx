@@ -59,6 +59,8 @@ export default function FiltrosPrincipales() {
         if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades());
     }
 
+
+
     return (
         <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)"}}>
             <Grid container direction="row" justifyContent="center" alignItems="center">
@@ -116,7 +118,7 @@ export default function FiltrosPrincipales() {
                             views={['year', 'month', 'day']}
                             value={value2}
                             onChange={(newValue) => {
-                                setValue2(newValue);
+                                setValue2(newValue)
                             }}
                             renderInput={(params) => <TextField {...params} />}
                         />
