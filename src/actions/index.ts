@@ -178,15 +178,6 @@ export function loginUser(data: {
         try {
             let result = await axios.post('/api/login', data);
 
-            setStateOpen(() => ({
-                open: true,
-                title: 'INICIO DE SESIÓN EXITOSO',
-                description: 'Disfrutá de tu estadía :)',
-                confirm: 'OK!!',
-                type: 'success',
-                navigateTo: '/'
-            }));
-
             return dispatch({
                 type: LOGIN_USER,
                 payload: {...result.data, remember}
@@ -316,15 +307,6 @@ export function loginUserWithGoogle(data: User | undefined,  remember: boolean, 
         try {
             console.log(process.env.REACT_APP_API_KEY)
             let result = await axios.post('/api/login/google', {...data, apikey: process.env.REACT_APP_API_KEY});
-            
-            setStateOpen(() => ({
-                open: true,
-                title: 'INICIO DE SESIÓN EXITOSO',
-                description: 'Disfrutá de tu estadía :)',
-                confirm: 'OK!!',
-                type: 'success',
-                navigateTo: '/'
-            }));
 
             return dispatch({
                 type: LOGIN_USER,

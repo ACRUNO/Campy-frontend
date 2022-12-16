@@ -24,7 +24,6 @@ import { loginUserWithToken } from './actions';
 function App() {
 
   const dispatch: AppDispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

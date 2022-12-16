@@ -74,8 +74,8 @@ export default function FiltrosPrincipales() {
                         color="secondary"
                         value={String(provincia)}
                         onChange={handleChangeProvincia}>
-                        {allProvincias?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        {allProvincias?.map((m, i) => (
+                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
 
