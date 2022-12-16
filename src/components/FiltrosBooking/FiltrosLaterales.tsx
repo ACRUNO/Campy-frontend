@@ -2,114 +2,90 @@ import React from "react";
 import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
 import { fontWeight } from "@mui/system";
 import { ChangeEvent } from 'react'
-import { filterCategoria } from '../actions/index'
+import { filterCategoria } from '../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from '../store/index';
+import { AppDispatch, RootState } from '../../store/index';
 
 export default function FiltrosLaterales() {
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
+    const max: number = 8000
+    const min: number = 1500
 
-
-    interface filtrosBack {
-        id_provincia: number,
-        id_localidad: number,
-        abierto_fecha_desde: "",
-        abierto_fecha_hast: "",
-        precio: number[],
-        reviews: number[],
-        id_categoria: [],
-        parcela_superficie: [],
-        parcela_techada: number,
-        parcela_agua_en_parcela: number,
-        parcela_iluminacion_toma_corriente: number,
+    interface filterCamps {
+        longitud: string,
+        latitud: string,
+        categoria: string,
+        id_categoria: number,
+        cantidad_estrellas: number,
+        duchas: number,
+        baños: number,
         mascotas: number,
         rodantes: number,
         proveduria: number,
-        restaurant: number,
-        pileta: number,
-        vigilancia: number,
-        maquinas_gimnasia: number,
-        juegos_infantiles: number,
         salon_sum: number,
-        wifi: number,
+        restaurant: number,
+        vigilancia: number,
+        pileta: number,
         estacionamiento: number,
+        juegos_infantiles: number,
+        maquinas_gimnasia: number,
+        wifi: number,
+        parcela_techada: number,
+        parcela_agua_en_parcela: number,
+        parcela_iluminacion_toma_corriente: number,
+        parcela_superficie: number,
+        descripcion_periodo: string,
+        descripcion_periodo_agua: string,
     }
 
-    const [filters, setFilters] = React.useState<filtrosBack>({
-        id_provincia: 0,
-        id_localidad: 0,
-        abierto_fecha_desde: "",
-        abierto_fecha_hast: "",
-        precio: [0, 0],
-        reviews: [],
-        id_categoria: [],
-        parcela_superficie: [],
-        parcela_techada: 0,
-        parcela_agua_en_parcela: 0,
-        parcela_iluminacion_toma_corriente: 0,
+    const [filter, SetFilter] = React.useState<filterCamps>({
+        longitud: "",
+        latitud: "",
+        categoria: "",
+        id_categoria: 0,
+        cantidad_estrellas: 0,
+        duchas: 0,
+        baños: 0,
         mascotas: 0,
         rodantes: 0,
         proveduria: 0,
-        restaurant: 0,
-        pileta: 0,
-        vigilancia: 0,
-        maquinas_gimnasia: 0,
-        juegos_infantiles: 0,
         salon_sum: 0,
-        wifi: 0,
+        restaurant: 0,
+        vigilancia: 0,
+        pileta: 0,
         estacionamiento: 0,
+        juegos_infantiles: 0,
+        maquinas_gimnasia: 0,
+        wifi: 0,
+        parcela_techada: 0,
+        parcela_agua_en_parcela: 0,
+        parcela_iluminacion_toma_corriente: 0,
+        parcela_superficie: 0,
+        descripcion_periodo: "",
+        descripcion_periodo_agua: "",
     })
 
-
-    const min: number = 0
-    const max: number = 8000
-
-    const [precioLocal, setPrecioLocal] = React.useState<number[]>([min, max])
 
 
     const dispatch: AppDispatch = useDispatch()
 
 
+    const [filterCat, SetFilterCat] = React.useState<number>(0)
+    const [precio, setPrecio] = React.useState<number[]>([min, max]);
+
+
+    const handleChange = (event: Event, newValue: number | number[]) => {
+        setPrecio(newValue as number[]);
+        console.log(newValue)
+    };
 
 
 
-
-
-    const handlePrecio = (e: Event, newValue: number | number[]) => {
-        setPrecioLocal(newValue as number[]);
-        setFilters((filters: filtrosBack) => {
-            return {
-                ...filters,
-                precio: precioLocal
-            }
-        })
+    const handleCategoria = (e: ChangeEvent<HTMLInputElement>) => {
+        SetFilterCat(Number(e.target.value))
+        dispatch(filterCategoria(filterCat))
     }
-
-
-
-    const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
-
-        setFilters((filters: any) => {
-            if(!filters[e.target.name].includes(Number(e.target.value))){
-            return {
-                ...filters,
-                [e.target.name]: [...filters[e.target.name], Number(e.target.value)]
-            }
-        }else{
-            return {
-                ...filters,
-                [e.target.name]: filters[e.target.name].filter((r:number) => r !== Number(e.target.value))
-            }
-        }
-        })
-
-
-    }
-
-    console.log(filters.reviews)
-
-
 
     /*     const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
             //e.preventDefault();
@@ -125,85 +101,82 @@ export default function FiltrosLaterales() {
     return (
 
 
+        /* 
+        
+        const [] = React.useState[]([])
+        
+        
+        useEffect */
+
+
+
+
+
         <Box sx={{ borderRadius: 1, backgroundColor: "white", height: "100%", pl: 3, mr: 4, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
+            {/* 
+             */}
             < Typography variant="h6" sx={{ paddingTop: "1.5rem", fontSize: "800", mb: "0.5rem" }}> Filtros:</Typography >
             <hr />
             <Typography >Precio</Typography>
 
-            <Typography>${precioLocal[0]}- +${precioLocal[1]}</Typography>
+            <Typography>${precio[0]}- +${precio[1]}</Typography>
 
             <Slider
                 sx={{ mt: "1rem", mb: "0.5rem" }}
                 getAriaLabel={() => 'Temperature range'}
-                value={precioLocal}
-                onChange={handlePrecio}
+                value={precio}
+                onChange={handleChange}
                 valueLabelDisplay="off"
                 color="secondary"
                 min={min}
                 max={max}
-            // getAriaValueText={valuetext}
             />
-
-
-
-
             <hr></hr>
-            <Typography >Reviews</Typography>
+            <Typography >Puntuacion</Typography>
 
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
 
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="reviews" />}
+                    control={<Checkbox color="secondary" name="5" />}
                     label="5 estrellas"
-
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary"value="4" name="reviews" />}
+                    control={<Checkbox color="secondary" name="4" />}
                     label="4 estrellas"
-
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="3" name="reviews" />}
+                    control={<Checkbox color="secondary" name="3" />}
                     label="3 estrellas"
-
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="2" name="reviews" />}
+                    control={<Checkbox color="secondary" name="2" />}
                     label="2 estrellas"
-
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="1" name="reviews" />}
+                    control={<Checkbox color="secondary" name="1" />}
                     label="1 estrellas"
-
                 />
             </FormGroup>
-
-
-
-
 
             <hr></hr>
             <Typography >Categoría</Typography>
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
-
-                
-{/*                 <FormControlLabel
-                    control={<Checkbox value="1" color="secondary" name="id_categoria" />}
+                <FormControlLabel
+                    control={<Checkbox onChange={handleCategoria} value="1" color="secondary" name="id_categoria" />}
                     label="Lujo"
                 />
                 <FormControlLabel
-                    control={<Checkbox value="2" color="secondary" name="id_categoria" />}
+                    control={<Checkbox onChange={handleCategoria} value="2" color="secondary" name="id_categoria" />}
                     label="Primera"
                 />
                 <FormControlLabel
-                    control={<Checkbox value="3" color="secondary" name="id_categoria" />}
+                    control={<Checkbox onChange={handleCategoria} value="3" color="secondary" name="id_categoria" />}
                     label="Segunda"
                 />
                 <FormControlLabel
-                    control={<Checkbox value="4" color="secondary" name="id_categoria" />}
+                    control={<Checkbox onChange={handleCategoria} value="4" color="secondary" name="id_categoria" />}
                     label="Tercera"
-                /> */}
+                />
 
             </FormGroup>
             <hr></hr>
@@ -322,10 +295,10 @@ interface filtrosBack {
     id_localidad: number
     abierto_fecha_desde: Date
     abierto_fecha_hast: Date
-    precio: [min: number, max: number],
-    reviews: [],
-    id_categoria: [],
-    parcela_superficie: [],
+    precio:[min:number,max:number],
+    reviews:[],
+    id_categoria:[],
+    parcela_superficie:[],
     parcela_techada: number,
     parcela_agua_en_parcela: number,
     parcela_iluminacion_toma_corriente: number,

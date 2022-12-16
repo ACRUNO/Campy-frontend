@@ -24,7 +24,7 @@ import Details from './Details';
 import Salidas from './Salidas';
 import Resume from './Resume';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Footer from '../Footer';
+import Footer from '../Footer/Footer';
 import { getDetails } from '../../actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

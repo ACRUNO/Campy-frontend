@@ -7,7 +7,7 @@ import s from './Home.module.css'
 import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
-import Footer from "../Footer";
+import Footer from "../Footer/Footer";
 import {getProvincias,getAllCampings,filterProvincia,getCampingsProvincias}from "../../actions";
 import { MouseEvent } from 'react';
 import { Link } from "react-router-dom";
