@@ -81,14 +81,14 @@ export default function BasicSelect() {
 
 
 
-    const handleChangeProvincia = (e: SelectChangeEvent) => {
+    const handleChangeProvincia = (e: SelectChangeEvent<unknown>) => {
         e.preventDefault();
         dispatch(filterProvincia(Number(e.target.value) as number))
         dispatch(getLocalidades(Number(e.target.value) as number))
 
     };
 
-    const handleChangeLocalidad = (e: SelectChangeEvent) => {
+    const handleChangeLocalidad = (e: SelectChangeEvent<unknown>) => {
         e.preventDefault();
         dispatch(filterLocalidad(Number(e.target.value) as number))
     };
@@ -126,8 +126,8 @@ export default function BasicSelect() {
                         label="provincia"
                         color="secondary"
                         onChange={handleChangeProvincia}>
-                        {allProvincias?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        {allProvincias?.map((m, i) => (
+                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
@@ -142,8 +142,8 @@ export default function BasicSelect() {
                         label="localidad"
                         color="secondary"
                         onChange={handleChangeLocalidad}>
-                        {allLocalidades?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        {allLocalidades?.map((m, i) => (
+                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>

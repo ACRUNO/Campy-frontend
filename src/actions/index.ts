@@ -178,15 +178,6 @@ export function loginUser(data: {
         try {
             let result = await axios.post('/api/login', data);
 
-            setStateOpen(() => ({
-                open: true,
-                title: 'INICIO DE SESIÓN EXITOSO',
-                description: 'Disfrutá de tu estadía :)',
-                confirm: 'OK!!',
-                type: 'success',
-                navigateTo: '/'
-            }));
-
             return dispatch({
                 type: LOGIN_USER,
                 payload: {...result.data, remember}
@@ -314,17 +305,8 @@ export function getAllCategorias(): ThunkAction<void, RootState, unknown, AnyAct
 export function loginUserWithGoogle(data: User | undefined,  remember: boolean, setStateOpen: Dispatch<SetStateAction<AlertType>>): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            console.log(data)
+            console.log(process.env.REACT_APP_API_KEY)
             let result = await axios.post('/api/login/google', {...data, apikey: process.env.REACT_APP_API_KEY});
-            
-            setStateOpen(() => ({
-                open: true,
-                title: 'INICIO DE SESIÓN EXITOSO',
-                description: 'Disfrutá de tu estadía :)',
-                confirm: 'OK!!',
-                type: 'success',
-                navigateTo: '/'
-            }));
 
             return dispatch({
                 type: LOGIN_USER,

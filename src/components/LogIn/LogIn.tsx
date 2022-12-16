@@ -3,8 +3,8 @@ import { Avatar, Button, TextField, Select, MenuItem, CssBaseline,
         FormControlLabel, Checkbox, Link, Paper, Box, Grid,
         Typography } from '@mui/material';
 import { LockOutlined as LockOutlinedIcon, Google as GoogleIcon } from '@mui/icons-material';
-import { AppDispatch } from '../../store';
-import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { loginUser, loginUserWithGoogle } from '../../actions';
 import Alert from '../helpers/Alert';
@@ -44,6 +44,8 @@ export default function SignIn() {
     const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
+    const globalUser = useSelector((state: RootState) => state.user);
+
     const [typeOfSign, setTypeOfSign] = useState('signin');
     const [stateOpen, setStateOpen]: [stateOpen: AlertType, setStateOpen: Dispatch<SetStateAction<AlertType>>] = useState<AlertType>({
         open: false,
@@ -88,8 +90,6 @@ export default function SignIn() {
     const handlerChangeRemember = (e: any) => 
         e.target.checked ? localStorage.setItem('remember', 'true') : localStorage.removeItem('remember');
 
-    const returnToHome = () => navigate('/')
-
     useEffect(() => {
         if(isAuthenticated && !isLoading) {
             const remember: boolean = Boolean(localStorage.getItem('remember'));
@@ -97,6 +97,16 @@ export default function SignIn() {
             dispatch(loginUserWithGoogle(user, remember, setStateOpen));
         }
     }, [isAuthenticated]);
+
+    useEffect(() => {
+        globalUser && setStateOpen(() => ({
+                open: true,
+                title: 'INICIO DE SESIÓN EXITOSO',
+                description: 'Disfrutá de tu estadía :)',
+                confirm: 'OK!!',
+                type: 'success',
+                navigateTo: '/'
+            }))}, [globalUser])
 
     const handleChangeSign = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
