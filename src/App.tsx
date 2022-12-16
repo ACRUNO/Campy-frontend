@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Camping from './components/Camping/Camping'
-import Booking from "./components/Booking"
+import Booking from "./components/Booking/Booking"
 import LogIn from './components/LogIn/LogIn';
 import NavBar from './components/NavBar/NavBar';
 import { ThemeProvider } from '@mui/material/styles'
