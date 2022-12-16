@@ -1,4 +1,4 @@
-import Footer from "../Footer";
+import Footer from "../Footer/Footer";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 

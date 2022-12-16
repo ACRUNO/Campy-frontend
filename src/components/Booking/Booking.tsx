@@ -1,17 +1,17 @@
 import React from "react";
-import Footer from "./Footer";
-import Paginado from "./Paginado";
-import FiltrosLaterales from "./FiltrosLaterales";
-import FiltrosPrincipales from "./FiltrosPrincipales";
-import Alert_busqueda from "./Alert_busqueda";
-import CardCamping from "./CardCamping";
+import Footer from "../Footer/Footer";
+import Paginado from "../Paginado/Paginado";
+import FiltrosLaterales from "../FiltrosBooking/FiltrosLaterales";
+import FiltrosPrincipales from "../FiltrosBooking/FiltrosPrincipales";
+import Alert_busqueda from "../AlertBusqueda/Alert_busqueda";
+import CardCamping from "../CardCamping/CardCamping";
 import { Box, Grid } from '@mui/material'
 import { useDispatch, useSelector} from "react-redux";
-import {getAllCampings,filterProvincia,getCampingsProvincias,getCampingsLocalidades} from "../actions/index"
+import {getAllCampings,filterProvincia,getCampingsProvincias,getCampingsLocalidades} from "../../actions/index"
 import { useEffect, useState } from "react";
-import * as actions from "../actions";
-import { AppDispatch, RootState } from '../store/index';
-import {Campings} from '../reducer/estados';
+import * as actions from "../../actions";
+import { AppDispatch, RootState } from '../../store/index';
+import {Campings} from '../../reducer/estados';
 
 
 

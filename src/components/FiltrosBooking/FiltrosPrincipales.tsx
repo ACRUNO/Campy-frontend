@@ -1,16 +1,17 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from '../store/index';
+import { AppDispatch, RootState } from '../../store/index';
 import { MouseEvent } from 'react';
 import { Box, Select, MenuItem, InputLabel, FormControl, TextField, Button, Grid } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 //import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { Dayjs } from 'dayjs';
-import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterProvincia, getProvincias, getLocalidades, getAllCampings, } from '../actions/index'
-import { Campings } from "../reducer/estados";
+import dayjs, { Dayjs } from 'dayjs';
+import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterProvincia, getProvincias, getLocalidades, getAllCampings, } from '../../actions/index'
+import { Campings } from "../../reducer/estados";
+import { TodayTwoTone } from "@mui/icons-material";
 
 
 
@@ -33,11 +34,13 @@ export default function FiltrosPrincipales() {
     }, [dispatch])
 
 
-
+    const today:Dayjs = dayjs();
 
     const [value, setValue] = React.useState<Dayjs | null>(null);
     const [value2, setValue2] = React.useState<Dayjs | null>(null);
 
+    console.log(value?.toDate());
+    
 
 
     const handleChangeProvincia = (e: SelectChangeEvent) => {
@@ -106,6 +109,7 @@ export default function FiltrosPrincipales() {
                             onChange={(newValue) => {
                                 setValue(newValue);
                             }}
+                            minDate={today}
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
@@ -120,6 +124,7 @@ export default function FiltrosPrincipales() {
                             onChange={(newValue) => {
                                 setValue2(newValue)
                             }}
+                            minDate={value}
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
