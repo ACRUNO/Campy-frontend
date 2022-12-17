@@ -43,9 +43,10 @@ export type User = {
     id: number,
     nombre_completo: string, 
     email: string,
-    numero_celular: string,
-    dni: string,
-    direccion: string,
-    tipo: number,
+    numero_celular: string| null,
+    dni: string| null,
+    direccion: string| null,
+    foto: string | null,
+    tipo: string,
     token: string
 }

@@ -35,6 +35,7 @@ export default function BasicMenu({ button, idButton, menuItems, handleSelectIte
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          sx={{zIndex: 9999999}}
         >
           {
             menuItems?.map(item => <MenuItem onClick={handleOptionItem} data-my-value={item.value}>{item.key}</MenuItem>)
