@@ -7,6 +7,7 @@ import { SetStateAction } from 'react'
 import { AlertType } from '../components/LogIn/LogIn'
 import { User } from '@auth0/auth0-react'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
+import { func } from 'prop-types'
 
 
 export const GET_PROVINCIAS: string = 'GET_PROVINCIAS'
@@ -26,8 +27,11 @@ export const GET_PERIODO_AGUA: string = 'GET_PERIODO_AGUA'
 export const FILTER_PERIODO_AGUA: string = 'FILTER_PERIODO_AGUA'
 export const GET_PERIODO_ABIERTO: string = 'GET_PERIODO_ABIERTO'
 export const FILTER_PERIODO_ABIERTO: string = 'FILTER_PERIODO_ABIERTO'
-
-
+export const FILTROS_COMBINADOS: string = 'FILTROS_COMBINADOS'
+export const FILTROS_BOOLEANOS: string = 'FILTROS_BOOLEANOS'
+export const FILTROS_PRECIOS: string = 'FILTROS_PRECIOS'
+export const FILTROS_PRINCIPALES: string = 'FILTROS_PRINCIPALES'
+export const RESET_FILTROS: string = 'RESET_FILTROS'
 
 
 
@@ -332,4 +336,40 @@ export function logoutUser() {
 }
 
 
+export function filtrosCombinados(name: string, value: number){
+    const data = {name: name, value: value}
+    return {
+        type: FILTROS_COMBINADOS,
+        payload: data
+    }
+}
 
+export function filtrosBooleanos(name: string, value: boolean){
+    const data = {name: name, value: value}
+    return {
+        type: FILTROS_BOOLEANOS,
+        payload: data
+    }
+}
+
+export function filtrosPrecios(name: string, value: number[]){
+    const data = {name: name, value: value}
+    return {
+        type: FILTROS_PRECIOS,
+        payload: data
+    }
+}
+
+export function filtrosPrincipales(provincia: number, localidad: number, ingreso: string | undefined, egreso: string | undefined){
+    const data = {provincia: provincia, localidad: localidad, ingreso: ingreso, egreso: egreso}
+    return {
+        type: FILTROS_PRINCIPALES,
+        payload: data
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
+    }
+}
