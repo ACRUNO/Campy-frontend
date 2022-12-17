@@ -50,3 +50,29 @@ export type User = {
     tipo: string,
     token: string
 }
+
+
+export type filterCamps = {
+    id_provincia: number,
+    id_localidad: number,
+    abierto_fecha_desde: "",
+    abierto_fecha_hast: "",
+    precio: number[],
+    reviews: number[],
+    id_categoria: [],
+    parcela_superficie: [],
+    parcela_techada: number,
+    parcela_agua_en_parcela: number,
+    parcela_iluminacion_toma_corriente: number,
+    mascotas: number,
+    rodantes: number,
+    proveduria: number,
+    restaurant: number,
+    pileta: number,
+    vigilancia: number,
+    maquinas_gimnasia: number,
+    juegos_infantiles: number,
+    salon_sum: number,
+    wifi: number,
+    estacionamiento: number,
+}
