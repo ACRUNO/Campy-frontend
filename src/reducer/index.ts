@@ -115,7 +115,7 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state, user: action.payload }
         case LOGOUT_USER:
             return { ...state, user: null }
-        default: return { ...state }
+        
         case GET_CATEGORIAS:
             return {
                 ...state,
@@ -146,8 +146,8 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 periodoAbierto: action.payload
             }
+            default: return { ...state }
     }
-
 }
 
 

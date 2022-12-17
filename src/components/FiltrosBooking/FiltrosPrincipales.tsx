@@ -39,7 +39,7 @@ export default function FiltrosPrincipales() {
     const [value, setValue] = React.useState<Dayjs | null>(null);
     const [value2, setValue2] = React.useState<Dayjs | null>(null);
 
-    console.log(value?.toDate());
+    console.log(value?.toDate().toLocaleDateString().split('/').reverse().join('/'));
     
 
 
