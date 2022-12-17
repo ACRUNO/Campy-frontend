@@ -21,19 +21,7 @@ import ListItems from './ListItems';
 import Misdatos from './Misdatos';
 import Reservas from "./Reservas"
 import Favoritos from './Favoritos';
-
-// function Copyright(props: any) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Campy S.A.
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import { VERDE, VERDE_OSCURO } from '../../helpers/colors';
 
 const drawerWidth: number = 240;
 
@@ -106,6 +94,7 @@ function DashboardContent() {
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
+              bgcolor: VERDE_OSCURO
             }}
           >
             <IconButton
@@ -127,7 +116,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dueño de camping
+              Viajero
             </Typography>
           </Toolbar>
         </AppBar>
@@ -138,10 +127,11 @@ function DashboardContent() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
+              bgcolor: VERDE,
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon sx={{fill: 'white'}} />
             </IconButton>
           </Toolbar>
           <Divider />
@@ -167,7 +157,6 @@ function DashboardContent() {
                   {misdatos && <Misdatos/>}
 
             </Grid>
-            {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>

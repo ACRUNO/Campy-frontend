@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
-import { Avatar, Button, TextField, Select, MenuItem, CssBaseline,
+import { Avatar, Button, TextField, CssBaseline,
         FormControlLabel, Checkbox, Link, Paper, Box, Grid,
         Typography } from '@mui/material';
 import { LockOutlined as LockOutlinedIcon, Google as GoogleIcon } from '@mui/icons-material';
@@ -148,6 +148,23 @@ export default function SignIn() {
                             {typeOfSign === 'signin' ? 'INICIAR SESIÓN' : 'REGISTRARSE' }
                         </Typography>
                         <Box component="form" id='form-login' onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
+                            {
+                                typeOfSign === 'signup' && (
+                                    <>
+                                        <TextField
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="username"
+                                            label="Nombre de Usuario"
+                                            type="username"
+                                            id="username"
+                                            autoComplete="current-password"
+                                            color='secondary'
+                                        />
+                                    </>
+                                )
+                            }
                             <TextField
                                 margin="normal"
                                 required
@@ -170,23 +187,6 @@ export default function SignIn() {
                                 autoComplete="current-password"
                                 color='secondary'
                             />
-                            {
-                                typeOfSign === 'signup' && (
-                                    <>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            name="username"
-                                            label="Nombre de Usuario"
-                                            type="username"
-                                            id="username"
-                                            autoComplete="current-password"
-                                            color='secondary'
-                                        />
-                                    </>
-                                )
-                            }
                             {typeOfSign === 'signin' && <FormControlLabel
                                 control={<Checkbox color="secondary" defaultChecked={localStorage.getItem('remember') === 'true'} />}
                                 onClick={handlerChangeRemember}

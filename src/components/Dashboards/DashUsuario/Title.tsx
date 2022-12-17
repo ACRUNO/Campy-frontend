@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
+import { GRIS, VERDE_OSCURO } from '../../helpers/colors';
 
 interface TitleProps {
   children?: React.ReactNode;
@@ -7,7 +8,7 @@ interface TitleProps {
 
 export default function Title(props: TitleProps) {
   return (
-    <Typography component="h2" variant="h6" color="primary" gutterBottom>
+    <Typography variant="h4" color={VERDE_OSCURO} gutterBottom>
       {props.children}
     </Typography>
   );
