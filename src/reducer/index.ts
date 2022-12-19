@@ -1,4 +1,4 @@
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, filtrosCombinados, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS } from "../actions";
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, filtrosCombinados, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING } from "../actions";
 import { Campings, User, filterCamps, reset } from './estados';
 
 
@@ -38,12 +38,12 @@ const initialState: {
     allPeriodoAbierto: [],
     periodoAbierto: 0,
     filtrosBooking: {        
-        id_provincia: 0,
-        id_localidad: 0,
+        id_provincia: '',
+        id_localidad: '',
         abierto_fecha_desde: "",
-        abierto_fecha_hast: "",
-        precio: [0, 0],
-        reviews: [],
+        abierto_fecha_hasta: "",
+        precio: [],
+        // reviews: [],
         id_categoria: [],
         parcela_superficie: [],
         parcela_techada: 0,
@@ -197,13 +197,18 @@ function rootReducer(state: any = initialState, action: any): any {
                     id_provincia: action.payload.provincia,
                     id_localidad: action.payload.localidad,
                     abierto_fecha_desde: action.payload.ingreso,
-                    abierto_fecha_hast: action.payload.egreso
+                    abierto_fecha_hasta: action.payload.egreso
                 }
             }
         case RESET_FILTROS:
             return {
                 ...state,
                 filtrosBooking: reset
+            }
+        case GET_FILTERS_CAMPING:
+            return {
+                ...state,
+                campings: action.payload
             }
         default: return { ...state }
     }
