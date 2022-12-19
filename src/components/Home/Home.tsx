@@ -27,7 +27,7 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(getProvincias())
-        dispatch(getAllCampings())
+        // dispatch(getAllCampings())
     }, [dispatch]);
 
 

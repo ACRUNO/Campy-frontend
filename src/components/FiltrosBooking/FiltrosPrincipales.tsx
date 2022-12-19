@@ -9,7 +9,7 @@ import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 //import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
 import dayjs, { Dayjs } from 'dayjs';
-import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterProvincia, getProvincias, getLocalidades, getAllCampings, filtrosPrincipales, } from '../../actions/index'
+import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterProvincia, getProvincias, getLocalidades, getAllCampings, filtrosPrincipales, getFiltersCamping, } from '../../actions/index'
 import { Campings } from "../../reducer/estados";
 import { TodayTwoTone } from "@mui/icons-material";
 
@@ -30,8 +30,9 @@ export default function FiltrosPrincipales() {
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
     useEffect(() => {
+        dispatch(getFiltersCamping(filtrosBook));
         dispatch(getProvincias())
-    }, [dispatch])
+    }, [dispatch, filtrosBook])
 
 
     const today:Dayjs = dayjs();
@@ -63,6 +64,7 @@ export default function FiltrosPrincipales() {
         const fecha_ingreso: string | undefined = ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
         const fecha_egreso: string | undefined = egreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
+        
     }
     
 

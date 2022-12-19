@@ -53,12 +53,12 @@ export type User = {
 
 
 export type filterCamps = {
-    id_provincia: number,
-    id_localidad: number,
+    id_provincia: string,
+    id_localidad: string,
     abierto_fecha_desde: string,
-    abierto_fecha_hast: string,
+    abierto_fecha_hasta: string,
     precio: number[],
-    reviews: number[],
+    // reviews: number[],
     id_categoria: number[],
     parcela_superficie: number[],
     parcela_techada: number,
@@ -78,12 +78,12 @@ export type filterCamps = {
 }
 
 export const reset = {        
-    id_provincia: 0,
-    id_localidad: 0,
+    id_provincia: '',
+    id_localidad: '',
     abierto_fecha_desde: "",
-    abierto_fecha_hast: "",
-    precio: [0, 0],
-    reviews: [],
+    abierto_fecha_hasta: "",
+    precio: [],
+    // reviews: [],
     id_categoria: [],
     parcela_superficie: [],
     parcela_techada: 0,
