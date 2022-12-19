@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
+import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup, Button } from '@mui/material';
 import { fontWeight } from "@mui/system";
-import { ChangeEvent } from 'react'
-import { filterCategoria, getAllCategorias } from '../../actions/index'
+import { ChangeEvent, MouseEvent } from 'react'
+import { filterCategoria, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCategorias, resetFiltros } from '../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
+import { filterCamps } from "../../reducer/estados";
 
 
 export default function FiltrosLaterales() {
@@ -66,7 +67,7 @@ export default function FiltrosLaterales() {
         wifi: 0,
         estacionamiento: 0,
     })
-    
+
 
     const min: number = 0
     const max: number = 8000
@@ -77,69 +78,63 @@ export default function FiltrosLaterales() {
 
 
     const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
-
+    const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
 
 
 
     const handlePrecio = (e: Event, newValue: number | number[]) => {
         setPrecioLocal(newValue as number[]);
-        setFilters((filters: filtrosBack) => {
-            return {
-                ...filters,
-                precio: precioLocal
-            }
-        })
+        // setFilters((filters: filtrosBack) => {
+        //     return {
+        //         ...filters,
+        //         precio: precioLocal
+        //     }
+        // })
+        dispatch(filtrosPrecios('precio', precioLocal))
     }
 
 
+    // const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+
+    //     setFilters((filters: any) => {
+    //         if (!filters[e.target.name].includes(Number(e.target.value))) {
+    //             return {
+    //                 ...filters,
+    //                 [e.target.name]: [...filters[e.target.name], Number(e.target.value)]
+    //             }
+    //         } else {
+    //             return {
+    //                 ...filters,
+    //                 [e.target.name]: filters[e.target.name].filter((r: number) => r !== Number(e.target.value))
+    //             }
+    //         }
+    //     })
+    // }
 
     const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
-
-        setFilters((filters: any) => {
-            if (!filters[e.target.name].includes(Number(e.target.value))) {
-                return {
-                    ...filters,
-                    [e.target.name]: [...filters[e.target.name], Number(e.target.value)]
-                }
-            } else {
-                return {
-                    ...filters,
-                    [e.target.name]: filters[e.target.name].filter((r: number) => r !== Number(e.target.value))
-                }
-            }
-        })
-
-
+        dispatch(filtrosCombinados(e.target.name, Number(e.target.value)))
     }
-
-    
 
 
 
 
     const handleBoolean = (e: ChangeEvent<HTMLInputElement>) => {
-        setFilters((filters: any) => {
-            return{
-                ...filters,
-                [e.target.name]: e.target.checked
-            }
-        })
+        // setFilters((filters: any) => {
+        //     return {
+        //         ...filters,
+        //         [e.target.name]: e.target.checked
+        //     }
+        // })
+        dispatch(filtrosBooleanos(e.target.name, e.target.checked))
     }
 
-   
-
-
-    /*     const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-            //e.preventDefault();
-            setInput((inputs: any) => {
-              return {
-                ...inputs,
-                [e.target.name]: e.target.checked
-              }
-            })
-          } */
-
+    const handleReset = (e: MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        dispatch(resetFiltros());
+    }
+    console.log(filtrosBook);
+    
 
     return (
 
@@ -148,12 +143,17 @@ export default function FiltrosLaterales() {
             < Typography variant="h6" sx={{ paddingTop: "1.5rem", fontSize: "800", mb: "0.5rem" }}> Filtros:</Typography >
             <hr />
             <Typography >Precio</Typography>
+            <Button
+                onClick={handleReset}
+                variant="contained" color="success"
+            >Reset Filtros</Button>
 
             <Typography>${precioLocal[0]}- +${precioLocal[1]}</Typography>
 
             <Slider
                 sx={{ mt: "1rem", mb: "0.5rem" }}
                 getAriaLabel={() => 'Temperature range'}
+                name="precio"
                 value={precioLocal}
                 onChange={handlePrecio}
                 valueLabelDisplay="off"
@@ -264,7 +264,7 @@ export default function FiltrosLaterales() {
                 <FormControlLabel
                     sx={{ marginTop: "1rem" }}
                     name="mascotas"
-                    control={<Switch  onChange={handleBoolean} color="secondary" />}
+                    control={<Switch onChange={handleBoolean} color="secondary" />}
                     label="Mascotas"
                     labelPlacement="end" />
                 <FormControlLabel
@@ -279,7 +279,7 @@ export default function FiltrosLaterales() {
                     labelPlacement="end" />
                 <FormControlLabel
                     name="restaurant"
-                    control={<Switch onChange={handleBoolean}  color="secondary" />}
+                    control={<Switch onChange={handleBoolean} color="secondary" />}
                     label="Restaurant"
                     labelPlacement="end" />
                 <FormControlLabel
@@ -293,7 +293,7 @@ export default function FiltrosLaterales() {
                     label="Vigilancia"
                     labelPlacement="end" />
                 <FormControlLabel
-                    name="maquinas_gimnasio"
+                    name="maquinas_gimnasia"
                     control={<Switch onChange={handleBoolean} color="secondary" />}
                     label="Gimnasio"
                     labelPlacement="end" />
@@ -311,6 +311,11 @@ export default function FiltrosLaterales() {
                     name="wifi"
                     control={<Switch onChange={handleBoolean} color="secondary" />}
                     label="Wifi"
+                    labelPlacement="end" />
+                <FormControlLabel
+                    name="estacionamiento"
+                    control={<Switch onChange={handleBoolean} color="secondary" />}
+                    label="Estacionamiento"
                     labelPlacement="end" />
             </FormGroup>
         </Box >

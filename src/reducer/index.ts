@@ -1,5 +1,5 @@
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO } from "../actions";
-import { Campings, User } from './estados';
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, filtrosCombinados, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS } from "../actions";
+import { Campings, User, filterCamps, reset } from './estados';
 
 
 
@@ -19,6 +19,7 @@ const initialState: {
     periodoAgua: number;
     allPeriodoAbierto: { id: number, periodo_abierto: string }[];
     periodoAbierto: number;
+    filtrosBooking: filterCamps
 } = {
 
     //ESTADOS GLOBALES
@@ -35,7 +36,31 @@ const initialState: {
     allPeriodoAgua: [],
     periodoAgua: 0,
     allPeriodoAbierto: [],
-    periodoAbierto: 0
+    periodoAbierto: 0,
+    filtrosBooking: {        
+        id_provincia: 0,
+        id_localidad: 0,
+        abierto_fecha_desde: "",
+        abierto_fecha_hast: "",
+        precio: [0, 0],
+        reviews: [],
+        id_categoria: [],
+        parcela_superficie: [],
+        parcela_techada: 0,
+        parcela_agua_en_parcela: 0,
+        parcela_iluminacion_toma_corriente: 0,
+        mascotas: 0,
+        rodantes: 0,
+        proveduria: 0,
+        restaurant: 0,
+        pileta: 0,
+        vigilancia: 0,
+        maquinas_gimnasia: 0,
+        juegos_infantiles: 0,
+        salon_sum: 0,
+        wifi: 0,
+        estacionamiento: 0
+    }
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -93,14 +118,11 @@ function rootReducer(state: any = initialState, action: any): any {
             const filterCampys = campys.filter(c => {
                 return c.id_categoria === action.payload
             })
-
             return {
                 ...state,
                 campings: filterCampys
 
             }
-
-
         case CREATE_CAMPING:
             return { ...state }
         case FILTER_LOCALIDAD:
@@ -146,7 +168,44 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 periodoAbierto: action.payload
             }
-            default: return { ...state }
+        case FILTROS_COMBINADOS:
+            let filtrosBook: number[] = state.filtrosBooking[action.payload.name]
+            if(!filtrosBook.includes(action.payload.value)){
+                filtrosBook.push(action.payload.value)
+            } else {
+                filtrosBook = filtrosBook.filter((r: number) => r !== action.payload.value)
+            }
+            return{
+                ...state,
+                filtrosBooking: {...state.filtrosBooking, [action.payload.name]: filtrosBook} 
+            }
+        case FILTROS_BOOLEANOS:
+            return{
+                ...state,
+                filtrosBooking: {...state.filtrosBooking, [action.payload.name]: action.payload.value} 
+            }
+        case FILTROS_PRECIOS:
+            return{
+                ...state,
+                filtrosBooking: {...state.filtrosBooking, [action.payload.name]: action.payload.value}
+            }
+        case FILTROS_PRINCIPALES:
+            return {
+                ...state,
+                filtrosBooking: {
+                    ...state.filtrosBooking, 
+                    id_provincia: action.payload.provincia,
+                    id_localidad: action.payload.localidad,
+                    abierto_fecha_desde: action.payload.ingreso,
+                    abierto_fecha_hast: action.payload.egreso
+                }
+            }
+        case RESET_FILTROS:
+            return {
+                ...state,
+                filtrosBooking: reset
+            }
+        default: return { ...state }
     }
 }
 

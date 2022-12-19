@@ -8,7 +8,7 @@ import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
 import Footer from "../Footer/Footer";
-import {getProvincias,getAllCampings,filterProvincia,getCampingsProvincias}from "../../actions";
+import {getProvincias,getAllCampings,filterProvincia,getCampingsProvincias, filtrosPrincipales}from "../../actions";
 import { MouseEvent } from 'react';
 import { Link } from "react-router-dom";
 
@@ -34,9 +34,9 @@ export default function Home() {
 
     function handleClick(id:number){
         dispatch(filterProvincia(id)) 
-        dispatch(getCampingsProvincias())
+        // dispatch(getCampingsProvincias())
+        dispatch(filtrosPrincipales(id, 0, undefined, undefined))
         document.documentElement.scrollTop = 0
-
     }
 
     return (
