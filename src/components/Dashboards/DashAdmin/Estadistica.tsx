@@ -3,6 +3,10 @@ import { useTheme } from '@mui/material/styles';
 import {Typography, Grid, Paper} from '@mui/material';
 // import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
+import Torta from './Estadistica/Graftorta';
+import GrafUsuarios from './Estadistica/GrafUsuarios'
+import GrafReservas from './Estadistica/GrafReservas'
+import Top10 from './Estadistica/Top10';
 
 // Generate Sales Data
 function createData(time: string, amount?: number) {
@@ -26,59 +30,32 @@ export default function Estadistica() {
 
   return (
     <React.Fragment>
-      <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title>Aca se muestran las reservas $ acumulado(eje y) en el tiempo (eje x)</Title>
-      {/* <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
-          }}
-        >
-          <XAxis
-            dataKey="time"
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          />
-          <YAxis
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          >
-            <Label
-              angle={270}
-              position="left"
-              style={{
-                textAnchor: 'middle',
-                fill: theme.palette.text.primary,
-                ...theme.typography.body1,
-              }}
-            >
-              Sales ($)
-            </Label>
-          </YAxis>
-          <Line
-            isAnimationActive={false}
-            type="monotone"
-            dataKey="amount"
-            stroke={theme.palette.primary.main}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer> */}
-      </Paper>
-      </Grid>
-      <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
+
+      <Grid item xs={6}>
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
       <Title>Grafico de torta, campings totales y % por provincia</Title>
+      <Torta/>
       </Paper>
       </Grid>
-      <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
+
+      <Grid item xs={6}>
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
+      <Title>Aca se muestran los nuevos usuarios por mes y el total acumulado</Title>
+      <GrafUsuarios/>
+      </Paper>
+      </Grid>
+
+      <Grid item xs={6}>
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
+      <Title>Acá se muestran las reservas $ por mes y el acumulado</Title>
+      <GrafReservas/>
+      </Paper>
+      </Grid>
+
+      <Grid item xs={6}>
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
       <Title>top 10 de campings con mas reservas</Title>
+      <Top10/>
       </Paper>
       </Grid>
     </React.Fragment>
