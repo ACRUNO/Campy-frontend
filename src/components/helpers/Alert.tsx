@@ -1,4 +1,4 @@
-import React, { SetStateAction, Dispatch } from 'react';
+import { SetStateAction, Dispatch } from 'react';
 import { 
   Box, 
   Button, 
@@ -14,8 +14,7 @@ import {
 } from '@mui/icons-material';
 import { ROJO, VERDE_CLARO } from './colors';
 import { useNavigate } from 'react-router-dom';
-import { AlertType } from '../LogIn/LogIn';
-import { NavigateToItem } from 'typescript';
+import { AlertType } from '../../auxiliar';
 
 
 interface PropsAlert extends AlertType {
@@ -47,7 +46,7 @@ export default function Alert({
   }
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
         fullWidth
         maxWidth="md"
@@ -66,6 +65,6 @@ export default function Alert({
           <Button onClick={handlerClose} variant="contained" color="secondary">{confirm}</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }

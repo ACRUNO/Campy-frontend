@@ -103,7 +103,7 @@ export default function BasicSelect() {
 
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 70%)", pt: 1.25, pb: 1.25, mb: "3%" }}>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 70%)", pt: 1.25, pb: 1.25 }}>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
 
 {/*                 <Search>

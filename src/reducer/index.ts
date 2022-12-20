@@ -110,12 +110,13 @@ function rootReducer(state: any = initialState, action: any): any {
             }
         case LOGIN_USER:
             const { remember, token }: { remember: boolean, token: string } = action.payload;
+            console.log("token en reducer", token)
+            
             remember && localStorage.setItem('token', token);
 
             return { ...state, user: action.payload }
         case LOGOUT_USER:
             return { ...state, user: null }
-        default: return { ...state }
         case GET_CATEGORIAS:
             return {
                 ...state,
@@ -146,6 +147,7 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 periodoAbierto: action.payload
             }
+        default: return { ...state }
     }
 
 }
