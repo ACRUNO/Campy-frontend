@@ -10,7 +10,7 @@ import s from './NavBar.module.css';
 import { Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material';
 import BasicMenu from "../helpers/BasicMenu";
 
-const pages: string[] = ['blog', 'booking', 'map', "create"];
+const pages: string[] = ['blog', 'booking', 'map'];
 const logo: string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
@@ -34,6 +34,7 @@ export default function NavBar() {
         const { myValue } = event.currentTarget.dataset;
 
         if(myValue === 'logout') handlerLogoutUser();
+        else if(myValue === 'propietario') navigate('/create');
         else navigate('/dashboard');
     }
 
@@ -63,7 +64,7 @@ export default function NavBar() {
                         {
                             pages.map(page => {
                                 return (
-                                    <Link className={s.links} to={`/${page}`} key={page}>
+                                    <Link onClick={() => document.documentElement.scrollTop = 0} className={s.links} to={`/${page}`} key={page}>
                                         <Button
                                             className={s.btns}
                                             variant='text'
@@ -108,6 +109,7 @@ export default function NavBar() {
                                 }
                                 menuItems={[
                                     {key: 'Mi Perfil', value: 'perfil'},
+                                    {key: 'Mis campings', value: 'propietario'},
                                     {key: <>Salir <LogoutIcon sx={{fill: ROJO, ml: '10px'}} /></>, value: 'logout'}
                                 ]}
                                 handleSelectItems={handleSelectItems}

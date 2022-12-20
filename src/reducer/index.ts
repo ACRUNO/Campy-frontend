@@ -1,4 +1,4 @@
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, filtrosCombinados, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING } from "../actions";
+import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING } from "../actions";
 import { Campings, User, filterCamps, reset } from './estados';
 
 
@@ -112,7 +112,6 @@ function rootReducer(state: any = initialState, action: any): any {
                 provincia: action.payload,
                 localidad: 0
             }
-
         case FILTER_CATEGORIA:
             const campys: Campings[] = state.campings
             const filterCampys = campys.filter(c => {
@@ -121,7 +120,6 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 campings: filterCampys
-
             }
         case CREATE_CAMPING:
             return { ...state }
@@ -132,12 +130,12 @@ function rootReducer(state: any = initialState, action: any): any {
             }
         case LOGIN_USER:
             const { remember, token }: { remember: boolean, token: string } = action.payload;
+            
             remember && localStorage.setItem('token', token);
 
             return { ...state, user: action.payload }
         case LOGOUT_USER:
             return { ...state, user: null }
-        
         case GET_CATEGORIAS:
             return {
                 ...state,

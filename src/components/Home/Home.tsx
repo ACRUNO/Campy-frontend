@@ -1,16 +1,16 @@
-import React,{useEffect} from "react";
+import { useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
 import Cards from "../Cards/Cards";
 import Banner from "../Banner/Banner"
-import { Grid, Box,Container} from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import s from './Home.module.css'
-import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
 import Footer from "../Footer/Footer";
 import {getProvincias,getAllCampings,filterProvincia,getCampingsProvincias, filtrosPrincipales}from "../../actions";
 import { MouseEvent } from 'react';
 import { Link } from "react-router-dom";
+import Loader from "../helpers/Loader";
 
 
 
@@ -21,8 +21,6 @@ import { Link } from "react-router-dom";
 export default function Home() {
 
     const dispatch: AppDispatch = useDispatch()
-
-
     const allProvincias:{id:number ,nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
 
     useEffect(() => {
@@ -43,8 +41,8 @@ export default function Home() {
         <>
             <Banner />
             <Filters />
-            <Box>
-                <Grid className={s.grid} container >
+            <Box sx={{p: '80px 0'}} >
+                <Box className={s.grid} >
 
                     {
                         allProvincias?.map((e: {id:number ,nombre: string, imagen: string }) => {
@@ -52,13 +50,13 @@ export default function Home() {
                                 <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.id}>
                                 <Link onClick={(event:MouseEvent<HTMLElement>) => handleClick(e.id)} to={`/booking/`} className={s.link}>
                                         <Cards id={e.id} name={e.nombre} img={e.imagen} />
-
                                     </Link>
                                 </Grid>
                             )
                         })
                     }
-                </Grid>
+                    <Loader open={allProvincias.length === 0} />
+                </Box>
             </Box>
             <Footer />
         </>

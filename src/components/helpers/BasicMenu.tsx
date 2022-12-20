@@ -38,7 +38,7 @@ export default function BasicMenu({ button, idButton, menuItems, handleSelectIte
           sx={{zIndex: 9999999}}
         >
           {
-            menuItems?.map(item => <MenuItem onClick={handleOptionItem} data-my-value={item.value}>{item.key}</MenuItem>)
+            menuItems?.map((item, i) => <MenuItem onClick={handleOptionItem} data-my-value={item.value} key={i}>{item.key}</MenuItem>)
           }
         </Menu>
     </>
