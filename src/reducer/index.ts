@@ -1,4 +1,4 @@
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO } from "../actions";
+import { USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO } from "../actions";
 import { Campings, User } from './estados';
 
 
@@ -19,6 +19,8 @@ const initialState: {
     periodoAgua: number;
     allPeriodoAbierto: { id: number, periodo_abierto: string }[];
     periodoAbierto: number;
+    campingsDash:{id:number, nombre_camping:string, habilitado:number}[];
+    usuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]
 } = {
 
     //ESTADOS GLOBALES
@@ -35,7 +37,9 @@ const initialState: {
     allPeriodoAgua: [],
     periodoAgua: 0,
     allPeriodoAbierto: [],
-    periodoAbierto: 0
+    periodoAbierto: 0,
+    campingsDash: [],
+    usuariosDash: []
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -146,6 +150,18 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 periodoAbierto: action.payload
             }
+
+            case CAMPINGS_DASH:
+                return {
+                    ...state,
+                    campingsDash: action.payload
+                }
+
+            case USUARIOS_DASH:
+                return {
+                    ...state,
+                    usuariosDash: action.payload
+                }
             default: return { ...state }
     }
 }

@@ -26,6 +26,8 @@ export const GET_PERIODO_AGUA: string = 'GET_PERIODO_AGUA'
 export const FILTER_PERIODO_AGUA: string = 'FILTER_PERIODO_AGUA'
 export const GET_PERIODO_ABIERTO: string = 'GET_PERIODO_ABIERTO'
 export const FILTER_PERIODO_ABIERTO: string = 'FILTER_PERIODO_ABIERTO'
+export const CAMPINGS_DASH: string = 'CAMPINGS_DASH'
+export const USUARIOS_DASH: string = 'USUARIOS_DASH'
 
 
 
@@ -331,5 +333,79 @@ export function logoutUser() {
     return { type: LOGOUT_USER };
 }
 
+export function getCampings_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/campings/habilitacion`);
+            return dispatch({
+                type: CAMPINGS_DASH,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function habilitacion_camping(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_CAMPING",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function getUsuarios_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/usuarios/habilitacion`);
+            return dispatch({
+                type: USUARIOS_DASH,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function habilitacion_usuario(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function tipo_usuario(id:number,  data: {tipo:string, token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/tipo/${id}`, data);
+            return dispatch({
+                type: "TIPO_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 

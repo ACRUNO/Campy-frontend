@@ -8,53 +8,40 @@ import GrafUsuarios from './Estadistica/GrafUsuarios'
 import GrafReservas from './Estadistica/GrafReservas'
 import Top10 from './Estadistica/Top10';
 
-// Generate Sales Data
-function createData(time: string, amount?: number) {
-  return { time, amount };
-}
 
-const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 2400),
-  createData('24:00', undefined),
-];
+
 
 export default function Estadistica() {
-  const theme = useTheme();
+  
 
   return (
     <React.Fragment>
 
-      <Grid item xs={6}>
+      <Grid item xs={6} color="secondary">
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title>Grafico de torta, campings totales y % por provincia</Title>
+      <Title >Distribución geográfica de campings registrados</Title>
+      <Typography align="center" variant="subtitle2">Total de campings: 1200</Typography>
       <Torta/>
       </Paper>
       </Grid>
 
       <Grid item xs={6}>
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title>Aca se muestran los nuevos usuarios por mes y el total acumulado</Title>
+      <Title>Usuarios registrados en Campy</Title>
       <GrafUsuarios/>
       </Paper>
       </Grid>
 
       <Grid item xs={6}>
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title>Acá se muestran las reservas $ por mes y el acumulado</Title>
+      <Title>Reservas realizadas en Campy</Title>
       <GrafReservas/>
       </Paper>
       </Grid>
 
       <Grid item xs={6}>
-      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title>top 10 de campings con mas reservas</Title>
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', color:"secondary"}}>  
+      <Title>Top 10: Campings con mayores reservas</Title>
       <Top10/>
       </Paper>
       </Grid>
