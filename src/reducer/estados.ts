@@ -51,6 +51,11 @@ export type User = {
     token: string
 }
 
+export type FavoritesCampings = {
+    favorites: { id: number, nombre: string, imagen: string }[]
+    done: boolean
+}
+
 
 export type filterCamps = {
     id_provincia: string,
