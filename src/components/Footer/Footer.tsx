@@ -8,7 +8,7 @@ import Link from '@mui/material/Link';
 import Style from "./footer.module.css"
 
 
-function Copyright(props: any) {
+function Copyright(props: any) {    
   return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
           {'Copyright © '}
