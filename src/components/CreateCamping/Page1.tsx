@@ -7,31 +7,43 @@ import Checkbox from '@mui/material/Checkbox';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades } from "../../actions";
+import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades, getAllCategorias } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { setUncaughtExceptionCaptureCallback } from 'process';
+import { Inputs } from './CreateCamping';
 
-export default function Page1({ setInput }: { setInput: any }) {
+export default function Page1({ setInput }: { setInput: React.Dispatch<React.SetStateAction<Inputs>> }) {
 
   const dispatch: AppDispatch = useDispatch()
 
   const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
   const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
+  const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
 
   useEffect(() => {
     dispatch(getProvincias())
+    dispatch(getAllCategorias())
   }, [dispatch]);
 
   const [provincia, setProvincia] = useState<number>(0);
+  const [categoria, setCategoria] = useState<number>(0);
 
-
-  const categorias: number[] = [1, 2, 3];
-  
 
   const handleChangeProvincia = (e: SelectChangeEvent) => {
     e.preventDefault();
     setProvincia(Number(e.target.value) as number);
     dispatch(getLocalidades(Number(e.target.value) as number))
+    setInput((inputs: Inputs) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
+  };
+
+  const handleChangeCategoria = (e: SelectChangeEvent) => {
+    e.preventDefault();
+    setCategoria(Number(e.target.value) as number);
     setInput((inputs: any) => {
       return {
         ...inputs,
@@ -42,7 +54,7 @@ export default function Page1({ setInput }: { setInput: any }) {
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -53,7 +65,7 @@ export default function Page1({ setInput }: { setInput: any }) {
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -72,10 +84,10 @@ export default function Page1({ setInput }: { setInput: any }) {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="nombre_camping"
+            label="Nombre Camping"
+            name="nombre_camping"
+            autoComplete="nombre_camping"
             autoFocus
             color='secondary'
             variant="standard"
@@ -193,10 +205,10 @@ export default function Page1({ setInput }: { setInput: any }) {
               name='CategoriaCampingId'
               label="categoria"
               color="secondary"
-              onChange={handleChangeSelect}>
+              onChange={handleChangeCategoria}>
               {/* <MenuItem value=""><em>None</em></MenuItem> */}
-              {categorias?.map(m => (
-                <MenuItem value={m}>{m}</MenuItem>
+              {allCategorias?.map(m => (
+                <MenuItem value={m.id}>{m.categoria}</MenuItem>
               ))}
             </Select>
           </FormControl>

@@ -1,9 +1,13 @@
 import Footer from "../Footer";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { Form } from "react-router-dom";
+import axios from "axios";
 
 
 export default function Blog() {
+
+
     return (
         <Box>
             <Box 
@@ -15,10 +19,12 @@ export default function Blog() {
                 <Box 
                     component="img"
                     alt="Componente en progreso..."
-                    src="https://mapealia.es/wp-content/uploads/estamos-trabajando-864x380.jpg"
-                    sx={{ backgroundPosition: 'center' }}
+                    src="https://res.cloudinary.com/pfcampy/image/upload/v1670853348/campy/Funcionalidad_en_desarrollo_y7cqm6.jpg"
+                    sx={{ backgroundPosition: 'center',mt:'5%',mb:'3%' }}
                 />
             </Box>
+           
+
             <Footer />
         </Box>
     )

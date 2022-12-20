@@ -13,6 +13,7 @@ import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterP
 import { Campings } from "../reducer/estados";
 
 
+
 export default function FiltrosPrincipales() {
 
     
@@ -24,6 +25,7 @@ export default function FiltrosPrincipales() {
     const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
     const provincia: number = useSelector((state: RootState) => state.provincia)
     const localidad: number = useSelector((state: RootState) => state.localidad)
+    const campings:Campings[] = useSelector((state: RootState) => state.campings)
 
 
     useEffect(() => {
@@ -53,12 +55,12 @@ export default function FiltrosPrincipales() {
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
-        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias());
+        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades());
     }
 
     return (
-        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)" }}>
+        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)"}}>
             <Grid container direction="row" justifyContent="center" alignItems="center">
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
@@ -92,7 +94,7 @@ export default function FiltrosPrincipales() {
                     </Select>
 
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl color="secondary" sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <DatePicker
                             label="Ingreso"
@@ -106,7 +108,7 @@ export default function FiltrosPrincipales() {
                         />
                     </LocalizationProvider>
                 </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                <FormControl  color="secondary"sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             label="Egreso"

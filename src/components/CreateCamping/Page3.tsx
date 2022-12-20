@@ -1,21 +1,60 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
-import { Box, Card, Grid, Typography, CardContent, CardMedia, Link } from '@mui/material';
+import { Box, Card, Grid, Typography, CardContent, CardMedia, Link, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Cloudinary from "./Cloudinary";
+import { Inputs } from './CreateCamping';
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { getPeriodoAbierto } from '../../actions';
 
-export default function Page3({ setInput }: { setInput: any }) {
 
+export default function Page3({ setInput }: { setInput: React.Dispatch<React.SetStateAction<Inputs>> }) {
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const allPeriodoAbierto: { id: number, descripcion_periodo: string }[] = useSelector((state: RootState) => state.allPeriodoAbierto)
+
+  useEffect(() => {
+    dispatch(getPeriodoAbierto())
+  }, [dispatch]);
+
+  const [periodoAbierto, setPeriodoAbierto] = useState<number>(0)
 
   const [imagenes, setImagenes] = React.useState({
     array: []
   });
 
+  const handlePeriodoAbierto = (e: SelectChangeEvent) => {
+    e.preventDefault();
+    setPeriodoAbierto(Number(e.target.value) as number);
+    setInput((inputs: any) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
+  };
+
+
   let img: Array<string> = ["1", "2", "3", "4"]
+
+  const abierto_periodo : number[] = [1, 2, 3];
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
+      return {
+        ...inputs,
+        [e.target.name]: e.target.value
+      }
+    })
+  };
+
+  const handleChangeSelect = (e: SelectChangeEvent) => {
+    e.preventDefault();
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
@@ -55,12 +94,12 @@ export default function Page3({ setInput }: { setInput: any }) {
             onChange={handleChangeInput}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12}>
           <TextField
             required
             id="Tarifa por casa rodante por día"
             name="tarifa_por_casa_rodante"
-            label="Tarifa por casa rodante por día"
+            label="Tarifa casa rodante por día"
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
@@ -69,15 +108,24 @@ export default function Page3({ setInput }: { setInput: any }) {
           />
         </Grid>
         {/* LUEGO VER EL TEMA DE LAS FECHAS */}
-        {/*         <Grid item xs={12} sm={6}>
-          <TextField
-            id="Periodo abierto - poner calendario?"
-            name="Periodo abierto - poner calendario?"
-            label="Periodo abierto - poner calendario?"
-            fullWidth
-            variant="standard"
-          />
-        </Grid> */}
+        <Grid item xs={12} sm={6}>
+          <FormControl sx={{ m: 1, minWidth: "15rem" }}>
+            <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo Abierto</InputLabel>
+            <Select
+              defaultValue=''
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              name='AbiertoPeriodoId'
+              label="Período Abierto"
+              color="secondary"
+              onChange={handlePeriodoAbierto}>
+              {/* <MenuItem value=""><em>None</em></MenuItem> */}
+              {allPeriodoAbierto?.map(m => (
+                <MenuItem value={m.id}>{m.descripcion_periodo}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid> 
         <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
           {img.map(m => (
             <Grid item key={m}>

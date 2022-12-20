@@ -26,7 +26,7 @@ export default function Footer() {
 
 
   return (
-    <Box sx={{ p: 5 }} component="footer" className={Style.footer}>
+    <Box sx={{ p: 5, mt:"5rem"}} component="footer" className={Style.footer}>
         <Grid container direction="row"  justifyContent="center" sx={{mt: 5}}>
         <Box className={Style.img}
           component="img"
@@ -36,7 +36,7 @@ export default function Footer() {
             height:50,
           }}
           alt="Logo"
-          src={"https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"}/>
+          src={"https://res.cloudinary.com/pfcampy/image/upload/v1670849448/campy/logo_CAMPY-BLANCO_hn507u.png"}/>
           </Grid>
         <Grid container direction="row"  justifyContent="center" columnSpacing={15} sx={{mt: 5}}>
         <Grid item >
