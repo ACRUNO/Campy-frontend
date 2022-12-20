@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { ROJO, VERDE } from "../helpers/colors";
 import { useAuth0 } from "@auth0/auth0-react";
-import { logoutUser } from "../../actions";
+import { logoutUser } from "../../actions/Login.action";
 import s from './NavBar.module.css';
 import { Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material';
 import BasicMenu from "../helpers/BasicMenu";
