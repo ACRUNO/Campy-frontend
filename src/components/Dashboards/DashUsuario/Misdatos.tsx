@@ -119,7 +119,6 @@ export default function Misdatos() {
       });
   }
 
-  console.log(user)
   return (
     <>
         <Grid item xs={12}>

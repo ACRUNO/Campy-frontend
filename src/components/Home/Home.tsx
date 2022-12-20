@@ -7,7 +7,7 @@ import s from './Home.module.css'
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
 import Footer from "../Footer/Footer";
-import {getProvincias,getAllCampings,filterProvincia,getCampingsProvincias}from "../../actions";
+import {getProvincias,getAllCampings,filterProvincia,getCampingsProvincias, filtrosPrincipales}from "../../actions";
 import { MouseEvent } from 'react';
 import { Link } from "react-router-dom";
 import Loader from "../helpers/Loader";
@@ -25,14 +25,15 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(getProvincias())
-        dispatch(getAllCampings())
+        // dispatch(getAllCampings())
     }, [dispatch]);
 
 
 
     function handleClick(id:number){
         dispatch(filterProvincia(id)) 
-        dispatch(getCampingsProvincias())
+        // dispatch(getCampingsProvincias())
+        dispatch(filtrosPrincipales(id, 0, undefined, undefined))
         document.documentElement.scrollTop = 0
     }
 

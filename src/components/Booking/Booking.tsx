@@ -33,14 +33,17 @@ export default function Booking() {
     const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings)
     const campings:Campings[] = useSelector((state: RootState) => state.campings)
     const [open, setOpen] = React.useState(false);
+    const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
 
         useEffect(()=>{
-            if(!allCampings.length){ 
-            dispatch(getAllCampings())}
+            dispatch(actions.getFiltersCamping(filtrosBook))
+            console.log('campings',campings);
+            // if(!allCampings.length){ 
+            // dispatch(getAllCampings())}
             if(!campings.length){
-                setOpen(true)}
-          },[dispatch,campings]
+                setOpen(true)}            
+        },[dispatch, filtrosBook]
         )
     
         console.log(open)

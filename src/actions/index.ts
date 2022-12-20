@@ -7,6 +7,8 @@ import { SetStateAction } from 'react'
 import { User } from '@auth0/auth0-react'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { AlertType } from '../auxiliar'
+import { func } from 'prop-types'
+import { filterCamps } from '../reducer/estados'
 
 
 export const GET_PROVINCIAS: string = 'GET_PROVINCIAS'
@@ -26,9 +28,12 @@ export const GET_PERIODO_AGUA: string = 'GET_PERIODO_AGUA'
 export const FILTER_PERIODO_AGUA: string = 'FILTER_PERIODO_AGUA'
 export const GET_PERIODO_ABIERTO: string = 'GET_PERIODO_ABIERTO'
 export const FILTER_PERIODO_ABIERTO: string = 'FILTER_PERIODO_ABIERTO'
-
-
-
+export const FILTROS_COMBINADOS: string = 'FILTROS_COMBINADOS'
+export const FILTROS_BOOLEANOS: string = 'FILTROS_BOOLEANOS'
+export const FILTROS_PRECIOS: string = 'FILTROS_PRECIOS'
+export const FILTROS_PRINCIPALES: string = 'FILTROS_PRINCIPALES'
+export const RESET_FILTROS: string = 'RESET_FILTROS'
+export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
 
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
@@ -141,7 +146,7 @@ export function filterLocalidad(id: number): ThunkAction<void, RootState, unknow
 export function createCamping(camping: any): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.post('/api/campings', camping)
+            var json = await axios.post('/api/create', camping)
             return dispatch({
                 type: CREATE_CAMPING,
                 payload: json.data
@@ -343,9 +348,65 @@ export function updateUser(
             const result: User = await axios.put(`/api/usuarios/actualizar?${queries}`, data);
            
             dispatch({ type:  LOGIN_USER, payload: { ...result.data, remember: localStorage.getItem('remember') === 'true' } });
-        } catch(e) {
-
-        }
+        } catch(e) {}
     }
 }
 
+export function filtrosCombinados(name: string, value: number){
+    const data = {name: name, value: value}
+    return {
+        type: FILTROS_COMBINADOS,
+        payload: data
+    }
+}
+
+export function filtrosBooleanos(name: string, value: boolean){
+    const data = {name: name, value: value}
+    return {
+        type: FILTROS_BOOLEANOS,
+        payload: data
+    }
+}
+
+export function filtrosPrecios(name: string, value: number[]){
+    const data = {name: name, value: value}
+    return {
+        type: FILTROS_PRECIOS,
+        payload: data
+    }
+}
+
+export function filtrosPrincipales(provincia: number, localidad: number, ingreso: string | undefined, egreso: string | undefined){
+    const data = {provincia: provincia, localidad: localidad, ingreso: ingreso, egreso: egreso}
+    return {
+        type: FILTROS_PRINCIPALES,
+        payload: data
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
+    }
+}
+
+export function getFiltersCamping(filters: filterCamps) {
+    return async function (dispatch: AppDispatch) {
+        try {
+            let result = await axios.post('/api/campings', filters);
+            // return fetch('/api/campings', filters)
+            // .then(r=> r.json())
+            // .then(result=> dispatch({
+            //     type: GET_FILTERS_CAMPING,
+            //     payload: result
+            // }))
+            return dispatch({
+                type: GET_FILTERS_CAMPING,
+                payload: result.data
+            })
+            
+        } catch(error: any) {
+            console.log(error)
+        }
+    }
+}
