@@ -53,14 +53,14 @@ export type User = {
 
 
 export type filterCamps = {
-    id_provincia: number,
-    id_localidad: number,
-    abierto_fecha_desde: "",
-    abierto_fecha_hast: "",
+    id_provincia: string,
+    id_localidad: string,
+    abierto_fecha_desde: string,
+    abierto_fecha_hasta: string,
     precio: number[],
-    reviews: number[],
-    id_categoria: [],
-    parcela_superficie: [],
+    // reviews: number[],
+    id_categoria: number[],
+    parcela_superficie: number[],
     parcela_techada: number,
     parcela_agua_en_parcela: number,
     parcela_iluminacion_toma_corriente: number,
@@ -75,4 +75,29 @@ export type filterCamps = {
     salon_sum: number,
     wifi: number,
     estacionamiento: number,
+}
+
+export const reset = {        
+    id_provincia: '',
+    id_localidad: '',
+    abierto_fecha_desde: "",
+    abierto_fecha_hasta: "",
+    precio: [],
+    // reviews: [],
+    id_categoria: [],
+    parcela_superficie: [],
+    parcela_techada: 0,
+    parcela_agua_en_parcela: 0,
+    parcela_iluminacion_toma_corriente: 0,
+    mascotas: 0,
+    rodantes: 0,
+    proveduria: 0,
+    restaurant: 0,
+    pileta: 0,
+    vigilancia: 0,
+    maquinas_gimnasia: 0,
+    juegos_infantiles: 0,
+    salon_sum: 0,
+    wifi: 0,
+    estacionamiento: 0
 }

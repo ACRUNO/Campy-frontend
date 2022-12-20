@@ -42,3 +42,20 @@ export interface datosMenu {
     menuItems: {key: any, value: string}[],
     handleSelectItems: (event: { currentTarget: any }) => void
 }
+
+export interface AlertType {
+    open: boolean,
+    title: string,
+    description: string,
+    confirm: string,
+    type: 'success' | 'error',
+    navigateTo: string | null
+};
+
+export interface AlertConfirmType {
+    open: boolean,
+    title: string,
+    description: string,
+    confirm: () => void,
+    denegate: () => void
+};

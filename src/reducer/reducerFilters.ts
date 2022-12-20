@@ -2,12 +2,12 @@ import { } from '../actions/index';
 import { filterCamps } from './estados'
 
 const initialState: filterCamps = {
-    id_provincia: 0,
-    id_localidad: 0,
+    id_provincia: '',
+    id_localidad: '',
     abierto_fecha_desde: "",
-    abierto_fecha_hast: "",
+    abierto_fecha_hasta: "",
     precio: [0, 0],
-    reviews: [],
+    // reviews: [],
     id_categoria: [],
     parcela_superficie: [],
     parcela_techada: 0,

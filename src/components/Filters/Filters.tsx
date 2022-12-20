@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades,filterProvincia,filterLocalidad,getAllCampings} from "../../actions";
+import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades,filterProvincia,filterLocalidad,getAllCampings, filtrosPrincipales} from "../../actions";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -95,15 +95,17 @@ export default function BasicSelect() {
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
-        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        // if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
+        // if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        dispatch(filtrosPrincipales(provincia, localidad, undefined, undefined))
         navigate("/booking")
         document.documentElement.scrollTop = 0
     }
+    
 
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 70%)", pt: 1.25, pb: 1.25, mb: "3%" }}>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 70%)", pt: 1.25, pb: 1.25 }}>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
 
 {/*                 <Search>

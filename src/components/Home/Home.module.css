@@ -1,13 +1,12 @@
 .grid{
-    display: flex;
+    width: 100%;
     justify-content: center;
-    padding-left: 2rem;
-    padding-right:2rem ; 
-}
-
-.item{
-    display: flex;
-    justify-content: center;
+    display: grid;
+    
+    grid-template-columns: repeat(auto-fit, 400px);
+    column-gap: 60px;
+    row-gap: 60px;
+    
 }
 
 .link{
