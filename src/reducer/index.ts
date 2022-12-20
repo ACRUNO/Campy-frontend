@@ -1,7 +1,8 @@
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING } from "../actions";
+import { USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
+
 
 const initialState: {
     user: User | null;
@@ -19,6 +20,8 @@ const initialState: {
     periodoAgua: number;
     allPeriodoAbierto: { id: number, periodo_abierto: string }[];
     periodoAbierto: number;
+    campingsDash:{id:number, nombre_camping:string, habilitado:number}[];
+    usuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]
     filtrosBooking: filterCamps
 } = {
 
@@ -38,6 +41,8 @@ const initialState: {
     periodoAgua: 0,
     allPeriodoAbierto: [],
     periodoAbierto: 0,
+    campingsDash: [],
+    usuariosDash: [],
     filtrosBooking: {        
         id_provincia: '',
         id_localidad: '',
@@ -167,6 +172,21 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 periodoAbierto: action.payload
             }
+
+
+            case CAMPINGS_DASH:
+                return {
+                    ...state,
+                    campingsDash: action.payload
+                }
+
+            case USUARIOS_DASH:
+                return {
+                    ...state,
+                    usuariosDash: action.payload
+                }
+            
+
         case FILTROS_COMBINADOS:
             let filtrosBook: number[] = state.filtrosBooking[action.payload.name]
             if(!filtrosBook.includes(action.payload.value)){
@@ -224,6 +244,7 @@ function rootReducer(state: any = initialState, action: any): any {
                 }
             }
         default: return { ...state }
+
     }
 }
 

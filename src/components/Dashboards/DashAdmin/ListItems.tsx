@@ -81,12 +81,12 @@ export default function listItems(props:Props){
       </ListItemIcon>
       <ListItemText primary="Estadisticas" />
     </ListItemButton>
-    <ListItemButton>
+    {/* <ListItemButton>
       <ListItemIcon>
         <PlaceIcon />
       </ListItemIcon>
       <ListItemText primary="Localidades" />
-    </ListItemButton>
+    </ListItemButton> */}
     </List>
   </React.Fragment>
 )} ;

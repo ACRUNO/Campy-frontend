@@ -22,12 +22,15 @@ export const GET_PERIODO_AGUA: string = 'GET_PERIODO_AGUA'
 export const FILTER_PERIODO_AGUA: string = 'FILTER_PERIODO_AGUA'
 export const GET_PERIODO_ABIERTO: string = 'GET_PERIODO_ABIERTO'
 export const FILTER_PERIODO_ABIERTO: string = 'FILTER_PERIODO_ABIERTO'
+export const CAMPINGS_DASH: string = 'CAMPINGS_DASH'
+export const USUARIOS_DASH: string = 'USUARIOS_DASH'
 export const FILTROS_COMBINADOS: string = 'FILTROS_COMBINADOS'
 export const FILTROS_BOOLEANOS: string = 'FILTROS_BOOLEANOS'
 export const FILTROS_PRECIOS: string = 'FILTROS_PRECIOS'
 export const FILTROS_PRINCIPALES: string = 'FILTROS_PRINCIPALES'
 export const RESET_FILTROS: string = 'RESET_FILTROS'
 export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
+
 
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
@@ -254,7 +257,79 @@ export function getAllCategorias(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
+export function getCampings_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
 
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/campings/habilitacion`);
+            return dispatch({
+                type: CAMPINGS_DASH,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function habilitacion_camping(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_CAMPING",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function getUsuarios_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/usuarios/habilitacion`);
+            return dispatch({
+                type: USUARIOS_DASH,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function habilitacion_usuario(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function tipo_usuario(id:number,  data: {tipo:string, token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/tipo/${id}`, data);
+            return dispatch({
+                type: "TIPO_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }}}
+        
 export function filtrosCombinados(name: string, value: number){
     const data = {name: name, value: value}
     return {

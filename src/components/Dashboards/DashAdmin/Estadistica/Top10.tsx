@@ -8,7 +8,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Area
+  Area,
+  Label
 } from "recharts";
 
 const data = [
@@ -53,11 +54,13 @@ export default function Top10() {
       }}
     >
       <CartesianGrid stroke="#f5f5f5" />
-      <XAxis type="number" />
+      <XAxis type="number">
+      <Label value="Reservas" offset={2} position="bottom" />
+      </XAxis>
       <YAxis dataKey="camping" type="category" scale="band" />
       <Tooltip />
-      <Legend />
-      <Bar dataKey="reservas" barSize={20} fill="#413ea0" />
+      {/* <Legend /> */}
+      <Bar dataKey="reservas" barSize={20} fill="#5F8D4E" />
     </ComposedChart>
   );
 }
