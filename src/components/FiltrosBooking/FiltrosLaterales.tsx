@@ -128,6 +128,7 @@ export default function FiltrosLaterales() {
     const handleReset = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(resetFiltros());
+        setPrecioLocal([min,max])
     }
     
 
@@ -205,7 +206,7 @@ export default function FiltrosLaterales() {
                     allCategorias.map(c => {
                         return (
                             <FormControlLabel
-                                control={<Checkbox onChange={handleCheck} value={c.id} color="secondary" name="id_categoria" />}
+                                control={<Checkbox onChange={handleCheck} value={c.id} color="secondary" name="id_categoria" checked={filtrosBook.id_categoria.includes(c.id)} />}
                                 label={c.categoria}
                             />
                         )
@@ -219,7 +220,7 @@ export default function FiltrosLaterales() {
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
 
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="parcela_superficie" />}
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="parcela_superficie"/>}
                     label="5 metros"
                 />
                 <FormControlLabel
@@ -227,7 +228,7 @@ export default function FiltrosLaterales() {
                     label="10 metros"
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="20" name="parcela_superficie" />}
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="20" name="parcela_superficie"/>}
                     label="20 metros"
                 />
             </FormGroup>
