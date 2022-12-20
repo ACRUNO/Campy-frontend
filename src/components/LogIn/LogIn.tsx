@@ -11,6 +11,8 @@ import Alert from '../helpers/Alert';
 import axios from 'axios';
 import { ROJO } from '../helpers/colors';
 import { useNavigate } from 'react-router-dom';
+import { AlertType } from '../../auxiliar';
+import Loader from '../helpers/Loader';
 
 function Copyright() {
     return (
@@ -30,23 +32,15 @@ const logInPhotos: string [] = ["https://res.cloudinary.com/pfcampy/image/upload
 
 const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
 
-export interface AlertType {
-    open: boolean,
-    title: string,
-    description: string,
-    confirm: string,
-    type: 'success' | 'error',
-    navigateTo: string | null
-};
-
 export default function SignIn() {
 
     const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
-    const navigate = useNavigate();
+
     const dispatch: AppDispatch = useDispatch();
     const globalUser = useSelector((state: RootState) => state.user);
 
     const [typeOfSign, setTypeOfSign] = useState('signin');
+    const [openLoader, setOpenLoader]: [openLoader: boolean, setOpenLoader: Dispatch<SetStateAction<boolean>>]  = useState(false);
     const [stateOpen, setStateOpen]: [stateOpen: AlertType, setStateOpen: Dispatch<SetStateAction<AlertType>>] = useState<AlertType>({
         open: false,
         title: '',
@@ -58,13 +52,15 @@ export default function SignIn() {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setOpenLoader(true);
+
         const data: FormData = new FormData(event.currentTarget);
         const email: string = String(data.get('email'));
         const clave: string = String(data.get('password'));
         const username: string = String(data.get('username'));
         const remember: boolean = Boolean(localStorage.getItem('remember'));
 
-        if(typeOfSign === 'signin') dispatch(loginUser({email, clave}, remember, setStateOpen));
+        if(typeOfSign === 'signin') dispatch(loginUser({email, clave}, remember, setStateOpen, setOpenLoader));
         else axios
                 .post('/api/register', {
                     email, clave, username
@@ -82,7 +78,7 @@ export default function SignIn() {
                     confirm: 'ok...',
                     type: 'error',
                     navigateTo: null
-                })));
+                }))).finally(() => setOpenLoader(false));
 
         event.currentTarget.reset();
     };
@@ -237,6 +233,7 @@ export default function SignIn() {
                         navigateTo={stateOpen.navigateTo}
                     />
                 }
+                <Loader open={openLoader} />
             </Grid>
     );
 }

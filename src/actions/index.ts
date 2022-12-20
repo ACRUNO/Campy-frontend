@@ -4,9 +4,9 @@ import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import { Dispatch } from 'react'
 import { SetStateAction } from 'react'
-import { AlertType } from '../components/LogIn/LogIn'
 import { User } from '@auth0/auth0-react'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
+import { AlertType } from '../auxiliar'
 import { func } from 'prop-types'
 import { filterCamps } from '../reducer/estados'
 
@@ -178,7 +178,8 @@ export function loginUser(data: {
         clave: string,     
     }, 
     remember: boolean, 
-    setStateOpen: Dispatch<SetStateAction<AlertType>>): ThunkAction<void, RootState, unknown, AnyAction> {
+    setStateOpen: Dispatch<SetStateAction<AlertType>>,
+    setOpenLoader: Dispatch<SetStateAction<boolean>>): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch:AppDispatch) {
         try {
             let result = await axios.post('/api/login', data);
@@ -197,6 +198,8 @@ export function loginUser(data: {
                 navigateTo: null
             }))
             console.log(error.response.data)
+        } finally {
+            setOpenLoader(false)
         }
     }
 }
@@ -286,7 +289,7 @@ export function loginUserWithToken(data: {token: string}): ThunkAction<void, Roo
                 payload: result.data
             })
         } catch(error: any) {
-            console.log(error.response.data)
+            console.log(error?.response.data)
         }
     }
 }
@@ -319,15 +322,16 @@ export function loginUserWithGoogle(data: User | undefined,  remember: boolean, 
             })
             
         } catch(error: any) {
-            // setStateOpen(() => ({
-            //         open: true,
-            //         title: `ERROR: ${error.response.data.error}`,
-            //         description: error.response.data.message,
-            //         confirm: 'ok...',
-            //         type: 'error',
-            //         navigateTo: null
-            //     }))
-            console.log(error)
+            error && setStateOpen(() => ({
+                    open: true,
+                    title: `ERROR: ${error.response.data.error}`,
+                    description: error.response.data.message,
+                    confirm: 'ok...',
+                    type: 'error',
+                    navigateTo: null
+                }));
+
+                console.log(error)
             }
     }
 }
@@ -336,6 +340,17 @@ export function logoutUser() {
     return { type: LOGOUT_USER };
 }
 
+export function updateUser(
+    queries: string, 
+    data: { token: string, userId: number }): ThunkAction<void, RootState, unknown, AnyAction> {
+    return async function(dispatch: AppDispatch) {
+        try {
+            const result: User = await axios.put(`/api/usuarios/actualizar?${queries}`, data);
+           
+            dispatch({ type:  LOGIN_USER, payload: { ...result.data, remember: localStorage.getItem('remember') === 'true' } });
+        } catch(e) {}
+    }
+}
 
 export function filtrosCombinados(name: string, value: number){
     const data = {name: name, value: value}
