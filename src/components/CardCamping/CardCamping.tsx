@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material';
 import Rating from '@mui/material/Rating';
-import Style from "./Camping/Camping.module.css"
+import Style from "../Camping/Camping.module.css"
 
 type Props = {
   id:number,
@@ -19,12 +19,12 @@ export default function CardCamping( props: Props){
     return (
     
     <Link href={`/booking/camping/${props.id}`}>
-    <Card sx={{ display: 'flex', mt: 2, mb:2, ml:2, mr:2, height:200 , width:1000, p:1,boxShadow: 3, justifyContent:"space-around"}}>
+    <Card sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around"}}>
         <CardMedia
         component="img"
         image={props.imagenes[0]}
         alt="Camping"
-        sx={{width:250}}
+        sx={{width:"15.6rem"}}
         />
       <Box >
         <CardContent sx={{ display: 'flex', flexDirection: 'column', width:500, p:0, m:0}}>

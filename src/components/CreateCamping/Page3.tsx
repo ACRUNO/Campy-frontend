@@ -9,8 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAbierto } from '../../actions';
 
+interface InputProps {
+  setInput: React.Dispatch<React.SetStateAction<Inputs>>,
+  input: Inputs
+}
 
-export default function Page3({ setInput }: { setInput: React.Dispatch<React.SetStateAction<Inputs>> }) {
+export default function Page3({ setInput, input }: InputProps) {
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -71,6 +75,7 @@ export default function Page3({ setInput }: { setInput: React.Dispatch<React.Set
         <Grid item xs={12} sm={6}>
           <TextField
             required
+            value={input.tarifa_por_mayor_dia}
             id="Tarifa por mayor por día "
             name="tarifa_por_mayor_dia"
             label="Tarifa por mayor por día "
@@ -84,6 +89,7 @@ export default function Page3({ setInput }: { setInput: React.Dispatch<React.Set
         <Grid item xs={12} sm={6}>
           <TextField
             required
+            value={input.tarifa_por_menor_dia}
             id="Tarifa por menor por día"
             name="tarifa_por_menor_dia"
             label="Tarifa por menor por día"
@@ -97,6 +103,7 @@ export default function Page3({ setInput }: { setInput: React.Dispatch<React.Set
         <Grid item xs={12} sm={12}>
           <TextField
             required
+            value={input.tarifa_por_casa_rodante}
             id="Tarifa por casa rodante por día"
             name="tarifa_por_casa_rodante"
             label="Tarifa casa rodante por día"
@@ -113,6 +120,7 @@ export default function Page3({ setInput }: { setInput: React.Dispatch<React.Set
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo Abierto</InputLabel>
             <Select
               defaultValue=''
+              value={`${input.AbiertoPeriodoId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='AbiertoPeriodoId'

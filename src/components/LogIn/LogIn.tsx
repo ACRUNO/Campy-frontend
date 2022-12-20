@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { Avatar, Button, TextField, CssBaseline,
+        FormControlLabel, Checkbox, Link, Paper, Box, Grid,
+        Typography } from '@mui/material';
+import { LockOutlined as LockOutlinedIcon, Google as GoogleIcon } from '@mui/icons-material';
 import { AppDispatch, RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../actions';
+import { useAuth0 } from '@auth0/auth0-react';
+import { loginUser, loginUserWithGoogle } from '../../actions';
+import Alert from '../helpers/Alert';
 import axios from 'axios';
+import { ROJO } from '../helpers/colors';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright() {
     return (
@@ -34,37 +28,85 @@ function Copyright() {
 
 const logInPhotos: string [] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536215/Fotos/Misiones.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
 
-const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)]
+const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+
+export interface AlertType {
+    open: boolean,
+    title: string,
+    description: string,
+    confirm: string,
+    type: 'success' | 'error',
+    navigateTo: string | null
+};
 
 export default function SignIn() {
 
-        const user = useSelector((state: RootState) => state.user);
+    const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
+    const navigate = useNavigate();
+    const dispatch: AppDispatch = useDispatch();
+    const globalUser = useSelector((state: RootState) => state.user);
 
-    console.log("user", user)
-
-    const dispatch: AppDispatch = useDispatch()
     const [typeOfSign, setTypeOfSign] = useState('signin');
+    const [stateOpen, setStateOpen]: [stateOpen: AlertType, setStateOpen: Dispatch<SetStateAction<AlertType>>] = useState<AlertType>({
+        open: false,
+        title: '',
+        description: '',
+        confirm: '',
+        type: 'success',
+        navigateTo: null
+    });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data: FormData = new FormData(event.currentTarget);
         const email: string = String(data.get('email'));
         const clave: string = String(data.get('password'));
-        const nombre_completo: string = String(data.get('nombre_completo'));
-        const numero_celular: string = String(data.get('numero_celular'));
-        const direccion: string = String(data.get('direccion'));
-        const dni: string = String(data.get('dni'));
-        const tipo: number = Number(data.get('tipo'));
-        const remember: boolean = Boolean(data.get('remember'));
+        const username: string = String(data.get('username'));
+        const remember: boolean = Boolean(localStorage.getItem('remember'));
 
-        if(typeOfSign === 'signin') dispatch(loginUser({email, clave}, remember));
+        if(typeOfSign === 'signin') dispatch(loginUser({email, clave}, remember, setStateOpen));
         else axios
                 .post('/api/register', {
-                    data, email, clave, nombre_completo, numero_celular, direccion, dni, tipo 
-                }).then(res => console.log("hecho id:", res.data));
+                    email, clave, username
+                }).then(() => setStateOpen(() => ({
+                    open: true,
+                    title: 'REGISTRO CON ÉXITO',
+                    description: 'En las próximas 12hs deberás confirmar un correo de verificación por gmail.',
+                    confirm: 'OK',
+                    type: 'success',
+                    navigateTo: null
+                }))).catch(({response}) => setStateOpen(() => ({
+                    open: true,
+                    title: `ERROR: ${response.data.error}`,
+                    description: response.data.message,
+                    confirm: 'ok...',
+                    type: 'error',
+                    navigateTo: null
+                })));
 
         event.currentTarget.reset();
     };
+
+    const handlerChangeRemember = (e: any) => 
+        e.target.checked ? localStorage.setItem('remember', 'true') : localStorage.removeItem('remember');
+
+    useEffect(() => {
+        if(isAuthenticated && !isLoading) {
+            const remember: boolean = Boolean(localStorage.getItem('remember'));
+            
+            dispatch(loginUserWithGoogle(user, remember, setStateOpen));
+        }
+    }, [isAuthenticated]);
+
+    useEffect(() => {
+        globalUser && setStateOpen(() => ({
+                open: true,
+                title: 'INICIO DE SESIÓN EXITOSO',
+                description: 'Disfrutá de tu estadía :)',
+                confirm: 'OK!!',
+                type: 'success',
+                navigateTo: '/'
+            }))}, [globalUser])
 
     const handleChangeSign = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
@@ -105,7 +147,24 @@ export default function SignIn() {
                         <Typography sx={{mt: '10px'}} component="h1" variant="h5">
                             {typeOfSign === 'signin' ? 'INICIAR SESIÓN' : 'REGISTRARSE' }
                         </Typography>
-                        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                        <Box component="form" id='form-login' onSubmit={handleSubmit} sx={{ mt: 1, width: '100%' }}>
+                            {
+                                typeOfSign === 'signup' && (
+                                    <>
+                                        <TextField
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="username"
+                                            label="Nombre de Usuario"
+                                            type="username"
+                                            id="username"
+                                            autoComplete="current-password"
+                                            color='secondary'
+                                        />
+                                    </>
+                                )
+                            }
                             <TextField
                                 margin="normal"
                                 required
@@ -128,76 +187,13 @@ export default function SignIn() {
                                 autoComplete="current-password"
                                 color='secondary'
                             />
-                            {
-                                typeOfSign === 'signup' && (
-                                    <>
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            name="nombre_completo"
-                                            label="Nombre completo"
-                                            type="text"
-                                            id="nombre_completo"
-                                            autoComplete="current-name"
-                                            color='secondary'
-                                        />
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            name="numero_celular"
-                                            label="Número celular"
-                                            type="text"
-                                            id="numero_celular"
-                                            autoComplete="current-name"
-                                            color='secondary'
-                                        />
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            name="direccion"
-                                            label="Dirección"
-                                            type="text"
-                                            id="direccion"
-                                            autoComplete="current-name"
-                                            color='secondary'
-                                        />
-                                        <TextField
-                                            margin="normal"
-                                            required
-                                            fullWidth
-                                            name="dni"
-                                            label="Dni"
-                                            type="text"
-                                            id="dni"
-                                            autoComplete="current-name"
-                                            color='secondary'
-                                        />
-                                        <Typography sx={{margin: '10px 0'}} variant="h6" color="text.secondary" align="left">
-                                            Selecciona un rol:
-                                        </Typography>
-                                        <Select
-                                            fullWidth
-                                            id="tipo"
-                                            name='tipo'
-                                            label="Tipo"
-                                            variant="outlined"
-                                            sx={{mb: '15px'}}
-                                            defaultValue={3}
-                                        >
-                                            <MenuItem value={2}>Propietario</MenuItem>
-                                            <MenuItem value={3}>Viajero</MenuItem>
-                                        </Select>
-                                    </>
-                                )
-                            }
                             {typeOfSign === 'signin' && <FormControlLabel
-                                control={<Checkbox value={true} color="secondary" />}
+                                control={<Checkbox color="secondary" defaultChecked={localStorage.getItem('remember') === 'true'} />}
+                                onClick={handlerChangeRemember}
                                 label='Recordarme'
                                 name='remember'
-                            />}
+                            />
+                            }
                             <Link onClick={handleChangeSign} color="inherit" href="/login">
                                 {typeOfSign === 'signin' ? 'registrarme' : 'iniciar sesión'}
                             </Link>
@@ -210,22 +206,37 @@ export default function SignIn() {
                             >
                                 {typeOfSign === 'signin' ? 'iniciar sesión' : 'registrarse' }
                             </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
+                            {
+                                typeOfSign === 'signin' && (
+
+                                    <Button
+                                        onClick={loginWithRedirect}
+                                        type="button"
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{ mt: 3, mb: 2, backgroundColor: ROJO, color: 'white' }}
+                                    >
+                                        <GoogleIcon sx={{mr: 1}} />
+                                        Iniciar con google
+                                    </Button>
+                                )
+                            }
                             <Copyright />
                         </Box>
                     </Box>
                 </Grid>
+                {
+                    stateOpen.open && 
+                    <Alert
+                        setStateOpen={setStateOpen} 
+                        open={stateOpen.open}
+                        description={stateOpen.description}
+                        title={stateOpen.title} 
+                        confirm={stateOpen.confirm}
+                        type={stateOpen.type}
+                        navigateTo={stateOpen.navigateTo}
+                    />
+                }
             </Grid>
     );
 }

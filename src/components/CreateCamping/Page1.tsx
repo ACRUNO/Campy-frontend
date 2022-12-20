@@ -12,7 +12,12 @@ import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@m
 import { setUncaughtExceptionCaptureCallback } from 'process';
 import { Inputs } from './CreateCamping';
 
-export default function Page1({ setInput }: { setInput: React.Dispatch<React.SetStateAction<Inputs>> }) {
+interface InputProps {
+  setInput: React.Dispatch<React.SetStateAction<Inputs>>,
+  input: Inputs
+}
+
+export default function Page1({ setInput, input }: InputProps) {
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -84,6 +89,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
             margin="normal"
             required
             fullWidth
+            value={input.nombre_camping}
             id="nombre_camping"
             label="Nombre Camping"
             name="nombre_camping"
@@ -99,6 +105,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
             margin='normal'
             required
             fullWidth
+            value={input.telefono}
             id="Teléfono"
             label="Teléfono"
             name="telefono"
@@ -112,6 +119,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
           <TextField
             required
             fullWidth
+            value={input.direccion}
             id="Dirección"
             label="Dirección"
             name="direccion"
@@ -134,15 +142,15 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
             <Select
-              defaultValue=''
+              value={`${input.provincia}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='provincia'
               label="provincia"
               color="secondary"
               onChange={handleChangeProvincia}>
-              {allProvincias?.map(m => (
-                <MenuItem value={m.id}>{m.nombre}</MenuItem>
+              {allProvincias?.map((m, i) => (
+                <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -160,6 +168,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
             <Select
               defaultValue=''
               disabled={provincia === 0}
+              value={`${input.LocalidadeId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='LocalidadeId'
@@ -200,6 +209,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Categoria</InputLabel>
             <Select
               defaultValue=''
+              value={`${input.CategoriaCampingId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='CategoriaCampingId'
@@ -217,6 +227,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
         <Grid item xs={12} sm={6}>
           <TextField
             required
+            value={input.contacto_nombre}
             id="Nombre de contacto"
             name="contacto_nombre"
             label="Nombre de contacto"
@@ -230,6 +241,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
         <Grid item xs={12} sm={6}>
           <TextField
             required
+            value={input.contacto_tel}
             id="Teléfono de contacto"
             name="contacto_tel"
             label="Teléfono de contacto"
@@ -244,6 +256,7 @@ export default function Page1({ setInput }: { setInput: React.Dispatch<React.Set
           <TextField
             multiline
             rows={6}
+            value={input.descripcion_camping}
             id="Descripción"
             name="descripcion_camping"
             label="Descripción"

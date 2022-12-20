@@ -1,35 +1,49 @@
 import React from "react";
-import Footer from "./Footer";
-import Paginado from "./Paginado";
-import FiltrosLaterales from "./FiltrosLaterales";
-import FiltrosPrincipales from "./FiltrosPrincipales";
-import Alert_busqueda from "./Alert_busqueda";
-import CardCamping from "./CardCamping";
+import Footer from "../Footer/Footer";
+import Paginado from "../Paginado/Paginado";
+import FiltrosLaterales from "../FiltrosBooking/FiltrosLaterales";
+import FiltrosPrincipales from "../FiltrosBooking/FiltrosPrincipales";
+import Alert_busqueda from "../AlertBusqueda/Alert_busqueda";
+import CardCamping from "../CardCamping/CardCamping";
 import { Box, Grid } from '@mui/material'
 import { useDispatch, useSelector} from "react-redux";
-import {getAllCampings,filterProvincia,getCampingsProvincias,getCampingsLocalidades} from "../actions/index"
+import {getAllCampings,filterProvincia,getCampingsProvincias,getCampingsLocalidades} from "../../actions/index"
 import { useEffect, useState } from "react";
-import * as actions from "../actions";
-import { AppDispatch, RootState } from '../store/index';
-import {Campings} from '../reducer/estados';
+import * as actions from "../../actions";
+import { AppDispatch, RootState } from '../../store/index';
+import {Campings} from '../../reducer/estados';
+
+
+
+
+
+
+
+
+
+
 
 
 export default function Booking() {
 
+  
     
 
     const dispatch: AppDispatch = useDispatch()
     const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings)
     const campings:Campings[] = useSelector((state: RootState) => state.campings)
     const [open, setOpen] = React.useState(false);
+    const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
 
         useEffect(()=>{
-            if(!allCampings.length){ 
-            dispatch(getAllCampings())}
+            dispatch(actions.getFiltersCamping(filtrosBook))
+            console.log('campings',campings);
+            // if(!allCampings.length){ 
+            // dispatch(getAllCampings())}
             if(!campings.length){
-                setOpen(true)}
-          },[dispatch,campings]
+                setOpen(true)}            
+        },[dispatch, filtrosBook]
         )
     
         console.log(open)
@@ -41,7 +55,6 @@ export default function Booking() {
     const [campingsxPage,setCampingsxPage]=useState(5);
     const indexLastCamping : number = currentPage * campingsxPage;
     const indexFirstCamping : number = indexLastCamping - campingsxPage;
-    /* const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping); */
 
     const currentCampings:Campings[]=campings.slice(indexFirstCamping,indexLastCamping) 
 
@@ -92,6 +105,5 @@ export default function Booking() {
 
 
     
-
 
 

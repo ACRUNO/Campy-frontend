@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^1.12.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@googlemaps/react-wrapper": "^1.1.35",
@@ -12,6 +13,7 @@
     "@mui/system": "^5.10.17",
     "@mui/x-date-pickers": "^5.0.9",
     "@mui/x-date-pickers-pro": "^5.0.9",
+    "@react-google-maps/api": "^2.17.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -23,6 +25,7 @@
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "dotenv-webpack": "^8.0.1",
+    "google-map-react": "^2.2.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-awesome-slider": "^4.1.0",
@@ -33,13 +36,13 @@
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
     "react-swipeable-views-utils": "^0.14.0",
+    "recharts": "^2.2.0",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
     "styled-components": "^5.3.6",
     "typescript": "^4.9.3",
-    "web-vitals": "^2.1.4",
-    "dotenv": "^16.0.3"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

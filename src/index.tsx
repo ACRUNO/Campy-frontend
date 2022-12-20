@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { Auth0Provider } from '@auth0/auth0-react'
 import store from './store/index';
 import axios from 'axios';
 //import dotenv from 'dotenv';
@@ -18,11 +19,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
-    </Provider>
+     <Auth0Provider domain='dev-pxuenzxdcfyoadkw.us.auth0.com' clientId='MqHATjuTUW4q3hlJw9LgG4lYEh5nxXbu' redirectUri={process.env.REACT_APP_REDIRECT_AUTH0 || 'http://localhost:3000/login'}>
+      <Provider store={store}>    
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+      </Provider>
+    </Auth0Provider>
   </React.StrictMode>
 );
 
