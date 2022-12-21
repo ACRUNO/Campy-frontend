@@ -1,7 +1,9 @@
-import { USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING } from "../actions";
+import { USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
+import { Dayjs } from 'dayjs';
+
 
 
 const initialState: {
@@ -20,9 +22,13 @@ const initialState: {
     periodoAgua: number;
     allPeriodoAbierto: { id: number, periodo_abierto: string }[];
     periodoAbierto: number;
+    filtrosBooking: filterCamps;
+    fechaIngreso: string;
+    fechaEgreso: string;
+    fechaIngresoDayjs:Dayjs | null;
+    fechaEgresoDayjs:Dayjs | null
     campingsDash:{id:number, nombre_camping:string, habilitado:number}[];
     usuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]
-    filtrosBooking: filterCamps
 } = {
 
     //ESTADOS GLOBALES
@@ -66,7 +72,11 @@ const initialState: {
         salon_sum: 0,
         wifi: 0,
         estacionamiento: 0
-    }
+    },
+    fechaIngreso: "",
+    fechaEgreso: "",
+    fechaIngresoDayjs:null,
+    fechaEgresoDayjs: null
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -222,13 +232,29 @@ function rootReducer(state: any = initialState, action: any): any {
         case RESET_FILTROS:
             return {
                 ...state,
-                filtrosBooking: reset
+                filtrosBooking: reset(),
+                provincia:0,
+                localidad:0,
+                fechaIngresoDayjs:null,
+                fechaEgresoDayjs:null
             }
         case GET_FILTERS_CAMPING:
             return {
                 ...state,
                 campings: action.payload
             }
+        case FILTER_INGRESO:
+            return {
+                ...state,
+                fechaIngreso: action.payload?.toDate().toLocaleDateString().split('/').reverse().join('/'),
+                fechaIngresoDayjs: action.payload
+            }
+            case FILTER_EGRESO:
+                return {
+                    ...state,
+                    fechaEgreso: action.payload?.toDate().toLocaleDateString().split('/').reverse().join('/'),
+                    fechaEgresoDayjs: action.payload
+                }
         case GET_FAVORITES_CAMPINGS:
             return {
                 ...state,

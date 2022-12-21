@@ -5,6 +5,7 @@ import { ThunkAction } from 'redux-thunk'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { func } from 'prop-types'
 import { filterCamps } from '../reducer/estados'
+import dayjs, { Dayjs } from 'dayjs';
 
 
 export const GET_PROVINCIAS: string = 'GET_PROVINCIAS'
@@ -30,6 +31,10 @@ export const FILTROS_PRECIOS: string = 'FILTROS_PRECIOS'
 export const FILTROS_PRINCIPALES: string = 'FILTROS_PRINCIPALES'
 export const RESET_FILTROS: string = 'RESET_FILTROS'
 export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
+export const FILTER_INGRESO: string = 'FILTER_INGRESO'
+export const FILTER_EGRESO: string = 'FILTER_EGRESO'
+
+
 
 
 
@@ -387,4 +392,20 @@ export function getFiltersCamping(filters: filterCamps) {
             console.log(error)
         }
     }
+}
+
+
+export function FilterIngreso(date:Dayjs | null){
+    return {
+        type: FILTER_INGRESO,
+        payload: date
+    }   
+}
+
+
+export function FilterEgreso(date:Dayjs | null){
+    return {
+        type: FILTER_EGRESO,
+        payload: date
+    }   
 }
