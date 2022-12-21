@@ -2,8 +2,6 @@ import { FILTER_PARCELA,USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAM
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
-import { GET_FAVORITES_CAMPINGS, REMOVE_FAVORITE_CAMPING} from "../actions/User.action";
-import { Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
 import { Dayjs } from 'dayjs';
 
 const initialState: {
