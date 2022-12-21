@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../../store';
 import ConfirmAlert from '../../helpers/ConfirmAlert';
 import { AlertConfirmType } from '../../../auxiliar';
 import { updateUser } from '../../../actions/Login.action';
+import { VERDE } from '../../helpers/colors';
 
 export default function Misdatos() {
 
@@ -127,7 +128,7 @@ export default function Misdatos() {
             {
               user.foto 
               ? <Avatar src={user.foto} sx={{height: '150px', width: '150px', m: '20px auto'}} /> 
-              : <Avatar sx={{height: '150px', width: '150px', fontSize: '3.5rem', m: '20px auto'}} >
+              : <Avatar sx={{height: '150px', width: '150px', fontSize: '3.5rem', m: '20px auto', bgcolor: VERDE}} >
                   {user.username[0].toUpperCase()}
                 </Avatar>
             }

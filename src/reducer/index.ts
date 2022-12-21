@@ -1,14 +1,15 @@
 import { FILTER_PARCELA,USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
+import { GET_FAVORITES_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
+import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
 import { GET_FAVORITES_CAMPINGS, REMOVE_FAVORITE_CAMPING} from "../actions/User.action";
 import { Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
 import { Dayjs } from 'dayjs';
 
-
-
 const initialState: {
     user: User | null;
-    favoritesCampings: {favorites: FavoritesCampings[], done: boolean };
+    favoritesCampings: { favorites: FavoritesCampings[], done: boolean };
+    userBookings: { bookings: Bookings[], done: boolean };
     allProvincias: { id: number, nombre: string, imagen: string }[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
@@ -34,6 +35,7 @@ const initialState: {
     //ESTADOS GLOBALES
     user: null,
     favoritesCampings: { favorites: [], done: false },
+    userBookings: { bookings: [], done: false },
     allProvincias: [],
     detailCamping: [],
     allCampings: [],
@@ -267,6 +269,14 @@ function rootReducer(state: any = initialState, action: any): any {
                 favoritesCampings: { 
                     favorites: state.favoritesCampings.favorites.filter((fav: { id: number }) => fav.id !== action.payload), 
                     done: true 
+                }
+            }
+        case GET_USER_BOOKINGS:
+            return {
+                ...state,
+                userBookings: {
+                    bookings: action.payload,
+                    done: true
                 }
             }
             case FILTER_PARCELA:
