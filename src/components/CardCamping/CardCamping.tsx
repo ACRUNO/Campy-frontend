@@ -1,5 +1,6 @@
 import React from "react";
-import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material';
+import {Box, Card, Grid, Typography, CardContent, CardMedia } from '@mui/material'
+import { Link } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import Style from "../Camping/Camping.module.css"
 
@@ -18,7 +19,7 @@ type Props = {
 export default function CardCamping( props: Props){
     return (
     
-    <Link href={`/booking/camping/${props.id}`}>
+    <Link to={`/booking/camping/${props.id}`} style={{textDecoration: 'none'}}>
     <Card sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around"}}>
         <CardMedia
         component="img"

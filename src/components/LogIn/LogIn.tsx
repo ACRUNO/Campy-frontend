@@ -6,11 +6,10 @@ import { LockOutlined as LockOutlinedIcon, Google as GoogleIcon } from '@mui/ico
 import { AppDispatch, RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
-import { loginUser, loginUserWithGoogle } from '../../actions';
+import { loginUser, loginUserWithGoogle } from '../../actions/Login.action';
 import Alert from '../helpers/Alert';
 import axios from 'axios';
 import { ROJO } from '../helpers/colors';
-import { useNavigate } from 'react-router-dom';
 import { AlertType } from '../../auxiliar';
 import Loader from '../helpers/Loader';
 

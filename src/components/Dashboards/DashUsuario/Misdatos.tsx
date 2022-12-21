@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store';
 import ConfirmAlert from '../../helpers/ConfirmAlert';
 import { AlertConfirmType } from '../../../auxiliar';
-import { updateUser } from '../../../actions';
+import { updateUser } from '../../../actions/Login.action';
 
 export default function Misdatos() {
 

@@ -2,11 +2,7 @@ import axios from 'axios'
 import { RootState, AppDispatch } from '../store'
 import { AnyAction } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { Dispatch } from 'react'
-import { SetStateAction } from 'react'
-import { User } from '@auth0/auth0-react'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
-import { AlertType } from '../auxiliar'
 import { func } from 'prop-types'
 import { filterCamps } from '../reducer/estados'
 import dayjs, { Dayjs } from 'dayjs';
@@ -21,14 +17,14 @@ export const GET_DETAILS: string = "GET_DETAILS"
 export const CREATE_CAMPING: string = 'CREATE_CAMPING'
 export const FILTER_PROVINCIA: string = 'FILTER_PROVINCIA'
 export const FILTER_LOCALIDAD: string = 'FILTER_LOCALIDAD'
-export const LOGIN_USER: string = 'LOGIN_USER'
-export const LOGOUT_USER: string = 'LOGOUT_USER'
 export const GET_CATEGORIAS: string = 'GET_CATEGORIAS'
 export const FILTER_CATEGORIA: string = 'FILTER_CATEGORIA'
 export const GET_PERIODO_AGUA: string = 'GET_PERIODO_AGUA'
 export const FILTER_PERIODO_AGUA: string = 'FILTER_PERIODO_AGUA'
 export const GET_PERIODO_ABIERTO: string = 'GET_PERIODO_ABIERTO'
 export const FILTER_PERIODO_ABIERTO: string = 'FILTER_PERIODO_ABIERTO'
+export const CAMPINGS_DASH: string = 'CAMPINGS_DASH'
+export const USUARIOS_DASH: string = 'USUARIOS_DASH'
 export const FILTROS_COMBINADOS: string = 'FILTROS_COMBINADOS'
 export const FILTROS_BOOLEANOS: string = 'FILTROS_BOOLEANOS'
 export const FILTROS_PRECIOS: string = 'FILTROS_PRECIOS'
@@ -37,6 +33,7 @@ export const RESET_FILTROS: string = 'RESET_FILTROS'
 export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
 export const FILTER_INGRESO: string = 'FILTER_INGRESO'
 export const FILTER_EGRESO: string = 'FILTER_EGRESO'
+
 
 
 
@@ -178,38 +175,6 @@ export function getDetails(id: any): ThunkAction<void, RootState, unknown, AnyAc
 }
 
 
-export function loginUser(data: {
-        email: string, 
-        clave: string,     
-    }, 
-    remember: boolean, 
-    setStateOpen: Dispatch<SetStateAction<AlertType>>,
-    setOpenLoader: Dispatch<SetStateAction<boolean>>): ThunkAction<void, RootState, unknown, AnyAction> {
-    return async function (dispatch:AppDispatch) {
-        try {
-            let result = await axios.post('/api/login', data);
-
-            return dispatch({
-                type: LOGIN_USER,
-                payload: {...result.data, remember}
-            })
-        } catch(error: any) {
-            setStateOpen(() => ({
-                open: true,
-                title: 'USUARIO INVÁLIDO',
-                description: 'El correo o clave proporcionado son erróneos.',
-                confirm: 'ok...',
-                type: 'error',
-                navigateTo: null
-            }))
-            console.log(error.response.data)
-        } finally {
-            setOpenLoader(false)
-        }
-    }
-}
-
-
 export function filterCategoria(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch:AppDispatch) {
@@ -282,23 +247,6 @@ export function filterPeriodoAbierto(id:number): ThunkAction<void, RootState, un
     }
 }
 
-
-
-export function loginUserWithToken(data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
-    return async function (dispatch: AppDispatch) {
-        try {
-            let result = await axios.post('/api/login', data);
-
-            return dispatch({
-                type: LOGIN_USER,
-                payload: result.data
-            })
-        } catch(error: any) {
-            console.log(error?.response.data)
-        }
-    }
-}
-
 export function getAllCategorias(): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch:AppDispatch) {
@@ -314,49 +262,79 @@ export function getAllCategorias(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
+export function getCampings_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-export function loginUserWithGoogle(data: User | undefined,  remember: boolean, setStateOpen: Dispatch<SetStateAction<AlertType>>): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            console.log(process.env.REACT_APP_API_KEY)
-            let result = await axios.post('/api/login/google', {...data, apikey: process.env.REACT_APP_API_KEY});
-
+            var json = await axios.get(`/api/campings/habilitacion`);
             return dispatch({
-                type: LOGIN_USER,
-                payload: {...result.data, remember}
+                type: CAMPINGS_DASH,
+                payload: json.data
             })
-            
-        } catch(error: any) {
-            error && setStateOpen(() => ({
-                    open: true,
-                    title: `ERROR: ${error.response.data.error}`,
-                    description: error.response.data.message,
-                    confirm: 'ok...',
-                    type: 'error',
-                    navigateTo: null
-                }));
-
-                console.log(error)
-            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
-export function logoutUser() {
-    return { type: LOGOUT_USER };
-}
+export function habilitacion_camping(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
 
-export function updateUser(
-    queries: string, 
-    data: { token: string, userId: number }): ThunkAction<void, RootState, unknown, AnyAction> {
-    return async function(dispatch: AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
-            const result: User = await axios.put(`/api/usuarios/actualizar?${queries}`, data);
-           
-            dispatch({ type:  LOGIN_USER, payload: { ...result.data, remember: localStorage.getItem('remember') === 'true' } });
-        } catch(e) {}
+            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_CAMPING",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
+export function getUsuarios_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/usuarios/habilitacion`);
+            return dispatch({
+                type: USUARIOS_DASH,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function habilitacion_usuario(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function tipo_usuario(id:number,  data: {tipo:string, token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/tipo/${id}`, data);
+            return dispatch({
+                type: "TIPO_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }}}
+        
 export function filtrosCombinados(name: string, value: number){
     const data = {name: name, value: value}
     return {

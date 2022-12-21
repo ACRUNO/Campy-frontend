@@ -9,8 +9,10 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Scatter
+  Scatter,
+  Label
 } from "recharts";
+import { VERDE, VERDE_OSCURO } from '../../../helpers/colors';
 
 const data = [
   {
@@ -48,32 +50,6 @@ const data = [
 
 
 
-// const data2 = [
-//   {
-//     mes: "Enero",
-//     usuariostotales: data[0].usuarios,
-//   },
-//   {
-//     mes: "Febrero",
-//     usuarios: ,
-//   },
-//   {
-//     mes: "Marzo",
-//     usuarios: 1397,
-//   },
-//   {
-//     mes: "Abril",
-//     usuarios: 1480,
-//   },
-//   {
-//     mes: "Mayo",
-//     uv: 1520,
-//   },
-//   {
-//     mes: "Junio",
-//     usuarios: 1400,
-//   }
-// ];
 
 export default function GrafReservas() {
   return (
@@ -89,12 +65,14 @@ export default function GrafReservas() {
       }}
     >
       <CartesianGrid stroke="#f5f5f5" />
-      <XAxis dataKey="mes" />
+      <XAxis dataKey="mes">
+      <Label value="Meses" offset={2} position="bottom" />
+      </XAxis>
       <YAxis />
       <Tooltip />
-      <Legend />
-      <Bar dataKey="usuarios" barSize={20} fill="#413ea0" />
-      <Line type="monotone" dataKey="totales" stroke="#ff7300" />
+      <Legend verticalAlign="top" align="center" />
+      <Bar name="Reservas" dataKey="usuarios" barSize={20} fill="#5F8D4E" />
+      <Line name="Reservas Totales" type="monotone" dataKey="totales" stroke="#ff7300" />
     </ComposedChart>
   );
 }
