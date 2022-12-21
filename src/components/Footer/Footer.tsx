@@ -26,7 +26,7 @@ export default function Footer() {
 
 
   return (
-    <Box sx={{ p: '50px 0', mt:"5rem"}} component="footer" className={Style.footer}>
+    <Box sx={{ p: '50px 0'}} component="footer" className={Style.footer}>
         <Grid container direction="row"  justifyContent="center" sx={{mt: 5}} >
         <Box className={Style.img}
           component="img"

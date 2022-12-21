@@ -1,20 +1,29 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from '../store/index';
+import { AppDispatch, RootState } from '../../store/index';
 import { MouseEvent } from 'react';
 import { Box, Select, MenuItem, InputLabel, FormControl, TextField, Button, Grid } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 //import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { Dayjs } from 'dayjs';
-import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterProvincia, getProvincias, getLocalidades, getAllCampings, } from '../actions/index'
-import { Campings } from "../reducer/estados";
+import dayjs, { Dayjs } from 'dayjs';
+import { getCampingsProvincias, getCampingsLocalidades, filterLocalidad, filterProvincia, getProvincias, getLocalidades, getAllCampings, filtrosPrincipales, getFiltersCamping, FilterIngreso, FilterEgreso, } from '../../actions/index'
+import { Campings } from "../../reducer/estados";
+import { TodayTwoTone } from "@mui/icons-material";
+import { Root } from "react-dom/client";
 
 
 
-export default function FiltrosPrincipales() {
+
+type Props = {
+    setCurrentPage: (value: React.SetStateAction<number>) => void
+  }
+
+
+
+export default function FiltrosPrincipales(props:Props) {
 
     
 
@@ -26,17 +35,26 @@ export default function FiltrosPrincipales() {
     const provincia: number = useSelector((state: RootState) => state.provincia)
     const localidad: number = useSelector((state: RootState) => state.localidad)
     const campings:Campings[] = useSelector((state: RootState) => state.campings)
+    const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
+    const fechaIngreso:string = useSelector((state:RootState) => state.fechaIngreso)
+    const fechaEgreso:string = useSelector((state:RootState) => state.fechaEgreso)
+    const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
+    const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
 
 
     useEffect(() => {
+        dispatch(getFiltersCamping(filtrosBook));
         dispatch(getProvincias())
-    }, [dispatch])
+    }, [dispatch, filtrosBook])
 
 
+    const today:Dayjs = dayjs();
 
+    const [ingreso, setIngreso] = React.useState<Dayjs | null>(null);
+    const [egreso, setEgreso] = React.useState<Dayjs | null>(null);
 
-    const [value, setValue] = React.useState<Dayjs | null>(null);
-    const [value2, setValue2] = React.useState<Dayjs | null>(null);
+    // console.log(ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/'));
+    
 
 
 
@@ -44,7 +62,6 @@ export default function FiltrosPrincipales() {
         e.preventDefault();
         dispatch(filterProvincia(Number(e.target.value) as number))
         dispatch(getLocalidades(Number(e.target.value) as number))
-
     };
 
     const handleChangeLocalidad = (e: SelectChangeEvent) => {
@@ -53,12 +70,27 @@ export default function FiltrosPrincipales() {
 
     };
 
-    const handleSubmit = (e: MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias());
-        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades());
+
+    const handleIngreso = (e:Dayjs | null) => {
+        dispatch(FilterIngreso(e))
     }
 
+    const handleEgreso = (e: Dayjs | null) => {
+        dispatch(FilterEgreso(e))
+        /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
+    }
+
+  
+
+    const handleSubmit = (e: MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        const fecha_ingreso: string | undefined = ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
+        const fecha_egreso: string | undefined = egreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
+        dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
+        props.setCurrentPage(1)
+        
+    }
+    
 
 
     return (
@@ -74,8 +106,8 @@ export default function FiltrosPrincipales() {
                         color="secondary"
                         value={String(provincia)}
                         onChange={handleChangeProvincia}>
-                        {allProvincias?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        {allProvincias?.map((m, i) => (
+                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
 
@@ -102,10 +134,11 @@ export default function FiltrosPrincipales() {
                             label="Ingreso"
                             openTo="day"
                             views={['year', 'month', 'day']}
-                            value={value}
+                            value={fechaIngresoDayjs}
                             onChange={(newValue) => {
-                                setValue(newValue);
+                                handleIngreso(newValue);
                             }}
+                            minDate={today}
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
@@ -116,10 +149,11 @@ export default function FiltrosPrincipales() {
                             label="Egreso"
                             openTo="day"
                             views={['year', 'month', 'day']}
-                            value={value2}
+                            value={fechaEgresoDayjs}
                             onChange={(newValue) => {
-                                setValue2(newValue)
+                                handleEgreso(newValue)
                             }}
+                            minDate={fechaIngresoDayjs}
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>

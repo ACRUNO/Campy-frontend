@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades,filterProvincia,filterLocalidad,getAllCampings} from "../../actions";
+import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocalidades,filterProvincia,filterLocalidad,getAllCampings, filtrosPrincipales} from "../../actions";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -81,29 +81,31 @@ export default function BasicSelect() {
 
 
 
-    const handleChangeProvincia = (e: SelectChangeEvent) => {
+    const handleChangeProvincia = (e: SelectChangeEvent<unknown>) => {
         e.preventDefault();
         dispatch(filterProvincia(Number(e.target.value) as number))
         dispatch(getLocalidades(Number(e.target.value) as number))
 
     };
 
-    const handleChangeLocalidad = (e: SelectChangeEvent) => {
+    const handleChangeLocalidad = (e: SelectChangeEvent<unknown>) => {
         e.preventDefault();
         dispatch(filterLocalidad(Number(e.target.value) as number))
     };
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
-        if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        // if (provincia !== 0 && localidad === 0) dispatch(getCampingsProvincias())
+        // if (provincia !== 0 && localidad !== 0) dispatch(getCampingsLocalidades())
+        dispatch(filtrosPrincipales(provincia, localidad, undefined, undefined))
         navigate("/booking")
         document.documentElement.scrollTop = 0
     }
+    
 
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 70%)", pt: 1.25, pb: 1.25, mb: "3%" }}>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 70%)", pt: 1.25, pb: 1.25 }}>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
 
 {/*                 <Search>
@@ -126,8 +128,8 @@ export default function BasicSelect() {
                         label="provincia"
                         color="secondary"
                         onChange={handleChangeProvincia}>
-                        {allProvincias?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        {allProvincias?.map((m, i) => (
+                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
@@ -142,8 +144,8 @@ export default function BasicSelect() {
                         label="localidad"
                         color="secondary"
                         onChange={handleChangeLocalidad}>
-                        {allLocalidades?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        {allLocalidades?.map((m, i) => (
+                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>

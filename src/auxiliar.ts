@@ -1,5 +1,7 @@
 
-const tipodato_allcampings = {id: number,
+
+export interface tipodato_allcampings {
+    id: number,
     nombre_camping: string,
     descripcion_camping: string,
     direccion: string,
@@ -31,6 +33,29 @@ const tipodato_allcampings = {id: number,
     parcela_iluminacion_toma_corriente: number,
     parcela_superficie: number,
     descripcion_periodo: string,
-    descripcion_periodo_agua: string}
+    descripcion_periodo_agua: string
+}
 
-    export default tipodato_allcampings
+export interface datosMenu {
+    idButton: string,
+    button: string | React.ReactElement,
+    menuItems: {key: any, value: string}[],
+    handleSelectItems: (event: { currentTarget: any }) => void
+}
+
+export interface AlertType {
+    open: boolean,
+    title: string,
+    description: string,
+    confirm: string,
+    type: 'success' | 'error' | 'person',
+    navigateTo: string | null
+};
+
+export interface AlertConfirmType {
+    open: boolean,
+    title: string,
+    description: string,
+    confirm: () => void,
+    denegate: () => void
+};

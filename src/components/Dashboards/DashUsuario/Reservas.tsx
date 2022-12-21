@@ -1,5 +1,4 @@
-import * as React from 'react';
-import Link from '@mui/material/Link';
+import { useEffect, useState, ChangeEvent } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,39 +6,37 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Grid, Paper} from "@mui/material";
 import Title from './Title';
-import {Campings} from '../../../reducer/estados';
 import { useDispatch, useSelector} from "react-redux";
 import { AppDispatch, RootState } from '../../../store/index';
-import * as actions from "../../../actions";
-import { useEffect, useState } from "react";
 import TablePagination from '@mui/material/TablePagination';
+import { getUserBookings } from '../../../actions/User.action';
+import { Bookings } from '../../../reducer/estados';
 
 
 export default function Reservas() {
   const dispatch: AppDispatch = useDispatch()
-  const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings) 
+  const { bookings, done } = useSelector((state: RootState) => state.userBookings)
+  const { id }: { id: number } = useSelector((state: RootState) => state.user)  
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
+    console.log(newPage)
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-
-  useEffect(()=>{
-    if(!allCampings.length){ 
-    dispatch(actions.getAllCampings())}
-  },[dispatch,rowsPerPage]
-)
+  useEffect(() => {
+    if(!bookings.length && !done) dispatch(getUserBookings(id));
+  }, [bookings])
   
   return (
-    <React.Fragment>
+    <>
         <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   
@@ -48,21 +45,23 @@ export default function Reservas() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Localidad</TableCell>
-            <TableCell>Provincia</TableCell>
-            <TableCell>Contacto</TableCell>
+            <TableCell>Nombre Camping</TableCell>
+            <TableCell>Correo Propietario</TableCell>
+            <TableCell>Desde</TableCell>
+            <TableCell>Hasta</TableCell>
+            <TableCell>Total</TableCell>
             <TableCell align="right">Estado</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {allCampings.map((c) => (
+          {bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings) => (
             <TableRow key={c.id}>
               <TableCell>{c.nombre_camping}</TableCell>
-              <TableCell>{c.localidad}</TableCell>
-              <TableCell>{c.provincia}</TableCell>
-              <TableCell>{c.telefono}</TableCell>
-              <TableCell align="right">Habilitado**</TableCell>
+              <TableCell>{c.correo_prop}</TableCell>
+              <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
+              <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
+              <TableCell>$ {c.total}</TableCell>
+              <TableCell align="right">{c.descrip_estado}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -70,14 +69,14 @@ export default function Reservas() {
       <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={allCampings.length}
+          count={bookings.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
         </Paper>
-              </Grid>
-    </React.Fragment>
+      </Grid>
+    </>
   );
 }

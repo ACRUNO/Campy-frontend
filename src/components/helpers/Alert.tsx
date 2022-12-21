@@ -1,4 +1,4 @@
-import React, { SetStateAction, Dispatch } from 'react';
+import { SetStateAction, Dispatch } from 'react';
 import { 
   Box, 
   Button, 
@@ -10,12 +10,12 @@ import {
 } from '@mui/material';
 import { 
   CheckCircle as CheckCircleIcon, 
-  Error as ErrorIcon 
+  Error as ErrorIcon,
+  Person as PersonIcon 
 } from '@mui/icons-material';
 import { ROJO, VERDE_CLARO } from './colors';
 import { useNavigate } from 'react-router-dom';
-import { AlertType } from '../LogIn/LogIn';
-import { NavigateToItem } from 'typescript';
+import { AlertType } from '../../auxiliar';
 
 
 interface PropsAlert extends AlertType {
@@ -43,11 +43,12 @@ export default function Alert({
 
   const icons = {
     success: <CheckCircleIcon sx={{fontSize: 100, width: '100%', mt: 3, fill: VERDE_CLARO}} />,
-    error: <ErrorIcon sx={{fontSize: 100, width: '100%', mt: 3, fill: ROJO}} />
+    error: <ErrorIcon sx={{fontSize: 100, width: '100%', mt: 3, fill: ROJO}} />,
+    person: <PersonIcon sx={{fontSize: 100, width: '100%', mt: 3, fill: VERDE_CLARO}} />
   }
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
         fullWidth
         maxWidth="md"
@@ -66,6 +67,6 @@ export default function Alert({
           <Button onClick={handlerClose} variant="contained" color="secondary">{confirm}</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }
