@@ -1,0 +1,47 @@
+div.card-container {
+  height: 250px;
+  width: 300px;
+  position: relative;
+  transform: scale(1);
+  background-color: black;
+  border-radius: 15px;
+  transition: transform .4s ease;
+}
+
+div.card-container:hover {
+  transform: scale(1.05);
+}
+
+img.card-image {
+  height: 100%; 
+  width: 100%;
+  opacity: .7;
+  object-fit: cover;
+}
+
+h4.card-title {
+  color: white;
+  font-size: 1.6rem;
+  position: absolute;
+  top: calc(100% - 2.3rem); 
+  left: .7rem;
+  cursor: pointer;
+}
+
+svg.card-remove-icon {
+  color: white;
+  font-size: 2rem;
+  position: absolute;
+  top: .4rem;
+  left: calc(100% - 2.3rem);
+  cursor: pointer;
+}
+
+div.cards-container {
+  margin: 30px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 300px);
+  column-gap: 30px;
+  row-gap: 30px;
+}

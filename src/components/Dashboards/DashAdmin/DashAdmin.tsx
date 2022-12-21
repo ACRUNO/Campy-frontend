@@ -22,6 +22,7 @@ import Estadistica from './Estadistica';
 import Misdatos from './Misdatos';
 import Camping from "./Camping"
 import Usuarios from './Usuarios';
+import { VERDE, VERDE_OSCURO } from '../../helpers/colors';
 
 // function Copyright(props: any) {
 //   return (
@@ -86,7 +87,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const mdTheme = createTheme();
+// const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
@@ -101,18 +102,19 @@ function DashboardContent() {
   const[localidades, setLocalidades] = React.useState(false);
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    // <ThemeProvider theme={mdTheme}>
       <Box component= "div" sx={{ display: 'flex'}}>
         <CssBaseline />
         <AppBar position="fixed" sx={{mt:8}} open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
+              bgcolor: VERDE_OSCURO
             }}
           >
             <IconButton
               edge="start"
-              color="inherit"
+              color="primary"
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
@@ -125,7 +127,7 @@ function DashboardContent() {
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              color="primary"
               noWrap
               sx={{ flexGrow: 1 }}
             >
@@ -140,6 +142,7 @@ function DashboardContent() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
+              bgcolor: VERDE,
             }}
           >
             <IconButton onClick={toggleDrawer}>
@@ -174,7 +177,7 @@ function DashboardContent() {
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }
 

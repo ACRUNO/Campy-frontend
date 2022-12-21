@@ -9,7 +9,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Scatter
+  Scatter,
+  Label
 } from "recharts";
 
 const data = [
@@ -89,12 +90,14 @@ export default function GrafUsuarios() {
       }}
     >
       <CartesianGrid stroke="#f5f5f5" />
-      <XAxis dataKey="mes" />
+      <XAxis dataKey="mes" name="Mes">
+      <Label value="Meses" offset={2} position="bottom" />
+      </XAxis>
       <YAxis />
       <Tooltip />
-      <Legend />
-      <Bar dataKey="usuarios" barSize={20} fill="#413ea0" />
-      <Line type="monotone" dataKey="totales" stroke="#ff7300" />
+      <Legend verticalAlign="top" align="center" />
+      <Bar name="Nuevos Usuarios" dataKey="usuarios" barSize={20} fill="#5F8D4E" />
+      <Line name= "Usuarios Totales" type="monotone" dataKey="totales" stroke="#ff7300" />
     </ComposedChart>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { PieChart, Pie, Sector } from "recharts";
+import { VERDE, VERDE_CLARO, VERDE_OSCURO } from '../../../helpers/colors';
 
 const data = [
   { name: "Cordoba", value: 400 },
@@ -45,7 +46,7 @@ const renderActiveShape = (props: any) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
-        fill={fill}
+        fill="#285430"
       />
       <Sector
         cx={cx}
@@ -54,7 +55,7 @@ const renderActiveShape = (props: any) => {
         endAngle={endAngle}
         innerRadius={outerRadius + 6}
         outerRadius={outerRadius + 10}
-        fill={fill}
+        fill="#285430"
       />
       <path
         d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
@@ -67,7 +68,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Reservas ${value}`}</text>
+      >{`${value} campings`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -91,7 +92,7 @@ export default function Torta() {
   );
 
   return (
-    <PieChart width={500} height={400}>
+    <PieChart width={500} height={380}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
@@ -100,7 +101,7 @@ export default function Torta() {
         cy={200}
         innerRadius={60}
         outerRadius={80}
-        fill="#8884d8"
+        fill="#A4BE7B"
         dataKey="value"
         onMouseEnter={onPieEnter}
       />
