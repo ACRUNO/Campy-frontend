@@ -5,6 +5,7 @@ import { ThunkAction } from 'redux-thunk'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { func } from 'prop-types'
 import { filterCamps } from '../reducer/estados'
+import dayjs, { Dayjs } from 'dayjs';
 
 
 export const GET_PROVINCIAS: string = 'GET_PROVINCIAS'
@@ -22,12 +23,20 @@ export const GET_PERIODO_AGUA: string = 'GET_PERIODO_AGUA'
 export const FILTER_PERIODO_AGUA: string = 'FILTER_PERIODO_AGUA'
 export const GET_PERIODO_ABIERTO: string = 'GET_PERIODO_ABIERTO'
 export const FILTER_PERIODO_ABIERTO: string = 'FILTER_PERIODO_ABIERTO'
+export const CAMPINGS_DASH: string = 'CAMPINGS_DASH'
+export const USUARIOS_DASH: string = 'USUARIOS_DASH'
 export const FILTROS_COMBINADOS: string = 'FILTROS_COMBINADOS'
 export const FILTROS_BOOLEANOS: string = 'FILTROS_BOOLEANOS'
 export const FILTROS_PRECIOS: string = 'FILTROS_PRECIOS'
 export const FILTROS_PRINCIPALES: string = 'FILTROS_PRINCIPALES'
 export const RESET_FILTROS: string = 'RESET_FILTROS'
 export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
+export const FILTER_INGRESO: string = 'FILTER_INGRESO'
+export const FILTER_EGRESO: string = 'FILTER_EGRESO'
+export const FILTER_PARCELA:string = 'FILTER_PARCELA'
+
+
+
 
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
@@ -106,6 +115,9 @@ export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyActio
         }
     }
 }
+
+
+
 
 export function filterProvincia(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
@@ -254,7 +266,79 @@ export function getAllCategorias(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
+export function getCampings_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
 
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/campings/habilitacion`);
+            return dispatch({
+                type: CAMPINGS_DASH,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function habilitacion_camping(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_CAMPING",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function getUsuarios_dash(): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/usuarios/habilitacion`);
+            return dispatch({
+                type: USUARIOS_DASH,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function habilitacion_usuario(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            return dispatch({
+                type: "HABILITACION_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function tipo_usuario(id:number,  data: {tipo:string, token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/usuarios/tipo/${id}`, data);
+            return dispatch({
+                type: "TIPO_USUARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }}}
+        
 export function filtrosCombinados(name: string, value: number){
     const data = {name: name, value: value}
     return {
@@ -271,7 +355,7 @@ export function filtrosBooleanos(name: string, value: boolean){
     }
 }
 
-export function filtrosPrecios(name: string, value: number[]){
+export function filtrosPrecios(name: string, value: number | number[]){
     const data = {name: name, value: value}
     return {
         type: FILTROS_PRECIOS,
@@ -311,5 +395,28 @@ export function getFiltersCamping(filters: filterCamps) {
         } catch(error: any) {
             console.log(error)
         }
+    }
+}
+
+
+export function FilterIngreso(date:Dayjs | null){
+    return {
+        type: FILTER_INGRESO,
+        payload: date
+    }   
+}
+
+
+export function FilterEgreso(date:Dayjs | null){
+    return {
+        type: FILTER_EGRESO,
+        payload: date
+    }   
+}
+
+export function FilterParcela (tamaño : number[]){
+    return{
+        type: FILTER_PARCELA,
+        payload: tamaño
     }
 }
