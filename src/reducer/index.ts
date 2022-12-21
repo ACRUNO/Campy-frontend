@@ -1,6 +1,6 @@
-import { USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO } from "../actions";
+import { FILTER_PARCELA,USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
-import { GET_FAVORITES_CAMPINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
+import { GET_FAVORITES_CAMPINGS, REMOVE_FAVORITE_CAMPING} from "../actions/User.action";
 import { Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
 import { Dayjs } from 'dayjs';
 
@@ -269,6 +269,15 @@ function rootReducer(state: any = initialState, action: any): any {
                     done: true 
                 }
             }
+            case FILTER_PARCELA:
+                return {
+                    ...state,
+                    filtrosBooking: {
+                        ...state.filtrosBooking,
+                        parcela_superficie: action.payload
+                    }
+                    
+                }
         default: return { ...state }
 
     }

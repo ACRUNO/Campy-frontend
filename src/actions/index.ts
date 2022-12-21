@@ -33,6 +33,7 @@ export const RESET_FILTROS: string = 'RESET_FILTROS'
 export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
 export const FILTER_INGRESO: string = 'FILTER_INGRESO'
 export const FILTER_EGRESO: string = 'FILTER_EGRESO'
+export const FILTER_PARCELA:string = 'FILTER_PARCELA'
 
 
 
@@ -114,6 +115,9 @@ export function getAllCampings(): ThunkAction<void, RootState, unknown, AnyActio
         }
     }
 }
+
+
+
 
 export function filterProvincia(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
@@ -351,7 +355,7 @@ export function filtrosBooleanos(name: string, value: boolean){
     }
 }
 
-export function filtrosPrecios(name: string, value: number[]){
+export function filtrosPrecios(name: string, value: number | number[]){
     const data = {name: name, value: value}
     return {
         type: FILTROS_PRECIOS,
@@ -408,4 +412,11 @@ export function FilterEgreso(date:Dayjs | null){
         type: FILTER_EGRESO,
         payload: date
     }   
+}
+
+export function FilterParcela (tamaño : number[]){
+    return{
+        type: FILTER_PARCELA,
+        payload: tamaño
+    }
 }

@@ -16,7 +16,14 @@ import { Root } from "react-dom/client";
 
 
 
-export default function FiltrosPrincipales() {
+
+type Props = {
+    setCurrentPage: (value: React.SetStateAction<number>) => void
+  }
+
+
+
+export default function FiltrosPrincipales(props:Props) {
 
     
 
@@ -48,7 +55,8 @@ export default function FiltrosPrincipales() {
 
     // console.log(ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/'));
     
-    
+
+
 
     const handleChangeProvincia = (e: SelectChangeEvent) => {
         e.preventDefault();
@@ -79,6 +87,7 @@ export default function FiltrosPrincipales() {
         const fecha_ingreso: string | undefined = ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
         const fecha_egreso: string | undefined = egreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
+        props.setCurrentPage(1)
         
     }
     
