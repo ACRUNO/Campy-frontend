@@ -109,7 +109,7 @@ export default function NavBar() {
                                 }
                                 menuItems={[
                                     {key: 'Mi Perfil', value: 'perfil'},
-                                    {key: 'Mis campings', value: 'propietario'},
+                                    {key: 'Crear camping', value: 'propietario'},
                                     {key: <>Salir <LogoutIcon sx={{fill: ROJO, ml: '10px'}} /></>, value: 'logout'}
                                 ]}
                                 handleSelectItems={handleSelectItems}

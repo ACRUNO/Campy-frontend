@@ -36,7 +36,7 @@ import { addFavoriteCamping } from '../../actions/User.action';
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
   const params = useParams()
-  const { token }: { token: string } = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user);
   let camp = useSelector((state : any) => state.detailCamping)
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
@@ -104,6 +104,7 @@ if(stay > 0 && travellers > 0){
 const handleReserv = () => {
        navigate('../../');
     }
+
 
 
 return(
@@ -331,19 +332,22 @@ return(
       
 
          
-      
-        <Typography 
-          className={Style['add-fav']}  
-          variant="h5" 
-          color="primary"
-          onClick={() => {
-            if(params.id) dispatch(addFavoriteCamping(Number(params.id), token));
+        {
+          user && 
+          <Typography 
+            className={Style['add-fav']}  
+            variant="h5" 
+            color="primary"
+            onClick={() => {
+              if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
 
-            setFavorite(true)
-          }}
-        >
-           Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
-        </Typography>
+              setFavorite(true)
+            }}
+          >
+            Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
+          </Typography>
+        }
+        
         <Footer/>
        
          </Box>         
