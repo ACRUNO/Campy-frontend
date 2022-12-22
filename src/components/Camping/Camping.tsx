@@ -32,7 +32,6 @@ import Carousel from './Carousel'
 import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { isGeneratorFunction } from 'util/types';
 import { AppDispatch, RootState } from '../../store';
-import { useParams } from 'react-router-dom';
 import { addFavoriteCamping } from '../../actions/User.action';
 
 export default function Camping() {
