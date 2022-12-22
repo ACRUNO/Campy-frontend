@@ -92,6 +92,9 @@ border-radius : 1%;
 }
 
 .lugar{
+    display: flex;
+    justify-content: center;
+
     /* margin-top : .5rem;
     margin-left : 1rem; */
 }
