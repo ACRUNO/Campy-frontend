@@ -8,6 +8,10 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAbierto } from '../../actions';
+import { GoogleMap } from '@react-google-maps/api';
+import { Wrapper } from '@googlemaps/react-wrapper';
+import Mapa from '../Map/Map';
+import MapCreate from './CreateMap';
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
@@ -44,7 +48,7 @@ export default function Page3({ setInput, input }: InputProps) {
 
   let img: Array<string> = ["1", "2", "3", "4"]
 
-  const abierto_periodo : number[] = [1, 2, 3];
+  const abierto_periodo: number[] = [1, 2, 3];
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -133,7 +137,7 @@ export default function Page3({ setInput, input }: InputProps) {
               ))}
             </Select>
           </FormControl>
-        </Grid> 
+        </Grid>
         <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
           {img.map(m => (
             <Grid item key={m}>
@@ -154,6 +158,11 @@ export default function Page3({ setInput, input }: InputProps) {
         <Cloudinary setInput={setInput}></Cloudinary>
         {/* HABRIA QUE VER EL TEMA DE LATITUD Y LONGITUD */}
 
+        <Grid item justifyContent="center" alignContent="center" sx={{ mt: 4, ml: 0 }}>
+        <Wrapper apiKey='AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8' >
+          <MapCreate />
+        </Wrapper>
+        </Grid>
 
 
 
