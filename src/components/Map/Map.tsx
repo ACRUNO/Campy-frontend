@@ -53,10 +53,7 @@ function handleMarker3(){
 }
 
 
-function handleMouseOver(){
-  SetIcon("https://res.cloudinary.com/pfcampy/image/upload/v1671133089/campy/mapiconBlack_wmuuqv.png")
-  console.log(icon)
-}
+
 
   return (
    
@@ -65,7 +62,7 @@ function handleMouseOver(){
     center={center} 
     mapContainerClassName="map-container"
     >
-        <MarkerF onMouseOver={handleMouseOver}  onClick={handleMarker1} position={center} icon={icon}/>
+        <MarkerF onClick={handleMarker1} position={center} icon={icon} />
         <MarkerF onClick={handleMarker2} position={{lat: -31.532271330349058, lng: -64.2362134738245}} icon={icon}/>
         <MarkerF onClick={handleMarker3} position={{lat: -41.17195054526889, lng: -71.29609791237797}} icon={icon}/>
         

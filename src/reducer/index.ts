@@ -1,11 +1,13 @@
-import { GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, LOGIN_USER, LOGOUT_USER, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING } from "../actions";
-import { Campings, User, filterCamps, reset } from './estados';
-
-
-
+import { FILTER_PARCELA,USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO } from "../actions";
+import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
+import { GET_FAVORITES_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
+import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
+import { Dayjs } from 'dayjs';
 
 const initialState: {
     user: User | null;
+    favoritesCampings: { favorites: FavoritesCampings[], done: boolean };
+    userBookings: { bookings: Bookings[], done: boolean };
     allProvincias: { id: number, nombre: string, imagen: string }[];
     allLocalidades: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
@@ -19,11 +21,19 @@ const initialState: {
     periodoAgua: number;
     allPeriodoAbierto: { id: number, periodo_abierto: string }[];
     periodoAbierto: number;
-    filtrosBooking: filterCamps
+    filtrosBooking: filterCamps;
+    fechaIngreso: string;
+    fechaEgreso: string;
+    fechaIngresoDayjs:Dayjs | null;
+    fechaEgresoDayjs:Dayjs | null
+    campingsDash:{id:number, nombre_camping:string, habilitado:number}[];
+    usuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]
 } = {
 
     //ESTADOS GLOBALES
     user: null,
+    favoritesCampings: { favorites: [], done: false },
+    userBookings: { bookings: [], done: false },
     allProvincias: [],
     detailCamping: [],
     allCampings: [],
@@ -37,6 +47,8 @@ const initialState: {
     periodoAgua: 0,
     allPeriodoAbierto: [],
     periodoAbierto: 0,
+    campingsDash: [],
+    usuariosDash: [],
     filtrosBooking: {        
         id_provincia: '',
         id_localidad: '',
@@ -60,7 +72,11 @@ const initialState: {
         salon_sum: 0,
         wifi: 0,
         estacionamiento: 0
-    }
+    },
+    fechaIngreso: "",
+    fechaEgreso: "",
+    fechaIngresoDayjs:null,
+    fechaEgresoDayjs: null
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -166,6 +182,21 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 periodoAbierto: action.payload
             }
+
+
+            case CAMPINGS_DASH:
+                return {
+                    ...state,
+                    campingsDash: action.payload
+                }
+
+            case USUARIOS_DASH:
+                return {
+                    ...state,
+                    usuariosDash: action.payload
+                }
+            
+
         case FILTROS_COMBINADOS:
             let filtrosBook: number[] = state.filtrosBooking[action.payload.name]
             if(!filtrosBook.includes(action.payload.value)){
@@ -201,14 +232,62 @@ function rootReducer(state: any = initialState, action: any): any {
         case RESET_FILTROS:
             return {
                 ...state,
-                filtrosBooking: reset
+                filtrosBooking: reset(),
+                provincia:0,
+                localidad:0,
+                fechaIngresoDayjs:null,
+                fechaEgresoDayjs:null
             }
         case GET_FILTERS_CAMPING:
             return {
                 ...state,
                 campings: action.payload
             }
+        case FILTER_INGRESO:
+            return {
+                ...state,
+                fechaIngreso: action.payload?.toDate().toLocaleDateString().split('/').reverse().join('/'),
+                fechaIngresoDayjs: action.payload
+            }
+            case FILTER_EGRESO:
+                return {
+                    ...state,
+                    fechaEgreso: action.payload?.toDate().toLocaleDateString().split('/').reverse().join('/'),
+                    fechaEgresoDayjs: action.payload
+                }
+        case GET_FAVORITES_CAMPINGS:
+            return {
+                ...state,
+                favoritesCampings: { favorites: action.payload, done: true }
+            }
+        case REMOVE_FAVORITE_CAMPING:
+
+            return {
+                ...state,
+                favoritesCampings: { 
+                    favorites: state.favoritesCampings.favorites.filter((fav: { id: number }) => fav.id !== action.payload), 
+                    done: true 
+                }
+            }
+        case GET_USER_BOOKINGS:
+            return {
+                ...state,
+                userBookings: {
+                    bookings: action.payload,
+                    done: true
+                }
+            }
+            case FILTER_PARCELA:
+                return {
+                    ...state,
+                    filtrosBooking: {
+                        ...state.filtrosBooking,
+                        parcela_superficie: action.payload
+                    }
+                    
+                }
         default: return { ...state }
+
     }
 }
 

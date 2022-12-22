@@ -23,29 +23,28 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Details from './Details';
 import Salidas from './Salidas';
 import Resume from './Resume';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { LocationOn as LocationOnIcon, Favorite as FavoriteIcon } from '@mui/icons-material';
 import Footer from '../Footer/Footer';
 import { getDetails } from '../../actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../store';
 import Carousel from './Carousel'  
 import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { isGeneratorFunction } from 'util/types';
-    
- 
-
-
-
+import { AppDispatch, RootState } from '../../store';
+import { useParams } from 'react-router-dom';
+import { addFavoriteCamping } from '../../actions/User.action';
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
   const params = useParams()
+  const user = useSelector((state: RootState) => state.user);
   let camp = useSelector((state : any) => state.detailCamping)
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
   let navigate : any = useNavigate ();
   const [valid , setValid] =React.useState(0);
+  const [favorite, setFavorite] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const [stay, setStay] = React.useState(0);
   const [travellers, setTravellers] = React.useState(0);
@@ -137,6 +136,7 @@ const handleCotizacion = (e : any) => {
 
 
 
+
 return(
   <Box>
     <Box className={Style.all}>
@@ -148,7 +148,9 @@ return(
          src={Portada}
          />
          <Box className={Style.text}>                   
-           <Typography  variant="h1" color="primary"> {camp.nombre_camping}  </Typography>
+           <Typography  variant="h1" color="primary">
+            {camp.nombre_camping}
+          </Typography>  
              <Box className={Style.rankingcont}>
               <Typography   color="primary" component="legend">Ranking</Typography>
               <Rating     name="read-only" value={value} readOnly />
@@ -387,8 +389,22 @@ return(
       
 
          
-      
+        {
+          user && 
+          <Typography 
+            className={Style['add-fav']}  
+            variant="h5" 
+            color="primary"
+            onClick={() => {
+              if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
 
+              setFavorite(true)
+            }}
+          >
+            Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
+          </Typography>
+        }
+        
         <Footer/>
        
          </Box>         

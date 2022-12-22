@@ -22,6 +22,8 @@ import Misdatos from './Misdatos';
 import Reservas from "./Reservas"
 import Favoritos from './Favoritos';
 import { VERDE, VERDE_OSCURO } from '../../helpers/colors';
+import { RootState } from '../../../store';
+import { useSelector } from 'react-redux';
 
 const drawerWidth: number = 240;
 
@@ -77,6 +79,7 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const { username } = useSelector((state: RootState) => state.user);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -116,7 +119,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Viajero
+              Viajero: {username.toUpperCase()}
             </Typography>
           </Toolbar>
         </AppBar>

@@ -51,6 +51,20 @@ export type User = {
     token: string
 }
 
+export type FavoritesCampings = { id: number, nombre: string, imagen: string }
+
+export type Bookings = { 
+    id: number,
+    fecha_desde_reserva: string,
+    fecha_hasta_reserva: string,
+    cant_noches: number,
+    total: number,
+    descrip_estado: string,
+    correo_prop: string,
+    nombre_camping: string,
+    id_campings: number
+}
+
 
 export type filterCamps = {
     id_provincia: string,
@@ -77,7 +91,7 @@ export type filterCamps = {
     estacionamiento: number,
 }
 
-export const reset = {        
+/* export const reset = {        
     id_provincia: '',
     id_localidad: '',
     abierto_fecha_desde: "",
@@ -100,4 +114,31 @@ export const reset = {
     salon_sum: 0,
     wifi: 0,
     estacionamiento: 0
+}
+ */
+export function reset(){ 
+    return({   
+    id_provincia: '',
+    id_localidad: '',
+    abierto_fecha_desde: "",
+    abierto_fecha_hasta: "",
+    precio: [],
+    // reviews: [],
+    id_categoria: [],
+    parcela_superficie: [],
+    parcela_techada: 0,
+    parcela_agua_en_parcela: 0,
+    parcela_iluminacion_toma_corriente: 0,
+    mascotas: 0,
+    rodantes: 0,
+    proveduria: 0,
+    restaurant: 0,
+    pileta: 0,
+    vigilancia: 0,
+    maquinas_gimnasia: 0,
+    juegos_infantiles: 0,
+    salon_sum: 0,
+    wifi: 0,
+    estacionamiento: 0
+})
 }
