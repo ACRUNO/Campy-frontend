@@ -158,14 +158,6 @@ export default function Page3({ setInput, input }: InputProps) {
         <Cloudinary setInput={setInput}></Cloudinary>
         {/* HABRIA QUE VER EL TEMA DE LATITUD Y LONGITUD */}
 
-        <Grid item justifyContent="center" alignContent="center" sx={{ mt: 4, ml: 0 }}>
-        <Wrapper apiKey='AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8' >
-          <MapCreate />
-        </Wrapper>
-        </Grid>
-
-
-
       </Grid>
 
     </React.Fragment>
