@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Dayjs } from 'dayjs';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -29,8 +29,14 @@ import { getDetails } from '../../actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { useParams } from 'react-router-dom';
 import Carousel from './Carousel'  
+import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { isGeneratorFunction } from 'util/types';
+    
+ 
+
+
+
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
@@ -39,6 +45,7 @@ export default function Camping() {
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
   let navigate : any = useNavigate ();
+  const [valid , setValid] =React.useState(0);
   const [value, setValue] = React.useState(0);
   const [stay, setStay] = React.useState(0);
   const [travellers, setTravellers] = React.useState(0);
@@ -47,15 +54,37 @@ export default function Camping() {
   const [value1, setValue1] = React.useState<Dayjs | null>(null);
   const [value2, setValue2] = React.useState<Dayjs | null>(null);
   const [open, setOpen] = React.useState(false);
-  const [valid , setValid] =React.useState(true);
+
+ let mayores = camp?.precios?.filter((eso : any) => eso.descrip_tarifa == "Mayores");
+ let menores = camp?.precios?.filter((eso : any) => eso.descrip_tarifa == "Menores");
+ let rodantes = camp?.precios?.filter((eso : any) => eso.descrip_tarifa == "Rodantes")
 
 useEffect(() => {
      dispatch(getDetails(params.id));
     }, [dispatch , params.id])
     
-setTimeout(function(){
+    setTimeout(function(){
       setValue(camp.cantidad_estrellas)
-  }, 1000); //try to resolve better
+    }, 1000); //try to resolve better
+    
+
+    
+ 
+
+    const handleAlgo = (e : any) => {
+      
+      if(e.target.name == "stay") {
+        setStay(e.target.value as number)
+        
+    }
+    if(e.target.name == "travellers") {
+      
+      setTravellers(e.target.value as number)
+    }
+  
+    if(stay && travellers ) setValid(1)
+    
+  }
 
 const handleClickOpen = () => {
       setOpen(true);
@@ -72,35 +101,40 @@ const handleCloseR = () => {
   navigate("/booking")   
       }; 
     
-const handleCloseM = () => {
-        navigate("/")   
-            }; 
-   
+
 
 const handleCotizacion = (e : any) => {
-   
+   if (value1?.month() == value2?.month()) {
     let day1 : any = value1?.date();
    let day2 : any = value2?.date();
    let rest = day2 - day1 
    let total = 1
+   let menores1 = camp?.precios?.filter((eso : any) => eso.descrip_tarifa == "Menores");
    if(rest > 0 ) { total = rest}
-      let final = (500 * stay) + (200 * kids) + (350 * travellers) 
+   console.log(menores[0].precio)
+   console.log(menores[0].precio * kids)
+   let final =  (menores[0].precio * kids) + (mayores[0].precio * travellers) 
       
-    setPrice(final * total)
-    
+    setPrice((final * total) + stay)
   
+   }
+   if (value1?.month() !== value2?.month()) {
+    let count1 : any = value1?.daysInMonth() ;
+    let count2 : any = value1?.date() ;
+    let count3 : any = value2?.date();
+    let rest : number = parseInt(count1 - count2 + count3 )
  
+    let total = 1
+    if(rest > 0 ) { total = rest}
+       let final =  (menores[0].precio * kids) + (mayores[0].precio * travellers) 
+       
+
+     setPrice((final * total) + stay)
+    
    }
 
-const handleValidate = ( e : any) => {
-if(stay > 0 && travellers > 0){
-  setValid(false)
 }
-}
-  
-const handleReserv = () => {
-       navigate('../../');
-    }
+
 
 
 return(
@@ -151,12 +185,18 @@ return(
             <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <DatePicker
+                        disablePast
+                        
                             label="Ingreso"
                             openTo="day"
                             views={['year', 'month', 'day']}
                             value={value1}
                             onChange={(newValue) => {
-                                setValue1(newValue);
+                                setValue1(newValue); 
+                                console.log(newValue?.month())
+                                console.log(newValue?.daysInMonth())
+                                console.log(newValue?.date())
+                                console.log(newValue?.day())
                             }}
                            
                             renderInput={(params) => <TextField {...params} />}
@@ -166,6 +206,9 @@ return(
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
+                        disablePast
+                        minDate={value1}
+                       maxDate={value1?.add(4, 'week')}
                             label="Egreso"
                             openTo="day"
                             views={['year', 'month', 'day']}
@@ -179,12 +222,16 @@ return(
                     </LocalizationProvider>
                 </FormControl>
             </Box>
+           
            <Box className={Style.input}>
            <FormControl  sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Estadia</InputLabel>
                     <Select
-                         onChange={(e) => {setStay(e.target.value as number) }}
-                         onClick={handleValidate}
+                    // onChange={handleValidate}
+                         onChange={handleAlgo}  
+                        // handleValidate() }}
+                        
+                         name="stay"
                         value={stay}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
@@ -192,8 +239,8 @@ return(
                         color="secondary"
                         >
                       
-              <MenuItem value={1}>Zona Carpas</MenuItem>
-              { camp.rodantes > 0 ? <MenuItem value={2}>Trailer Park</MenuItem> : <></> }
+              <MenuItem value={0}>Zona Carpas</MenuItem>
+              { camp.rodantes > 0 ? <MenuItem value={rodantes[0]?.precio}>Trailer Park</MenuItem> : <></> }
          
        
                     </Select>
@@ -206,8 +253,8 @@ return(
         <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Viajeros</InputLabel>
                     <Select
-                     onChange={(e) => {setTravellers(e.target.value as number)}}
-                     onClick={handleValidate}
+                     onChange={handleAlgo}
+                       name="travellers"     
                      value={travellers}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
@@ -216,6 +263,7 @@ return(
                         color="secondary"
                         >
                        {/* { travellers >= 1 ?  <h1> {travellers}</h1> : <h1>nono</h1>} */}
+              <MenuItem value={0}> Viajeros</MenuItem> 
               <MenuItem value={1}>1 Persona</MenuItem>
               <MenuItem value={2}>2 Personas</MenuItem>
               <MenuItem value={3}>3 Personas</MenuItem>                        
@@ -231,7 +279,7 @@ return(
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Menores</InputLabel>
                     <Select
                     onChange={(e) => {setKids(e.target.value as number)}}
-                    onClick={handleValidate}
+                    onClick={handleAlgo}
                     value={kids}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
@@ -250,16 +298,21 @@ return(
         </Box>
 
        <Box className={Style.btn2} > 
+       
+
         <Stack direction="row" spacing={2}>
-         { price == 0 ? <Button disabled={valid} sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" value={price} color="warning">
+       
+
+         { valid == 0 ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained"  color="warning">
             Generar Cotizacion
-          </Button> : <></>
+          </Button> : <Button  sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained"  color="warning">
+            Generar Cotizacion
+          </Button>
 }
           
         </Stack>
+      
        </Box>
-        
-        
             {price > 0 ? <Box> 
                 <Box className={Style.btn1} > 
               <Typography variant="subtitle1"> Precio valido hasta el {now}  a las 24:00Hs</Typography>
@@ -272,12 +325,14 @@ return(
         </Stack>
        </Box></Box> : <></>}
         
+        
+        
         </Box>
         </Paper>
-         </Box>
          <Box className={Style.lugar}>
             <Typography   variant="subtitle1" color="black"> <LocationOnIcon /> {camp.direccion} - {camp.provincia} </Typography>
             </Box>
+         </Box>
         </Box>
         <div>
                    <Dialog
@@ -298,9 +353,15 @@ return(
             </DialogContent>
             <DialogActions>
               <Button className={Style.red} color="info" onClick={handleCloseR}>Seguir mirando</Button>
-              <Button className={Style.green} color="info" onClick={handleCloseM} autoFocus>
+              
+   <form   action="http://localhost:3001/api/checkout" method="post"> 
+              <input type="hidden" name="price" value={price}  /> 
+              <input type="hidden" name="title" value={camp.nombre_camping}  /> 
+             
+                 <Button className={Style.green} color="info" type="submit" autoFocus>
                 Reservar!
               </Button>
+              </form>
             </DialogActions>
           </Dialog>
         </div>
@@ -347,8 +408,10 @@ return(
 
     
     
+    
+  
+        
    
-      
     
      
       
