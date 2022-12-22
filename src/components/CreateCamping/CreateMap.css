@@ -1,0 +1,26 @@
+.combobox-input {
+    width: 30.9rem;
+    height: 1.875rem;
+    font-family: Sen;
+    font-size: medium;
+    margin-bottom: 2%;
+    border: 1px;
+    /* border-radius: 5px; */
+    border-color: grey;
+    border-style: none none solid none;
+}
+
+.combobox-input:focus {
+    outline: none;
+    border: 2px;
+    border-style: none none solid none;
+    border-color: #5f8d4e;
+}
+
+.combobox-input:hover {
+    /* border: 2px; */
+    outline: none;
+    border-width: 2px;
+    border-style: none none solid none;
+    border-color: black;
+}

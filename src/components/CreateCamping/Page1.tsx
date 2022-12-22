@@ -11,6 +11,8 @@ import { getProvincias, getLocalidades, getCampingsProvincias, getCampingsLocali
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { setUncaughtExceptionCaptureCallback } from 'process';
 import { Inputs } from './CreateCamping';
+import { Wrapper } from '@googlemaps/react-wrapper';
+import MapCreate from './CreateMap';
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
@@ -129,6 +131,11 @@ export default function Page1({ setInput, input }: InputProps) {
             onChange={handleChangeInput}
           />
         </Grid>
+        <Grid item justifyContent="center" alignContent="center" sx={{ mt: 1, mb: 1}}>
+        {/* <Wrapper apiKey='AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8' > */}
+          <MapCreate />
+        {/* </Wrapper> */}
+        </Grid>
         <Grid item xs={12} sm={6}>
           {/*           <TextField
             required
@@ -150,7 +157,7 @@ export default function Page1({ setInput, input }: InputProps) {
               color="secondary"
               onChange={handleChangeProvincia}>
               {allProvincias?.map((m, i) => (
-                <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
+                <MenuItem value={m.id} key={i+1}>{m.nombre}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -176,8 +183,8 @@ export default function Page1({ setInput, input }: InputProps) {
               color="secondary"
               onChange={handleChangeSelect}>
               {/* <MenuItem value=""><em>None</em></MenuItem> */}
-              {allLocalidades?.map(m => (
-                <MenuItem value={m.id}>{m.nombre}</MenuItem>
+              {allLocalidades?.map((m, i) => (
+                <MenuItem value={m.id} key={i+1}>{m.nombre}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -218,7 +225,7 @@ export default function Page1({ setInput, input }: InputProps) {
               onChange={handleChangeCategoria}>
               {/* <MenuItem value=""><em>None</em></MenuItem> */}
               {allCategorias?.map(m => (
-                <MenuItem value={m.id}>{m.categoria}</MenuItem>
+                <MenuItem value={m.id} key={m.id}>{m.categoria}</MenuItem>
               ))}
             </Select>
           </FormControl>
