@@ -14,22 +14,24 @@ import * as actions from "../../../actions";
 import { useEffect, useState } from "react";
 import TablePagination from '@mui/material/TablePagination';
 import Detalle_camping from "./Detalle_camping"
-import Habilitar from './Habilitar';
+import HabilitarAlert from "./Habilitar";
 
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
   
-  const campingsDash:{id:number, nombre_camping:string, habilitado:number}[] = useSelector((state: RootState) => state.campingsDash)
+  const campingsDash:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = useSelector((state: RootState) => state.campingsDash)
   const user = useSelector((state: RootState) => state.user);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen]= React.useState(false);
   const [camping, setCamping]=React.useState(0);
-  const [habilitacion, setHabilitacion]=React.useState(0);
-  const [deshabilitacion, setDeshabilitacion]=React.useState(0);
   const [openHab, setOpenHab]= React.useState(false);
+  const [nombre_camping, setNombre_camping]=React.useState("")
+  const [estado, setEstado]=React.useState(0)
+  const currentCampings=campingsDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  
 
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -37,8 +39,7 @@ export default function Camping() {
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value)
-    // setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
@@ -48,20 +49,13 @@ export default function Camping() {
     setCamping(id)
   };
 
-
-  const Deshabilitar=(e:React.ChangeEvent<unknown>, id:number)=>{
-    // e.preventDefault();
-    let data={token:user.token}
-    dispatch(actions.habilitacion_camping(id,0,data))
-    setDeshabilitacion(deshabilitacion+1)
-  }
-
-  const Habilitar=(e:React.ChangeEvent<unknown>, id:number)=>{
-    // e.preventDefault();
-    let data={token:user.token}
-    dispatch(actions.habilitacion_camping(id,1,data))
-    setHabilitacion(habilitacion+1)
-  }
+  const HandleHabilitar = (e:React.ChangeEvent<unknown>, id:number, nombre:string, estado:number) => {
+    e.preventDefault();
+    setOpenHab(true);
+    setCamping(id);
+    setNombre_camping(nombre)
+    setEstado(estado)
+  };
 
 
   useEffect(()=>{
@@ -71,7 +65,7 @@ export default function Camping() {
     //   dispatch(actions.cleanCampings_dash())
     //   console.log("cleancampings")
     // };
-   },[dispatch, rowsPerPage])
+   },[dispatch, rowsPerPage, openHab])
   
   
 
@@ -95,11 +89,11 @@ export default function Camping() {
             <TableRow key={c.id}>
               <TableCell onClick={(e)=>handleClick(e,c.id)}><Button variant='text' color="inherit">{c.nombre_camping}</Button></TableCell>
               <Detalle_camping key={c.id} open={open} setopen={setOpen} id={camping}></Detalle_camping>
-              <TableCell>Localidad</TableCell>
-              <TableCell>Provincia</TableCell>
+              <TableCell>{c.localidad}</TableCell>
+              <TableCell>{c.provincia}</TableCell>
               <TableCell >{c.habilitado===1 ? "Habilitado" : "Deshabilitado"}</TableCell>
-              <TableCell>{c.habilitado===1? <Button onClick={(e)=>Deshabilitar(e,c.id)} variant="contained" sx={{color:'#d50000'}}>Deshabilitar</Button>:<Button onClick={(e)=>Habilitar(e,c.id)} variant="contained" sx={{color:'#00c853'}}>Habilitar</Button>}</TableCell>
-              {/* <Habilitar key={c.id} open={openHab} setopen={setOpenHab} id={c.id} ></Habilitar> */}
+              <TableCell>{c.habilitado===1? <Button onClick={(e)=>HandleHabilitar(e,c.id, c.nombre_camping, c.habilitado)} variant="contained" sx={{color:'#d50000'}}>Deshabilitar</Button>:<Button onClick={(e)=>HandleHabilitar(e,c.id, c.nombre_camping, c.habilitado)} variant="contained" sx={{color:'#00c853'}}>Habilitar</Button>}</TableCell>
+              <HabilitarAlert open={openHab} setopen={setOpenHab} nombre={nombre_camping} id={camping} estado={estado} tipo="camping"/>
             </TableRow>
           ))}
         </TableBody>
