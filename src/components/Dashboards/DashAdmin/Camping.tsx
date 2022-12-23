@@ -5,7 +5,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {Grid, Paper, Button} from "@mui/material";
+import {Grid, Paper, Button, Checkbox} from "@mui/material";
 import Title from './Title';
 import {Campings} from '../../../reducer/estados';
 import { useDispatch, useSelector} from "react-redux";
@@ -14,11 +14,12 @@ import * as actions from "../../../actions";
 import { useEffect, useState } from "react";
 import TablePagination from '@mui/material/TablePagination';
 import Detalle_camping from "./Detalle_camping"
+import Habilitar from './Habilitar';
 
-let json={"id_provincia" : "","id_localidad": "","abierto_fecha_desde":"","abierto_fecha_hasta":"","precio":[],"id_categoria":[],"parcela_superficie":[],"parcela_techada": 0,"parcela_agua_en_parcela":0,"parcela_iluminacion_toma_corriente":0,"mascotas": 0,"rodantes": 0,"proveduria": 0,"restaurant":0,"pileta":0,"vigilancia":0,"maquinas_gimnasia":0,"juegos_infantiles": 0,"salon_sum":0,"wifi": 0,"estacionamiento": 0 }
+
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
-  // const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings) 
+  
   const campingsDash:{id:number, nombre_camping:string, habilitado:number}[] = useSelector((state: RootState) => state.campingsDash)
   const user = useSelector((state: RootState) => state.user);
 
@@ -26,13 +27,18 @@ export default function Camping() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen]= React.useState(false);
   const [camping, setCamping]=React.useState(0);
+  const [habilitacion, setHabilitacion]=React.useState(0);
+  const [deshabilitacion, setDeshabilitacion]=React.useState(0);
+  const [openHab, setOpenHab]= React.useState(false);
+
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(+event.target.value)
+    // setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
@@ -42,24 +48,30 @@ export default function Camping() {
     setCamping(id)
   };
 
+
   const Deshabilitar=(e:React.ChangeEvent<unknown>, id:number)=>{
-    e.preventDefault();
+    // e.preventDefault();
     let data={token:user.token}
     dispatch(actions.habilitacion_camping(id,0,data))
+    setDeshabilitacion(deshabilitacion+1)
   }
 
   const Habilitar=(e:React.ChangeEvent<unknown>, id:number)=>{
-    e.preventDefault();
+    // e.preventDefault();
     let data={token:user.token}
     dispatch(actions.habilitacion_camping(id,1,data))
+    setHabilitacion(habilitacion+1)
   }
 
 
   useEffect(()=>{
-    //  if(!allCampings.length)
-     { 
-     dispatch(actions.getCampings_dash())}
-   },[dispatch,rowsPerPage, Deshabilitar, Habilitar])
+     dispatch(actions.getCampings_dash())
+      console.log("getcampings")
+    //  return () => {
+    //   dispatch(actions.cleanCampings_dash())
+    //   console.log("cleancampings")
+    // };
+   },[dispatch, rowsPerPage])
   
   
 
@@ -87,6 +99,7 @@ export default function Camping() {
               <TableCell>Provincia</TableCell>
               <TableCell >{c.habilitado===1 ? "Habilitado" : "Deshabilitado"}</TableCell>
               <TableCell>{c.habilitado===1? <Button onClick={(e)=>Deshabilitar(e,c.id)} variant="contained" sx={{color:'#d50000'}}>Deshabilitar</Button>:<Button onClick={(e)=>Habilitar(e,c.id)} variant="contained" sx={{color:'#00c853'}}>Habilitar</Button>}</TableCell>
+              {/* <Habilitar key={c.id} open={openHab} setopen={setOpenHab} id={c.id} ></Habilitar> */}
             </TableRow>
           ))}
         </TableBody>
@@ -99,6 +112,7 @@ export default function Camping() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          
         />
         </Paper>
               </Grid>

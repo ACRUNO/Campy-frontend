@@ -1,7 +1,8 @@
-import { FILTER_PARCELA,USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO } from "../actions";
+import { FILTER_PARCELA,USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
+import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
 
 const initialState: {
@@ -28,6 +29,10 @@ const initialState: {
     fechaEgresoDayjs:Dayjs | null
     campingsDash:{id:number, nombre_camping:string, habilitado:number}[];
     usuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]
+    datos_graftorta:{provincias: string,cant_campings: number}[]
+    datos_graftop:{nombre_camping: string,cant_reservas: number}[],
+    datos_grafusuarios:{users: number,  created: string}[],
+    datos_grafreservas:{reservas: number, total:number,  created: string}[],
 } = {
 
     //ESTADOS GLOBALES
@@ -76,7 +81,11 @@ const initialState: {
     fechaIngreso: "",
     fechaEgreso: "",
     fechaIngresoDayjs:null,
-    fechaEgresoDayjs: null
+    fechaEgresoDayjs: null,
+    datos_graftorta: [],
+    datos_graftop: [],
+    datos_grafusuarios:[],
+    datos_grafreservas:[]
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -189,6 +198,11 @@ function rootReducer(state: any = initialState, action: any): any {
                     ...state,
                     campingsDash: action.payload
                 }
+            case CLEAN_CAMPINGS_DASH:
+                return {
+                    ...state,
+                    campingsDash:[]
+                }
 
             case USUARIOS_DASH:
                 return {
@@ -286,6 +300,58 @@ function rootReducer(state: any = initialState, action: any): any {
                     }
                     
                 }
+            case GET_CAMPINGSXPROV:
+                return {
+                    ...state,
+                    datos_graftorta: action.payload 
+                }
+            case GET_MASRESERVADOS:
+                return {
+                    ...state,
+                    datos_graftop: action.payload 
+                }
+            case GET_USUARIOSCAMPY:
+                let u: number = 1; 
+                let data: {users: number,  created: string}[] =[]
+                let i:number = 0
+                while(i<action.payload.length){
+                if(i<action.payload.length-1 && action.payload[i].createdAt === action.payload[i+1].createdAt){
+                     u++
+                     i++}
+                else {
+                    let obj : {users:number, created:string}={users:u, created:action.payload[i].createdAt.split("T")[0]}
+                    data.push(obj)
+                    u++
+                    i++}}
+                return {
+                    ...state,
+                    datos_grafusuarios: data
+                }
+
+            case GET_RESERVASCAMPY:
+                console.log(action.payload)
+                let r: number = 1; 
+                let t: number = 0;
+                let datos: {reservas: number, total:number,  created: string}[] =[];
+                let j:number = 0;
+                while(j<action.payload.length){
+                if(j<action.payload.length-1 && action.payload[j].createdAt === action.payload[j+1].createdAt){
+                    r++
+                    t=t+action.payload[j].total
+                    j++}
+                else {
+                    t=t+action.payload[j].total
+                    let obj : {reservas: number, total:number,  created: string}={reservas:r, total:t, created:action.payload[j].createdAt.split("T")[0]}
+                    datos.push(obj)
+                    r++
+                    j++
+                    }}
+                    console.log(datos)
+                return {
+                    ...state,
+                    datos_grafreservas: datos
+                    }
+
         default: return { ...state }
 
     }

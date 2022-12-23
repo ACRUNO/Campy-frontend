@@ -60,9 +60,9 @@ export default function Usuarios() {
   useEffect(()=>{
     if(!UsuariosDash.length)
      { 
-    //  dispatch(actions.getUsuarios_dash())
+     dispatch(actions.getUsuarios_dash())
     }
-   },[dispatch, rowsPerPage, Deshabilitar, Habilitar])
+   },[dispatch, rowsPerPage])
   
   
   return (
