@@ -34,6 +34,7 @@ export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
 export const FILTER_INGRESO: string = 'FILTER_INGRESO'
 export const FILTER_EGRESO: string = 'FILTER_EGRESO'
 export const FILTER_PARCELA:string = 'FILTER_PARCELA'
+export const CLEAN_CAMPINGS_DASH:string = "CLEAN_CAMPINGS_DASH"
 
 
 
@@ -279,6 +280,12 @@ export function getCampings_dash(): ThunkAction<void, RootState, unknown, AnyAct
             console.log(error);
         }
     }
+}
+
+export function cleanCampings_dash()  {
+            return ({
+                type: CLEAN_CAMPINGS_DASH, 
+            });
 }
 
 export function habilitacion_camping(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {

@@ -1,4 +1,8 @@
 import React from "react";
+import { useDispatch, useSelector} from "react-redux";
+import { AppDispatch, RootState } from '../../../../store/index';
+import { useEffect } from "react";
+import * as actions from "../../../../actions/Dash.admin.action";
 import {
   ComposedChart,
   Line,
@@ -10,53 +14,27 @@ import {
   Tooltip,
   Legend,
   Scatter,
-  Label
+  Label,
+  LineChart
 } from "recharts";
 import { VERDE, VERDE_OSCURO } from '../../../helpers/colors';
 
-const data = [
-  {
-    mes: 1,
-    usuarios: 4,
-    totales:4
-  },
-  {
-    mes: 2,
-    usuarios: 3,
-    totales:7
-  },
-  {
-    mes: 3,
-    usuarios: 5,
-    totales:12
-
-  },
-  {
-    mes: 4,
-    usuarios: 8,
-    totales:20
-  },
-  {
-    mes: 5,
-    usuarios: 10,
-    totales:30
-  },
-  {
-    mes: 6,
-    usuarios: 12,
-    totales:42
-  }
-];
-
-
-
 
 export default function GrafReservas() {
+  const dispatch: AppDispatch = useDispatch()
+  const datos_grafreservas:{reservas: number, total:number,  created: string}[] = useSelector((state: RootState) => state.datos_grafreservas);
+
+  useEffect(()=>{
+    dispatch(actions.getReservasCampy())
+  },[dispatch]) 
+
+  console.log(datos_grafreservas)
+
   return (
-    <ComposedChart
+    <LineChart
       width={500}
       height={400}
-      data={data}
+      data={datos_grafreservas}
       margin={{
         top: 20,
         right: 20,
@@ -64,15 +42,17 @@ export default function GrafReservas() {
         left: 20
       }}
     >
-      <CartesianGrid stroke="#f5f5f5" />
-      <XAxis dataKey="mes">
-      <Label value="Meses" offset={2} position="bottom" />
-      </XAxis>
-      <YAxis />
-      <Tooltip />
-      <Legend verticalAlign="top" align="center" />
-      <Bar name="Reservas" dataKey="usuarios" barSize={20} fill="#5F8D4E" />
-      <Line name="Reservas Totales" type="monotone" dataKey="totales" stroke="#ff7300" />
-    </ComposedChart>
+      <CartesianGrid stroke="#f5f5f5"/>
+      <XAxis dataKey="created"  />
+          <YAxis yAxisId="left" label={{ value: 'Cantidad de Reservas', angle: -90, position: 'insideBottomLeft' }}/>
+          <YAxis yAxisId="right" orientation="right" label={{ value: 'Monto Total de Reservas $', angle: 90, position: 'insideBottomRight' }} />
+          <Tooltip />
+          <Legend />
+          <Line yAxisId="left" type="monotone" dataKey="reservas" stroke="#8884d8" />
+          <Line yAxisId="right" type="monotone" dataKey="total" stroke="#82ca9d" />
+    </LineChart>
   );
 }
+
+
+
