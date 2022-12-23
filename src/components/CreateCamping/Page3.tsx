@@ -37,21 +37,6 @@ export default function Page3({ setInput, input }: InputProps) {
   const handlePeriodoAbierto = (e: SelectChangeEvent) => {
     e.preventDefault();
     setPeriodoAbierto(Number(e.target.value) as number);
-    setInput((inputs: any) => {
-      return {
-        ...inputs,
-        [e.target.name]: e.target.value
-      }
-    })
-  };
-
-
-  let img: Array<string> = ["1", "2", "3", "4"]
-
-  const abierto_periodo: number[] = [1, 2, 3];
-
-  const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    e.preventDefault();
     setInput((inputs: Inputs) => {
       return {
         ...inputs,
@@ -59,6 +44,29 @@ export default function Page3({ setInput, input }: InputProps) {
       }
     })
   };
+  console.log(input);
+  
+
+  let img: Array<string> = ["1", "2", "3", "4"]
+
+  const abierto_periodo: number[] = [1, 2, 3];
+
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.preventDefault();
+    let i: number;
+    e.target.name === "tarifa_por_mayor_dia" ? i = 0 :
+    e.target.name === "tarifa_por_menor_dia" ? i = 1 : i = 2
+
+    setInput((inputs: Inputs) => {
+      return {
+        ...inputs,
+        [e.target.name]: Number(e.target.value),
+        precio: [...inputs.precio, Number(e.target.value)]
+      }
+    })
+  };
+
+
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
     e.preventDefault();
@@ -156,7 +164,6 @@ export default function Page3({ setInput, input }: InputProps) {
           ))}
         </Grid>
         <Cloudinary setInput={setInput}></Cloudinary>
-        {/* HABRIA QUE VER EL TEMA DE LATITUD Y LONGITUD */}
 
       </Grid>
 

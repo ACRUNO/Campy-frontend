@@ -117,7 +117,7 @@ export default function Page1({ setInput, input }: InputProps) {
             onChange={handleChangeInput}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             required
             fullWidth
@@ -130,10 +130,11 @@ export default function Page1({ setInput, input }: InputProps) {
             variant="standard"
             onChange={handleChangeInput}
           />
-        </Grid>
+        </Grid> */}
         <Grid item justifyContent="center" alignContent="center" sx={{ mt: 1, mb: 1}}>
         {/* <Wrapper apiKey='AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8' > */}
-          <MapCreate />
+          <MapCreate setInput ={setInput}
+                      input={input}/>
         {/* </Wrapper> */}
         </Grid>
         <Grid item xs={12} sm={6}>

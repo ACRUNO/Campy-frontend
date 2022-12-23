@@ -5,6 +5,7 @@ import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption 
 import "@reach/combobox/styles.css";
 import { Box } from "@mui/material";
 import "./CreateMap.css"
+import { Inputs } from "./CreateCamping";
 
 
 const containerStyle = {
@@ -12,9 +13,13 @@ const containerStyle = {
     width: "31.25rem"
 }
 
+interface InputProps {
+    setInput: React.Dispatch<React.SetStateAction<Inputs>>,
+    input: Inputs,
+}
 
 
-export default function MapCreate() {
+export default function MapCreate({ setInput, input }: InputProps) {
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8",
@@ -22,12 +27,19 @@ export default function MapCreate() {
     });
 
     if (!isLoaded) return <div>Loading...</div>;
-    return <Map />
+    return <Map setInput={setInput}
+        input={input} />
 }
 
-function Map() {
 
-    const [selected, setSelected] = useState(null)
+interface LtnLng {
+    lat: number;
+    lng: number;
+}
+
+function Map({ setInput, input }: InputProps) {
+
+    const [selected, setSelected] = useState<LtnLng | null>(null)
 
     const center = selected ? selected : { lat: -38.40725346022871, lng: -63.617129400239264 };
     const zoom = selected ? 15 : 5;
@@ -37,7 +49,9 @@ function Map() {
     return (
         <>
             <Box>
-                <PlacesAutocomplete setSelected={setSelected} />
+                <PlacesAutocomplete setInput={setInput}
+                    input={input}
+                    setSelected={setSelected} />
             </Box>
 
             <GoogleMap
@@ -52,11 +66,17 @@ function Map() {
 
 };
 
-const PlacesAutocomplete = ({ setSelected }: any) => {
+interface InputPropsPlace {
+    setInput: React.Dispatch<React.SetStateAction<Inputs>>,
+    input: Inputs,
+    setSelected: React.Dispatch<React.SetStateAction<LtnLng | null>>
+}
+
+const PlacesAutocomplete = ({ setInput, input, setSelected }: InputPropsPlace) => {
 
     const {
         ready,
-        value,
+        value= input.direccion,
         setValue,
         suggestions: { status, data },
         clearSuggestions,
@@ -69,14 +89,32 @@ const PlacesAutocomplete = ({ setSelected }: any) => {
         const results = await getGeocode({ address });
         const { lat, lng } = getLatLng(results[0]);
         setSelected({ lat, lng })
+        setInput((inputs: Inputs) => {
+            return {
+                ...inputs,
+                latitud: String(lat),
+                longitud: String(lng),
+                direccion: address
+            }
+        })
     }
 
-    console.log(value);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setValue(e.target.value)
+        setInput((inputs: Inputs) => {
+            return {
+                ...inputs,
+                direccion: e.target.value
+            }
+        })
+    }
+
+    console.log(input);
 
 
     return (
         <Combobox onSelect={handleSelect}>
-            <ComboboxInput value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready} className="combobox-input" placeholder="Buscar Direccion..." />
+            <ComboboxInput value={input.direccion} onChange={(e) => handleChange(e)} disabled={!ready} className="combobox-input" placeholder="Buscar Direccion..." />
             <ComboboxPopover>
                 <ComboboxList>
                     {status === "OK" && data.map(({ place_id, description }) => <ComboboxOption key={place_id} value={description} />)}
