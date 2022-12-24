@@ -2,20 +2,18 @@ import React, { useEffect } from "react";
 import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup,RadioGroup,Radio, Button } from '@mui/material';
 import { fontWeight } from "@mui/system";
 import { ChangeEvent, MouseEvent } from 'react'
-import { filterCategoria, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
+import { filterCategoria, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCategorias, getFiltersCamping, resetFiltros } from '../../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from '../../store/index';
-import { filterCamps } from "../../reducer/estados";
-import {Campings} from '../../reducer/estados';
+import { AppDispatch, RootState } from '../../../store/index';
+import { filterCamps } from "../../../reducer/estados";
+import {Campings} from '../../../reducer/estados';
+import s from "./FiltersMap.module.css"
 
 
 
-type Props = {
-    setCurrentPage: (value: React.SetStateAction<number>) => void
-  }
 
 
-export default function FiltrosLaterales(props:Props) {
+export default function FiltrosLaterales() {
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
     const dispatch: AppDispatch = useDispatch()
@@ -46,7 +44,6 @@ export default function FiltrosLaterales(props:Props) {
     const handlePrecio = (e: Event, newValue: number | number[]) => {
         setPrecioLocal(newValue as number[]);
         dispatch(filtrosPrecios('precio', newValue))
-        props.setCurrentPage(1) 
     }
 
 
@@ -54,7 +51,6 @@ export default function FiltrosLaterales(props:Props) {
 
     const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(filtrosCombinados(e.target.name, Number(e.target.value)))
-        props.setCurrentPage(1) 
     }
 
 
@@ -62,14 +58,14 @@ export default function FiltrosLaterales(props:Props) {
 
     const handleBoolean = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(filtrosBooleanos(e.target.name, e.target.checked))
-        props.setCurrentPage(1) 
+        
     }
 
     const handleReset = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(resetFiltros());
         setPrecioLocal([min,max])
-        props.setCurrentPage(1) 
+       
     }
 
     const handleRadio = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +77,7 @@ export default function FiltrosLaterales(props:Props) {
 
     return (
 
-        <Box sx={{ borderRadius: 1, backgroundColor: "white", height: "100%", pl: 3, mr: 4, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
+        <Box sx={{ borderRadius: 1, backgroundColor: "white", height: "43.5rem",overflowY:"auto", pl: 3, mr: 4, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
             < Typography variant="h6" sx={{ paddingTop: "1.5rem", fontSize: "800", mb: "0.5rem" }}> Filtros:</Typography >
             <Button
                 onClick={handleReset}
@@ -106,7 +102,7 @@ export default function FiltrosLaterales(props:Props) {
 
 
 
-          <hr></hr>
+{/*             <hr></hr>
            <Typography >Reviews</Typography>
 
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
@@ -138,6 +134,7 @@ export default function FiltrosLaterales(props:Props) {
                 />
             </FormGroup>
  
+ */}
 
 
 
