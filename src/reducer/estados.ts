@@ -25,7 +25,7 @@ export type Campings =
     restaurant: number,
     vigilancia: number,
     pileta: number,
-    estacionamiento: 1,
+    estacionamiento: number,
     juegos_infantiles: number,
     maquinas_gimnasia: number,
     wifi: number,
@@ -38,6 +38,51 @@ export type Campings =
     precio: number,
     imagenes: Array<string>
 }
+
+export const Campys = {
+    id: 0,
+    nombre_camping: "",
+    descripcion_camping: "",
+    direccion: "",
+    telefono: "",
+    longitud: "",
+    latitud: "",
+    prop_camping_Id: 0,
+    abierto_fecha_desde: "", 
+    abierto_fecha_hasta: "", 
+    localidad: "",
+    id_localidad:0,
+    provincia: "",
+    id_provincia:0,
+    categoria: "",
+    id_categoria:0,
+    cantidad_estrellas: 0,
+    duchas: 0,
+    baños: 0,
+    mascotas: 0,
+    rodantes: 0,
+    proveduria: 0,
+    salon_sum: 0,
+    restaurant: 0,
+    vigilancia: 0,
+    pileta: 0,
+    estacionamiento: 1,
+    juegos_infantiles: 0,
+    maquinas_gimnasia: 0,
+    wifi: 0,
+    parcela_techada: 0,
+    parcela_agua_en_parcela: 0,
+    parcela_iluminacion_toma_corriente: 0,
+    parcela_superficie: 0,
+    descripcion_periodo: "",
+    descripcion_periodo_agua: "",
+    precio: 0,
+    imagenes: [""]
+}
+    
+
+    
+
 
 export type User = {
     id: number,
@@ -91,31 +136,7 @@ export type filterCamps = {
     estacionamiento: number,
 }
 
-/* export const reset = {        
-    id_provincia: '',
-    id_localidad: '',
-    abierto_fecha_desde: "",
-    abierto_fecha_hasta: "",
-    precio: [],
-    // reviews: [],
-    id_categoria: [],
-    parcela_superficie: [],
-    parcela_techada: 0,
-    parcela_agua_en_parcela: 0,
-    parcela_iluminacion_toma_corriente: 0,
-    mascotas: 0,
-    rodantes: 0,
-    proveduria: 0,
-    restaurant: 0,
-    pileta: 0,
-    vigilancia: 0,
-    maquinas_gimnasia: 0,
-    juegos_infantiles: 0,
-    salon_sum: 0,
-    wifi: 0,
-    estacionamiento: 0
-}
- */
+
 export function reset(){ 
     return({   
     id_provincia: '',

@@ -20,7 +20,7 @@ export default function CardCamping( props: Props){
     return (
     
     <Link to={`/booking/camping/${props.id}`} style={{textDecoration: 'none'}}>
-    <Card sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around"}}>
+    <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around",}}>
         <CardMedia
         component="img"
         image={props.imagenes[0]}

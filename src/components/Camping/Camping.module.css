@@ -226,3 +226,8 @@ h5.add-fav {
 svg.heart {
     fill: #EB403A;
 }
+
+
+.card:hover{
+    box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
+}
