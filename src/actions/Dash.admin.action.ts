@@ -13,7 +13,7 @@ export const GET_MASRESERVADOS: string = 'GET_MASRESERVADOS'
 export const GET_USUARIOSCAMPY: string = 'GET_USUARIOSCAMPY'
 export const GET_RESERVASCAMPY: string = "GET_RESERVASCAMPY"
 
-
+////////////////////////GRAFICOS/////////////////////////////////
 //GRAFICO DE TORTA
 export function getCampsxprov(): ThunkAction<void, RootState, unknown, AnyAction> {
 
@@ -61,7 +61,7 @@ export function getUsuariosCampy(): ThunkAction<void, RootState, unknown, AnyAct
         }
     }
 }
-
+//GRAFICO DE RESERVAS EN CAMPY
 export function getReservasCampy(): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
@@ -77,4 +77,5 @@ export function getReservasCampy(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
+////////////////////////USUARIOS/////////////////////////////////////////////////
 

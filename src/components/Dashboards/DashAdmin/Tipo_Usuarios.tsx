@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from '../../../store/index';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 
+
 type Props = {
     open:boolean
     setopen:(value: React.SetStateAction<boolean>) => void
@@ -35,11 +36,11 @@ export default function Tipo_usuarios(props:Props) {
     setTipo(e.target.value)
   }
 
-  const handleChange = (e:React.ChangeEvent<unknown>, id:number) => {
+  const handleChange = (e:React.ChangeEvent<unknown>, id:number, tipo:string) => {
     e.preventDefault();
-    let data={token:user.token, tipo:tipo}
+    let data:{token:string, userType:string} ={token:user.token, userType:tipo}
     dispatch(actions.tipo_usuario(id,data))
-    props.setopen(false);
+    props.setopen(false); 
   };
 
 
@@ -61,14 +62,14 @@ export default function Tipo_usuarios(props:Props) {
               label="Tipo"
               onChange={cambiarTipo}
               >
-                <MenuItem value="Propietario">Propietario</MenuItem>
-                <MenuItem value="Usuario">Usuario</MenuItem>
-                <MenuItem value="Administrador">Administrador</MenuItem>
+                <MenuItem value={process.env.REACT_APP_TIPO_PROPIETARIO}>Propietario</MenuItem>
+                <MenuItem value={process.env.REACT_APP_TIPO_USUARIO}>Usuario</MenuItem>
+                <MenuItem value={process.env.REACT_APP_TIPO_ADMIN}>Administrador</MenuItem>
               </Select>
             </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={(e)=>handleChange(e,props.id)} variant="contained" color="secondary">Confirmar cambio</Button>
+          <Button onClick={(e)=>handleChange(e,props.id, tipo)} variant="contained" color="secondary">Confirmar cambio</Button>
           <Button onClick={handleClose} variant="contained" color="secondary">Cerrar</Button>
         </DialogActions>
       </Dialog>

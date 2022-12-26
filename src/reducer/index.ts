@@ -27,7 +27,7 @@ const initialState: {
     fechaEgreso: string;
     fechaIngresoDayjs:Dayjs | null;
     fechaEgresoDayjs:Dayjs | null
-    campingsDash:{id:number, nombre_camping:string, habilitado:number}[];
+    campingsDash:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[];
     usuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]
     datos_graftorta:{provincias: string,cant_campings: number}[]
     datos_graftop:{nombre_camping: string,cant_reservas: number}[],
