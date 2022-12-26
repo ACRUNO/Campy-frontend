@@ -30,13 +30,14 @@ export default function Page2({ setInput, input }: InputProps) {
   const handlePeriodoAgua = (e: SelectChangeEvent) => {
     e.preventDefault();
     setPeriodoAgua(Number(e.target.value) as number);
-    setInput((inputs: any) => {
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value
       }
     })
   };
+  
 
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
     //e.preventDefault();
