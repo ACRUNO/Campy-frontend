@@ -96,6 +96,7 @@ export interface Inputs {
   cerrado_fecha_hasta: string,
   longitud: string,
   latitud: string,
+  precio: number[]
 }
 
 //const theme = createTheme();
@@ -150,8 +151,9 @@ export default function Checkout() {
     tarifa_por_casa_rodante: 0,
     cerrado_fecha_desde: '',
     cerrado_fecha_hasta: '',
-    longitud: '5',
-    latitud: '5',
+    longitud: '',
+    latitud: '',
+    precio: []
   });
 
   let disabled =
