@@ -33,6 +33,7 @@ import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePic
 import { isGeneratorFunction } from 'util/types';
 import { AppDispatch, RootState } from '../../store';
 import { addFavoriteCamping } from '../../actions/User.action';
+import { Reviews } from '../Reviews/Reviews';
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
@@ -369,6 +370,7 @@ return(
 
        
         <Details/>
+        <Reviews/>
         
       
 
