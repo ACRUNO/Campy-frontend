@@ -53,9 +53,9 @@ export default function Page3({ setInput, input }: InputProps) {
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
-    let i: number;
-    e.target.name === "tarifa_por_mayor_dia" ? i = 0 :
-    e.target.name === "tarifa_por_menor_dia" ? i = 1 : i = 2
+    // let i: number;
+    // e.target.name === "tarifa_por_mayor_dia" ? i = 0 :
+    // e.target.name === "tarifa_por_menor_dia" ? i = 1 : i = 2
 
     setInput((inputs: Inputs) => {
       return {
