@@ -103,7 +103,7 @@ export interface Inputs {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  // const { tipo } = useSelector((state: RootState) => state.user)
+  const { tipo } = useSelector((state: RootState) => state.user)
   const [alert, setAlert] = React.useState<AlertType>({
     open: true,
     title: 'Ser Propietario',
@@ -260,7 +260,7 @@ export default function Checkout() {
               </Box>
             </React.Fragment>
           )}
-          {/* {
+          {
             process.env.REACT_APP_TIPO_USUARIO === tipo &&
             <Alert 
               open={alert.open}
@@ -271,7 +271,7 @@ export default function Checkout() {
               setStateOpen={setAlert}
               navigateTo={null}
             />
-          } */}
+          }
         </Paper>
         <Copyright />
       </Container>
