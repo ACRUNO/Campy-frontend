@@ -11,10 +11,9 @@ code {
     monospace;
 }
 
-.map-container{
-  height: 100%;
-  width: 100vh;
-  position: static !important;
+div.map-container{
+  height: calc(100vh - 64px);
+  width: 100vw;
 }
 
 
