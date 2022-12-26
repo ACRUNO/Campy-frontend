@@ -7,22 +7,28 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect } from "react";
+import { useDispatch, useSelector} from "react-redux";
+import { AppDispatch, RootState } from '../../../store/index';
 
 
 type Props = {
     open:boolean
     setopen:(value: React.SetStateAction<boolean>) => void
     id:number
+    nombre:string
     } 
 
 export default function Detalle_camping(props:Props) {
-  //const [open, setOpen] = React.useState(false);
+  const dispatch: AppDispatch = useDispatch()
 
-//   useEffect(()=>{
-//         setOpen(props.estadoopen)
-  
-//   }
-// )
+
+  useEffect(() => {
+  //   if(props.open){  
+  //   dispatch(getUserBookings(props.id))};
+  //   return () => {
+  //    dispatch(cleanUsuarios_dash())
+  //  };
+ }, [props.open])
   
   const handleClose = () => {
     props.setopen(false);
@@ -39,22 +45,7 @@ export default function Detalle_camping(props:Props) {
       >
         <DialogTitle>Detalle del camping {props.id}</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText align="center">
-            No tenemos campings que se ajusten a tu búsqueda por el momento
-          </DialogContentText> */}
-          {/* <Box
-            component="img"
-            src="https://res.cloudinary.com/pfcampy/image/upload/v1670848679/Raskrasil.com-Coloring-Pages-Camping-21_grudhm.jpg"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              mr: 25,
-              ml:29,
-              mt:2,
-              width: 350,
-            }}
-          >
-          </Box> */}
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="contained" color="secondary">Cerrar</Button>

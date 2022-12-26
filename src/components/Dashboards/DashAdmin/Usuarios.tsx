@@ -16,12 +16,12 @@ import TablePagination from '@mui/material/TablePagination';
 import Tipo_usuarios from './Tipo_Usuarios';
 import HabilitarAlert from "./Habilitar";
 import Detalle_usuario from './DetalleUsuario';
+import SearchBar from './SearchBar';
 
 
 
 export default function Usuarios() {
   const dispatch: AppDispatch = useDispatch()
-  const user = useSelector((state: RootState) => state.user);
   const UsuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]= useSelector((state: RootState) => state.usuariosDash) 
   
   const [page, setPage] = React.useState(0);
@@ -35,6 +35,8 @@ export default function Usuarios() {
   const [tipo, setTipo]=React.useState("")
 
   const [openDet, setOpenDet]= React.useState(false);
+
+  //let usuariosSliced:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = UsuariosDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
 
 
@@ -62,10 +64,11 @@ export default function Usuarios() {
     setTipo(tipo)
   };
 
-  const handleDetalle = (e:React.ChangeEvent<unknown>, id:number) => {
+  const handleDetalle = (e:React.ChangeEvent<unknown>, id:number, nombre:string) => {
     e.preventDefault();
     setOpenDet(true);
-    setUsuario(id)
+    setUsuario(id);
+    setNombre_usuario(nombre)
   };
 
 
@@ -77,8 +80,11 @@ export default function Usuarios() {
   return (
     <React.Fragment>
         <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>    
-      <Title>Usuarios</Title>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>   
+      <Grid container sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", mb:5, alignItems:"center"}}>
+        <Grid item sx={{ml:3}}><Title>Usuarios</Title></Grid>
+        <Grid item sx={{mr:3}}><SearchBar type="Usuario"></SearchBar></Grid>
+      </Grid> 
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -90,13 +96,13 @@ export default function Usuarios() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {UsuariosDash.map((u) => (
+          {UsuariosDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((u) => (
             <TableRow key={u.id}>
-              <TableCell onClick={(e)=>handleDetalle(e,u.id)}><Button variant='text' color="inherit">{u.username}</Button></TableCell>
-              <Detalle_usuario open={openDet} setopen={setOpenDet} id={usuario}></Detalle_usuario>
+              <TableCell onClick={(e)=>handleDetalle(e,u.id,u.username)}><Button variant='text' color="inherit">{u.username}</Button></TableCell>
+              <Detalle_usuario open={openDet} setopen={setOpenDet} id={usuario} nombre={nombre_usuario}></Detalle_usuario>
               <TableCell>{u.email}</TableCell>
               <TableCell onClick={(e)=>handleClick(e,u.id, u.tipo)}><Button variant='text' color="inherit" >{u.tipo}</Button></TableCell>
-              <Tipo_usuarios open={open} setopen={setOpen} id={usuario} username={nombre_usuario} tipo={u.tipo} ></Tipo_usuarios>
+              <Tipo_usuarios open={open} setopen={setOpen} id={usuario} username={nombre_usuario} tipo={tipo} ></Tipo_usuarios>
               <TableCell>{u.habilitado===1 ? "Habilitado" : "Deshabilitado"}</TableCell>
               <TableCell align="right">{u.habilitado===1? <Button onClick={(e)=>HandleHabilitar(e,u.id, u.username, u.habilitado)} variant="contained" sx={{color:'#d50000'}}>Deshabilitar</Button>:<Button onClick={(e)=>HandleHabilitar(e,u.id, u.username, u.habilitado)} variant="contained" sx={{color:'#00c853'}}>Habilitar</Button>}</TableCell>
               <HabilitarAlert  open={openHab} setopen={setOpenHab} nombre={nombre_usuario} id={usuario} estado={estado} tipo="usuario"/>

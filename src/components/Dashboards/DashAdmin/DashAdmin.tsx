@@ -24,18 +24,6 @@ import Camping from "./Camping"
 import Usuarios from './Usuarios';
 import { VERDE, VERDE_OSCURO } from '../../helpers/colors';
 
-// function Copyright(props: any) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Campy S.A.
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const drawerWidth: number = 240;
 
