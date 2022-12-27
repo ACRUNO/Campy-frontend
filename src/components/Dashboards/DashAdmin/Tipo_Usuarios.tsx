@@ -40,6 +40,7 @@ export default function Tipo_usuarios(props:Props) {
     e.preventDefault();
     let data:{token:string, userType:string} ={token:user.token, userType:tipo}
     dispatch(actions.tipo_usuario(id,data))
+    setTimeout(()=>dispatch(actions.getUsuarios_dash()))
     props.setopen(false); 
   };
 
