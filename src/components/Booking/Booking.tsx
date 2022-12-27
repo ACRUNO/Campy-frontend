@@ -100,7 +100,7 @@ export default function Booking() {
                     {currentCampings.length>0? currentCampings.map((c: Campings)=>(
                        <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                        localidad={c.localidad} provincia={c.provincia}
-                       categoria={c.categoria} imagenes={c.imagenes} estrellas={c.cantidad_estrellas} precio={c.precio}></CardCamping> 
+                       categoria={c.categoria} imagenes={c.imagenes} reviews={c.puntuacion_promedio} precio={c.precio}></CardCamping> 
                     )):campings.length===0 && <Alert_busqueda estadoopen={open} setestadoopen={setOpen}/>}
                 </Grid>
             </Grid>

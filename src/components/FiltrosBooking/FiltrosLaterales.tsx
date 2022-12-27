@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup,RadioGroup,Radio, Button } from '@mui/material';
 import { fontWeight } from "@mui/system";
 import { ChangeEvent, MouseEvent } from 'react'
-import { filterCategoria, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
+import { filterCategoria, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { filterCamps } from "../../reducer/estados";
 import {Campings} from '../../reducer/estados';
-
+import Rating from '@mui/material/Rating';
+import StarIcon from '@mui/icons-material/Star';
 
 
 type Props = {
@@ -29,18 +30,18 @@ export default function FiltrosLaterales(props:Props) {
     useEffect(() => {
         dispatch(getAllCategorias())
         dispatch(getFiltersCamping(filtrosBook))
+        dispatch(getAllCampings())
     }, [dispatch, filtrosBook])
 
 
+    const precioCamps = allCampings.map(c => c.precio)
+
+    
+    var min = Math.min(...precioCamps)
+    var max = Math.max(...precioCamps)
 
 
-   const precioCamps = allCampings.map(c => c.precio)
-
-
-    const min: number = 0
-    const max: number = 8000
-
-    const [precioLocal, setPrecioLocal] = React.useState<number[]>([min, max])
+    const [precioLocal, setPrecioLocal] = React.useState<number[]>([min | 0, max | 2500 ])
 
 
     const handlePrecio = (e: Event, newValue: number | number[]) => {
@@ -113,27 +114,71 @@ export default function FiltrosLaterales(props:Props) {
 
                 <FormControlLabel
                     control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="reviews" />}
-                    label="5 estrellas"
-
+                    label= { 
+                    <Rating
+                    name="text-feedback"
+                    value={5}
+                    readOnly
+                    precision={1}
+                    style={{marginTop:"0.3rem"}}
+                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                  />
+                    }
                 />
                 <FormControlLabel
                     control={<Checkbox onChange={handleCheck} color="secondary" value="4" name="reviews" />}
-                    label="4 estrellas"
+                    label= { 
+                        <Rating
+                        name="text-feedback"
+                        value={4}
+                        readOnly
+                        precision={1}
+                        style={{marginTop:"0.3rem"}}
+                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                      />
+                        }
 
                 />
                 <FormControlLabel
                     control={<Checkbox onChange={handleCheck} color="secondary" value="3" name="reviews" />}
-                    label="3 estrellas"
+                    label= { 
+                        <Rating
+                        name="text-feedback"
+                        value={3}
+                        readOnly
+                        precision={1}
+                        style={{marginTop:"0.3rem"}}
+                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                      />
+                        }
 
                 />
                 <FormControlLabel
                     control={<Checkbox onChange={handleCheck} color="secondary" value="2" name="reviews" />}
-                    label="2 estrellas"
+                    label= { 
+                        <Rating
+                        name="text-feedback"
+                        value={2}
+                        readOnly
+                        precision={1}
+                        style={{marginTop:"0.3rem"}}
+                        emptyIcon={<StarIcon style={{ opacity: 0.55}} fontSize="inherit" />}
+                      />
+                        }
 
                 />
                 <FormControlLabel
                     control={<Checkbox onChange={handleCheck} color="secondary" value="1" name="reviews" />}
-                    label="1 estrellas"
+                    label= { 
+                        <Rating
+                        name="text-feedback"
+                        value={1}
+                        readOnly
+                        precision={1}
+                        style={{marginTop:"0.3rem"}}
+                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                      />
+                        }
 
                 />
             </FormGroup>
@@ -168,21 +213,6 @@ export default function FiltrosLaterales(props:Props) {
                 <FormControlLabel value={"21,500"}  control={<Radio color="secondary"/>} label="21 o mas metros" />
                 </RadioGroup>
 
-{/*             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
-
-                <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="parcela_superficie"/>}
-                    label="5 metros"
-                />
-                <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="10" name="parcela_superficie" />}
-                    label="10 metros"
-                />
-                <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="20" name="parcela_superficie"/>}
-                    label="20 metros"
-                />
-            </FormGroup> */}
 
 
             <hr></hr>
@@ -269,3 +299,15 @@ export default function FiltrosLaterales(props:Props) {
 
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+ 

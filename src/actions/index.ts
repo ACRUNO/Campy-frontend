@@ -35,7 +35,7 @@ export const FILTER_INGRESO: string = 'FILTER_INGRESO'
 export const FILTER_EGRESO: string = 'FILTER_EGRESO'
 export const FILTER_PARCELA:string = 'FILTER_PARCELA'
 export const CLEAN_CAMPINGS_DASH:string = "CLEAN_CAMPINGS_DASH"
-
+export const LINK_MAP:string = 'LINK_MAP'
 
 
 
@@ -423,5 +423,20 @@ export function FilterParcela (tamaño : number[]){
     return{
         type: FILTER_PARCELA,
         payload: tamaño
+    }
+}
+
+
+export function LinkMap(id: any): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            let details = await axios.get(`/api/campings/${id}`);
+
+            return dispatch({
+                type: LINK_MAP,
+                payload: details.data
+            })
+        } catch (error: any) { console.log(error.message) }
     }
 }
