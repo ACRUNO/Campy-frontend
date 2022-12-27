@@ -15,13 +15,12 @@ import { useEffect, useState } from "react";
 import TablePagination from '@mui/material/TablePagination';
 import Detalle_camping from "./Detalle_camping"
 import HabilitarAlert from "./Habilitar";
+import SearchBar from './SearchBar';
 
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
-  
   const campingsDash:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = useSelector((state: RootState) => state.campingsDash)
-  const user = useSelector((state: RootState) => state.user);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -30,7 +29,6 @@ export default function Camping() {
   const [openHab, setOpenHab]= React.useState(false);
   const [nombre_camping, setNombre_camping]=React.useState("")
   const [estado, setEstado]=React.useState(0)
-  const currentCampings=campingsDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
   
 
 
@@ -43,10 +41,11 @@ export default function Camping() {
     setPage(0);
   };
 
-  const handleClick = (e:React.ChangeEvent<unknown>, id:number) => {
+  const handleClick = (e:React.ChangeEvent<unknown>, id:number, nombre:string) => {
     e.preventDefault();
     setOpen(true);
     setCamping(id)
+    setNombre_camping(nombre)
   };
 
   const HandleHabilitar = (e:React.ChangeEvent<unknown>, id:number, nombre:string, estado:number) => {
@@ -60,12 +59,10 @@ export default function Camping() {
 
   useEffect(()=>{
      dispatch(actions.getCampings_dash())
-      console.log("getcampings")
     //  return () => {
-    //   dispatch(actions.cleanCampings_dash())
-    //   console.log("cleancampings")
-    // };
-   },[dispatch, rowsPerPage, openHab])
+    //   dispatch(actions.cleanCampings_dash());
+    // }; 
+   },[dispatch, rowsPerPage, openHab, open])
   
   
 
@@ -73,7 +70,10 @@ export default function Camping() {
     <React.Fragment>
         <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>   
-      <Title>Campings</Title>
+        <Grid container sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", mb:5, alignItems:"center"}}>
+        <Grid item sx={{ml:3}}><Title>Campings</Title></Grid>
+        <Grid item sx={{mr:3}}><SearchBar type="Camping"></SearchBar></Grid>
+      </Grid> 
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -85,10 +85,10 @@ export default function Camping() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {campingsDash.map((c) => (
+          {campingsDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c) => (
             <TableRow key={c.id}>
-              <TableCell onClick={(e)=>handleClick(e,c.id)}><Button variant='text' color="inherit">{c.nombre_camping}</Button></TableCell>
-              <Detalle_camping key={c.id} open={open} setopen={setOpen} id={camping}></Detalle_camping>
+              <TableCell onClick={(e)=>handleClick(e,c.id, c.nombre_camping)}><Button variant='text' color="inherit">{c.nombre_camping}</Button></TableCell>
+              <Detalle_camping key={c.id} open={open} setopen={setOpen} id={camping} nombre={nombre_camping}></Detalle_camping>
               <TableCell>{c.localidad}</TableCell>
               <TableCell>{c.provincia}</TableCell>
               <TableCell >{c.habilitado===1 ? "Habilitado" : "Deshabilitado"}</TableCell>
@@ -106,7 +106,6 @@ export default function Camping() {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          
         />
         </Paper>
               </Grid>

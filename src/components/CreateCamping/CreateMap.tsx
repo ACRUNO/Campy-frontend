@@ -37,6 +37,15 @@ interface LtnLng {
     lng: number;
 }
 
+const option = {
+    mapTypeControl: false,
+    streetViewControl: false,
+    minZoom: 4,
+    maxZoom: 18,
+    mapTypeId:'terrain'
+}
+
+
 function Map({ setInput, input }: InputProps) {
 
     const [selected, setSelected] = useState<LtnLng | null>(null)
@@ -57,6 +66,7 @@ function Map({ setInput, input }: InputProps) {
             <GoogleMap
                 zoom={zoom}
                 center={center}
+                options={option}
                 // mapContainerClassName="map-container"
                 mapContainerStyle={containerStyle}>
                 {selected && <Marker position={selected} />}

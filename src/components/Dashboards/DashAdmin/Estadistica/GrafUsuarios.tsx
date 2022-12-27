@@ -78,12 +78,9 @@ export default function GrafUsuarios() {
       <Label value="Días" offset={2} position="bottom" />
       </XAxis>
       <YAxis label={{ value: 'Usuarios', angle: -90, position: 'insideLeft' }}>
-      {/* <Label value="Usuarios" offset={2} position="left" /> */}
       </YAxis>
       <Tooltip />
-      {/* <Legend verticalAlign="top" align="center" /> */}
-      {/* <Bar name="Nuevos Usuarios" dataKey="user" barSize={20} fill="#5F8D4E" /> */}
-      <Line name= "Usuarios Totales" type="monotone" dataKey="users" stroke="#ff7300" />
+      <Line name= "Usuarios Totales" type="monotone" dataKey="users" stroke="#A4BE7B"   />
     </ComposedChart>
   );
 }

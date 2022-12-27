@@ -18,45 +18,33 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Title from './Title';
+import { cleanUsuarios_dash } from '../../../actions/Dash.admin.action';
 
 
 type Props = {
     open:boolean
     setopen:(value: React.SetStateAction<boolean>) => void
     id:number
+    nombre: string
     } 
 
 export default function Detalle_usuario(props:Props) {
   const dispatch: AppDispatch = useDispatch()
   const { bookings, done } = useSelector((state: RootState) => state.userBookings)
-
-
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    console.log(newPage)
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
  
   const handleClose = () => {
     props.setopen(false);
   };
 
   useEffect(() => {
-     dispatch(getUserBookings(props.id));
-    //  return () => {
-    //   dispatch(actions.cleanCampings_dash())
-    //   console.log("cleancampings")
-    // };
-  }, [])
+     if(props.open){  
+     dispatch(getUserBookings(props.id))};
+     return () => {
+      dispatch(cleanUsuarios_dash())
+    };
+  }, [props.open])
 
- console.log(bookings)
+
   return (
     <React.Fragment>
       <Dialog
@@ -65,9 +53,9 @@ export default function Detalle_usuario(props:Props) {
         open={props.open}
         onClose={handleClose}
       >
-        <DialogTitle>Detalle del usuario {props.id}</DialogTitle>
+        <DialogTitle>{props.nombre}</DialogTitle>
         <DialogContent>
-        <Title>Reservas</Title>
+        <Title>Reservas del usuario</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -80,7 +68,7 @@ export default function Detalle_usuario(props:Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings) => (
+          {bookings?.map((c: Bookings) => (
             <TableRow key={c.id}>
               <TableCell>{c.nombre_camping}</TableCell>
               <TableCell>{c.correo_prop}</TableCell>
@@ -92,15 +80,6 @@ export default function Detalle_usuario(props:Props) {
           ))}
         </TableBody>
       </Table>
-      {/* <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={bookings.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="contained" color="secondary">Cerrar</Button>
