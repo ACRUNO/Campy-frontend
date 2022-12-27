@@ -99,7 +99,6 @@ function Map() {
         center={center}
         mapContainerClassName="map-container"
         options={OPTIONS}
-        
       >
         
         <button className={s.buttonFilters} onClick={handleButton}>
