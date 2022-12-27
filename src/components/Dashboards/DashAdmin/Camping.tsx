@@ -16,11 +16,13 @@ import TablePagination from '@mui/material/TablePagination';
 import Detalle_camping from "./Detalle_camping"
 import HabilitarAlert from "./Habilitar";
 import SearchBar from './SearchBar';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+
 
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
-  const campingsDash:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = useSelector((state: RootState) => state.campingsDash)
+  const campingsDash:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string, contacto_tel:string}[] = useSelector((state: RootState) => state.campingsDash)
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -78,6 +80,7 @@ export default function Camping() {
         <TableHead>
           <TableRow>
             <TableCell>Nombre</TableCell>
+            <TableCell>Teléfono</TableCell>
             <TableCell>Localidad</TableCell>
             <TableCell>Provincia</TableCell>
             <TableCell>Estado</TableCell>
@@ -87,8 +90,9 @@ export default function Camping() {
         <TableBody>
           {campingsDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c) => (
             <TableRow key={c.id}>
-              <TableCell onClick={(e)=>handleClick(e,c.id, c.nombre_camping)}><Button variant='text' color="inherit">{c.nombre_camping}</Button></TableCell>
+              <TableCell onClick={(e)=>handleClick(e,c.id, c.nombre_camping)}><Button variant='text' color="inherit"><ListAltIcon fontSize="small" sx={{color:"#ACA8A6", pb:0.5}}/>{c.nombre_camping}</Button></TableCell>
               <Detalle_camping key={c.id} open={open} setopen={setOpen} id={camping} nombre={nombre_camping}></Detalle_camping>
+              <TableCell>{c.contacto_tel}</TableCell>
               <TableCell>{c.localidad}</TableCell>
               <TableCell>{c.provincia}</TableCell>
               <TableCell >{c.habilitado===1 ? "Habilitado" : "Deshabilitado"}</TableCell>
