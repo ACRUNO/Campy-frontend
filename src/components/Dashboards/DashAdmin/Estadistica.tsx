@@ -19,29 +19,28 @@ export default function Estadistica() {
 
       <Grid item xs={6} color="secondary">
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title >Distribución geográfica de campings registrados</Title>
-      {/* <Typography align="center" variant="subtitle2">Total de campings: 1200</Typography> */}
+      <Typography component="h2" variant="h6" color="black" align="center" gutterBottom>Distribución geográfica de campings registrados</Typography>
       <Torta/>
       </Paper>
       </Grid>
 
       <Grid item xs={6}>
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title>Usuarios registrados en Campy</Title>
+      <Typography component="h2" variant="h6" color="black" align="center" gutterBottom>Usuarios registrados en Campy</Typography>
       <GrafUsuarios/>
       </Paper>
       </Grid>
 
       <Grid item xs={6}>
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
-      <Title>Reservas realizadas en Campy</Title>
+      <Typography component="h2" variant="h6" color="black" align="center" gutterBottom>Reservas realizadas en Campy</Typography>
       <GrafReservas/>
       </Paper>
       </Grid>
 
       <Grid item xs={6}>
       <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', color:"secondary"}}>  
-      <Title>Top 5: Campings con mayor cantidad de reservas</Title>
+      <Typography component="h2" variant="h6" color="black" align="center" gutterBottom>Top 5: Campings con mayor cantidad de reservas</Typography>
       <Top10/>
       </Paper>
       </Grid>

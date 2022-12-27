@@ -210,7 +210,7 @@ export default function Misdatos() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  color='primary'
+                  color='secondary'
                 >
                   Guardar Cambios
                 </Button>
