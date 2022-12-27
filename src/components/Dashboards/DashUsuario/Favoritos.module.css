@@ -44,4 +44,5 @@ div.cards-container {
   grid-template-columns: repeat(auto-fit, 300px);
   column-gap: 30px;
   row-gap: 30px;
+  cursor: pointer;
 }

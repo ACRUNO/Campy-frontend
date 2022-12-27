@@ -1,8 +1,10 @@
-import { FILTER_PARCELA,USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO } from "../actions";
+import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
+import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
+import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
 
 const initialState: {
     user: User | null;
@@ -28,10 +30,17 @@ const initialState: {
     filtrosBooking: filterCamps;
     fechaIngreso: string;
     fechaEgreso: string;
-    fechaIngresoDayjs:Dayjs | null;
-    fechaEgresoDayjs:Dayjs | null
-    campingsDash:{id:number, nombre_camping:string, habilitado:number}[];
-    usuariosDash:{id: number, username: string,email: string,tipo: string,habilitado: number}[]
+    campingsDash_All:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[];
+    usuariosDash_All:{id: number, username: string,email: string,tipo: string,habilitado: number}[];
+    fechaIngresoDayjs: Dayjs | null;
+    fechaEgresoDayjs: Dayjs | null
+    campingsDash: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string }[];
+    usuariosDash: { id: number, username: string, email: string, tipo: string, habilitado: number }[]
+    datos_graftorta: { provincias: string, cant_campings: number }[]
+    datos_graftop: { nombre_camping: string, cant_reservas: number }[],
+    datos_grafusuarios: { users: number, created: string }[],
+    datos_grafreservas: { reservas: number, total: number, created: string }[],
+    reviews: { id: number, puntaje: number ,username: string, fecha: string ,comentario: string }[],
 } = {
 
     //ESTADOS GLOBALES
@@ -53,8 +62,9 @@ const initialState: {
     allPeriodoAbierto: [],
     periodoAbierto: 0,
     campingsDash: [],
+    campingsDash_All: [],
     usuariosDash: [],
-    filtrosBooking: {        
+    filtrosBooking: {
         id_provincia: '',
         id_localidad: '',
         abierto_fecha_desde: "",
@@ -80,8 +90,15 @@ const initialState: {
     },
     fechaIngreso: "",
     fechaEgreso: "",
-    fechaIngresoDayjs:null,
-    fechaEgresoDayjs: null
+    fechaIngresoDayjs: null,
+    fechaEgresoDayjs: null,
+    datos_graftorta: [],
+    datos_graftop: [],
+    usuariosDash_All: [],
+    datos_grafusuarios: [],
+    datos_grafreservas: [],
+    reviews: []
+
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -151,7 +168,7 @@ function rootReducer(state: any = initialState, action: any): any {
             }
         case LOGIN_USER:
             const { remember, token }: { remember: boolean, token: string } = action.payload;
-            
+
             remember && localStorage.setItem('token', token);
 
             return { ...state, user: action.payload }
@@ -189,45 +206,54 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
 
+
             case CAMPINGS_DASH:
                 return {
                     ...state,
-                    campingsDash: action.payload
+                    campingsDash: action.payload,
+                    campingsDash_All: action.payload
+                }
+            case CLEAN_CAMPINGS_DASH:
+                return {
+                    ...state,
+                    campingsDash:[],
+                    campingsDash_All: []
                 }
 
             case USUARIOS_DASH:
                 return {
                     ...state,
-                    usuariosDash: action.payload
+                    usuariosDash: action.payload,
+                    usuariosDash_All: action.payload
                 }
-            
+   
 
         case FILTROS_COMBINADOS:
             let filtrosBook: number[] = state.filtrosBooking[action.payload.name]
-            if(!filtrosBook.includes(action.payload.value)){
+            if (!filtrosBook.includes(action.payload.value)) {
                 filtrosBook.push(action.payload.value)
             } else {
                 filtrosBook = filtrosBook.filter((r: number) => r !== action.payload.value)
             }
-            return{
+            return {
                 ...state,
-                filtrosBooking: {...state.filtrosBooking, [action.payload.name]: filtrosBook} 
+                filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: filtrosBook }
             }
         case FILTROS_BOOLEANOS:
-            return{
+            return {
                 ...state,
-                filtrosBooking: {...state.filtrosBooking, [action.payload.name]: action.payload.value} 
+                filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: action.payload.value }
             }
         case FILTROS_PRECIOS:
-            return{
+            return {
                 ...state,
-                filtrosBooking: {...state.filtrosBooking, [action.payload.name]: action.payload.value}
+                filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: action.payload.value }
             }
         case FILTROS_PRINCIPALES:
             return {
                 ...state,
                 filtrosBooking: {
-                    ...state.filtrosBooking, 
+                    ...state.filtrosBooking,
                     id_provincia: action.payload.provincia,
                     id_localidad: action.payload.localidad,
                     abierto_fecha_desde: action.payload.ingreso,
@@ -238,10 +264,10 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 filtrosBooking: reset(),
-                provincia:0,
-                localidad:0,
-                fechaIngresoDayjs:null,
-                fechaEgresoDayjs:null
+                provincia: 0,
+                localidad: 0,
+                fechaIngresoDayjs: null,
+                fechaEgresoDayjs: null
             }
         case GET_FILTERS_CAMPING:
             return {
@@ -254,12 +280,12 @@ function rootReducer(state: any = initialState, action: any): any {
                 fechaIngreso: action.payload?.toDate().toLocaleDateString().split('/').reverse().join('/'),
                 fechaIngresoDayjs: action.payload
             }
-            case FILTER_EGRESO:
-                return {
-                    ...state,
-                    fechaEgreso: action.payload?.toDate().toLocaleDateString().split('/').reverse().join('/'),
-                    fechaEgresoDayjs: action.payload
-                }
+        case FILTER_EGRESO:
+            return {
+                ...state,
+                fechaEgreso: action.payload?.toDate().toLocaleDateString().split('/').reverse().join('/'),
+                fechaEgresoDayjs: action.payload
+            }
         case GET_FAVORITES_CAMPINGS:
             return {
                 ...state,
@@ -269,9 +295,9 @@ function rootReducer(state: any = initialState, action: any): any {
 
             return {
                 ...state,
-                favoritesCampings: { 
-                    favorites: state.favoritesCampings.favorites.filter((fav: { id: number }) => fav.id !== action.payload), 
-                    done: true 
+                favoritesCampings: {
+                    favorites: state.favoritesCampings.favorites.filter((fav: { id: number }) => fav.id !== action.payload),
+                    done: true
                 }
             }
         case GET_USER_BOOKINGS:
@@ -282,20 +308,104 @@ function rootReducer(state: any = initialState, action: any): any {
                     done: true
                 }
             }
-            case FILTER_PARCELA:
+        case FILTER_PARCELA:
+            return {
+                ...state,
+                filtrosBooking: {
+                    ...state.filtrosBooking,
+                    parcela_superficie: action.payload
+                }
+
+            }
+        case GET_CAMPINGSXPROV:
+            return {
+                ...state,
+                datos_graftorta: action.payload
+            }
+        case GET_MASRESERVADOS:
+            return {
+                ...state,
+                datos_graftop: action.payload
+            }
+        case GET_USUARIOSCAMPY:
+            let u: number = 1;
+            let data: { users: number, created: string }[] = []
+            let i: number = 0
+            while (i < action.payload.length) {
+                if (i < action.payload.length - 1 && action.payload[i].createdAt === action.payload[i + 1].createdAt) {
+                    u++
+                    i++
+                }
+                else {
+                    let obj: { users: number, created: string } = { users: u, created: action.payload[i].createdAt.split("T")[0] }
+                    data.push(obj)
+                    u++
+                    i++
+                }
+            }
+            return {
+                ...state,
+                datos_grafusuarios: data
+            }
+
+        case GET_RESERVASCAMPY:
+            console.log(action.payload)
+            let r: number = 1;
+            let t: number = 0;
+            let datos: { reservas: number, total: number, created: string }[] = [];
+            let j: number = 0;
+            while (j < action.payload.length) {
+                if (j < action.payload.length - 1 && action.payload[j].createdAt === action.payload[j + 1].createdAt) {
+                    r++
+                    t = t + action.payload[j].total
+                    j++
+                }
+                else {
+                    t = t + action.payload[j].total
+                    let obj: { reservas: number, total: number, created: string } = { reservas: r, total: t, created: action.payload[j].createdAt.split("T")[0] }
+                    datos.push(obj)
+                    r++
+                    j++
+                    }}
+                    console.log(datos)
                 return {
                     ...state,
-                    filtrosBooking: {
-                        ...state.filtrosBooking,
-                        parcela_superficie: action.payload
+                    datos_grafreservas: datos
                     }
                     
+            case CLEAN_USUARIOS_DASH:
+                return {
+                    ...state,
+                    userBookings: []
                 }
             case GET_OWNER_CAMPINGS:
                 return {
                     ...state,
                     ownerCampings: {campings: action.payload, done: true}
                 }
+            case GET_USUARIOS_BYNAME:
+                if (action.payload.length>0){
+                  var usuariosBuscados:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = state.usuariosDash_All.filter((u:{id: number, username: string,email: string,tipo: string,habilitado: number})=>u.username.toLowerCase().includes(action.payload.toLowerCase()))}
+                else{var usuariosBuscados:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = state.usuariosDash_All}
+                return{
+                    ...state,
+                    usuariosDash: usuariosBuscados
+
+                }
+
+        case GET_CAMPING_REVIEWS:
+            return {
+                ...state,
+                reviews: action.payload
+            }
+            case GET_CAMPINGS_BYNAME:
+                if (action.payload.length>0){
+                    var campingsBuscados:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = state.campingsDash_All.filter((u:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string})=>u.nombre_camping.toLowerCase().includes(action.payload.toLowerCase()))}
+                else{var campingsBuscados: {id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = state.campingsDash_All}
+                return{
+                     ...state,
+                    campingsDash: campingsBuscados
+                    }
         default: return { ...state }
 
     }

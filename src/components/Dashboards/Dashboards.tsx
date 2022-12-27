@@ -4,17 +4,16 @@ import DashboardAdmin from "./DashAdmin/DashAdmin"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { User } from "../../reducer/estados"
+import { userTypes } from "../../auxiliar"
 
 export default function Dashboards() {
   const user: User = useSelector((state: RootState) => state.user);
-  const ADMIN: string = String(process.env.REACT_APP_TIPO_ADMIN);
-  const PROPIETARIO: string = String(process.env.REACT_APP_TIPO_PROPIETARIO);
 
   if(!user) return <div>Iniciá Sesión</div>
 
-  return user.tipo === ADMIN 
+  return user.tipo === userTypes.ADMIN 
           ? <DashboardAdmin /> 
-          : user.tipo === PROPIETARIO
+          : user.tipo === userTypes.PROPIETARIO
           ? <DashboardPropietario />
           : <DashboardUsuario /> 
 }

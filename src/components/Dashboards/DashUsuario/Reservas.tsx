@@ -54,7 +54,7 @@ export default function Reservas() {
           {bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings) => (
             <TableRow key={c.id}>
               <TableCell>{c.nombre_camping}</TableCell>
-              <TableCell>{c.correo_prop}</TableCell>
+              <TableCell>{c.email}</TableCell>
               <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
               <TableCell>$ {c.total}</TableCell>

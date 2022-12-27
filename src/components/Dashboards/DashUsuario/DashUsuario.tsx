@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListItems from './ListItems';
-import Misdatos from './Misdatos';
+import Misdatos from './../Misdatos';
 import Reservas from "./Reservas"
 import Favoritos from './Favoritos';
 import { VERDE, VERDE_OSCURO } from '../../helpers/colors';

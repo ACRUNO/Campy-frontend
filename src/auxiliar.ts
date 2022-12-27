@@ -59,3 +59,16 @@ export interface AlertConfirmType {
     confirm: () => void,
     denegate: () => void
 };
+
+export const userTypes = {
+    USER: process.env.REACT_APP_TIPO_USUARIO,
+    PROPIETARIO: process.env.REACT_APP_TIPO_PROPIETARIO,
+    ADMIN: process.env.REACT_APP_TIPO_ADMIN
+}
+
+export const stateBooking = {
+    PENDIENTE: process.env.REACT_APP_PENDIENTE,
+    RECHAZADA: process.env.REACT_APP_RECHAZADA,
+    REALIZADA: process.env.REACT_APP_REALIZADA,
+    FINALIZADA: process.env.REACT_APP_FINALIZADA,
+}

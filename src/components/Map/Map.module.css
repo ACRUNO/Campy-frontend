@@ -1,0 +1,64 @@
+.MapCard {
+    position: fixed;
+    bottom: 3%;
+    right: 4%;
+}
+
+button.buttonFilters {
+    position: fixed;
+    bottom: 3%;
+    left: 0.5%;
+    background: none padding-box rgb(255, 255, 255);
+    display: table-cell;
+    border: 0px;
+    margin: 0px;
+    padding-left: 1rem;
+    padding-top: 0.3rem;
+    text-transform: none;
+    appearance: none;
+    cursor: pointer;
+    user-select: none;
+    direction: ltr;
+    overflow: hidden;
+    text-align: center;
+    height: 40px;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    min-width: 48px;
+    font-weight: 500;
+
+}
+
+.buttonFilters:hover{
+    background: #f1f1f1;
+}
+
+.filters {
+    position: fixed;
+    bottom: 8%;
+    left: 0.5%;
+}
+
+.link{
+    text-decoration: none;
+}
+
+button{
+    font-family: "Sen" !important;
+}
+
+li{
+    font-family: "Sen" !important;
+}
+
+
+.filtersArrow{
+    float: right;
+    margin-left: 0.1rem;
+
+}
+
+
