@@ -67,8 +67,8 @@ export default function Camping() {
   }, [dispatch, params.id])
 
   setTimeout(function () {
-    setValue(camp.cantidad_estrellas)
-  }, 1000); //try to resolve better
+    setValue(camp.puntuacion_promedio)
+  }, 500); //try to resolve better
 
 
 
