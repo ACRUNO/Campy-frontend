@@ -26,20 +26,33 @@ export function Reviews() {
     const dispatch: AppDispatch = useDispatch()
     const params = useParams()
     const reviews = useSelector((state: RootState) => state.reviews);
+    const raiting = useSelector((state: RootState) => state.detailCamping.puntuacion_promedio);
+    const [puntuacion, setPuntuacion] = React.useState(0);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
         dispatch(getCampingReviews(params.id));
-    }, [dispatch, params.id]);
+    }, [dispatch, params.id, puntuacion]);
 
-    console.log(reviews);
+    setTimeout(() => {
+        setPuntuacion(raiting)
+    }, 500);
 
 
     return (
-        <div>
-            <Button onClick={handleOpen} color='secondary' variant='contained'>Mostrar Reseñas</Button>
+        <Box display='flex' sx={{ width: '90%' }}>
+            <Box display='flex' p='1%' alignItems='center'>
+                <Box display='table-row' textAlign='center'>
+                    <Typography variant="h2">Reviews</Typography>
+                    <Typography variant="h2">{puntuacion}.0</Typography>
+                </Box>
+                <Box display='flex' flexDirection='column' alignItems='center' p='2%' ml='3rem'>
+                    <Button sx={{mb:'15%'}} onClick={handleOpen} color='secondary' variant='contained'>Mostrar Reseñas</Button>
+                    <Rating name="read-only" value={puntuacion} readOnly />
+                </Box>
+            </Box>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -66,7 +79,7 @@ export function Reviews() {
                             <Box alignItems='left' sx={{ width: '100%' }}>
                                 {reviews?.map((reviews: { id_camping: number, puntaje: number, username: string, fecha: string, comentario: string }) => {
                                     return (
-                                        
+
                                         <Box >
                                             <Box display='flex' justifyContent='space-between'>
                                                 <Typography variant="h4">
@@ -84,7 +97,7 @@ export function Reviews() {
                                             </Box>
                                             <hr></hr>
                                         </Box>
-                                        
+
                                     )
                                 })}
                             </Box>
@@ -92,6 +105,6 @@ export function Reviews() {
                     </Box>
                 </Fade>
             </Modal>
-        </div>
+        </Box>
     )
 }

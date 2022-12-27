@@ -117,7 +117,7 @@ export type filterCamps = {
     abierto_fecha_desde: string,
     abierto_fecha_hasta: string,
     precio: number[],
-    // reviews: number[],
+    reviews: number[],
     id_categoria: number[],
     parcela_superficie: number[],
     parcela_techada: number,
