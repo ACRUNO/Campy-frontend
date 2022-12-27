@@ -1,4 +1,4 @@
-import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH } from "../actions";
+import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
@@ -26,8 +26,8 @@ const initialState: {
     filtrosBooking: filterCamps;
     fechaIngreso: string;
     fechaEgreso: string;
-    campingsDash_All:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[];
-    usuariosDash_All:{id: number, username: string,email: string,tipo: string,habilitado: number}[];
+    campingsDash_All: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string }[];
+    usuariosDash_All: { id: number, username: string, email: string, tipo: string, habilitado: number }[];
     fechaIngresoDayjs: Dayjs | null;
     fechaEgresoDayjs: Dayjs | null
     campingsDash: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string }[];
@@ -36,7 +36,8 @@ const initialState: {
     datos_graftop: { nombre_camping: string, cant_reservas: number }[],
     datos_grafusuarios: { users: number, created: string }[],
     datos_grafreservas: { reservas: number, total: number, created: string }[],
-    reviews: { id: number, puntaje: number ,username: string, fecha: string ,comentario: string }[],
+    reviews: { id: number, puntaje: number, username: string, fecha: string, comentario: string }[],
+    linkMap: { lng: number, lat: number, zoom: number }
 } = {
 
     //ESTADOS GLOBALES
@@ -92,7 +93,8 @@ const initialState: {
     usuariosDash_All: [],
     datos_grafusuarios: [],
     datos_grafreservas: [],
-    reviews: []
+    reviews: [],
+    linkMap: { lng: -63.617129400239264, lat: -38.40725346022871, zoom: 5 }
 
 };
 
@@ -107,7 +109,6 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 allCampings: action.payload,
-                campings: action.payload
             }
         case GET_LOCALIDADES:
             return {
@@ -202,26 +203,26 @@ function rootReducer(state: any = initialState, action: any): any {
 
 
 
-            case CAMPINGS_DASH:
-                return {
-                    ...state,
-                    campingsDash: action.payload,
-                    campingsDash_All: action.payload
-                }
-            case CLEAN_CAMPINGS_DASH:
-                return {
-                    ...state,
-                    campingsDash:[],
-                    campingsDash_All: []
-                }
+        case CAMPINGS_DASH:
+            return {
+                ...state,
+                campingsDash: action.payload,
+                campingsDash_All: action.payload
+            }
+        case CLEAN_CAMPINGS_DASH:
+            return {
+                ...state,
+                campingsDash: [],
+                campingsDash_All: []
+            }
 
-            case USUARIOS_DASH:
-                return {
-                    ...state,
-                    usuariosDash: action.payload,
-                    usuariosDash_All: action.payload
-                }
-   
+        case USUARIOS_DASH:
+            return {
+                ...state,
+                usuariosDash: action.payload,
+                usuariosDash_All: action.payload
+            }
+
 
         case FILTROS_COMBINADOS:
             let filtrosBook: number[] = state.filtrosBooking[action.payload.name]
@@ -361,28 +362,30 @@ function rootReducer(state: any = initialState, action: any): any {
                     datos.push(obj)
                     r++
                     j++
-                    }}
-                    console.log(datos)
-                return {
-                    ...state,
-                    datos_grafreservas: datos
-                    }
-                    
-            case CLEAN_USUARIOS_DASH:
-                return {
-                    ...state,
-                    userBookings: []
                 }
+            }
+            console.log(datos)
+            return {
+                ...state,
+                datos_grafreservas: datos
+            }
 
-            case GET_USUARIOS_BYNAME:
-                if (action.payload.length>0){
-                  var usuariosBuscados:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = state.usuariosDash_All.filter((u:{id: number, username: string,email: string,tipo: string,habilitado: number})=>u.username.toLowerCase().includes(action.payload.toLowerCase()))}
-                else{var usuariosBuscados:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = state.usuariosDash_All}
-                return{
-                    ...state,
-                    usuariosDash: usuariosBuscados
+        case CLEAN_USUARIOS_DASH:
+            return {
+                ...state,
+                userBookings: []
+            }
 
-                }
+        case GET_USUARIOS_BYNAME:
+            if (action.payload.length > 0) {
+                var usuariosBuscados: { id: number, username: string, email: string, tipo: string, habilitado: number }[] = state.usuariosDash_All.filter((u: { id: number, username: string, email: string, tipo: string, habilitado: number }) => u.username.toLowerCase().includes(action.payload.toLowerCase()))
+            }
+            else { var usuariosBuscados: { id: number, username: string, email: string, tipo: string, habilitado: number }[] = state.usuariosDash_All }
+            return {
+                ...state,
+                usuariosDash: usuariosBuscados
+
+            }
 
         case GET_CAMPING_REVIEWS:
             return {
@@ -391,14 +394,22 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
 
-            case GET_CAMPINGS_BYNAME:
-                if (action.payload.length>0){
-                    var campingsBuscados:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = state.campingsDash_All.filter((u:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string})=>u.nombre_camping.toLowerCase().includes(action.payload.toLowerCase()))}
-                else{var campingsBuscados: {id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = state.campingsDash_All}
-                return{
-                     ...state,
-                    campingsDash: campingsBuscados
-                    }
+        case GET_CAMPINGS_BYNAME:
+            if (action.payload.length > 0) {
+                var campingsBuscados: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string }[] = state.campingsDash_All.filter((u: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string }) => u.nombre_camping.toLowerCase().includes(action.payload.toLowerCase()))
+            }
+            else { var campingsBuscados: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string }[] = state.campingsDash_All }
+            return {
+                ...state,
+                campingsDash: campingsBuscados
+            }
+
+        case LINK_MAP:
+            return {
+                ...state,
+                linkMap: { lng: (Number(action.payload.longitud)) , lat: (Number(action.payload.latitud)), zoom: 16 }
+            }
+
         default: return { ...state }
 
     }
