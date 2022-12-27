@@ -1,0 +1,13 @@
+.reserve-container {
+  position: fixed;
+  z-index: 999;
+}
+
+svg.close-button {
+  font-size: 1.7rem;
+  position: absolute;
+  fill: var(--red);
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

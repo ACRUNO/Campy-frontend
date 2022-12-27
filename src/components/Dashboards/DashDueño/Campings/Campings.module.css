@@ -1,0 +1,14 @@
+button.edit-button {
+  padding: 3px 7px;
+  font-size: .8rem;
+}
+
+button.delete-button {
+  padding: 3px 7px;
+  font-size: .8rem;
+  background-color: var(--red);
+}
+
+button.delete-button:hover {
+  background-color: var(--dark-red);
+}

@@ -1,22 +1,24 @@
-import { useEffect, useState, ChangeEvent } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { useEffect, useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { Dialog, Table, TableRow, TableHead, TableBody, TablePagination, TableCell, Button } from '@mui/material/';
 import {Grid, Paper} from "@mui/material";
-import Title from './Title';
+import Title from './../Title';
 import { useDispatch, useSelector} from "react-redux";
-import { AppDispatch, RootState } from '../../../store/index';
-import TablePagination from '@mui/material/TablePagination';
-import { getUserBookings } from '../../../actions/User.action';
-import { Bookings } from '../../../reducer/estados';
+import { AppDispatch, RootState } from '../../../../store/index';
+import { getOwnerBookings } from '../../../../actions/User.action';
+import { Bookings } from '../../../../reducer/estados';
+import { Cancel as CancelIcon } from '@mui/icons-material';
+import s from './Reservas.module.css';
 
+type Props = { 
+  setOpenReserves: Dispatch<SetStateAction<{open: boolean, campingId: number}>>;
+  open: boolean;
+  campingId: number;
+}
 
-export default function Reservas() {
+export default function Reservas({open, campingId, setOpenReserves}: Props) {
   const dispatch: AppDispatch = useDispatch()
   const { bookings, done } = useSelector((state: RootState) => state.userBookings)
-  const { id, token }: { id: number, token: string } = useSelector((state: RootState) => state.user)  
+  const { token }: { id: number, token: string } = useSelector((state: RootState) => state.user)  
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -29,12 +31,12 @@ export default function Reservas() {
   };
 
   useEffect(() => {
-    if(!bookings.length && !done) dispatch(getUserBookings(id, token));
-  }, [bookings])
+    dispatch(getOwnerBookings(campingId, token))
+  }, [])
   
   return (
-    <>
-        <Grid item xs={12}>
+    <Dialog open={open} className={s['reserve-container']}>
+        <Grid item xs={12} >
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   
                 
@@ -73,7 +75,11 @@ export default function Reservas() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
         </Paper>
+        <CancelIcon 
+          onClick={() => setOpenReserves({open: false, campingId: 0})} 
+          className={s['close-button']} 
+        />
       </Grid>
-    </>
+    </Dialog>
   );
 }

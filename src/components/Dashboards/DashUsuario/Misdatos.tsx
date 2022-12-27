@@ -97,7 +97,7 @@ export default function Misdatos() {
     const inputsFromForm: NodeListOf<HTMLInputElement> = document.querySelectorAll('#form-datos input');
     let query: string[] = [];
     
-
+    inputsFromForm.forEach((e) => console.log(e.name, e.value))
     for(let input of inputsFromForm) 
       if(input.value) query.push(`${input.name}=${input.value}`);
 
@@ -122,12 +122,13 @@ export default function Misdatos() {
 
   return (
     <>
+    {console.log(user)}
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
             <Title>Mis Datos</Title>
             {
               user.foto 
-              ? <Avatar src={user.foto} sx={{height: '150px', width: '150px', m: '20px auto'}} /> 
+              ? <Avatar src={`${user.foto}`} sx={{height: '150px', width: '150px', m: '20px auto'}} /> 
               : <Avatar sx={{height: '150px', width: '150px', fontSize: '3.5rem', m: '20px auto', bgcolor: VERDE}} >
                   {user.username[0].toUpperCase()}
                 </Avatar>

@@ -155,6 +155,16 @@ return(
               <Rating     name="read-only" value={value} readOnly />
            </Box>
           </Box>
+          {
+          user && 
+            <FavoriteIcon
+                onClick={() => {
+                  if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
+                  setFavorite(true)
+                }}
+              className={`${Style['add-fav']} ${favorite ? Style.heart : ''}`.trim()} 
+            />
+          }
          </Box>    
           
           <Box className={Style.booking}> 
@@ -385,24 +395,7 @@ return(
         </Box>
         </Box>
          
-      
 
-         
-        {
-          user && 
-          <Typography 
-            className={Style['add-fav']}  
-            variant="h5" 
-            color="primary"
-            onClick={() => {
-              if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
-
-              setFavorite(true)
-            }}
-          >
-            Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
-          </Typography>
-        }
         
         <Footer/>
        

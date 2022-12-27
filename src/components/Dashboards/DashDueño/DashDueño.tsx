@@ -19,8 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListItems from './ListItems';
 import Misdatos from './Misdatos';
-import Reservas from "./Reservas"
-import Modificar from './Modificar';
+import Campings from "./Campings/Campings"
 
 // function Copyright(props: any) {
 //   return (
@@ -94,8 +93,7 @@ function DashboardContent() {
   };
 
   const[misdatos, setMisdatos] = React.useState(true);
-  const[modificar, setModificar] = React.useState(false);
-  const[reservas, setReservas] = React.useState(false);
+  const[campings, setCampings] = React.useState(false);
   
 
   return (
@@ -145,7 +143,7 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-            <ListItems setReservas={setReservas} setMisdatos={setMisdatos} setModificar={setModificar}  />
+            <ListItems setCampings={setCampings} setMisdatos={setMisdatos}  />
         </Drawer>
         <Box
           component="main"
@@ -155,17 +153,15 @@ function DashboardContent() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: '100vh',
+            height: 'calc(100vh - 64px)',
             overflow: 'auto',
           }}
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                  {modificar && <Modificar/>}
-                  {reservas && <Reservas/>}
+                  {campings && <Campings />}
                   {misdatos && <Misdatos/>}
-
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
