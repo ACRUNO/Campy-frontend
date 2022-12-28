@@ -40,10 +40,13 @@ export function loginUser(data: {
     }
 }
 
-export function loginUserWithToken(data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function loginUserWithToken(token: string): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            let result: any = await axios.post('/api/login', data);
+            let result: any = await axios.post('/api/login', {},
+            {
+                headers: { authorization: token }
+            });
 
             return dispatch({
                 type: LOGIN_USER,

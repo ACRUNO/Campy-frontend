@@ -1,13 +1,12 @@
-import * as React from 'react';
 import { Dispatch, SetStateAction, useState, ChangeEvent, FormEvent } from 'react';
 import {Typography, TextField, Grid, Paper, Avatar, Box, Button} from '@mui/material';
-import Title from './Title';
+import Title from './DashUsuario/Title';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../../store';
-import ConfirmAlert from '../../helpers/ConfirmAlert';
-import { AlertConfirmType } from '../../../auxiliar';
-import { updateUser } from '../../../actions/Login.action';
-import { VERDE } from '../../helpers/colors';
+import { AppDispatch, RootState } from '../../store';
+import ConfirmAlert from '../helpers/ConfirmAlert';
+import { AlertConfirmType } from '../../auxiliar';
+import { updateUser } from '../../actions/Login.action';
+import { VERDE } from '../helpers/colors';
 
 export default function Misdatos() {
 
@@ -98,7 +97,7 @@ export default function Misdatos() {
     const inputsFromForm: NodeListOf<HTMLInputElement> = document.querySelectorAll('#form-datos input');
     let query: string[] = [];
     
-
+    inputsFromForm.forEach((e) => console.log(e.name, e.value))
     for(let input of inputsFromForm) 
       if(input.value) query.push(`${input.name}=${input.value}`);
 
@@ -123,12 +122,13 @@ export default function Misdatos() {
 
   return (
     <>
+    {console.log(user)}
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
             <Title>Mis Datos</Title>
             {
               user.foto 
-              ? <Avatar src={user.foto} sx={{height: '150px', width: '150px', m: '20px auto'}} /> 
+              ? <Avatar src={`${user.foto}`} sx={{height: '150px', width: '150px', m: '20px auto'}} /> 
               : <Avatar sx={{height: '150px', width: '150px', fontSize: '3.5rem', m: '20px auto', bgcolor: VERDE}} >
                   {user.username[0].toUpperCase()}
                 </Avatar>
@@ -147,7 +147,7 @@ export default function Misdatos() {
                   label="Nombre de Usuario"
                   type="text"
                   id="username"
-                  color='primary'
+                  color='secondary'
                   value={inputs.username}
                   onChange={handleChangeInput}
                   error={errors.username.active}
@@ -160,7 +160,7 @@ export default function Misdatos() {
                   label="Clave"
                   type="password"
                   id="password"
-                  color='primary'
+                  color='secondary'
                   value={inputs.clave}
                   onChange={handleChangeInput}
                   error={errors.clave.active}
@@ -173,7 +173,7 @@ export default function Misdatos() {
                   label="Número Celular"
                   type="text"
                   id="numero_celular"
-                  color='primary'
+                  color='secondary'
                   value={inputs.numero_celular}
                   onChange={handleChangeInput}
                   error={errors.numero_celular.active}
@@ -186,7 +186,7 @@ export default function Misdatos() {
                   label="Direccion"
                   type="text"
                   id="direccion"
-                  color='primary'
+                  color='secondary'
                   value={inputs.direccion}
                   onChange={handleChangeInput}
                   error={errors.direccion.active}
@@ -199,7 +199,7 @@ export default function Misdatos() {
                   label="Dni"
                   type="text"
                   id="dni"
-                  color='primary'
+                  color='secondary'
                   value={inputs.dni}
                   onChange={handleChangeInput}
                   error={errors.dni.active}

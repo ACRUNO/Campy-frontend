@@ -19,6 +19,7 @@ import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Title from './Title';
 import { cleanUsuarios_dash } from '../../../actions/Dash.admin.action';
+import { keyStateBooking } from '../../../auxiliar';
 
 
 type Props = {
@@ -30,6 +31,7 @@ type Props = {
 
 export default function Detalle_usuario(props:Props) {
   const dispatch: AppDispatch = useDispatch()
+  const { token } = useSelector((state: RootState) => state.user)
   const { bookings, done } = useSelector((state: RootState) => state.userBookings)
  
   const handleClose = () => {
@@ -38,7 +40,7 @@ export default function Detalle_usuario(props:Props) {
 
   useEffect(() => {
      if(props.open){  
-     dispatch(getUserBookings(props.id))};
+     dispatch(getUserBookings(props.id, token))};
      return () => {
       dispatch(cleanUsuarios_dash())
     };
@@ -71,11 +73,11 @@ export default function Detalle_usuario(props:Props) {
           {bookings?.map((c: Bookings) => (
             <TableRow key={c.id}>
               <TableCell>{c.nombre_camping}</TableCell>
-              <TableCell>{c.correo_prop}</TableCell>
+              <TableCell>{c.email}</TableCell>
               <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
               <TableCell>$ {c.total}</TableCell>
-              <TableCell align="right">{c.descrip_estado}</TableCell>
+              <TableCell align="right">{keyStateBooking[c.id_estado]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
