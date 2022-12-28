@@ -1,4 +1,4 @@
-import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO } from "../actions";
+import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas } from './estados';
@@ -18,7 +18,7 @@ const initialState: {
     allLocalidades: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
     detailCamping: Campings[];
-    campings: Campings[]
+    campings: Campings[];
     provincia: number;
     localidad: number;
     allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[];
@@ -244,16 +244,19 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: filtrosBook }
             }
+
         case FILTROS_BOOLEANOS:
             return {
                 ...state,
                 filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: action.payload.value }
             }
+
         case FILTROS_PRECIOS:
             return {
                 ...state,
                 filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: action.payload.value }
             }
+
         case FILTROS_PRINCIPALES:
             return {
                 ...state,
@@ -265,6 +268,26 @@ function rootReducer(state: any = initialState, action: any): any {
                     abierto_fecha_hasta: action.payload.egreso
                 }
             }
+
+        case FILTER_PROVINCIA_MAP:
+            return{
+                ...state,
+                filtrosBooking: {
+                    ...state.filtrosBooking,
+                    id_provincia: action.payload,
+                    id_localidad: 0
+                }
+            }
+
+        case FILTER_LOCALIDAD_MAP:
+            return{
+                ...state,
+                filtrosBooking: {
+                    ...state.filtrosBooking,
+                    id_localidad: action.payload,
+                }
+            }
+
         case RESET_FILTROS:
             return {
                 ...state,
