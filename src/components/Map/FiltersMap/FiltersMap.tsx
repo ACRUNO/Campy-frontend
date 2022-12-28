@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Box, Select, MenuItem, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button, InputLabel, SelectChangeEvent, Rating } from '@mui/material';
+import { Box, Select, MenuItem, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button, InputLabel, SelectChangeEvent, Rating, FormControl } from '@mui/material';
 import { fontWeight } from "@mui/system";
 import { ChangeEvent, MouseEvent } from 'react'
-import { filterCategoria, filterLocalidad, FilterParcela, filterProvincia, filtrosBooleanos, filtrosCombinados, filtrosPrecios, filtrosPrincipales, getAllCategorias, getFiltersCamping, getLocalidades, resetFiltros } from '../../../actions/index'
+import { filterCategoria, filterLocalidad, filterLocalidadMap, FilterParcela, filterProvincia, filterProvinciaMap, filtrosBooleanos, filtrosCombinados, filtrosPrecios, filtrosPrincipales, getAllCategorias, getFiltersCamping, getLocalidades, getProvincias, resetFiltros } from '../../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../../store/index';
 import { filterCamps } from "../../../reducer/estados";
@@ -32,6 +32,7 @@ export default function FiltrosLaterales() {
     useEffect(() => {
         dispatch(getAllCategorias())
         dispatch(getFiltersCamping(filtrosBook))
+        dispatch(getProvincias())
     }, [dispatch, filtrosBook])
 
 
@@ -80,6 +81,20 @@ export default function FiltrosLaterales() {
     }
 
 
+    const handleProvinciaMap = (e: SelectChangeEvent) => {
+        e.preventDefault();
+        dispatch(filterProvincia(Number(e.target.value) as number))
+        dispatch(getLocalidades(Number(e.target.value) as number))
+        dispatch(filterProvinciaMap(Number(e.target.value) as number))
+    };
+
+    const handleLocalidadMap = (e: SelectChangeEvent) => {
+        e.preventDefault();
+        dispatch(filterLocalidad(Number(e.target.value) as number)) 
+        dispatch(filterLocalidadMap(Number(e.target.value) as number))
+    };
+
+
 
 
 
@@ -95,6 +110,45 @@ export default function FiltrosLaterales() {
             </Button>
             
             <hr />
+
+            <Typography >Ubicacion</Typography>
+            <FormGroup sx={{minWidth: 120 }}>
+                    <InputLabel sx={{fontSize:"12px",mt:"5px"}} id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
+
+                    <Select
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        label="provincia"
+                        color="secondary"
+                        sx={{height:"40px"}}
+                        value={String(provincia)}
+                        onChange={handleProvinciaMap}>
+                        {allProvincias?.map((m, i) => (
+                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
+                        ))}
+                    </Select>
+
+                </FormGroup>
+                <FormGroup sx={{mt:"5px",minWidth: 120 }}>
+                    <InputLabel sx={{fontSize:"12px"}} id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
+
+                    <Select
+                        disabled={provincia === 0}
+                        labelId="demo-simple-select-helper-label"
+                        id="demo-simple-select-helper"
+                        label="localidad"
+                        color="secondary"
+                        sx={{height:"40px",mb:"5px"}}
+                        value={String(localidad)}
+                        onChange={handleLocalidadMap}>
+                        {allLocalidades?.map(m => (
+                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        ))}
+                    </Select>
+
+                </FormGroup>
+
+                <hr />
 
             <Typography >Precio</Typography>
             <Typography>${precioLocal[0]}- +${precioLocal[1]}</Typography>

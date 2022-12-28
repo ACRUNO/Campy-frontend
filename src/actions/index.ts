@@ -38,6 +38,8 @@ export const CLEAN_CAMPINGS_DASH:string = "CLEAN_CAMPINGS_DASH"
 export const LINK_MAP:string = 'LINK_MAP'
 export const POP_UP_CARD: string = 'POP_UP_CARD'
 export const SET_CARD_INFO: string = 'SET_CARD_INFO'
+export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
+export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
 
 
 
@@ -381,6 +383,20 @@ export function filtrosPrincipales(provincia: number, localidad: number, ingreso
 export function resetFiltros() {
     return {
         type: RESET_FILTROS
+    }
+}
+
+export function filterProvinciaMap(provincia: number){
+    return{
+        type: FILTER_PROVINCIA_MAP,
+        payload: provincia
+    }
+}
+
+export function filterLocalidadMap(localidad:number){
+    return{
+        type: FILTER_LOCALIDAD_MAP,
+        payload: localidad
     }
 }
 
