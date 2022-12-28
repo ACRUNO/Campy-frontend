@@ -37,7 +37,7 @@ export type Campings =
     descripcion_periodo_agua: string,
     precio: number,
     puntuacion_promedio:number,
-    imagenes: Array<string>
+    imagenes: string[]
 }
 
 export const Campys = {
@@ -79,7 +79,7 @@ export const Campys = {
     descripcion_periodo_agua: "",
     precio: 0,
     puntuacion_promedio:0,
-    imagenes: [""]
+    imagenes: []
 }
     
 

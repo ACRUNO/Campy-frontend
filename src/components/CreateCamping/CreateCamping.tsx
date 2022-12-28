@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
+import React from "react";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -11,17 +8,13 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-//import { useHistory } from 'react-router-dom';
 import { createCamping } from '../../actions/index'
 import { MouseEvent } from 'react';
-import { url } from "inspector";
-import { height } from "@mui/system";
 import Alert from "../helpers/Alert";
 import { AlertType } from "../../auxiliar";
 
@@ -45,14 +38,14 @@ const steps = ['Datos generales', 'Comodidades', 'Tarifas/Imágenes'];
 function getStepContent(step: number, setInput: React.Dispatch<React.SetStateAction<Inputs>>, input: Inputs) {
   switch (step) {
     case 0:
-      return <Page1 setInput ={setInput}
-                      input={input} />;
+      return <Page1 setInput={setInput}
+        input={input} />;
     case 1:
       return <Page2 setInput={setInput}
-                    input={input} />;
+        input={input} />;
     case 2:
-      return <Page3 setInput={setInput} 
-                    input={input}/>
+      return <Page3 setInput={setInput}
+        input={input} />
     default:
       throw new Error('Unknown step');
   }
@@ -92,14 +85,13 @@ export interface Inputs {
   mayores: number,
   menores: number,
   rodante: number,
-  cerrado_fecha_desde: string,
-  cerrado_fecha_hasta: string,
+  abierto_fecha_desde: string,
+  abierto_fecha_hasta: string,
   longitud: string,
   latitud: string,
   UsuarioId: number
 }
 
-//const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState<number>(0);
@@ -113,7 +105,6 @@ export default function Checkout() {
     navigateTo: null
   });
 
-  //const history = useHistory();
   const dispatch: AppDispatch = useDispatch();
 
   const [input, setInput] = React.useState<Inputs>({
@@ -149,11 +140,11 @@ export default function Checkout() {
     mayores: 0,
     menores: 0,
     rodante: 0,
-    cerrado_fecha_desde: '',
-    cerrado_fecha_hasta: '',
+    abierto_fecha_desde: '',
+    abierto_fecha_hasta: '',
     longitud: '',
     latitud: '',
-    UsuarioId: id 
+    UsuarioId: id
   });
 
   let disabled =
@@ -164,19 +155,16 @@ export default function Checkout() {
       input.telefono.length &&
       input.contacto_nombre.length &&
       input.contacto_tel.length &&
-      input.imagenes.length 
+      input.imagenes.length
     ) ||
-    input.CategoriaCampingId === 0 || 
+    input.CategoriaCampingId === 0 ||
     input.LocalidadeId === 0 ||
     input.provincia === 0 ||
     input.duchas === 0 ||
     input.baños === 0 ||
     input.AbiertoPeriodoId === 0 ||
     input.PeriodoAguaCalienteId === 0 ||
-    input.superficie === 0 ;
-
-
-
+    input.superficie === 0;
 
 
   const handleNext = () => {
@@ -190,7 +178,6 @@ export default function Checkout() {
   const redirect: any = (url: any) => window.location.href = url
 
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
-    /* history.push('/') */
     e.preventDefault();
     dispatch(createCamping(input))
     redirect('http://localhost:3000')
@@ -203,11 +190,6 @@ export default function Checkout() {
 
   return (
     <Box sx={{ backgroundColor: "#16161F", paddingTop: "3rem", boxShadow: "0 0 6px rgb(0 0 0 / 80%)" }}>
-      {/* <ThemeProvider 
-    theme={theme}
-    > */}
-      {/* <CssBaseline />  */}
-
       <Container component="main" maxWidth="sm">
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
@@ -256,13 +238,12 @@ export default function Checkout() {
                   >
                     Siguiente
                   </Button>}
-
               </Box>
             </React.Fragment>
           )}
           {
             process.env.REACT_APP_TIPO_USUARIO === tipo &&
-            <Alert 
+            <Alert
               open={alert.open}
               title={alert.title}
               description={alert.description}
@@ -276,6 +257,5 @@ export default function Checkout() {
         <Copyright />
       </Container>
     </Box>
-    // </ThemeProvider>
   );
 }
