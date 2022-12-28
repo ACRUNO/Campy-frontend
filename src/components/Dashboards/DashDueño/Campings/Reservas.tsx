@@ -1,5 +1,5 @@
 import { useEffect, useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { Dialog, Table, TableRow, TableHead, TableBody, TablePagination, TableCell, Button } from '@mui/material/';
+import { Dialog, Table, TableRow, TableHead, TableBody, TablePagination, TableCell, Button, Typography } from '@mui/material/';
 import {Grid, Paper} from "@mui/material";
 import Title from './../Title';
 import { useDispatch, useSelector} from "react-redux";
@@ -8,6 +8,9 @@ import { Bookings } from '../../../../reducer/estados';
 import { Cancel as CancelIcon } from '@mui/icons-material';
 import s from './Reservas.module.css';
 import axios from 'axios';
+import { keyStateBooking, stateBooking } from '../../../../auxiliar';
+import { VERDE } from '../../../helpers/colors';
+import BasicMenu from '../../../helpers/BasicMenu';
 
 type Props = { 
   setOpenReserves: Dispatch<SetStateAction<{open: boolean, campingId: number}>>;
@@ -18,7 +21,7 @@ type Props = {
 export default function Reservas({open, campingId, setOpenReserves}: Props) {
   const dispatch: AppDispatch = useDispatch()
   const { token }: { id: number, token: string } = useSelector((state: RootState) => state.user)  
-  const [ownerBookings, setOwnerBookings] = useState([]);
+  const [ownerBookings, setOwnerBookings] = useState<Bookings[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -29,50 +32,72 @@ export default function Reservas({open, campingId, setOpenReserves}: Props) {
     setPage(0);
   };
 
-  const getOwnerBokings = async () => {
-    const result = await axios.get(`/api/reservas/${campingId}`, 
+  const getOwnerBookings = async () => {
+    const { data }: { data: Bookings[] } = await axios.get(`/api/reservas/${campingId}`, 
     {
       headers: { authorization: token }
     });
 
-    setOwnerBookings(result.data);
-  }
+    setOwnerBookings(data);
+  }; 
 
   useEffect(() => {
-    if(campingId) getOwnerBokings();
+    if(campingId) getOwnerBookings();
 
     return () => setOwnerBookings([])
   }, [campingId]);
 
   return (
-    <Dialog open={open} className={s['reserve-container']} maxWidth={false} >
+    <Dialog open={open} className={s['reserve-container']} maxWidth={false}>
         <Grid item xs={12} >
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  
-                
-          <Title>Reservas</Title>
-          <Table size="small">
+          <Typography variant='h5' sx={{fontSize: '2rem', color: VERDE}}>
+            Reservas
+          </Typography>
+          <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Nombre Camping</TableCell>
-                <TableCell>Correo Viajero</TableCell>
-                <TableCell>Desde</TableCell>
-                <TableCell>Hasta</TableCell>
-                <TableCell>Noches</TableCell>
-                <TableCell>Total</TableCell>
-                <TableCell align="right">Estado</TableCell>
+                <TableCell className={s['table-head']}>Nombre Camping</TableCell>
+                <TableCell className={s['table-head']}>Correo Viajero</TableCell>
+                <TableCell className={s['table-head']}>Desde</TableCell>
+                <TableCell className={s['table-head']}>Hasta</TableCell>
+                <TableCell className={s['table-head']}>Noches</TableCell>
+                <TableCell className={s['table-head']}>Total</TableCell>
+                <TableCell className={s['table-head']} align="right">Estado</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {ownerBookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings, i) => (
                 <TableRow key={i}>
-                  <TableCell>{c.nombre_camping}</TableCell>
-                  <TableCell>{c.email}</TableCell>
-                  <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
-                  <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
-                  <TableCell align="right">{c.cant_noches}</TableCell>
-                  <TableCell>$ {c.total}</TableCell>
-                  <TableCell align="right">{c.descrip_estado}</TableCell>
+                  <TableCell className={s['table-row']}>{c.nombre_camping}</TableCell>
+                  <TableCell className={s['table-row']}>{c.email}</TableCell>
+                  <TableCell className={s['table-row']}>
+                    {new Date(c.fecha_desde_reserva).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className={s['table-row']}>
+                    {new Date(c.fecha_hasta_reserva).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className={s['table-row']}>{c.cant_noches}</TableCell>
+                  <TableCell className={s['table-row']}>$ {c.total}</TableCell>
+                  <TableCell 
+                    className={`${s['table-row']} ${s[keyStateBooking[c.id_estado]]}`} 
+                    align="right"
+                  >
+                    {
+                      c.id_estado === stateBooking.PENDIENTE 
+                      ? <BasicMenu 
+                          idButton='menu-reservas'
+                          menuItems={[
+                              {key: 'Realizar', value: stateBooking.REALIZADA as string},
+                              {key: 'Rechazar', value: stateBooking.RECHAZADA as string}
+                          ]}
+                          handleSelectItems={(data: any) => {console.log(data)}}
+                          button='Pendiente'
+                          s={s}
+                        />
+                      : keyStateBooking[c.id_estado]
+                    }
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

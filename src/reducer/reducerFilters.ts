@@ -7,7 +7,7 @@ const initialState: filterCamps = {
     abierto_fecha_desde: "",
     abierto_fecha_hasta: "",
     precio: [0, 0],
-    // reviews: [],
+    reviews: [],
     id_categoria: [],
     parcela_superficie: [],
     parcela_techada: 0,

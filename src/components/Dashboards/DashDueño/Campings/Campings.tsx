@@ -68,13 +68,6 @@ export default function Campings() {
             </TableRow>
           ))}
         </TableBody>
-        {openReserves && 
-          <Reservas 
-            open={openReserves.open}
-            campingId={openReserves.campingId}
-            setOpenReserves={setOpenReserves}
-          />
-        }
       </Table>
       <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
@@ -86,7 +79,14 @@ export default function Campings() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
         </Paper>
-              </Grid>
+        {openReserves && 
+          <Reservas 
+            open={openReserves.open}
+            campingId={openReserves.campingId}
+            setOpenReserves={setOpenReserves}
+          />
+        }
+      </Grid>
     </>
   );
 }

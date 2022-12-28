@@ -1,7 +1,47 @@
 .reserve-container {
-  max-width: none;
-  position: fixed;
-  z-index: 999;
+  position: absolute;
+  z-index: 9999;
+}
+
+.table-head {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #285430;
+}
+
+.table-row {
+  cursor:default;
+  font-size: 1rem;
+}
+
+button.menu-button {
+  text-decoration: underline;
+  color: #5481d0;
+  cursor: pointer;
+  padding-right: 0px;
+  transition: all .4s ease;
+}
+
+button.menu-button:hover {
+  color: #0b378a;
+  text-shadow: 1px 0px #0b378a;
+}
+
+.menu-item {
+  color: #39284b;
+  font-weight: 500;
+}
+
+.Rechazada {
+  color: #bd4242;
+}
+
+.Realizada {
+  color: #4c8a45;
+}
+
+.Finalizada {
+  color: #a27c2b;
 }
 
 svg.close-button {

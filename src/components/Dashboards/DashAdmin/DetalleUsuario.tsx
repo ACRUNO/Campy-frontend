@@ -19,6 +19,7 @@ import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Title from './Title';
 import { cleanUsuarios_dash } from '../../../actions/Dash.admin.action';
+import { keyStateBooking } from '../../../auxiliar';
 
 
 type Props = {
@@ -76,7 +77,7 @@ export default function Detalle_usuario(props:Props) {
               <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
               <TableCell>$ {c.total}</TableCell>
-              <TableCell align="right">{c.descrip_estado}</TableCell>
+              <TableCell align="right">{keyStateBooking[c.id_estado]}</TableCell>
             </TableRow>
           ))}
         </TableBody>

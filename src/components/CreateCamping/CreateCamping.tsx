@@ -89,21 +89,21 @@ export interface Inputs {
   iluminacion_toma_corriente: boolean,
   superficie: number,
   imagenes: string[],
-  tarifa_por_mayor_dia: number,
-  tarifa_por_menor_dia: number,
-  tarifa_por_casa_rodante: number,
+  mayores: number,
+  menores: number,
+  rodante: number,
   cerrado_fecha_desde: string,
   cerrado_fecha_hasta: string,
   longitud: string,
   latitud: string,
-  precio: number[]
+  UsuarioId: number
 }
 
 //const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const { tipo } = useSelector((state: RootState) => state.user)
+  const { tipo, id } = useSelector((state: RootState) => state.user)
   const [alert, setAlert] = React.useState<AlertType>({
     open: true,
     title: 'Ser Propietario',
@@ -146,14 +146,14 @@ export default function Checkout() {
     iluminacion_toma_corriente: false,
     superficie: 0,
     imagenes: [],
-    tarifa_por_mayor_dia: 0,
-    tarifa_por_menor_dia: 0,
-    tarifa_por_casa_rodante: 0,
+    mayores: 0,
+    menores: 0,
+    rodante: 0,
     cerrado_fecha_desde: '',
     cerrado_fecha_hasta: '',
     longitud: '',
     latitud: '',
-    precio: []
+    UsuarioId: id 
   });
 
   let disabled =

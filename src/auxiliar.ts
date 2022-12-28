@@ -40,6 +40,7 @@ export interface datosMenu {
     idButton: string,
     button: string | React.ReactElement,
     menuItems: {key: any, value: string}[],
+    s?: any,
     handleSelectItems: (event: { currentTarget: any }) => void
 }
 
@@ -71,4 +72,11 @@ export const stateBooking = {
     RECHAZADA: process.env.REACT_APP_RECHAZADA,
     REALIZADA: process.env.REACT_APP_REALIZADA,
     FINALIZADA: process.env.REACT_APP_FINALIZADA,
+}
+
+export const keyStateBooking = {
+    [process.env.REACT_APP_PENDIENTE as string]: 'Pendiente',
+    [process.env.REACT_APP_RECHAZADA as string]: 'Rechazada',
+    [process.env.REACT_APP_REALIZADA as string]: 'Realizada',
+    [process.env.REACT_APP_FINALIZADA as string]: 'Finalizada',
 }

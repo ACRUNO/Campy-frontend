@@ -11,6 +11,7 @@ import { AppDispatch, RootState } from '../../../store/index';
 import TablePagination from '@mui/material/TablePagination';
 import { getUserBookings } from '../../../actions/User.action';
 import { Bookings } from '../../../reducer/estados';
+import { keyStateBooking } from '../../../auxiliar';
 
 
 export default function Reservas() {
@@ -58,7 +59,7 @@ export default function Reservas() {
               <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
               <TableCell>$ {c.total}</TableCell>
-              <TableCell align="right">{c.descrip_estado}</TableCell>
+              <TableCell align="right">{keyStateBooking[c.id_estado]}</TableCell>
             </TableRow>
           ))}
         </TableBody>

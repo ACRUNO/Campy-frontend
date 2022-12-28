@@ -113,7 +113,8 @@ border-radius : 1%;
 
 .rankingcont{
     display: flex;
-    margin-left: 1rem;
+    margin-left: 0.8rem;
+    margin-top: 0.3rem;
 }
 
 .inputCont{
