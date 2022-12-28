@@ -105,8 +105,6 @@ function Map() {
 
 
   return (
-
-    <Box>
       <GoogleMap
         zoom={zoomMap}
         center={center}
@@ -155,7 +153,6 @@ function Map() {
         </Box>
 
       </GoogleMap>
-    </Box>
   );
 }
 

@@ -15,8 +15,9 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import { Reservas } from '../../../reducer/estados';
+import { Bookings } from '../../../reducer/estados';
 import { getReservas_Camping, cleanReservas_Camping } from '../../../actions/Dash.admin.action';
+import { keyStateBooking } from '../../../auxiliar';
 
 
 type Props = {
@@ -57,7 +58,7 @@ export default function Detalle_camping(props:Props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Usuario</TableCell>
+            <TableCell>Correo Viajeros</TableCell>
             <TableCell>Noches</TableCell>
             <TableCell>Desde</TableCell>
             <TableCell>Hasta</TableCell>
@@ -66,14 +67,14 @@ export default function Detalle_camping(props:Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {booking?.map((c: Reservas) => (
-            <TableRow key={c.id_reserva}>
-              <TableCell>{c.username}</TableCell>
+          {booking?.map((c: Bookings, i: number) => (
+            <TableRow key={i}>
+              <TableCell>{c.email}</TableCell>
               <TableCell>{c.cant_noches}</TableCell>
               <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
               <TableCell>$ {c.total}</TableCell>
-              <TableCell align="right">{c.descrip_estado}</TableCell>
+              <TableCell align="right">{keyStateBooking[c.id_estado]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
