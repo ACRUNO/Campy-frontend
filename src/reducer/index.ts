@@ -209,7 +209,6 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
 
-
         case CAMPINGS_DASH:
             return {
                 ...state,
@@ -393,27 +392,6 @@ function rootReducer(state: any = initialState, action: any): any {
                 return{
                     ...state,
                     usuariosDash: usuariosBuscados
-            }
-            console.log(datos)
-            return {
-                ...state,
-                datos_grafreservas: datos
-            }
-
-        case CLEAN_USUARIOS_DASH:
-            return {
-                ...state,
-                userBookings: []
-            }
-        case GET_USUARIOS_BYNAME:
-            if (action.payload.length > 0) {
-                var usuariosBuscados: { id: number, username: string, email: string, tipo: string, habilitado: number }[] = state.usuariosDash_All.filter((u: { id: number, username: string, email: string, tipo: string, habilitado: number }) => u.username.toLowerCase().includes(action.payload.toLowerCase()))
-            }
-            else { var usuariosBuscados: { id: number, username: string, email: string, tipo: string, habilitado: number }[] = state.usuariosDash_All }
-            return {
-                ...state,
-                usuariosDash: usuariosBuscados
-
             }
 
         case GET_CAMPING_REVIEWS:

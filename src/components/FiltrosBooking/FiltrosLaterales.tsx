@@ -113,7 +113,7 @@ export default function FiltrosLaterales(props:Props) {
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
 
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="reviews" />}
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="reviews" checked={filtrosBook.reviews.includes(5)} />}
                     label= { 
                     <Rating
                     name="text-feedback"
@@ -126,7 +126,7 @@ export default function FiltrosLaterales(props:Props) {
                     }
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="4" name="reviews" />}
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="4" name="reviews" checked={filtrosBook.reviews.includes(4)}/>}
                     label= { 
                         <Rating
                         name="text-feedback"
@@ -140,7 +140,7 @@ export default function FiltrosLaterales(props:Props) {
 
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="3" name="reviews" />}
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="3" name="reviews" checked={filtrosBook.reviews.includes(3)}/>}
                     label= { 
                         <Rating
                         name="text-feedback"
@@ -154,7 +154,7 @@ export default function FiltrosLaterales(props:Props) {
 
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="2" name="reviews" />}
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="2" name="reviews" checked={filtrosBook.reviews.includes(2)}/>}
                     label= { 
                         <Rating
                         name="text-feedback"
@@ -168,7 +168,7 @@ export default function FiltrosLaterales(props:Props) {
 
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="1" name="reviews" />}
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="1" name="reviews" checked={filtrosBook.reviews.includes(1)}/>}
                     label= { 
                         <Rating
                         name="text-feedback"
