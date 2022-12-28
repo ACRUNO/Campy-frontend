@@ -40,5 +40,43 @@ export interface datosMenu {
     idButton: string,
     button: string | React.ReactElement,
     menuItems: {key: any, value: string}[],
+    s?: any,
     handleSelectItems: (event: { currentTarget: any }) => void
+}
+
+export interface AlertType {
+    open: boolean,
+    title: string,
+    description: string,
+    confirm: string,
+    type: 'success' | 'error' | 'person',
+    navigateTo: string | null
+};
+
+export interface AlertConfirmType {
+    open: boolean,
+    title: string,
+    description: string,
+    confirm: () => void,
+    denegate: () => void
+};
+
+export const userTypes = {
+    USER: process.env.REACT_APP_TIPO_USUARIO,
+    PROPIETARIO: process.env.REACT_APP_TIPO_PROPIETARIO,
+    ADMIN: process.env.REACT_APP_TIPO_ADMIN
+}
+
+export const stateBooking = {
+    PENDIENTE: process.env.REACT_APP_PENDIENTE,
+    RECHAZADA: process.env.REACT_APP_RECHAZADA,
+    REALIZADA: process.env.REACT_APP_REALIZADA,
+    FINALIZADA: process.env.REACT_APP_FINALIZADA,
+}
+
+export const keyStateBooking = {
+    [process.env.REACT_APP_PENDIENTE as string]: 'Pendiente',
+    [process.env.REACT_APP_RECHAZADA as string]: 'Rechazada',
+    [process.env.REACT_APP_REALIZADA as string]: 'Realizada',
+    [process.env.REACT_APP_FINALIZADA as string]: 'Finalizada',
 }

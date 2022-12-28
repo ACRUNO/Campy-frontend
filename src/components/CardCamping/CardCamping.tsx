@@ -1,5 +1,6 @@
 import React from "react";
-import {Box, Card, Grid, Typography, CardContent, CardMedia, Link} from '@mui/material';
+import {Box, Card, Grid, Typography, CardContent, CardMedia } from '@mui/material'
+import { Link } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import Style from "../Camping/Camping.module.css"
 
@@ -11,15 +12,15 @@ type Props = {
   descripcion:string,
   categoria: string,
   imagenes:Array<string>,
-  estrellas: number,
+  reviews: number,
   precio:number
 }
 
 export default function CardCamping( props: Props){
     return (
     
-    <Link href={`/booking/camping/${props.id}`}>
-    <Card sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around"}}>
+    <Link to={`/booking/camping/${props.id}`} style={{textDecoration: 'none'}}>
+    <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around",}}>
         <CardMedia
         component="img"
         image={props.imagenes[0]}
@@ -44,8 +45,8 @@ export default function CardCamping( props: Props){
       </Box>
       <Box flexDirection="column" display="flex" component="div" justifyContent="space-between" alignItems="flex-end">
       <Box className={Style.rankingcont} display="flex" alignContent="flex-end">
-            <Typography  color="secondary" component="legend">Puntuación de usuarios</Typography>
-            {/* <Rating  name="read-only" value={props.estrellas} readOnly /> */}
+            <Typography  color="secondary" component="legend">Reviews</Typography>
+            <Rating  name="read-only" value={props.reviews} readOnly /> 
       </Box>
       <Box display="flex" flexDirection="column"  justifyContent="flex-end" component="div" >
       <Typography variant="subtitle1" color="text.secondary" component="div" align="right">1 noche, 1 adulto</Typography>

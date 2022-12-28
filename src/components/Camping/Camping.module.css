@@ -92,6 +92,9 @@ border-radius : 1%;
 }
 
 .lugar{
+    display: flex;
+    justify-content: center;
+
     /* margin-top : .5rem;
     margin-left : 1rem; */
 }
@@ -110,7 +113,8 @@ border-radius : 1%;
 
 .rankingcont{
     display: flex;
-    margin-left: 1rem;
+    margin-left: 0.8rem;
+    margin-top: 0.3rem;
 }
 
 .inputCont{
@@ -198,4 +202,26 @@ border-radius : 1%;
 .quini{
     display : flex;
     justify-content: flex-end;
+}
+
+svg.add-fav {
+    font-size:2.5rem;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px;
+    border-radius: 50%;
+    fill:white;
+    user-select: none;
+    cursor: pointer;
+    z-index: 999;
+}
+
+svg.heart {
+    fill: #EB403A;
+}
+
+
+.card:hover{
+    box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
 }

@@ -1,13 +1,13 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import { Box, Card, Grid, Typography, CardContent, CardMedia, Link, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Grid, Typography, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Cloudinary from "./Cloudinary";
 import { Inputs } from './CreateCamping';
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAbierto } from '../../actions';
+
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
@@ -24,47 +24,62 @@ export default function Page3({ setInput, input }: InputProps) {
     dispatch(getPeriodoAbierto())
   }, [dispatch]);
 
-  const [periodoAbierto, setPeriodoAbierto] = useState<number>(0)
+  console.log(allPeriodoAbierto);
 
-  const [imagenes, setImagenes] = React.useState({
-    array: []
-  });
 
   const handlePeriodoAbierto = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setPeriodoAbierto(Number(e.target.value) as number);
-    setInput((inputs: any) => {
+    let cerradoDesde: string = 'dsadas';
+    let cerradoHasta: string = 'dsadas';
+    let anio: number = new Date().getFullYear()
+    switch (Number(e.target.value)) {
+      case 1:
+        cerradoDesde= `${anio}/01/01`;
+        cerradoHasta= `${anio}/12/31`;
+        break;
+      case 2:
+        cerradoDesde= `${anio}/03/22`;
+        cerradoHasta= `${anio}/12/21`;
+        break;
+      case 3:
+        cerradoDesde= `${anio}/09/24`;
+        cerradoHasta= `${anio+1}/06/21`;
+        break;
+      default:
+        cerradoDesde= '';
+        cerradoHasta= '';
+        break;
+    }
+    console.log(cerradoDesde);
+    console.log(anio);
+    
+    
+    setInput((inputs: Inputs) => {
       return {
         ...inputs,
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value,
+        cerrado_fecha_desde: cerradoDesde,
+        cerrado_fecha_hasta: cerradoHasta
       }
     })
   };
 
+  console.log(input);
+  
 
   let img: Array<string> = ["1", "2", "3", "4"]
 
-  const abierto_periodo : number[] = [1, 2, 3];
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
     setInput((inputs: Inputs) => {
       return {
         ...inputs,
-        [e.target.name]: e.target.value
+        [e.target.name]: Number(e.target.value)
       }
     })
   };
 
-  const handleChangeSelect = (e: SelectChangeEvent) => {
-    e.preventDefault();
-    setInput((inputs: Inputs) => {
-      return {
-        ...inputs,
-        [e.target.name]: e.target.value
-      }
-    })
-  };
 
   return (
     <React.Fragment>
@@ -75,10 +90,10 @@ export default function Page3({ setInput, input }: InputProps) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            value={input.tarifa_por_mayor_dia}
-            id="Tarifa por mayor por día "
-            name="tarifa_por_mayor_dia"
-            label="Tarifa por mayor por día "
+            value={input.mayores}
+            id="Tarifa por mayor por día"
+            name="mayores"
+            label="Tarifa por mayor por día"
             fullWidth
             autoComplete="given-name"
             variant="standard"
@@ -89,9 +104,9 @@ export default function Page3({ setInput, input }: InputProps) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            value={input.tarifa_por_menor_dia}
+            value={input.menores}
             id="Tarifa por menor por día"
-            name="tarifa_por_menor_dia"
+            name="menores"
             label="Tarifa por menor por día"
             fullWidth
             autoComplete="family-name"
@@ -100,12 +115,12 @@ export default function Page3({ setInput, input }: InputProps) {
             onChange={handleChangeInput}
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
-            value={input.tarifa_por_casa_rodante}
+            value={input.rodante}
             id="Tarifa por casa rodante por día"
-            name="tarifa_por_casa_rodante"
+            name="rodante"
             label="Tarifa casa rodante por día"
             fullWidth
             autoComplete="shipping address-level2"
@@ -114,9 +129,8 @@ export default function Page3({ setInput, input }: InputProps) {
             onChange={handleChangeInput}
           />
         </Grid>
-        {/* LUEGO VER EL TEMA DE LAS FECHAS */}
         <Grid item xs={12} sm={6}>
-          <FormControl sx={{ m: 1, minWidth: "15rem" }}>
+          <FormControl sx={{ minWidth: "15rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo Abierto</InputLabel>
             <Select
               defaultValue=''
@@ -127,13 +141,12 @@ export default function Page3({ setInput, input }: InputProps) {
               label="Período Abierto"
               color="secondary"
               onChange={handlePeriodoAbierto}>
-              {/* <MenuItem value=""><em>None</em></MenuItem> */}
               {allPeriodoAbierto?.map(m => (
-                <MenuItem value={m.id}>{m.descripcion_periodo}</MenuItem>
+                <MenuItem key={m.id} value={m.id}>{m.descripcion_periodo}</MenuItem>
               ))}
             </Select>
           </FormControl>
-        </Grid> 
+        </Grid>
         <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
           {img.map(m => (
             <Grid item key={m}>
@@ -152,10 +165,6 @@ export default function Page3({ setInput, input }: InputProps) {
           ))}
         </Grid>
         <Cloudinary setInput={setInput}></Cloudinary>
-        {/* HABRIA QUE VER EL TEMA DE LATITUD Y LONGITUD */}
-
-
-
 
       </Grid>
 

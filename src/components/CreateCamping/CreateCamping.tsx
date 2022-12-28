@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,13 +15,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
 //import { useHistory } from 'react-router-dom';
 import { createCamping } from '../../actions/index'
 import { MouseEvent } from 'react';
 import { url } from "inspector";
 import { height } from "@mui/system";
+import Alert from "../helpers/Alert";
+import { AlertType } from "../../auxiliar";
 
 
 
@@ -87,23 +89,32 @@ export interface Inputs {
   iluminacion_toma_corriente: boolean,
   superficie: number,
   imagenes: string[],
-  tarifa_por_mayor_dia: number,
-  tarifa_por_menor_dia: number,
-  tarifa_por_casa_rodante: number,
+  mayores: number,
+  menores: number,
+  rodante: number,
   cerrado_fecha_desde: string,
   cerrado_fecha_hasta: string,
   longitud: string,
   latitud: string,
+  UsuarioId: number
 }
 
 //const theme = createTheme();
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState<number>(0);
+  const { tipo, id } = useSelector((state: RootState) => state.user)
+  const [alert, setAlert] = React.useState<AlertType>({
+    open: true,
+    title: 'Ser Propietario',
+    description: '¿Querés crear servicios de campings para viajeros? ¡Convertite en propietario creando al menos un camping!',
+    confirm: 'Crear Camping',
+    type: 'person',
+    navigateTo: null
+  });
 
   //const history = useHistory();
-  const dispatch: AppDispatch = useDispatch()
-
+  const dispatch: AppDispatch = useDispatch();
 
   const [input, setInput] = React.useState<Inputs>({
     nombre_camping: '',
@@ -135,13 +146,14 @@ export default function Checkout() {
     iluminacion_toma_corriente: false,
     superficie: 0,
     imagenes: [],
-    tarifa_por_mayor_dia: 0,
-    tarifa_por_menor_dia: 0,
-    tarifa_por_casa_rodante: 0,
+    mayores: 0,
+    menores: 0,
+    rodante: 0,
     cerrado_fecha_desde: '',
     cerrado_fecha_hasta: '',
-    longitud: '5',
-    latitud: '5',
+    longitud: '',
+    latitud: '',
+    UsuarioId: id 
   });
 
   let disabled =
@@ -248,6 +260,18 @@ export default function Checkout() {
               </Box>
             </React.Fragment>
           )}
+          {
+            process.env.REACT_APP_TIPO_USUARIO === tipo &&
+            <Alert 
+              open={alert.open}
+              title={alert.title}
+              description={alert.description}
+              type='person'
+              confirm={alert.confirm}
+              setStateOpen={setAlert}
+              navigateTo={null}
+            />
+          }
         </Paper>
         <Copyright />
       </Container>

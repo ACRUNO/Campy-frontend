@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Menu, MenuItem, Button } from "@mui/material";
 import { datosMenu } from "../../auxiliar";
 
-export default function BasicMenu({ button, idButton, menuItems, handleSelectItems }: datosMenu) {
+export default function BasicMenu({ button, idButton, menuItems, handleSelectItems, s }: datosMenu) {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -26,7 +26,7 @@ export default function BasicMenu({ button, idButton, menuItems, handleSelectIte
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
-          sx={{color: 'black'}}
+          className={s && s['menu-button']}
         >
           {button}
         </Button>
@@ -35,9 +35,10 @@ export default function BasicMenu({ button, idButton, menuItems, handleSelectIte
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          sx={{zIndex: 9999999}}
         >
           {
-            menuItems?.map(item => <MenuItem onClick={handleOptionItem} data-my-value={item.value}>{item.key}</MenuItem>)
+            menuItems?.map((item, i) => <MenuItem className={s && s['menu-item']} onClick={handleOptionItem} data-my-value={item.value} key={i}>{item.key}</MenuItem>)
           }
         </Menu>
     </>

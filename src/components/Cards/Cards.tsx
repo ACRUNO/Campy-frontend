@@ -32,7 +32,7 @@ export default function Cards(props: Props) {
 
 
     return (
-            <Card  className={s.card} >
+            <Card  className={s.card} sx={{bgcolor: 'd7d7d7'}} >
                 
                 <CardMedia key={props.id} className={s.image} component="img" alt="Provincia" image={props.img}></CardMedia>
                 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -19,22 +19,11 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListItems from './ListItems';
 import Estadistica from './Estadistica';
-import Misdatos from './Misdatos';
+import Misdatos from './../Misdatos';
 import Camping from "./Camping"
 import Usuarios from './Usuarios';
+import { VERDE, VERDE_OSCURO } from '../../helpers/colors';
 
-// function Copyright(props: any) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Campy S.A.
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const drawerWidth: number = 240;
 
@@ -86,7 +75,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const mdTheme = createTheme();
+// const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
@@ -101,18 +90,19 @@ function DashboardContent() {
   const[localidades, setLocalidades] = React.useState(false);
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    // <ThemeProvider theme={mdTheme}>
       <Box component= "div" sx={{ display: 'flex'}}>
         <CssBaseline />
         <AppBar position="fixed" sx={{mt:8}} open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
+              bgcolor: VERDE_OSCURO
             }}
           >
             <IconButton
               edge="start"
-              color="inherit"
+              color="primary"
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
@@ -125,7 +115,7 @@ function DashboardContent() {
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              color="primary"
               noWrap
               sx={{ flexGrow: 1 }}
             >
@@ -140,6 +130,7 @@ function DashboardContent() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
+              bgcolor: VERDE,
             }}
           >
             <IconButton onClick={toggleDrawer}>
@@ -157,7 +148,7 @@ function DashboardContent() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: '100vh',
+            height: 'calc(100vh - 64px)',
             overflow: 'auto',
           }}
         >
@@ -174,7 +165,7 @@ function DashboardContent() {
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }
 

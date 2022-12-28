@@ -11,12 +11,10 @@ import theme from './themeConfig'
 import Mapa from './components/Map/Map';
 import Blog from './components/Blog/Blog';
 import CreateCamping from './components/CreateCamping/CreateCamping';
-import DashUsuario from './components/Dashboards/DashUsuario/DashUsuario';
-import DashDueño from './components/Dashboards/DashDueño/DashDueño';
-import Dashboard from './components/Dashboards/DashAdmin/DashAdmin';
+import Dashboard from './components/Dashboards/Dashboards';
 import { AppDispatch, RootState } from './store';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserWithToken } from './actions';
+import { loginUserWithToken } from './actions/Login.action';
 
 
 
@@ -28,7 +26,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    if(token) dispatch(loginUserWithToken({token}));
+    if(token) dispatch(loginUserWithToken(token));
   }, [])
 
   return (
@@ -44,9 +42,7 @@ function App() {
           <Route path="/blog" element={<Blog/>}/>
           <Route path="/create" element={<CreateCamping/>} />
           <Route path="/about"  />
-          <Route path="/dashusuario" element={<DashUsuario/>} />
-          <Route path="/dashdueño" element={<DashDueño/>} />
-          <Route path="/dashadmin" element={<Dashboard/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </ThemeProvider>
     </React.Fragment>
