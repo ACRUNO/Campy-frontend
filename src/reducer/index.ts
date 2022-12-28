@@ -95,7 +95,7 @@ const initialState: {
     datos_grafusuarios: [],
     datos_grafreservas: [],
     reviews: [],
-    linkMap: { lng: -63.617129400239264, lat: -38.40725346022871, zoom: 5 }
+    linkMap: { lng: -63.617129400239264, lat: -38.40725346022871, zoom: 5 },
     campingBooking:[]
 
 };
@@ -202,7 +202,6 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 periodoAbierto: action.payload
             }
-
 
 
         case CAMPINGS_DASH:
@@ -371,17 +370,6 @@ function rootReducer(state: any = initialState, action: any): any {
                     datos_grafreservas: datos
                     }
                     
-            case CLEAN_USUARIOS_DASH:
-                return {
-                    ...state,
-                    userBookings: []
-                }
-            }
-            console.log(datos)
-            return {
-                ...state,
-                datos_grafreservas: datos
-            }
 
         case CLEAN_USUARIOS_DASH:
             return {
