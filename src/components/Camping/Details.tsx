@@ -60,6 +60,7 @@ export default function Details() {
         <ListItemText secondary={camp?.categoria === 1  ? "Si"  : camp?.categoria === 0 ? "No" : camp?.categoria  } primary="Categoria" />
       <Divider variant="inset" component="li" />
         </ListItem> 
+        <Divider variant="inset" component="li"  />
       <ListItem>
       <ListItemAvatar>
       <Avatar>
@@ -109,6 +110,7 @@ export default function Details() {
         <ListItemText secondary={camp?.rodantes === 1  ? "Si"  : camp?.rodantes === 0 ? "No" : camp?.rodantes  } primary="Trailers" />
       <Divider variant="inset" component="li" />
         </ListItem> 
+        <Divider variant="inset" component="li"  />
       <ListItem>
       <ListItemAvatar>
       <Avatar>
@@ -158,6 +160,7 @@ export default function Details() {
         <ListItemText secondary={camp?.pileta === 1  ? "Si"  : camp?.pileta === 0 ? "No" : camp?.pileta  } primary="Pileta" />
       <Divider variant="inset" component="li" />
         </ListItem> 
+        <Divider variant="inset" component="li"  />
       <ListItem>
       <ListItemAvatar>
       <Avatar>
@@ -208,6 +211,7 @@ export default function Details() {
         <ListItemText secondary={camp?.maquinas_gimnasia  === 1  ? "Si"  : camp?.maquinas_gimnasia  === 0 ? "No" : camp?.maquinas_gimnasia  } primary="Gimnasio" />
       <Divider variant="inset" component="li" />
         </ListItem> 
+        <Divider variant="inset" component="li"  />
       <ListItem>
       <ListItemAvatar>
       <Avatar>
