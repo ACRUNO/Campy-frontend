@@ -61,6 +61,8 @@ export default function Camping() {
   let mayores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Mayores");
   let menores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Menores");
   let rodantes = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Rodantes")
+  
+  let infoCards: {nombre_camping: string, imagenes: string, descripcion_camping: string} = {nombre_camping: camp.nombre_camping, imagenes: camp.imagenes, descripcion_camping: camp.descripcion_camping}
 
   useEffect(() => {
     dispatch(getDetails(params.id));
@@ -393,7 +395,7 @@ export default function Camping() {
             <Resume></Resume>
           </Box>
           <Box className={Style.salidas}>
-            <Salidas></Salidas>
+            <Salidas {...infoCards}></Salidas>
           </Box>
 
         </Box>
