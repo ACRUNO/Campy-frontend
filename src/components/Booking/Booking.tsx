@@ -60,10 +60,8 @@ export default function Booking() {
 
         useEffect(()=>{
             dispatch(actions.getFiltersCamping(filtrosBook))
-            // if(!allCampings.length){ 
-            // dispatch(getAllCampings())}
-            if(!campings.length){
-                setOpen(true)}            
+            setTimeout(()=>{if(!campings.length){
+                setOpen(true)}},500)       
         },[dispatch, filtrosBook]
         )
     
