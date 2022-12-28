@@ -106,8 +106,8 @@ export type Bookings = {
     fecha_hasta_reserva: string,
     cant_noches: number,
     total: number,
-    descrip_estado: string,
-    correo_prop: string,
+    id_estado: string,
+    email: string,
     nombre_camping: string,
     id_campings: number
 }

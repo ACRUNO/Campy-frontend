@@ -139,8 +139,6 @@ export default function Camping() {
   }
 
 
-
-
   return (
     <Box>
       <Box className={Style.all}>
@@ -160,6 +158,16 @@ export default function Camping() {
               <Rating name="read-only" value={value} readOnly />
             </Box>
           </Box>
+          {
+          user && 
+            <FavoriteIcon
+                onClick={() => {
+                  if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
+                  setFavorite(true)
+                }}
+              className={`${Style['add-fav']} ${favorite ? Style.heart : ''}`.trim()} 
+            />
+          }
         </Box>
 
         <Box className={Style.booking}>
@@ -389,54 +397,13 @@ export default function Camping() {
           </Box>
 
         </Box>
-      </Box>
+        </Box>
+         
 
-
-
-
-      {
-        user &&
-        <Typography
-          className={Style['add-fav']}
-          variant="h5"
-          color="primary"
-          onClick={() => {
-            if (params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
-            setFavorite(true)
-          }}
-        >
-          Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
-        </Typography>
-      }
-
-      <Footer />
-
-    </Box>
-
-  )
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        <Footer/>
+       
+         </Box>         
+                
+    )}
 

@@ -11,20 +11,18 @@ import { AppDispatch, RootState } from '../../../store/index';
 import TablePagination from '@mui/material/TablePagination';
 import { getUserBookings } from '../../../actions/User.action';
 import { Bookings } from '../../../reducer/estados';
+import { keyStateBooking } from '../../../auxiliar';
 
 
 export default function Reservas() {
   const dispatch: AppDispatch = useDispatch()
   const { bookings, done } = useSelector((state: RootState) => state.userBookings)
-  const { id }: { id: number } = useSelector((state: RootState) => state.user)  
+  const { id, token }: { id: number, token: string } = useSelector((state: RootState) => state.user)  
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    console.log(newPage)
-    setPage(newPage);
-  };
+  const handleChangePage = (event: unknown, newPage: number) => setPage(newPage);
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -32,7 +30,7 @@ export default function Reservas() {
   };
 
   useEffect(() => {
-    if(!bookings.length && !done) dispatch(getUserBookings(id));
+    if(!bookings.length && !done) dispatch(getUserBookings(id, token));
   }, [bookings])
   
   return (
@@ -57,11 +55,11 @@ export default function Reservas() {
           {bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings) => (
             <TableRow key={c.id}>
               <TableCell>{c.nombre_camping}</TableCell>
-              <TableCell>{c.correo_prop}</TableCell>
+              <TableCell>{c.email}</TableCell>
               <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
               <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
               <TableCell>$ {c.total}</TableCell>
-              <TableCell align="right">{c.descrip_estado}</TableCell>
+              <TableCell align="right">{keyStateBooking[c.id_estado]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
