@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -18,9 +18,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListItems from './ListItems';
-import Misdatos from './Misdatos';
-import Reservas from "./Reservas"
-import Modificar from './Modificar';
+import Misdatos from './../Misdatos';
+import Campings from "./Campings/Campings"
+import { VERDE, VERDE_CLARO } from '../../helpers/colors';
 
 // function Copyright(props: any) {
 //   return (
@@ -85,7 +85,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const mdTheme = createTheme();
+// const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
@@ -94,18 +94,18 @@ function DashboardContent() {
   };
 
   const[misdatos, setMisdatos] = React.useState(true);
-  const[modificar, setModificar] = React.useState(false);
-  const[reservas, setReservas] = React.useState(false);
+  const[campings, setCampings] = React.useState(false);
   
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    //<ThemeProvider theme={mdTheme}>
       <Box component= "div" sx={{ display: 'flex'}}>
         <CssBaseline />
         <AppBar position="fixed" sx={{mt:8}} open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
+              bgcolor: VERDE
             }}
           >
             <IconButton
@@ -123,11 +123,10 @@ function DashboardContent() {
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1, color: 'white' }}
             >
-              Dueño de camping
+              Propietario
             </Typography>
           </Toolbar>
         </AppBar>
@@ -138,14 +137,15 @@ function DashboardContent() {
               alignItems: 'center',
               justifyContent: 'flex-end',
               px: [1],
+              bgcolor: VERDE_CLARO
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon sx={{fill: 'white'}} />
             </IconButton>
           </Toolbar>
           <Divider />
-            <ListItems setReservas={setReservas} setMisdatos={setMisdatos} setModificar={setModificar}  />
+            <ListItems setCampings={setCampings} setMisdatos={setMisdatos}  />
         </Drawer>
         <Box
           component="main"
@@ -155,23 +155,21 @@ function DashboardContent() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: '100vh',
+            height: 'calc(100vh - 64px)',
             overflow: 'auto',
           }}
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                  {modificar && <Modificar/>}
-                  {reservas && <Reservas/>}
+                  {campings && <Campings />}
                   {misdatos && <Misdatos/>}
-
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>
-    </ThemeProvider>
+    //</ThemeProvider>
   );
 }
 

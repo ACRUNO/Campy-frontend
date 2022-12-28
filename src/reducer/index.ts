@@ -1,13 +1,17 @@
-import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH } from "../actions";
+import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
-import { GET_FAVORITES_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
-import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset } from './estados';
-import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME } from "../actions/Dash.admin.action";
+import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
+import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas } from './estados';
+import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME, GET_RESERVAS_CAMPING, CLEAN_RESERVAS_CAMPING } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
 
 const initialState: {
     user: User | null;
+    ownerCampings: {
+        campings: {id: number, nombre_camping:string, habilitado: boolean}[], 
+        done: boolean
+    };
     favoritesCampings: { favorites: FavoritesCampings[], done: boolean };
     userBookings: { bookings: Bookings[], done: boolean };
     allProvincias: { id: number, nombre: string, imagen: string }[];
@@ -26,21 +30,24 @@ const initialState: {
     filtrosBooking: filterCamps;
     fechaIngreso: string;
     fechaEgreso: string;
-    campingsDash_All:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[];
+    campingsDash_All:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string,contacto_tel:string}[];
     usuariosDash_All:{id: number, username: string,email: string,tipo: string,habilitado: number}[];
     fechaIngresoDayjs: Dayjs | null;
     fechaEgresoDayjs: Dayjs | null
-    campingsDash: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string }[];
+    campingsDash: { id: number, nombre_camping: string, habilitado: number, localidad: string, provincia: string ,contacto_tel:string}[];
     usuariosDash: { id: number, username: string, email: string, tipo: string, habilitado: number }[]
     datos_graftorta: { provincias: string, cant_campings: number }[]
     datos_graftop: { nombre_camping: string, cant_reservas: number }[],
     datos_grafusuarios: { users: number, created: string }[],
     datos_grafreservas: { reservas: number, total: number, created: string }[],
+    linkMap: { lng: number, lat: number, zoom: number }
     reviews: { id: number, puntaje: number ,username: string, fecha: string ,comentario: string }[],
+    campingBooking:Reservas[],
 } = {
 
     //ESTADOS GLOBALES
     user: null,
+    ownerCampings: {campings: [], done: false},
     favoritesCampings: { favorites: [], done: false },
     userBookings: { bookings: [], done: false },
     allProvincias: [],
@@ -92,7 +99,9 @@ const initialState: {
     usuariosDash_All: [],
     datos_grafusuarios: [],
     datos_grafreservas: [],
-    reviews: []
+    reviews: [],
+    linkMap: { lng: -63.617129400239264, lat: -38.40725346022871, zoom: 5 },
+    campingBooking:[]
 
 };
 
@@ -107,7 +116,6 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 allCampings: action.payload,
-                campings: action.payload
             }
         case GET_LOCALIDADES:
             return {
@@ -202,26 +210,26 @@ function rootReducer(state: any = initialState, action: any): any {
 
 
 
-            case CAMPINGS_DASH:
-                return {
-                    ...state,
-                    campingsDash: action.payload,
-                    campingsDash_All: action.payload
-                }
-            case CLEAN_CAMPINGS_DASH:
-                return {
-                    ...state,
-                    campingsDash:[],
-                    campingsDash_All: []
-                }
+        case CAMPINGS_DASH:
+            return {
+                ...state,
+                campingsDash: action.payload,
+                campingsDash_All: action.payload
+            }
+        case CLEAN_CAMPINGS_DASH:
+            return {
+                ...state,
+                campingsDash: [],
+                campingsDash_All: []
+            }
 
-            case USUARIOS_DASH:
-                return {
-                    ...state,
-                    usuariosDash: action.payload,
-                    usuariosDash_All: action.payload
-                }
-   
+        case USUARIOS_DASH:
+            return {
+                ...state,
+                usuariosDash: action.payload,
+                usuariosDash_All: action.payload
+            }
+
 
         case FILTROS_COMBINADOS:
             let filtrosBook: number[] = state.filtrosBooking[action.payload.name]
@@ -323,19 +331,19 @@ function rootReducer(state: any = initialState, action: any): any {
                 datos_graftop: action.payload
             }
         case GET_USUARIOSCAMPY:
-            let u: number = 1;
+            let day:Date = new Date (2022,11,14)
+            let u: number = 0;
             let data: { users: number, created: string }[] = []
             let i: number = 0
-            while (i < action.payload.length) {
-                if (i < action.payload.length - 1 && action.payload[i].createdAt === action.payload[i + 1].createdAt) {
+            while (day.toISOString() < new Date().toISOString() && i < action.payload.length) {
+                if (new Date(action.payload[i].createdAt).valueOf() < day.valueOf()) {
                     u++
                     i++
                 }
                 else {
-                    let obj: { users: number, created: string } = { users: u, created: action.payload[i].createdAt.split("T")[0] }
+                    let obj: { users: number, created: string } = { users: u, created: day.toLocaleDateString('zh-Hans-CN') }
                     data.push(obj)
-                    u++
-                    i++
+                    day.setDate(day.getDate() + 7)
                 }
             }
             return {
@@ -344,25 +352,25 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
         case GET_RESERVASCAMPY:
-            console.log(action.payload)
-            let r: number = 1;
+            let dia:Date = new Date (2022,11,14)
+            let r: number = 0;
             let t: number = 0;
             let datos: { reservas: number, total: number, created: string }[] = [];
             let j: number = 0;
-            while (j < action.payload.length) {
-                if (j < action.payload.length - 1 && action.payload[j].createdAt === action.payload[j + 1].createdAt) {
+            while (dia.toISOString() < new Date().toISOString() && j < action.payload.length){
+                if (new Date(action.payload[j].createdAt).valueOf() < dia.valueOf()) {
                     r++
                     t = t + action.payload[j].total
                     j++
                 }
                 else {
-                    t = t + action.payload[j].total
-                    let obj: { reservas: number, total: number, created: string } = { reservas: r, total: t, created: action.payload[j].createdAt.split("T")[0] }
+                    let obj: { reservas: number, total: number, created:string} = { reservas: r, total: t, created: dia.toLocaleDateString('zh-Hans-CN') }
                     datos.push(obj)
                     r++
                     j++
+                    //sumo 7 dias
+                    dia.setDate(dia.getDate() + 7)
                     }}
-                    console.log(datos)
                 return {
                     ...state,
                     datos_grafreservas: datos
@@ -373,7 +381,11 @@ function rootReducer(state: any = initialState, action: any): any {
                     ...state,
                     userBookings: []
                 }
-
+            case GET_OWNER_CAMPINGS:
+                return {
+                    ...state,
+                    ownerCampings: {campings: action.payload, done: true}
+                }
             case GET_USUARIOS_BYNAME:
                 if (action.payload.length>0){
                   var usuariosBuscados:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = state.usuariosDash_All.filter((u:{id: number, username: string,email: string,tipo: string,habilitado: number})=>u.username.toLowerCase().includes(action.payload.toLowerCase()))}
@@ -381,16 +393,39 @@ function rootReducer(state: any = initialState, action: any): any {
                 return{
                     ...state,
                     usuariosDash: usuariosBuscados
+            }
+            console.log(datos)
+            return {
+                ...state,
+                datos_grafreservas: datos
+            }
 
-                }
+        case CLEAN_USUARIOS_DASH:
+            return {
+                ...state,
+                userBookings: []
+            }
+        case GET_USUARIOS_BYNAME:
+            if (action.payload.length > 0) {
+                var usuariosBuscados: { id: number, username: string, email: string, tipo: string, habilitado: number }[] = state.usuariosDash_All.filter((u: { id: number, username: string, email: string, tipo: string, habilitado: number }) => u.username.toLowerCase().includes(action.payload.toLowerCase()))
+            }
+            else { var usuariosBuscados: { id: number, username: string, email: string, tipo: string, habilitado: number }[] = state.usuariosDash_All }
+            return {
+                ...state,
+                usuariosDash: usuariosBuscados
+
+            }
 
         case GET_CAMPING_REVIEWS:
             return {
                 ...state,
                 reviews: action.payload
+            }      
+        case LINK_MAP:
+            return {
+                ...state,
+                linkMap: { lng: (Number(action.payload.longitud)) , lat: (Number(action.payload.latitud)), zoom: 16 }
             }
-
-
             case GET_CAMPINGS_BYNAME:
                 if (action.payload.length>0){
                     var campingsBuscados:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string}[] = state.campingsDash_All.filter((u:{id:number, nombre_camping:string, habilitado:number, localidad:string, provincia:string})=>u.nombre_camping.toLowerCase().includes(action.payload.toLowerCase()))}
@@ -399,6 +434,18 @@ function rootReducer(state: any = initialState, action: any): any {
                      ...state,
                     campingsDash: campingsBuscados
                     }
+
+            case GET_RESERVAS_CAMPING:
+                return{
+                    ...state,
+                    campingBooking: action.payload
+                }
+            case CLEAN_RESERVAS_CAMPING:
+                return{
+                    ...state,
+                    campingBooking: []
+                }
+
         default: return { ...state }
 
     }

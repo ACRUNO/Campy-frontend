@@ -8,7 +8,7 @@ import {
   DialogContentText, 
   DialogTitle
 } from '@mui/material';
-import { ROJO, ROJO_FUERTE, VERDE_CLARO, VERDE_OSCURO } from './colors';
+import { ROJO, ROJO_FUERTE, VERDE, VERDE_OSCURO } from './colors';
 import { AlertConfirmType } from '../../auxiliar';
 
 
@@ -46,8 +46,8 @@ export default function Alert({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handlerClose('denegate')} variant='contained' sx={{bgcolor: ROJO, '&:hover': {bgcolor: ROJO_FUERTE}}}>Denegar</Button>
-          <Button onClick={() => handlerClose('confirm')} variant='contained' sx={{bgcolor: VERDE_CLARO, '&:hover': {bgcolor: VERDE_OSCURO}}}>Aceptar</Button>
+          <Button onClick={() => handlerClose('denegate')} variant='contained' sx={{bgcolor: ROJO, color: 'white', '&:hover': {bgcolor: ROJO_FUERTE}}}>Denegar</Button>
+          <Button onClick={() => handlerClose('confirm')} variant='contained' sx={{bgcolor: VERDE, color: 'white', '&:hover': {bgcolor: VERDE_OSCURO}}}>Aceptar</Button>
         </DialogActions>
       </Dialog>
     </>

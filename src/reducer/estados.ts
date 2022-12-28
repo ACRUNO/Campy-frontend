@@ -36,6 +36,7 @@ export type Campings =
     descripcion_periodo: string,
     descripcion_periodo_agua: string,
     precio: number,
+    puntuacion_promedio:number,
     imagenes: Array<string>
 }
 
@@ -77,6 +78,7 @@ export const Campys = {
     descripcion_periodo: "",
     descripcion_periodo_agua: "",
     precio: 0,
+    puntuacion_promedio:0,
     imagenes: [""]
 }
     
@@ -104,8 +106,8 @@ export type Bookings = {
     fecha_hasta_reserva: string,
     cant_noches: number,
     total: number,
-    descrip_estado: string,
-    correo_prop: string,
+    id_estado: string,
+    email: string,
     nombre_camping: string,
     id_campings: number
 }
@@ -163,3 +165,5 @@ export function reset(){
     estacionamiento: 0
 })
 }
+
+export type Reservas ={id_reserva: number, fecha_desde_reserva: string, fecha_hasta_reserva: string, cant_noches: number, total: number, descrip_estado: string,id_usuario: number,username: string,id_campings: number,nombre_camping: string}

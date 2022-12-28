@@ -160,8 +160,6 @@ export default function Camping() {
   }
 
 
-
-
   return (
     <Box>
       <Box className={Style.all}>
@@ -181,6 +179,16 @@ export default function Camping() {
               <Rating name="read-only" value={value} readOnly />
             </Box>
           </Box>
+          {
+          user && 
+            <FavoriteIcon
+                onClick={() => {
+                  if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
+                  setFavorite(true)
+                }}
+              className={`${Style['add-fav']} ${favorite ? Style.heart : ''}`.trim()} 
+            />
+          }
         </Box>
 
         <Box className={Style.booking}>
@@ -488,27 +496,4 @@ export default function Camping() {
 
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

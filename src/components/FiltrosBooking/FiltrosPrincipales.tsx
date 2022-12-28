@@ -87,8 +87,7 @@ export default function FiltrosPrincipales(props:Props) {
         const fecha_ingreso: string | undefined = ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
         const fecha_egreso: string | undefined = egreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
-        props.setCurrentPage(1)
-        
+        props.setCurrentPage(1)        
     }
     
 

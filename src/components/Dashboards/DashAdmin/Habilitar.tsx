@@ -12,6 +12,7 @@ import { AppDispatch, RootState } from '../../../store/index';
 import * as actions from "../../../actions";
 
 
+
 type Props = {
     open:boolean
     setopen:(value: React.SetStateAction<boolean>) => void
@@ -36,19 +37,23 @@ export default function HabilitarAlert(props:Props) {
     if (tipo === "camping"){
       if(estado === 0){
         dispatch(actions.habilitacion_camping(id,1,data))
+        setTimeout(()=>dispatch(actions.getCampings_dash()))
       }else{
         dispatch(actions.habilitacion_camping(id,0,data))
+        setTimeout(()=>dispatch(actions.getCampings_dash()))
       }
     }
     else{
       if(estado === 0){
         dispatch(actions.habilitacion_usuario(id,1,data))
+        setTimeout(()=>dispatch(actions.getUsuarios_dash()))
       }else{
         dispatch(actions.habilitacion_usuario(id,0,data))
+        setTimeout(()=>dispatch(actions.getUsuarios_dash()))
       }}
     props.setopen(false);
     }
-    
+
 
   return (
     <React.Fragment>
