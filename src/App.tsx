@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    if(token) dispatch(loginUserWithToken({token}));
+    if(token) dispatch(loginUserWithToken(token));
   }, [])
 
   return (

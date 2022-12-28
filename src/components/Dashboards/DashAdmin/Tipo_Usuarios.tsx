@@ -11,6 +11,7 @@ import * as actions from "../../../actions";
 import { useDispatch, useSelector} from "react-redux";
 import { AppDispatch, RootState } from '../../../store/index';
 import { SelectChangeEvent } from '@mui/material/Select';
+import { userTypes } from '../../../auxiliar';
 
 
 
@@ -40,6 +41,7 @@ export default function Tipo_usuarios(props:Props) {
     e.preventDefault();
     let data:{token:string, userType:string} ={token:user.token, userType:tipo}
     dispatch(actions.tipo_usuario(id,data))
+    setTimeout(()=>dispatch(actions.getUsuarios_dash()))
     props.setopen(false); 
   };
 
@@ -62,9 +64,9 @@ export default function Tipo_usuarios(props:Props) {
               label="Tipo"
               onChange={cambiarTipo}
               >
-                <MenuItem value={process.env.REACT_APP_TIPO_PROPIETARIO}>Propietario</MenuItem>
-                <MenuItem value={process.env.REACT_APP_TIPO_USUARIO}>Usuario</MenuItem>
-                <MenuItem value={process.env.REACT_APP_TIPO_ADMIN}>Administrador</MenuItem>
+                <MenuItem value={userTypes.PROPIETARIO}>Propietario</MenuItem>
+                <MenuItem value={userTypes.USER}>Usuario</MenuItem>
+                <MenuItem value={userTypes.ADMIN}>Administrador</MenuItem>
               </Select>
             </FormControl>
         </DialogContent>

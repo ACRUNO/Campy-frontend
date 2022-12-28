@@ -16,6 +16,9 @@ export const GET_RESERVASCAMPY: string = "GET_RESERVASCAMPY"
 export const CLEAN_USUARIOS_DASH: string = "CLEAN_USUARIOS_DASH"
 export const GET_USUARIOS_BYNAME: string = "GET_USUARIOS_BYNAME"
 export const GET_CAMPINGS_BYNAME: string = "GET_CAMPINGS_BYNAME"
+export const GET_RESERVAS_CAMPING: string = "GET_RESERVAS_CAMPING"
+export const CLEAN_RESERVAS_CAMPING: string = "CLEAN_RESERVAS_CAMPING"
+
 
 ////////////////////////GRAFICOS/////////////////////////////////
 //GRAFICO DE TORTA
@@ -103,5 +106,26 @@ export function getCampings_byname(name:string){
         type: GET_CAMPINGS_BYNAME,
         payload: name
     }
+}
+
+export function getReservas_Camping(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/reservas/${id}`);
+            return dispatch({
+                type: GET_RESERVAS_CAMPING,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function cleanReservas_Camping()  {
+    return ({
+        type: CLEAN_RESERVAS_CAMPING, 
+    });
 }
 

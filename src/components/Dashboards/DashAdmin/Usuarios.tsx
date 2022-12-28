@@ -17,6 +17,9 @@ import Tipo_usuarios from './Tipo_Usuarios';
 import HabilitarAlert from "./Habilitar";
 import Detalle_usuario from './DetalleUsuario';
 import SearchBar from './SearchBar';
+import EditIcon from '@mui/icons-material/Edit';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+
 
 
 
@@ -36,19 +39,14 @@ export default function Usuarios() {
 
   const [openDet, setOpenDet]= React.useState(false);
 
-  //let usuariosSliced:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = UsuariosDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  let usuariosSliced:{id: number, username: string,email: string,tipo: string,habilitado: number}[] = UsuariosDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
 
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
+  useEffect(()=>{
+     dispatch(actions.getUsuarios_dash())
+   },[dispatch, rowsPerPage, openHab, open])
+   
   const HandleHabilitar = (e:React.ChangeEvent<unknown>, id:number, nombre:string, estado:number) => {
     e.preventDefault();
     setOpenHab(true);
@@ -57,11 +55,12 @@ export default function Usuarios() {
     setEstado(estado)
   };
 
-  const handleClick = (e:React.ChangeEvent<unknown>, id:number, tipo:string) => {
+  const handleClick = (e:React.ChangeEvent<unknown>, id:number, tipo:string, username:string) => {
     e.preventDefault();
     setOpen(true);
     setUsuario(id)
     setTipo(tipo)
+    setNombre_usuario(username)
   };
 
   const handleDetalle = (e:React.ChangeEvent<unknown>, id:number, nombre:string) => {
@@ -71,10 +70,15 @@ export default function Usuarios() {
     setNombre_usuario(nombre)
   };
 
+   const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
 
-  useEffect(()=>{
-     dispatch(actions.getUsuarios_dash())
-   },[dispatch, rowsPerPage, openHab, open])
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   
   
   return (
@@ -96,12 +100,13 @@ export default function Usuarios() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {UsuariosDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((u) => (
+          {/* {UsuariosDash.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((u) => ( */}
+          {usuariosSliced.map((u) => (
             <TableRow key={u.id}>
-              <TableCell onClick={(e)=>handleDetalle(e,u.id,u.username)}><Button variant='text' color="inherit">{u.username}</Button></TableCell>
+              <TableCell onClick={(e)=>handleDetalle(e,u.id,u.username)}><Button variant='text' color="inherit"><ListAltIcon fontSize="small" sx={{color:"#ACA8A6", pb:0.5}}/>{u.username}</Button></TableCell>
               <Detalle_usuario open={openDet} setopen={setOpenDet} id={usuario} nombre={nombre_usuario}></Detalle_usuario>
               <TableCell>{u.email}</TableCell>
-              <TableCell onClick={(e)=>handleClick(e,u.id, u.tipo)}><Button variant='text' color="inherit" >{u.tipo}</Button></TableCell>
+              <TableCell onClick={(e)=>handleClick(e,u.id, u.tipo, u.username)}><Button variant='text' color="inherit" ><EditIcon fontSize="small" sx={{color:"#ACA8A6", pb:0.5}}/>{u.tipo}</Button></TableCell>
               <Tipo_usuarios open={open} setopen={setOpen} id={usuario} username={nombre_usuario} tipo={tipo} ></Tipo_usuarios>
               <TableCell>{u.habilitado===1 ? "Habilitado" : "Deshabilitado"}</TableCell>
               <TableCell align="right">{u.habilitado===1? <Button onClick={(e)=>HandleHabilitar(e,u.id, u.username, u.habilitado)} variant="contained" sx={{color:'#d50000'}}>Deshabilitar</Button>:<Button onClick={(e)=>HandleHabilitar(e,u.id, u.username, u.habilitado)} variant="contained" sx={{color:'#00c853'}}>Habilitar</Button>}</TableCell>
