@@ -1,14 +1,42 @@
+th.table-head {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #285430;
+}
+
+td.table-row {
+  cursor: default;
+  font-size: 1rem;
+}
+
 button.edit-button {
   padding: 3px 7px;
-  font-size: .8rem;
+  font-size: .7rem;
+  color: white;
+  background-color: rgb(106, 159, 114);
+}
+
+button.edit-button:hover  {
+  background-color: rgb(24, 86, 62);
 }
 
 button.delete-button {
   padding: 3px 7px;
-  font-size: .8rem;
+  font-size: .7rem;
+  color: white;
   background-color: var(--red);
 }
 
 button.delete-button:hover {
   background-color: var(--dark-red);
+}
+
+td.habilitado {
+  color: #22a139;
+  font-weight: 600;
+}
+
+td.deshabilitado {
+  color: #c91818;
+  font-weight: 600;
 }

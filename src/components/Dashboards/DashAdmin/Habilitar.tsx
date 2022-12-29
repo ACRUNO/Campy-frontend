@@ -36,10 +36,10 @@ export default function HabilitarAlert(props:Props) {
     let data={token:user.token}
     if (tipo === "camping"){
       if(estado === 0){
-        dispatch(actions.habilitacion_camping(id,1,data))
+        dispatch(actions.habilitacion_camping(id,1,user.token))
         setTimeout(()=>dispatch(actions.getCampings_dash()))
       }else{
-        dispatch(actions.habilitacion_camping(id,0,data))
+        dispatch(actions.habilitacion_camping(id,0,user.token))
         setTimeout(()=>dispatch(actions.getCampings_dash()))
       }
     }

@@ -5,6 +5,7 @@ import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reserv
 import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME, GET_RESERVAS_CAMPING, CLEAN_RESERVAS_CAMPING } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
+import { DISABLE_OWNER_CAMPING } from "../actions/Owner.action";
 import { GET_ALLPOSTS } from "../actions/Blog.action";
 
 const initialState: {
@@ -452,33 +453,44 @@ function rootReducer(state: any = initialState, action: any): any {
                     ...state,
                     campingBooking: []
                 }
-            case POP_UP_CARD:
+            case DISABLE_OWNER_CAMPING: 
+                const campings = state.ownerCampings.campings.map(
+                    (camping: any) => {
+                        if(camping.id === action.payload) {
+                            camping.habilitado = 0;
+                        }
+                        return camping
+                    }
+                )
+                return {
+                    ...state,
+                    ownerCampings: {
+                        campings,
+                        done: true
+                    }
+                }
+        case POP_UP_CARD:
                 return {
                     ...state,
                     popUpCards: action.payload
                 }
-            case SET_CARD_INFO:
+        case SET_CARD_INFO:
                 return {
                     ...state,
                     cardInfoMap: action.payload
                 }
-            case GET_ALLPOSTS:
+        case GET_ALLPOSTS:
                 return{ 
                     ...state,
                     allPosts: action.payload
                 }
         default: return { ...state }
-
     }
 }
 
 
 
 export default rootReducer;
-
-
-
-
 
 
 

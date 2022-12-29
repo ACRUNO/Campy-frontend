@@ -1,0 +1,16 @@
+div.iniciar-sesion-container {
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(245, 245, 245);
+}
+
+h4.iniciar-sesion {
+  font-size: 3rem;
+}
+
+svg.emoticon {
+  font-size: 3rem;
+}

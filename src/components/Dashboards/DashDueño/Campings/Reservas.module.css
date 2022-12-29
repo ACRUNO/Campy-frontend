@@ -3,13 +3,13 @@
   z-index: 9999;
 }
 
-.table-head {
+th.table-head {
   font-size: 1.2rem;
   font-weight: 600;
   color: #285430;
 }
 
-.table-row {
+td.table-row {
   cursor:default;
   font-size: 1rem;
 }
@@ -32,15 +32,15 @@ button.menu-button:hover {
   font-weight: 500;
 }
 
-.Rechazada {
+td.Rechazada {
   color: #bd4242;
 }
 
-.Realizada {
+td.Realizada {
   color: #4c8a45;
 }
 
-.Finalizada {
+td.Finalizada {
   color: #a27c2b;
 }
 
