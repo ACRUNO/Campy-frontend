@@ -5,6 +5,7 @@ import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reserv
 import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME, GET_RESERVAS_CAMPING, CLEAN_RESERVAS_CAMPING } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
+import { GET_ALLPOSTS } from "../actions/Blog.action";
 
 const initialState: {
     user: User | null;
@@ -44,7 +45,8 @@ const initialState: {
     reviews: { id: number, puntaje: number ,username: string, fecha: string ,comentario: string }[],
     campingBooking:Reservas[],
     popUpCards: boolean,
-    cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string}
+    cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
+    allPosts:{titulo:string,username: string, fecha: string,texto:string,}[]
 } = {
 
     //ESTADOS GLOBALES
@@ -105,7 +107,8 @@ const initialState: {
     linkMap: { lat: -38.40725346022871, lng: -63.617129400239264, zoom: 5 },
     campingBooking:[],
     popUpCards: false,
-    cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' } 
+    cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' },
+    allPosts:[]
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -458,6 +461,11 @@ function rootReducer(state: any = initialState, action: any): any {
                 return {
                     ...state,
                     cardInfoMap: action.payload
+                }
+            case GET_ALLPOSTS:
+                return{ 
+                    ...state,
+                    allPosts: action.payload
                 }
         default: return { ...state }
 
