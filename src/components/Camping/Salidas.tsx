@@ -4,14 +4,22 @@ import { Box } from '@mui/material';
 import fotito from "./salir.png"
 import fotito2 from "./comilona.webp"
 import Style from "./Salidas.module.css"
-import { LinkMap } from "../../actions";
+import { LinkMap, popUpCard, setCardInfo } from "../../actions";
 import { AppDispatch } from "../../store";
 import { useDispatch } from "react-redux";
-
-export default function Salidas() {
-
+import { useNavigate } from 'react-router-dom';
 
 
+interface InfoCards {
+  nombre_camping: string;
+  imagenes: string; 
+  descripcion_camping: string;
+}
+
+export default function Salidas({nombre_camping, imagenes, descripcion_camping} : InfoCards) {
+
+
+  const navigate = useNavigate();
 
   let saliditas = [
     {
@@ -26,6 +34,12 @@ const dispatch: AppDispatch = useDispatch()
 
 const handleMap = () => {
   dispatch(LinkMap(params.id))
+  dispatch(popUpCard(true))
+  dispatch(setCardInfo(Number(params.id), nombre_camping, imagenes, descripcion_camping))
+  setTimeout(() => {
+    navigate("/map")
+  }, 100);
+  
 }
 
 
@@ -34,33 +48,22 @@ const handleMap = () => {
 
   return (
     <Box  className={Style.total}>
-
-      <Link onClick={handleMap} to={`/map`} style={{ textDecoration: 'none' }}>
-        <Box className={Style.divimagen}>
+        <Box onClick={() => handleMap()} className={Style.divimagen}>
           <div> Donde Salir? </div>
           <Box className={Style.cont}
             component="img"
-
-            // className={Style.imagencita}
             alt="Logo"
             src={saliditas[0].imagen}
           />
         </Box>
-      </Link>
-
-      <Link onClick={handleMap} to={`/map`} style={{ textDecoration: 'none' }}>
-        <Box  className={Style.divimagen}>
+        <Box  onClick={() => handleMap()} className={Style.divimagen}>
           <div> Donde Comer? </div>
           <Box className={Style.cont}
             component="img"
-
-            // className={Style.imagencita}
             alt="Logo"
             src={saliditas[0].imagen2}
           />
         </Box>
-      </Link>
-
     </Box>
   )
 }

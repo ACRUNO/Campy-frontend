@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -25,11 +25,9 @@ export default function Page2({ setInput, input }: InputProps) {
     dispatch(getPeriodoAgua())
   }, [dispatch]);
 
-  const [periodoAgua, setPeriodoAgua] = useState<number>(0);
 
   const handlePeriodoAgua = (e: SelectChangeEvent) => {
     e.preventDefault();
-    setPeriodoAgua(Number(e.target.value) as number);
     setInput((inputs: Inputs) => {
       return {
         ...inputs,
@@ -37,10 +35,9 @@ export default function Page2({ setInput, input }: InputProps) {
       }
     })
   };
-  
+
 
   const handleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    //e.preventDefault();
     setInput((inputs: Inputs) => {
       return {
         ...inputs,
@@ -58,18 +55,6 @@ export default function Page2({ setInput, input }: InputProps) {
       }
     })
   };
-
-  const handleChangeSelect = (e: SelectChangeEvent) => {
-    e.preventDefault();
-    setInput((inputs: Inputs) => {
-      return {
-        ...inputs,
-        [e.target.name]: e.target.value
-      }
-    })
-  };
-
-  const periodo_agua: number[] = [1, 2, 3];
 
   return (
     <React.Fragment>
@@ -125,32 +110,23 @@ export default function Page2({ setInput, input }: InputProps) {
             onChange={handleChangeInput}
           />
         </Grid>
-      
-      <Grid item xs={12} sm={6}>
-        <TextField
-          required
-          value={input.duchas}
-          id="Cantidad de duchas"
-          name="duchas"
-          label="Cantidad de duchas"
-          fullWidth
-          autoComplete="shipping address-level2"
-          variant="standard"
-          color='secondary'
-          onChange={handleChangeInput}
-        />
-      </Grid>
-      <Grid item xs={12} >
-{/*         <TextField
-          id="Período de agua caliente"
-          name="periodo_agua"
-          label="Período de agua caliente"
-          fullWidth
-          autoComplete="shipping address-line2"
-          variant="standard"
-          onChange={handleChangeInput}
-        /> */}
-        <FormControl sx={{ m: 1, minWidth: "15rem" }}>
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            value={input.duchas}
+            id="Cantidad de duchas"
+            name="duchas"
+            label="Cantidad de duchas"
+            fullWidth
+            autoComplete="shipping address-level2"
+            variant="standard"
+            color='secondary'
+            onChange={handleChangeInput}
+          />
+        </Grid>
+        <Grid item xs={12} >
+          <FormControl sx={{ m: 1, minWidth: "15rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo de agua caliente</InputLabel>
             <Select
               defaultValue=''
@@ -161,13 +137,12 @@ export default function Page2({ setInput, input }: InputProps) {
               label="Período de agua caliente"
               color="secondary"
               onChange={handlePeriodoAgua}>
-              {/* <MenuItem value=""><em>None</em></MenuItem> */}
               {allPeriodoAgua?.map(m => (
                 <MenuItem value={m.id}>{m.descripcion_periodo_agua}</MenuItem>
               ))}
             </Select>
           </FormControl>
-      </Grid>
+        </Grid>
       </Grid>
 
       <Grid item xs={12}>

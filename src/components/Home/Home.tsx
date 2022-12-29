@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Cards from "../Cards/Cards";
 import Banner from "../Banner/Banner"
 import { Grid, Box } from '@mui/material';
@@ -7,10 +7,11 @@ import s from './Home.module.css'
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
 import Footer from "../Footer/Footer";
-import {getProvincias,getAllCampings,filterProvincia,getCampingsProvincias, filtrosPrincipales}from "../../actions";
+import { getProvincias, getAllCampings, filterProvincia, getCampingsProvincias, filtrosPrincipales } from "../../actions";
 import { MouseEvent } from 'react';
 import { Link } from "react-router-dom";
 import Loader from "../helpers/Loader";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -21,7 +22,9 @@ import Loader from "../helpers/Loader";
 export default function Home() {
 
     const dispatch: AppDispatch = useDispatch()
-    const allProvincias:{id:number ,nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
+    const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getProvincias())
@@ -30,11 +33,14 @@ export default function Home() {
 
 
 
-    function handleClick(id:number){
-        dispatch(filterProvincia(id)) 
+    function handleClick(id: number) {
+        dispatch(filterProvincia(id))
         // dispatch(getCampingsProvincias())
         dispatch(filtrosPrincipales(id, 0, undefined, undefined))
-        document.documentElement.scrollTop = 0
+        setTimeout(() => {
+            navigate('/booking')
+            document.documentElement.scrollTop = 0
+        }, 100);
     }
 
     return (
@@ -45,12 +51,14 @@ export default function Home() {
                 <Box className={s.grid} >
 
                     {
-                        allProvincias?.map((e: {id:number ,nombre: string, imagen: string }) => {
+                        allProvincias?.map((e: { id: number, nombre: string, imagen: string }) => {
                             return (
                                 <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.id}>
-                                <Link onClick={(event:MouseEvent<HTMLElement>) => handleClick(e.id)} to={`/booking/`} className={s.link}>
+                                    {/* <Link onClick={(event:MouseEvent<HTMLElement>) => handleClick(e.id)} to={`/booking/`} className={s.link}> */}
+                                    <Box onClick={(event: MouseEvent<HTMLElement>) => handleClick(e.id)} sx={{cursor:"pointer"}}>
                                         <Cards id={e.id} name={e.nombre} img={e.imagen} />
-                                    </Link>
+                                    </Box>
+                                    {/* </Link> */}
                                 </Grid>
                             )
                         })

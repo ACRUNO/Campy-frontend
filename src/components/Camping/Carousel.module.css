@@ -3,7 +3,7 @@
 .slideshow {
     margin: 0 auto;
     overflow: hidden;
-    max-width: 550px;
+    max-width: 580px;
   }
   
   .slideshowSlider {
@@ -14,7 +14,7 @@
   .slide {
     display: inline-block;
   
-    height: 440px;
+    height: 480px;
     width: 100%;
     border-radius: 40px;
   }

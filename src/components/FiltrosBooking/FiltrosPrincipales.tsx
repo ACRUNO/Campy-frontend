@@ -115,6 +115,7 @@ export default function FiltrosPrincipales(props:Props) {
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
 
                     <Select
+                        disabled={provincia === 0}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"

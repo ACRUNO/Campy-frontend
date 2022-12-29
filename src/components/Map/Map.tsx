@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
-import { GoogleMap, useLoadScript, MarkerF, MarkerProps } from "@react-google-maps/api";
+import { useEffect, useMemo, useState } from "react";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import s from "./Map.module.css"
-import { Typography } from "@mui/material";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import MapCard from "./CardMap/CardMap"
-import { getByLabelText } from "@testing-library/react";
 import FiltersMap from "./FiltersMap/FiltersMap"
 import { Campings } from "../../reducer/estados";
 import { Campys } from "../../reducer/estados";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { getFiltersCamping, LinkMap } from "../../actions";
+import { getFiltersCamping, popUpCard, setCardInfo } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Terrain } from "@mui/icons-material";
 
 
 
@@ -41,7 +38,7 @@ export default function Mapa() {
 
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8",
+    googleMapsApiKey: "AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8"
   });
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -58,14 +55,11 @@ function Map() {
   const dispatch: AppDispatch = useDispatch()
 
 
-
-
   const campings: Campings[] = useSelector((state: RootState) => state.campings)
-  var linkMap: { lng: number, lat: number, zoom: number } = useSelector((state: RootState) => state.linkMap)
+  var linkMap: { lat: number, lng: number, zoom: number } = useSelector((state: RootState) => state.linkMap)
 
 
-
-  const center = { lat: linkMap.lat, lng: linkMap.lng }
+  const center = useMemo(() => ({ lat: linkMap.lat, lng: linkMap.lng }),[]);
   const zoomMap = linkMap.zoom
 
 
@@ -75,17 +69,21 @@ function Map() {
 
 
   const [cardInfo, SetCardInfo] = useState<Campings>(Campys)
-  const [popUpBoolean, SetpopUpBoolean] = useState<boolean>(false)
+  const cardInfoo: {id: number, nombre_camping: string, imagenes: string, descripcion_camping: string} = useSelector((state: RootState) => state.cardInfoMap)
+  //const [popUpBoolean, SetpopUpBoolean] = useState<boolean>(false)
+  const popUpBool: boolean = useSelector((state: RootState) => state.popUpCards)
   const [popUpFilters, SetPopUpFilters] = useState<boolean>(false)
   const [filtersArrow, SetFiltersArrow] = useState<boolean>(false)
   const [icon, SetIcon] = useState<string>(iconImage1)
 
-  const navigate = useNavigate()
-
   function handleMarker(c: any) {
-    c.id !== cardInfo.id ? SetpopUpBoolean(true) :
-      popUpBoolean === false ? SetpopUpBoolean(true) : SetpopUpBoolean(false)
-    SetCardInfo(c)
+    c.id !== cardInfoo.id ? 
+    //SetpopUpBoolean(true) :
+    dispatch(popUpCard(true)) :
+    //popUpBoolean === false ? SetpopUpBoolean(true) : SetpopUpBoolean(false)
+    popUpBool === false ? dispatch(popUpCard(true)) : dispatch(popUpCard(false))
+    //SetCardInfo(c)
+    dispatch(setCardInfo(c.id, c.nombre_camping, c.imagenes, c.descripcion_camping))
     SetIcon(iconImage2)
   }
 
@@ -144,9 +142,10 @@ function Map() {
 
         <Box className={s.MapCard}>
           {
-            popUpBoolean === true ?
-              <Link className={s.link} to={`/booking/camping/${cardInfo.id}`}>
-                <MapCard nombre={cardInfo.nombre_camping} imagen={cardInfo.imagenes[0]} descripcion={cardInfo.descripcion_camping} />
+            // popUpBoolean === true ?
+            popUpBool === true ?
+              <Link className={s.link} to={`/booking/camping/${cardInfoo.id}`}>
+                <MapCard nombre={cardInfoo.nombre_camping} imagen={cardInfoo.imagenes} descripcion={cardInfoo.descripcion_camping} />
               </Link> :
               <Box />
           }
