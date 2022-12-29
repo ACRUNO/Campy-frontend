@@ -12,74 +12,49 @@ import Header from './Header';
 import MainFeaturedPost from './MainFeaturedPost';
 import FeaturedPost from './FeaturedPost';
 import { flexbox } from "@mui/system";
+import { useDispatch, useSelector} from "react-redux";
+import { AppDispatch, RootState } from '../../store/index';
+import { useEffect } from "react";
+import * as actions from "../../actions/Blog.action"
+import Paper from '@mui/material/Paper';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 
-const mainFeaturedPost = {
-  title: 'Title of a longer featured blog post',
-  description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: 'https://source.unsplash.com/random',
-  imageText: 'main image description',
-  linkText: 'Continue reading…',
-};
 
-const featuredPosts = [
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://source.unsplash.com/random',
-    imageLabel: 'Image Text',
-  },
-];
-
-
-const theme = createTheme();
 
 export default function Blog() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+
+const dispatch: AppDispatch = useDispatch()
+const allPosts:{titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.allPosts)
+
+useEffect(()=>{
+    dispatch(actions.getAll_posts())
+  },[dispatch])
+  
+return (
+    <React.Fragment>
       <Container maxWidth="lg">
-        {/* <Header title="Blog" sections={sections} /> */}
         <main>
-          <MainFeaturedPost post={mainFeaturedPost} />
-          <Grid container spacing={4} display="flex" flexDirection="column">
-            {featuredPosts.map((post) => (
-              <FeaturedPost key={post.title} post={post} />
-            ))}
+          <MainFeaturedPost/>
+          <Grid container columnSpacing={2} display="flex" alignItems="center" justifyContent="center" sx={{mb:4}}>
+          <Grid item md={10} sx={{pr:10}}>
+          <TextField id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small" />
           </Grid>
-          <Grid container spacing={5} sx={{ mt: 3 }}>
+          <Grid item>
+          {/* hay que chequear que este logueado!!!!!!!! */}
+          <Button variant="contained" color="secondary">Crear nuevo POST</Button> 
+          </Grid>
+          </Grid>
+          <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" >
+            {allPosts.map((p) => (
+            <FeaturedPost key={p.titulo} title={p.titulo} description={p.texto} date={p.fecha} username={p.username}/>
+            ))}
           </Grid>
         </main>
       </Container>
       <Footer/>
-    </ThemeProvider>
+      </React.Fragment>
   );
 }
 
