@@ -47,7 +47,7 @@ export default function Home() {
         <>
             <Banner />
             <Filters />
-            <Box sx={{ p: '80px 0' }} >
+            <Box sx={{ p: '80px 0 150px', bgcolor: 'rgb(245, 245, 245)'}} >
                 <Box className={s.grid} >
 
                     {

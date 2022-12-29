@@ -7,6 +7,10 @@ import { useEffect, useState } from "react";
 import { getCampingByOwner } from '../../../../actions/User.action';
 import Reservas from './Reservas';
 import s from './Campings.module.css';
+import { disableOwnerCamping } from '../../../../actions/Owner.action';
+import ConfirmAlert from '../../../helpers/ConfirmAlert';
+import Alert from '../../../helpers/Alert';
+import { AlertConfirmType, AlertType } from '../../../../auxiliar';
 
 
 export default function Campings() {
@@ -17,6 +21,25 @@ export default function Campings() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openReserves, setOpenReserves] = useState({open: false, campingId: 0});
+  const [stateAlertConfirm, setStateAlertConfirm] = useState<AlertConfirmType>(
+    {
+      open: false,
+      title: 'Dar de Baja un Camping',
+      description: '¿Seguro que desea dar de baja este camping? No se podrá volver a tener disponibilidad sobre el mismo...',
+      confirm: () => {},
+      denegate: () => {},
+    }
+  );
+  const [stateAlert, setStateAlert] = useState<AlertType>(
+    {
+      open: false,
+      title: 'Dar de Baja un Camping',
+      description: '¿Seguro que desea dar de baja este camping? No se podrá volver a tener disponibilidad sobre el mismo...',
+      confirm: 'ok',
+      type: 'success',
+      navigateTo: null
+    }
+  );
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -41,30 +64,56 @@ export default function Campings() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Habilitado</TableCell>
-            <TableCell>Reservas</TableCell>
-            <TableCell align="right">Actualizar</TableCell>
-            <TableCell align="right">Borrar</TableCell>
+            <TableCell className={s['table-head']}>Nombre</TableCell>
+            <TableCell className={s['table-head']}>Habilitado</TableCell>
+            <TableCell className={s['table-head']}>Reservas</TableCell>
+            <TableCell className={s['table-head']}  align="right">Actualizar</TableCell>
+            <TableCell  className={s['table-head']} align="right">Dar de Baja</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {campings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: any) => (
             <TableRow key={c.id}>
-              <TableCell>{c.nombre_camping}</TableCell>
-              <TableCell>{c.habilitado ? 'Sí' : 'No'}</TableCell>
-              <TableCell>
+              <TableCell className={s['table-row']}>{c.nombre_camping}</TableCell>
+              <TableCell className={`${s['table-row']} ${c.habilitado ? s.habilitado : s.deshabilitado}`}>
+                {c.habilitado ? 'SI' : 'NO'}
+              </TableCell>
+              <TableCell className={s['table-row']}>
                 <Typography 
                   onClick={() => setOpenReserves({open: true, campingId: c.id})} 
                   sx={{textDecoration: 'underline', cursor: 'pointer'}}
                 >Ver</Typography>
               </TableCell>
-              <TableCell align="right">
-                <Button variant='contained' className={s['edit-button']}>EDITAR</Button>
+              <TableCell className={s['table-row']} align="right">
+                <Button variant='text' className={s['edit-button']} disabled={!c.habilitado}>EDITAR</Button>
               </TableCell>
-              <TableCell align="right">
-                <Button variant='contained' className={s['delete-button']}>ELIMINAR</Button>
-              </TableCell>           
+              <TableCell className={s['table-row']} align="right">
+                <Button
+                  variant='text'
+                  className={s['delete-button']}
+                  disabled={!c.habilitado}
+                  onClick={() => setStateAlertConfirm(prev => ({...prev, open: true, confirm: () => {
+                    dispatch(disableOwnerCamping(c.id, token, setStateAlert))
+                  }}))}
+                >DESHABILITAR</Button>
+              </TableCell>
+              <ConfirmAlert
+                open={stateAlertConfirm.open}
+                confirm={stateAlertConfirm.confirm}
+                denegate={stateAlertConfirm.denegate}
+                title={stateAlertConfirm.title}
+                description={stateAlertConfirm.description}
+                setStateOpen={setStateAlertConfirm}
+              />   
+              <Alert
+                open={stateAlert.open}
+                confirm={stateAlert.confirm}
+                title={stateAlert.title}
+                type={stateAlert.type}
+                description={stateAlert.description}
+                setStateOpen={setStateAlert}
+                navigateTo={null}
+              />      
             </TableRow>
           ))}
         </TableBody>
