@@ -36,6 +36,10 @@ export const FILTER_EGRESO: string = 'FILTER_EGRESO'
 export const FILTER_PARCELA:string = 'FILTER_PARCELA'
 export const CLEAN_CAMPINGS_DASH:string = "CLEAN_CAMPINGS_DASH"
 export const LINK_MAP:string = 'LINK_MAP'
+export const POP_UP_CARD: string = 'POP_UP_CARD'
+export const SET_CARD_INFO: string = 'SET_CARD_INFO'
+export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
+export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
 
 
 
@@ -382,6 +386,20 @@ export function resetFiltros() {
     }
 }
 
+export function filterProvinciaMap(provincia: number){
+    return{
+        type: FILTER_PROVINCIA_MAP,
+        payload: provincia
+    }
+}
+
+export function filterLocalidadMap(localidad:number){
+    return{
+        type: FILTER_LOCALIDAD_MAP,
+        payload: localidad
+    }
+}
+
 export function getFiltersCamping(filters: filterCamps) {
     return async function (dispatch: AppDispatch) {
         try {
@@ -438,5 +456,20 @@ export function LinkMap(id: any): ThunkAction<void, RootState, unknown, AnyActio
                 payload: details.data
             })
         } catch (error: any) { console.log(error.message) }
+    }
+}
+
+export function popUpCard(bool: boolean) {
+    return {
+        type: POP_UP_CARD,
+        payload: bool
+    }
+}
+
+export function setCardInfo(id: number, nombre_camping: string, img: string, desc_camping: string) {
+    let info = {id: id, nombre_camping: nombre_camping, imagenes: img[0], descripcion_camping: desc_camping}
+    return {
+        type: SET_CARD_INFO,
+        payload: info
     }
 }
