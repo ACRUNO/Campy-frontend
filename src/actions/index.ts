@@ -336,6 +336,7 @@ export function tipo_usuario(id:number, {token, userType} :{token: string, userT
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.put(`/api/usuarios/tipo/${id}`, { userType }, { headers: { authorization: token } });
+            console.log("json", json.data)
             return dispatch({
                 type: "TIPO_USUARIO",
                 payload: json.data

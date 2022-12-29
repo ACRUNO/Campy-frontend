@@ -10,7 +10,9 @@ import s from './Reservas.module.css';
 import axios from 'axios';
 import { keyStateBooking, stateBooking } from '../../../../auxiliar';
 import { VERDE } from '../../../helpers/colors';
+import { CircularProgress } from '@mui/material';
 import BasicMenu from '../../../helpers/BasicMenu';
+import { confirmReserva } from '../../../../actions/Owner.action';
 
 type Props = { 
   setOpenReserves: Dispatch<SetStateAction<{open: boolean, campingId: number}>>;
@@ -19,13 +21,13 @@ type Props = {
 }
 
 export default function Reservas({open, campingId, setOpenReserves}: Props) {
-  const dispatch: AppDispatch = useDispatch()
   const { token }: { id: number, token: string } = useSelector((state: RootState) => state.user)  
-  const [ownerBookings, setOwnerBookings] = useState<Bookings[]>([]);
+  const [ownerBookings, setOwnerBookings] = 
+    useState<{bookings: Bookings[], done: boolean}>({bookings: [], done: false});
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleChangePage = (event: unknown, newPage: number) => setPage(newPage);
+  const handleChangePage = (_: unknown, newPage: number) => setPage(newPage);
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -38,22 +40,27 @@ export default function Reservas({open, campingId, setOpenReserves}: Props) {
       headers: { authorization: token }
     });
 
-    setOwnerBookings(data);
+    setOwnerBookings({bookings: data, done: true});
   }; 
 
   useEffect(() => {
     if(campingId) getOwnerBookings();
 
-    return () => setOwnerBookings([])
+    return () => setOwnerBookings({bookings: [], done: false})
   }, [campingId]);
 
   return (
     <Dialog open={open} className={s['reserve-container']} maxWidth={false}>
-        <Grid item xs={12} >
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-          <Typography variant='h5' sx={{fontSize: '2rem', color: VERDE}}>
+      <Grid item xs={12} >
+          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', minWidth: '200px', alignItems: 'center' }}>
+          <Typography variant='h5' sx={{fontSize: '2rem', color: VERDE, mt: 2}}>
             Reservas
           </Typography>
+      {
+        !ownerBookings.bookings.length && !ownerBookings.done 
+                ? <CircularProgress sx={{color: VERDE, textAlign: 'center', mt: 2}} />
+                :
+        <>
           <Table>
             <TableHead>
               <TableRow>
@@ -67,56 +74,59 @@ export default function Reservas({open, campingId, setOpenReserves}: Props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {ownerBookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings, i) => (
-                <TableRow key={i}>
-                  <TableCell className={s['table-row']}>{c.nombre_camping}</TableCell>
-                  <TableCell className={s['table-row']}>{c.email}</TableCell>
-                  <TableCell className={s['table-row']}>
-                    {new Date(c.fecha_desde_reserva).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell className={s['table-row']}>
-                    {new Date(c.fecha_hasta_reserva).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell className={s['table-row']}>{c.cant_noches}</TableCell>
-                  <TableCell className={s['table-row']}>$ {c.total}</TableCell>
-                  <TableCell 
-                    className={`${s['table-row']} ${s[keyStateBooking[c.id_estado]]}`} 
-                    align="right"
-                  >
-                    {
-                      c.id_estado === stateBooking.PENDIENTE 
-                      ? <BasicMenu 
-                          idButton='menu-reservas'
-                          menuItems={[
-                              {key: 'Realizar', value: stateBooking.REALIZADA as string},
-                              {key: 'Rechazar', value: stateBooking.RECHAZADA as string}
-                          ]}
-                          handleSelectItems={(data: any) => {console.log(data)}}
-                          button='Pendiente'
-                          s={s}
-                        />
-                      : keyStateBooking[c.id_estado]
-                    }
-                  </TableCell>
-                </TableRow>
+              {
+                ownerBookings.bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings, i) => (
+                  <TableRow key={i}>
+                    <TableCell className={s['table-row']}>{c.nombre_camping}</TableCell>
+                    <TableCell className={s['table-row']}>{c.email}</TableCell>
+                    <TableCell className={s['table-row']}>
+                      {new Date(c.fecha_desde_reserva).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className={s['table-row']}>
+                      {new Date(c.fecha_hasta_reserva).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className={s['table-row']}>{c.cant_noches}</TableCell>
+                    <TableCell className={s['table-row']}>$ {c.total}</TableCell>
+                    <TableCell 
+                      className={`${s['table-row']} ${s[keyStateBooking[c.id_estado]]}`} 
+                      align="right"
+                    >
+                      {
+                        c.id_estado === stateBooking.PENDIENTE 
+                        ? <BasicMenu 
+                            idButton='menu-reservas'
+                            menuItems={[
+                                {key: 'Realizar', value: stateBooking.REALIZADA as string},
+                                {key: 'Rechazar', value: stateBooking.RECHAZADA as string}
+                            ]}
+                            handleSelectItems={(data: any) => confirmReserva(c.id, data, token, getOwnerBookings)}
+                            button='Pendiente'
+                            s={s}
+                          />
+                        : keyStateBooking[c.id_estado]
+                      }
+                    </TableCell>
+                  </TableRow>
               ))}
             </TableBody>
           </Table>
           <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={ownerBookings.length}
+              count={ownerBookings.bookings.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            </Paper>
-        <CancelIcon 
-          onClick={() => setOpenReserves({open: false, campingId: 0})} 
-          className={s['close-button']} 
-        />
-      </Grid>
+            </>
+      }
+        </Paper>
+          <CancelIcon 
+            onClick={() => setOpenReserves({open: false, campingId: 0})} 
+            className={s['close-button']} 
+          />
+        </Grid>
     </Dialog>
   );
 }
