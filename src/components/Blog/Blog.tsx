@@ -26,7 +26,7 @@ import Button from "@mui/material/Button";
 export default function Blog() {
 
 const dispatch: AppDispatch = useDispatch()
-const allPosts:{titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.allPosts)
+const allPosts:{id:number, titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.allPosts)
 
 useEffect(()=>{
     dispatch(actions.getAll_posts())
@@ -37,8 +37,8 @@ return (
       <Container maxWidth="lg">
         <main>
           <MainFeaturedPost/>
-          <Grid container columnSpacing={2} display="flex" alignItems="center" justifyContent="center" sx={{mb:4}}>
-          <Grid item md={10} sx={{pr:10}}>
+          <Grid container columnSpacing={4} display="flex"  justifyContent="space-between" sx={{mb:4}}>
+          <Grid item xs={6} md={9} >
           <TextField id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small" />
           </Grid>
           <Grid item>
@@ -46,9 +46,9 @@ return (
           <Button variant="contained" color="secondary">Crear nuevo POST</Button> 
           </Grid>
           </Grid>
-          <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" >
+          <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{mb:4}} >
             {allPosts.map((p) => (
-            <FeaturedPost key={p.titulo} title={p.titulo} description={p.texto} date={p.fecha} username={p.username}/>
+            <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username}/>
             ))}
           </Grid>
         </main>
