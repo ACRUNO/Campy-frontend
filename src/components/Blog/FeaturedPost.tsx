@@ -5,9 +5,10 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 interface FeaturedPostProps {
-    //id:number
+    id:number
     date: string;
     description: string;
     title: string;
@@ -15,10 +16,15 @@ interface FeaturedPostProps {
 }
 
 export default function FeaturedPost(props: FeaturedPostProps) {
+  const navigate =useNavigate()
+
+  const handleClick=()=>{
+    setTimeout(()=>{navigate(`/blog/${props.id}`)},100)
+    
+  }
 
   return (
-    //<Link to={`/blog/${props.id}`}>
-    <Grid item xs={12} md={10} >
+    <Grid item xs={12} md={10} onClick={()=>handleClick()}>
       <CardActionArea component="a" href="#" >
         <Card sx={{ display: 'flex'}}>
           <CardContent sx={{ flex: 1 }}>
