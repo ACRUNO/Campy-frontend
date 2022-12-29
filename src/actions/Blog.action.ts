@@ -28,7 +28,7 @@ export function getAll_posts(): ThunkAction<void, RootState, unknown, AnyAction>
 }
 
 // TRAE EL POST EN DETALLE (C/ IMAGENES Y COMENTARIOS)
-export function getPostById(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function getPostById(id:any): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
