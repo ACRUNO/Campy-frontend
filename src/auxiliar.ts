@@ -61,6 +61,13 @@ export interface AlertConfirmType {
     denegate: () => void
 };
 
+export interface DetalleReserva {
+    descrip_tarifa: string,
+    cantidad: number,
+    precio: number,
+    subtotal: number
+}
+
 export const userTypes = {
     USER: process.env.REACT_APP_TIPO_USUARIO,
     PROPIETARIO: process.env.REACT_APP_TIPO_PROPIETARIO,
