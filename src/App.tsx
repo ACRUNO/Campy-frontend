@@ -16,6 +16,8 @@ import { AppDispatch, RootState } from './store';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserWithToken } from './actions/Login.action';
 import Detalle from './components/Blog/Detalle_post';
+import CrearPost from './components/Blog/CrearPost';
+
 
 
 
@@ -45,6 +47,8 @@ function App() {
           <Route path="/about"  />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
+          <Route path="/blog/crearpost" element={<CrearPost/>} />
+
         </Routes>
       </ThemeProvider>
     </React.Fragment>
