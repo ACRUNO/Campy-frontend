@@ -4,19 +4,15 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
+import { Opacity } from '@mui/icons-material';
 
-interface MainFeaturedPostProps {
-  post: {
-    description: string;
-    image: string;
-    imageText: string;
-    linkText: string;
-    title: string;
-  };
-}
 
-export default function MainFeaturedPost(props: MainFeaturedPostProps) {
-  const { post } = props;
+const logInPhotos: string [] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
+
+const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+
+export default function MainFeaturedPost() {
+
 
   return (
     <Paper
@@ -28,11 +24,12 @@ export default function MainFeaturedPost(props: MainFeaturedPostProps) {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundImage: `url(${post.image})`,
+        backgroundImage: `url(${randomPhoto})`,
+        opacity: 0.65
       }}
     >
       {/* Increase the priority of the hero background image */}
-      {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
+      {/* {<img style={{ display: 'none' }} src={randomPhoto} alt={"imagen"} />} */}
       <Box
         sx={{
           position: 'absolute',
@@ -52,15 +49,18 @@ export default function MainFeaturedPost(props: MainFeaturedPostProps) {
               pr: { md: 0 },
             }}
           >
-            <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-              {post.title}
+            <Typography component="h1" variant="h3" color="inherit"  >
+              Bienvenidos al blog de Campy
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
-              {post.description}
+              Un espacio para compartir con la comunidad experiencias y recomendaciones sobre el mundo del camping 
             </Typography>
-            <Link variant="subtitle1" href="#">
+            {/* <Typography variant="subtitle1" color="inherit" paragraph>
+              
+            </Typography> */}
+            {/* <Link variant="subtitle1" href="#">
               {post.linkText}
-            </Link>
+            </Link> */}
           </Box>
         </Grid>
       </Grid>

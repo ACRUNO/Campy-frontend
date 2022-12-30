@@ -25,7 +25,7 @@ import Salidas from './Salidas';
 import Resume from './Resume';
 import { LocationOn as LocationOnIcon, Favorite as FavoriteIcon } from '@mui/icons-material';
 import Footer from '../Footer/Footer';
-import { getDetails } from '../../actions';
+import { FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, getDetails } from '../../actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from './Carousel'
@@ -46,6 +46,7 @@ export default function Camping() {
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
   let navigate: any = useNavigate();
+  
   const [valid, setValid] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
@@ -63,6 +64,9 @@ export default function Camping() {
     total : 0,
     day2 : 0,
   })
+
+  const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
+  const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
 
   let fav = favourites.favorites.some((camp: { id: string | undefined; }) => Number(camp.id) === Number(params.id))
   const [favorite, setFavorite] = React.useState(fav);
@@ -163,6 +167,19 @@ export default function Camping() {
   }
 
 
+
+  const handleIngresoCamping = (e:Dayjs | null) => {
+    dispatch(FilterIngreso(e))
+    dispatch(FilterIngresoMap(e))
+}
+
+const handleEgresoCamping = (e: Dayjs | null) => {
+  dispatch(FilterEgreso(e))
+  dispatch(FilterEgresoMap(e))
+  /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
+}
+
+
   return (
     <Box>
       <Box className={Style.all}>
@@ -229,9 +246,9 @@ export default function Camping() {
                         label="Ingreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={value1}
+                        value={fechaIngresoDayjs}
                         onChange={(newValue) => {
-                          setValue1(newValue) ;
+                          handleIngresoCamping(newValue) ;
                         
                           let day1 = {
                             target : {
@@ -256,14 +273,14 @@ export default function Camping() {
                       <DatePicker
                         disablePast
                         
-                        minDate={value1}
-                        maxDate={value1?.add(4, 'week')}
+                        minDate={fechaIngresoDayjs}
+                        maxDate={fechaIngresoDayjs?.add(4, 'week')}
                         label="Egreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={value2}
+                        value={fechaEgresoDayjs}
                         onChange={(newValue) => {
-                          setValue2(newValue);
+                          handleEgresoCamping(newValue);
                           let day2 = {
                             target : {
                               name : "day2",
