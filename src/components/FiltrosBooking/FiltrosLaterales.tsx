@@ -1,30 +1,30 @@
 import React, { useEffect } from "react";
-import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup,RadioGroup,Radio, Button } from '@mui/material';
+import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button } from '@mui/material';
 import { fontWeight } from "@mui/system";
 import { ChangeEvent, MouseEvent } from 'react'
 import { filterCategoria, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { filterCamps } from "../../reducer/estados";
-import {Campings} from '../../reducer/estados';
+import { Campings } from '../../reducer/estados';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 
 
 type Props = {
     setCurrentPage: (value: React.SetStateAction<number>) => void
-  }
+}
 
 
-export default function FiltrosLaterales(props:Props) {
+export default function FiltrosLaterales(props: Props) {
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
     const dispatch: AppDispatch = useDispatch()
 
     const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
-    const campings:Campings[] = useSelector((state: RootState) => state.campings)
-    const allCampings:Campings[] = useSelector((state: RootState) => state.allCampings)
+    const campings: Campings[] = useSelector((state: RootState) => state.campings)
+    const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
 
 
     useEffect(() => {
@@ -41,13 +41,11 @@ export default function FiltrosLaterales(props:Props) {
     var max = Math.max(...precioCamps)
 
 
-    const [precioLocal, setPrecioLocal] = React.useState<number[]>([min | 0, max | 2500 ])
+    const [precioLocal, setPrecioLocal] = React.useState<number[]>([min | 500 , max |2500 ])
 
 
     const handlePrecio = (e: Event, newValue: number | number[]) => {
         setPrecioLocal(newValue as number[]);
-        dispatch(filtrosPrecios('precio', newValue))
-        props.setCurrentPage(1) 
     }
 
 
@@ -55,7 +53,7 @@ export default function FiltrosLaterales(props:Props) {
 
     const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(filtrosCombinados(e.target.name, Number(e.target.value)))
-        props.setCurrentPage(1) 
+        props.setCurrentPage(1)
     }
 
 
@@ -63,27 +61,34 @@ export default function FiltrosLaterales(props:Props) {
 
     const handleBoolean = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(filtrosBooleanos(e.target.name, e.target.checked))
-        props.setCurrentPage(1) 
+        props.setCurrentPage(1)
     }
 
     const handleReset = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(resetFiltros());
-        setPrecioLocal([min,max])
-        props.setCurrentPage(1) 
+        setPrecioLocal([min, max])
+        props.setCurrentPage(1)
+        
     }
 
     const handleRadio = (e: ChangeEvent<HTMLInputElement>) => {
         const split = (e.target.value).split(",")
-        const tamaño = [Number(split[0]),Number(split[1])]
+        const tamaño = [Number(split[0]), Number(split[1])]
         dispatch(FilterParcela(tamaño))
     }
-    
+
+    const handleButtonPrecio = () => {
+        dispatch(filtrosPrecios('precio', precioLocal))
+        props.setCurrentPage(1)
+
+    }
+
 
     return (
 
         <Box sx={{ borderRadius: 1, backgroundColor: "white", height: "100%", pl: 3, mr: 4, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
-            < Typography variant="h6" sx={{ paddingTop: "1.5rem", fontSize: "800", mb: "0.5rem" }}> Filtros:</Typography >
+            < Typography variant="h6" sx={{ paddingTop: "1.5rem", fontSize: "800", mb: "0.5rem" }}> Filtros</Typography >
             <Button
                 onClick={handleReset}
                 variant="contained" color="success"
@@ -91,98 +96,103 @@ export default function FiltrosLaterales(props:Props) {
 
             <hr />
             <Typography >Precio</Typography>
-            <Typography>${precioLocal[0]}- +${precioLocal[1]}</Typography>
-
-            <Slider
-                sx={{ mt: "1rem", mb: "0.5rem" }}
-                name="precio"
-                value={precioLocal}
-                onChange={(e, value) => handlePrecio(e,value)}
-                valueLabelDisplay="off"
-                color="secondary"
-                min={min}
-                max={max}
-            />
 
 
+            <Box sx={{display:"flex",justifyContent:"flex-start",alignItems:"center",columnGap:"3.3rem"}}>
 
+            <Typography >${precioLocal[0]}- +${precioLocal[1]}</Typography>
+            <Button  onClick={handleButtonPrecio} sx={{ fontSize:"0.625rem",p:"0.313rem"}} variant="contained" color="success">Aplicar</Button>
 
-          <hr></hr>
-           <Typography >Reviews</Typography>
+            </Box>
+
+                <Slider
+                    sx={{ ml:"0px" , mt: "1rem", mb: "0.5rem", width: "90%" }}
+                    name="precio"
+                    value={precioLocal}
+                    onChange={(e, value) => handlePrecio(e, value)}
+                    valueLabelDisplay="off"
+                    color="secondary"
+                    min={min}
+                    max={max}
+                />
+
+            <hr/>
+
+            <Typography >Reviews</Typography>
 
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
 
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="reviews" />}
-                    label= { 
-                    <Rating
-                    name="text-feedback"
-                    value={5}
-                    readOnly
-                    precision={1}
-                    style={{marginTop:"0.3rem"}}
-                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                  />
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="5" name="reviews" checked={filtrosBook.reviews.includes(5)} />}
+                    label={
+                        <Rating
+                            name="text-feedback"
+                            value={5}
+                            readOnly
+                            precision={1}
+                            style={{ marginTop: "0.3rem" }}
+                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                        />
                     }
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="4" name="reviews" />}
-                    label= { 
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="4" name="reviews" checked={filtrosBook.reviews.includes(4)} />}
+                    label={
                         <Rating
-                        name="text-feedback"
-                        value={4}
-                        readOnly
-                        precision={1}
-                        style={{marginTop:"0.3rem"}}
-                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                      />
-                        }
+                            name="text-feedback"
+                            value={4}
+                            readOnly
+                            precision={1}
+                            style={{ marginTop: "0.3rem" }}
+                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                        />
+                    }
 
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="3" name="reviews" />}
-                    label= { 
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="3" name="reviews" checked={filtrosBook.reviews.includes(3)} />}
+                    label={
                         <Rating
-                        name="text-feedback"
-                        value={3}
-                        readOnly
-                        precision={1}
-                        style={{marginTop:"0.3rem"}}
-                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                      />
-                        }
+                            name="text-feedback"
+                            value={3}
+                            readOnly
+                            precision={1}
+                            style={{ marginTop: "0.3rem" }}
+                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                        />
+                    }
 
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="2" name="reviews" />}
-                    label= { 
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="2" name="reviews" checked={filtrosBook.reviews.includes(2)} />}
+                    label={
                         <Rating
-                        name="text-feedback"
-                        value={2}
-                        readOnly
-                        precision={1}
-                        style={{marginTop:"0.3rem"}}
-                        emptyIcon={<StarIcon style={{ opacity: 0.55}} fontSize="inherit" />}
-                      />
-                        }
+                            name="text-feedback"
+                            value={2}
+                            readOnly
+                            precision={1}
+                            style={{ marginTop: "0.3rem" }}
+                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                        />
+                    }
 
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleCheck} color="secondary" value="1" name="reviews" />}
-                    label= { 
+                    control={<Checkbox onChange={handleCheck} color="secondary" value="1" name="reviews" checked={filtrosBook.reviews.includes(1)} />}
+                    label={
                         <Rating
-                        name="text-feedback"
-                        value={1}
-                        readOnly
-                        precision={1}
-                        style={{marginTop:"0.3rem"}}
-                        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                      />
-                        }
+                            name="text-feedback"
+                            value={1}
+                            readOnly
+                            precision={1}
+                            style={{ marginTop: "0.3rem" }}
+                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                        />
+                    }
 
                 />
             </FormGroup>
- 
+
 
 
 
@@ -206,12 +216,12 @@ export default function FiltrosLaterales(props:Props) {
             <hr></hr>
             <Typography>Tamaño de Parcela</Typography>
 
-                <RadioGroup defaultValue={"0,500"} onChange={handleRadio} >
-                <FormControlLabel value={"0,500"}  control={<Radio color="secondary"/>} label="Todos los tamaños" />
-                <FormControlLabel value={"0,15"}  control={<Radio color="secondary"/>} label="0 a 15 metros" />
-                <FormControlLabel value={"16,20"}  control={<Radio color="secondary"/>} label="16 a 20 metros" />
-                <FormControlLabel value={"21,500"}  control={<Radio color="secondary"/>} label="21 o mas metros" />
-                </RadioGroup>
+            <RadioGroup defaultValue={"0,550"} onChange={handleRadio} >
+                <FormControlLabel value={"0,550"} control={<Radio color="secondary" />} label="Todos los tamaños" />
+                <FormControlLabel value={"0,15"} control={<Radio color="secondary" />} label="0 a 15 metros" />
+                <FormControlLabel value={"16,20"} control={<Radio color="secondary" />} label="16 a 20 metros" />
+                <FormControlLabel value={"21,500"} control={<Radio color="secondary" />} label="21 o mas metros" />
+            </RadioGroup>
 
 
 
@@ -219,15 +229,15 @@ export default function FiltrosLaterales(props:Props) {
             <Typography>Comodidades de parcela</Typography>
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_techada" checked={filtrosBook.parcela_techada}/>}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_techada" checked={filtrosBook.parcela_techada} />}
                     label="Techada"
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_agua_en_parcela" checked={filtrosBook.parcela_agua_en_parcela}/>}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_agua_en_parcela" checked={filtrosBook.parcela_agua_en_parcela} />}
                     label="Agua"
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_iluminacion_toma_corriente" checked={filtrosBook.parcela_iluminacion_toma_corriente}/>}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_iluminacion_toma_corriente" checked={filtrosBook.parcela_iluminacion_toma_corriente} />}
                     label="Electricidad"
                 />
             </FormGroup>
@@ -246,7 +256,7 @@ export default function FiltrosLaterales(props:Props) {
                     labelPlacement="end" />
                 <FormControlLabel
                     name="rodantes"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.rodantes}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.rodantes} />}
                     label="Rodantes"
                     labelPlacement="end" />
                 <FormControlLabel
@@ -256,42 +266,42 @@ export default function FiltrosLaterales(props:Props) {
                     labelPlacement="end" />
                 <FormControlLabel
                     name="restaurant"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.restaurant}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.restaurant} />}
                     label="Restaurant"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="pileta"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.pileta}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.pileta} />}
                     label="Pileta"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="vigilancia"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.vigilancia}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.vigilancia} />}
                     label="Vigilancia"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="maquinas_gimnasia"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.maquinas_gimnasia}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.maquinas_gimnasia} />}
                     label="Gimnasio"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="juegos_infantiles"
-                    control={<Switch onChange={handleBoolean} color='secondary' checked={filtrosBook.juegos_infantiles}/>}
+                    control={<Switch onChange={handleBoolean} color='secondary' checked={filtrosBook.juegos_infantiles} />}
                     label="Juegos Infantiles"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="salon_sum"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.salon_sum}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.salon_sum} />}
                     label="Salon SUM"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="wifi"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.wifi}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.wifi} />}
                     label="Wifi"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="estacionamiento"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.estacionamiento}/>}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.estacionamiento} />}
                     label="Estacionamiento"
                     labelPlacement="end" />
             </FormGroup>
@@ -310,4 +320,4 @@ export default function FiltrosLaterales(props:Props) {
 
 
 
- 
+

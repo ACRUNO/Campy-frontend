@@ -25,7 +25,7 @@ import Salidas from './Salidas';
 import Resume from './Resume';
 import { LocationOn as LocationOnIcon, Favorite as FavoriteIcon } from '@mui/icons-material';
 import Footer from '../Footer/Footer';
-import { getDetails } from '../../actions';
+import { FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, getDetails } from '../../actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from './Carousel'
@@ -34,6 +34,7 @@ import { isGeneratorFunction } from 'util/types';
 import { AppDispatch, RootState } from '../../store';
 import { addFavoriteCamping } from '../../actions/User.action';
 import { Reviews } from '../Reviews/Reviews';
+import { type } from 'os';
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
@@ -44,16 +45,27 @@ export default function Camping() {
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
   let navigate: any = useNavigate();
+  
   const [valid, setValid] = React.useState(0);
   const [value, setValue] = React.useState(0);
-  const [stay, setStay] = React.useState(0);
-  const [travellers, setTravellers] = React.useState(0);
-  const [kids, setKids] = React.useState(0);
+  const [discount, setDiscount] = React.useState(0);
+   const [kids, setKids] = React.useState(0);
   const [price, setPrice] = React.useState(0)
   const [value1, setValue1] = React.useState<Dayjs | null>(null);
   const [value2, setValue2] = React.useState<Dayjs | null>(null);
   const [open, setOpen] = React.useState(false);
+  const [validate , setValidate] = React.useState({ 
+    day1 : 0,
+    value2,
+    stay : 0,
+    date2 : 0,
+    travellers : 0,
+    total : 0,
+    day2 : 0,
+  })
 
+  const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
+  const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
 
   let fav = favourites.favorites.some((camp: { id: string | undefined; }) => Number(camp.id) === Number(params.id))
   const [favorite, setFavorite] = React.useState(fav);
@@ -61,6 +73,8 @@ export default function Camping() {
   let mayores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Mayores");
   let menores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Menores");
   let rodantes = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Rodantes")
+  
+  let infoCards: {nombre_camping: string, imagenes: string, descripcion_camping: string} = {nombre_camping: camp.nombre_camping, imagenes: camp.imagenes, descripcion_camping: camp.descripcion_camping}
 
   useEffect(() => {
     dispatch(getDetails(params.id));
@@ -75,18 +89,17 @@ export default function Camping() {
 
 
   const handleAlgo = (e: any) => {
+   setValidate({...validate ,[e.target.name] : e.target.value }) 
 
-    if (e.target.name == "stay") {
-      setStay(e.target.value as number)
+  }
 
-    }
-    if (e.target.name == "travellers") {
-
-      setTravellers(e.target.value as number)
-    }
-
-    if (stay && travellers) setValid(1)
-
+  let trueValid = () => {
+    let counter = 0
+    if ( validate?.day1 !== 0) { counter += 1}
+    if ( validate?.day2 !== 0) { counter += 1}
+    if ( validate?.travellers !== 0) { counter += 1}
+    if(counter == 3) return false
+    if(counter < 3 ) return true
   }
 
   const handleClickOpen = () => {
@@ -112,14 +125,20 @@ export default function Camping() {
       let day2: any = value2?.date();
       let rest = day2 - day1
       let total = 1
-      let menores1 = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Menores");
       if (rest > 0) { total = rest }
-      console.log(menores[0].precio)
-      console.log(menores[0].precio * kids)
-      let final = (menores[0].precio * kids) + (mayores[0].precio * travellers)
+      let final = (menores[0].precio * kids) + (mayores[0].precio * validate.travellers)
+      let finalPrice = (final * total) + validate.stay
+      if(finalPrice > 60000){ 
+        setDiscount((finalPrice * 95) /100 )
+        setPrice((finalPrice * 95) /100 )
+      }
+      if(finalPrice > 120000){ 
+        setDiscount((finalPrice * 90) /100 )
+        setPrice((finalPrice * 90) /100 )}
 
-      setPrice((final * total) + stay)
-
+        if(finalPrice < 60000){
+      setPrice((final * total) + validate.stay)
+        }
     }
     if (value1?.month() !== value2?.month()) {
       let count1: any = value1?.daysInMonth();
@@ -129,14 +148,35 @@ export default function Camping() {
 
       let total = 1
       if (rest > 0) { total = rest }
-      let final = (menores[0].precio * kids) + (mayores[0].precio * travellers)
+      let final = (menores[0].precio * kids) + (mayores[0].precio * validate.travellers)
 
+      let finalPrice = (final * total) + validate.stay
+      if(finalPrice > 60000){
+         setDiscount((finalPrice * 95) /100 )
+         setPrice((finalPrice * 95) /100 )}
+      if(finalPrice > 120000){ 
+        setDiscount((finalPrice * 90) /100 )
+        setPrice((finalPrice * 90) /100 )}
 
-      setPrice((final * total) + stay)
-
+        if(finalPrice < 60000){
+          setPrice((final * total) + validate.stay)
+            }
     }
 
   }
+
+
+
+  const handleIngresoCamping = (e:Dayjs | null) => {
+    dispatch(FilterIngreso(e))
+    dispatch(FilterIngresoMap(e))
+}
+
+const handleEgresoCamping = (e: Dayjs | null) => {
+  dispatch(FilterEgreso(e))
+  dispatch(FilterEgresoMap(e))
+  /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
+}
 
 
   return (
@@ -185,28 +225,38 @@ export default function Camping() {
               flexWrap: 'wrap',
               '& > :not(style)': {
                 m: 1,
-                width: 600,
+                width: 720,
+               
 
               },
             }}
           >
-            <Paper elevation={3} >
+            <Paper elevation={5}   >
               <Box className={Style.inputCont}>
                 <Box sx={{ marginTop: 4 }}>
                   <Typography className={Style.coti} variant="h5" color="black"> Cotiza tu estadia al mejor precio</Typography>
                 </Box>
-                <Box>
+                <Box >
                   <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                       <DatePicker
                         disablePast
-
+                        maxDate={value2}
                         label="Ingreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={value1}
+                        value={fechaIngresoDayjs}
                         onChange={(newValue) => {
-                          setValue1(newValue);
+                          handleIngresoCamping(newValue) ;
+                        
+                          let day1 = {
+                            target : {
+                              name : "day1",
+                              value : newValue?.date(),
+                            }
+                          };
+                            handleAlgo(day1);
+                          
                           console.log(newValue?.month())
                           console.log(newValue?.daysInMonth())
                           console.log(newValue?.date())
@@ -221,15 +271,24 @@ export default function Camping() {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         disablePast
-                        minDate={value1}
-                        maxDate={value1?.add(4, 'week')}
+                        
+                        minDate={fechaIngresoDayjs}
+                        maxDate={fechaIngresoDayjs?.add(4, 'week')}
                         label="Egreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={value2}
+                        value={fechaEgresoDayjs}
                         onChange={(newValue) => {
-                          setValue2(newValue);
+                          handleEgresoCamping(newValue);
+                          let day2 = {
+                            target : {
+                              name : "day2",
+                              value : newValue?.date(),
+                            }
+                          };
+                            handleAlgo(day2);
                         }}
+                    
 
                         renderInput={(params) => <TextField {...params} />}
                       />
@@ -241,12 +300,13 @@ export default function Camping() {
                   <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Estadia</InputLabel>
                     <Select
-                      // onChange={handleValidate}
+                 
+                      // onChange={(e) => { setStay(e.target.value as number) }}
                       onChange={handleAlgo}
-                      // handleValidate() }}
+                    
 
                       name="stay"
-                      value={stay}
+                      value={validate.stay}
                       labelId="demo-simple-select-helper-label"
                       id="demo-simple-select-helper"
                       label="estadia"
@@ -267,9 +327,10 @@ export default function Camping() {
                   <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Viajeros</InputLabel>
                     <Select
+                    // onChange={(e) => { setTravellers(e.target.value as number) }}
                       onChange={handleAlgo}
                       name="travellers"
-                      value={travellers}
+                      value={validate.travellers}
                       labelId="demo-simple-select-helper-label"
                       id="demo-simple-select-helper"
 
@@ -317,7 +378,7 @@ export default function Camping() {
                   <Stack direction="row" spacing={2}>
 
 
-                    {valid == 0 ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
+                    { trueValid() ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
                       Generar Cotizacion
                     </Button> : <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
                       Generar Cotizacion
@@ -327,15 +388,45 @@ export default function Camping() {
                   </Stack>
 
                 </Box>
-                {price > 0 ? <Box>
+                {price > 0 ? 
+                <Box>
                   <Box className={Style.btn1} >
                     <Typography variant="subtitle1"> Precio valido hasta el {now}  a las 24:00Hs</Typography>
-                    <Stack className={Style.btn3} direction="row" spacing={2}>
+                    
+                    
+                    <Stack className={Style.btn3} direction="row" spacing={1}>
+
+
+                    
+
+
+
+                         {price > 60000 ? price > 120000 ? <Box>
 
                       <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={handleClickOpen} variant="contained" color="success">
-                        ${price} Reserva ya!
-                      </Button>
 
+                        
+                       {discount } RESERVA YA! 
+                         
+                         </Button>
+                         
+
+
+
+                         </Box>
+                          :<></> :   <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={handleClickOpen} variant="contained" color="success">
+
+                        
+                          {price } RESERVA YA! 
+                            
+                            </Button>
+                            
+}
+{/* <Typography> ${price} OFERTA</Typography> */}
+
+                      
+{price > 60000 ?
+                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando ${price - discount} </Typography>: <></> }
                     </Stack>
                   </Box></Box> : <></>}
 
@@ -366,15 +457,16 @@ export default function Camping() {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button className={Style.red} color="info" onClick={handleCloseR}>Seguir mirando</Button>
+              <Button className={Style.red} color="info" onClick={handleCloseR} sx={{marginRight : 30}}>Seguir mirando</Button>
 
               <form action="http://localhost:3001/api/checkout" method="post">
                 <input type="hidden" name="price" value={price} />
                 <input type="hidden" name="title" value={camp.nombre_camping} />
-
+{/* { user == null ? <Button className={Style.green} color="info" > Crea una cuenta para reservar </Button> : 
                 <Button className={Style.green} color="info" type="submit" autoFocus>
                   Reservar!
-                </Button>
+                </Button>            DESCOMENTAR ESTO CUANDO TE HAGAS UNA CUENTA DE USER Y BORRAR EL BUTTON DE ABAJO, DE MIENTRAS DEJAR COMENTADO  */}
+ <Button className={Style.green} color="info" type="submit" autoFocus>PAGARAPRATA</Button>
               </form>
             </DialogActions>
           </Dialog>
@@ -393,17 +485,34 @@ export default function Camping() {
             <Resume></Resume>
           </Box>
           <Box className={Style.salidas}>
-            <Salidas></Salidas>
+            <Salidas {...infoCards}></Salidas>
           </Box>
 
         </Box>
-        </Box>
-         
+      </Box>
 
-        
-        <Footer/>
-       
-         </Box>         
-                
-    )}
+
+
+
+      {
+        user &&
+        <Typography
+          className={Style['add-fav']}
+          variant="h5"
+          color="primary"
+          onClick={() => {
+            if (params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
+            setFavorite(true)
+          }}
+        >
+          Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
+        </Typography>
+      }
+
+      <Footer />
+
+    </Box>
+
+  )
+}
 

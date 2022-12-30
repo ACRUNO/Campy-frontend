@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
-import { GoogleMap, useLoadScript, MarkerF, MarkerProps } from "@react-google-maps/api";
+import { useEffect, useMemo, useState } from "react";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import s from "./Map.module.css"
-import { Typography } from "@mui/material";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import MapCard from "./CardMap/CardMap"
-import { getByLabelText } from "@testing-library/react";
 import FiltersMap from "./FiltersMap/FiltersMap"
 import { Campings } from "../../reducer/estados";
 import { Campys } from "../../reducer/estados";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { getFiltersCamping, LinkMap } from "../../actions";
+import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Terrain } from "@mui/icons-material";
+import { Button, InputProps } from "@mui/material";
+import { ZoomOutMap } from "@mui/icons-material";
 
 
 
@@ -29,29 +28,43 @@ export default function Mapa() {
   const dispatch: AppDispatch = useDispatch()
   const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
+  var linkMap: { lat: number, lng: number, zoom: number } = useSelector((state: RootState) => state.linkMap)
+
+
+  const center = useMemo(() => ({ lat: linkMap.lat, lng: linkMap.lng }), []);
+  const zoomMap = linkMap.zoom
+
 
 
   useEffect(() => {
     dispatch(getFiltersCamping(filtrosBook))
-  }, [dispatch, filtrosBook]
+  }, [dispatch, filtrosBook,linkMap]
   )
 
+  console.log(linkMap);
+  
 
 
 
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8",
+    googleMapsApiKey: "AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8"
   });
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map />
+  return <Map center={center} zoomMap={zoomMap} linkMap={linkMap}/>
+}
+
+interface mapProps{
+  center: { lat: number, lng: number},
+  zoomMap: number,
+  linkMap: { lat: number, lng: number, zoom: number }
 }
 
 
+function Map({center,zoomMap,linkMap}:mapProps) {
 
 
-function Map() {
 
 
   const params = useParams()
@@ -59,14 +72,23 @@ function Map() {
 
 
 
-
   const campings: Campings[] = useSelector((state: RootState) => state.campings)
-  var linkMap: { lng: number, lat: number, zoom: number } = useSelector((state: RootState) => state.linkMap)
+  const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
+
+  let num = 0
+
+  if (filtrosBook.id_provincia > 0 || filtrosBook.id_localidad) num++
+  if (filtrosBook.abierto_fecha_desde || filtrosBook.abierto_fecha_hasta) num++
+  if (filtrosBook.precio.length > 0) num++
+  if (filtrosBook.reviews.length > 0) num++
+  if (filtrosBook.id_categoria.length > 0) num++
+  if (filtrosBook.parcela_superficie.length > 0 && filtrosBook.parcela_superficie[1] < 510) num++
+  if (filtrosBook.parcela_agua_en_parcela || filtrosBook.parcela_iluminacion_toma_corriente || filtrosBook.parcela_techada) num++
+  if (filtrosBook.mascotas || filtrosBook.rodantes || filtrosBook.proveduria || filtrosBook.restaurant || filtrosBook.pileta || filtrosBook.vigilancia || filtrosBook.maquinas_gimnasia || filtrosBook.juegos_infantiles || filtrosBook.salon_sum || filtrosBook.wifi || filtrosBook.estacionamiento) num++
 
 
 
-  const center = { lat: linkMap.lat, lng: linkMap.lng }
-  const zoomMap = linkMap.zoom
+
 
 
   const iconImage2 = "https://res.cloudinary.com/pfcampy/image/upload/v1671133089/campy/mapiconBlack_wmuuqv.png"
@@ -74,18 +96,19 @@ function Map() {
 
 
 
+
   const [cardInfo, SetCardInfo] = useState<Campings>(Campys)
-  const [popUpBoolean, SetpopUpBoolean] = useState<boolean>(false)
+  const cardInfoo: { id: number, nombre_camping: string, imagenes: string, descripcion_camping: string } = useSelector((state: RootState) => state.cardInfoMap)
+  const popUpBool: boolean = useSelector((state: RootState) => state.popUpCards)
   const [popUpFilters, SetPopUpFilters] = useState<boolean>(false)
   const [filtersArrow, SetFiltersArrow] = useState<boolean>(false)
   const [icon, SetIcon] = useState<string>(iconImage1)
 
-  const navigate = useNavigate()
-
   function handleMarker(c: any) {
-    c.id !== cardInfo.id ? SetpopUpBoolean(true) :
-      popUpBoolean === false ? SetpopUpBoolean(true) : SetpopUpBoolean(false)
-    SetCardInfo(c)
+    c.id !== cardInfoo.id ?
+      dispatch(popUpCard(true)) :
+      popUpBool === false ? dispatch(popUpCard(true)) : dispatch(popUpCard(false))
+    dispatch(setCardInfo(c.id, c.nombre_camping, c.imagenes, c.descripcion_camping))
     SetIcon(iconImage2)
   }
 
@@ -96,63 +119,77 @@ function Map() {
     filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false)
   }
 
+  const handleZoomOut = () => {
+    dispatch(zoomOutMap())
+    console.log(linkMap)
+  }
+
 
   const OPTIONS = {
     minZoom: 4,
     maxZoom: 18,
     mapTypeId: 'terrain',
+    fullscreenControl: true,
   }
 
 
   return (
-      <GoogleMap
-        zoom={zoomMap}
-        center={center}
-        mapContainerClassName="map-container"
-        options={OPTIONS}
-      >
+    <GoogleMap
+      zoom={zoomMap}
+      center={center}
+      mapContainerClassName="map-container"
+      options={OPTIONS}
+    >
 
-        <button className={s.buttonFilters} onClick={handleButton}>
-          Filtros
+      <button className={s.buttonFilters} onClick={handleButton}>
+        Filtros
 
-          <Box className={s.filtersArrow} >
-            {
-              filtersArrow === false ? <ArrowDropUpIcon sx={{}} /> : <ArrowDropDownIcon />
-            }
-          </Box>
-
-
-        </button>
-
-
-
+        <Box className={s.filtersArrow} >
+          {
+            filtersArrow === false ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+          }
+        </Box>
         {
-
-          campings?.map((c: any) => {
-            return (
-              <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={icon} />
-            )
-          })
+          num > 0 ? <button className={s.filterCounter} disabled >{num}</button> : <Box />
         }
 
 
-        <Box className={s.filters}>
-          {
-            popUpFilters === true ? <FiltersMap /> : <Box />
-          }
-        </Box>
 
-        <Box className={s.MapCard}>
-          {
-            popUpBoolean === true ?
-              <Link className={s.link} to={`/booking/camping/${cardInfo.id}`}>
-                <MapCard nombre={cardInfo.nombre_camping} imagen={cardInfo.imagenes[0]} descripcion={cardInfo.descripcion_camping} />
-              </Link> :
-              <Box />
-          }
-        </Box>
+      </button>
 
-      </GoogleMap>
+
+     {/*  <button className={s.buttonZoomOut} onClick={handleZoomOut}>ZoomOut</button> */}
+
+
+
+      {
+
+        campings?.map((c: any) => {
+          return (
+            <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={icon} />
+          )
+        })
+      }
+
+
+      <Box className={s.filters}>
+        {
+          popUpFilters === true ? <FiltersMap /> : <Box />
+        }
+      </Box>
+
+      <Box className={s.MapCard}>
+        {
+          // popUpBoolean === true ?
+          popUpBool === true ?
+            <Link className={s.link} to={`/booking/camping/${cardInfoo.id}`}>
+              <MapCard nombre={cardInfoo.nombre_camping} imagen={cardInfoo.imagenes} descripcion={cardInfoo.descripcion_camping} />
+            </Link> :
+            <Box />
+        }
+      </Box>
+
+    </GoogleMap>
   );
 }
 

@@ -36,7 +36,15 @@ export const FILTER_EGRESO: string = 'FILTER_EGRESO'
 export const FILTER_PARCELA:string = 'FILTER_PARCELA'
 export const CLEAN_CAMPINGS_DASH:string = "CLEAN_CAMPINGS_DASH"
 export const LINK_MAP:string = 'LINK_MAP'
-
+export const POP_UP_CARD: string = 'POP_UP_CARD'
+export const SET_CARD_INFO: string = 'SET_CARD_INFO'
+export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
+export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
+export const FILTER_INGRESO_MAP:string ='FILTER_INGRESO_MAP'
+export const FILTER_EGRESO_MAP:string='FILTER_EGRESO_MAP'
+export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
+export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
+export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
 
 
 
@@ -288,11 +296,12 @@ export function cleanCampings_dash()  {
             });
 }
 
-export function habilitacion_camping(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function habilitacion_camping(id:number, habilitacion:number, { token }: {token: string }): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, {}, { headers: { authorization: token } });
+
             return dispatch({
                 type: "HABILITACION_CAMPING",
                 payload: json.data
@@ -318,10 +327,11 @@ export function getUsuarios_dash(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
-export function habilitacion_usuario(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function habilitacion_usuario(id:number, habilitacion:number, { token }: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api/usuarios/deshabilitar/${id}?habilitar=${habilitacion}`, data);
+            var json = await axios.put(`/api/usuarios/deshabilitar/${id}?habilitar=${habilitacion}`, {}, { headers: { authorization: token } });
+
             return dispatch({
                 type: "HABILITACION_USUARIO",
                 payload: json.data
@@ -332,10 +342,11 @@ export function habilitacion_usuario(id:number, habilitacion:number, data: {toke
     }
 }
 
-export function tipo_usuario(id:number,  data: {token: string, userType:string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function tipo_usuario(id:number, {token, userType} :{token: string, userType:string}): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api/usuarios/tipo/${id}`, data);
+            var json = await axios.put(`/api/usuarios/tipo/${id}`, { userType }, { headers: { authorization: token } });
+
             return dispatch({
                 type: "TIPO_USUARIO",
                 payload: json.data
@@ -381,6 +392,37 @@ export function resetFiltros() {
         type: RESET_FILTROS
     }
 }
+
+export function filterProvinciaMap(provincia: number){
+    return{
+        type: FILTER_PROVINCIA_MAP,
+        payload: provincia
+    }
+}
+
+export function filterLocalidadMap(localidad:number){
+    return{
+        type: FILTER_LOCALIDAD_MAP,
+        payload: localidad
+    }
+}
+
+
+export function FilterIngresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_INGRESO_MAP,
+        payload: date
+    } 
+}
+
+
+export function FilterEgresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_EGRESO_MAP,
+        payload: date
+    } 
+}
+
 
 export function getFiltersCamping(filters: filterCamps) {
     return async function (dispatch: AppDispatch) {
@@ -440,3 +482,27 @@ export function LinkMap(id: any): ThunkAction<void, RootState, unknown, AnyActio
         } catch (error: any) { console.log(error.message) }
     }
 }
+
+export function popUpCard(bool: boolean) {
+    return {
+        type: POP_UP_CARD,
+        payload: bool
+    }
+}
+
+export function setCardInfo(id: number, nombre_camping: string, img: string, desc_camping: string) {
+    let info = {id: id, nombre_camping: nombre_camping, imagenes: img[0], descripcion_camping: desc_camping}
+    return {
+        type: SET_CARD_INFO,
+        payload: info
+    }
+}
+
+
+
+export function zoomOutMap(){
+    return {
+        type: ZOOM_OUT_MAP
+    }
+}
+

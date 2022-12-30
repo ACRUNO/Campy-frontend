@@ -36,6 +36,38 @@ button.buttonFilters {
     background: #f1f1f1;
 }
 
+
+
+
+button.buttonZoomOut {
+    background: none padding-box rgb(255, 255, 255);
+    display: table-cell;
+    border: 0px;
+    margin: 0px;
+    padding: 0px 17px;
+    top: 8%;
+    right: 1%;
+    text-transform: none;
+    appearance: none;
+    position: fixed;
+    cursor: pointer;
+    user-select: none;
+    direction: ltr;
+    overflow: hidden;
+    text-align: center;
+    height: 40px;
+    vertical-align: middle;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    min-width: 65px;
+}
+
+.buttonZoomOut:hover{
+    background: #f1f1f1;
+}
 .filters {
     position: fixed;
     bottom: 8%;
@@ -61,4 +93,15 @@ li{
 
 }
 
-
+.filterCounter{
+    display: inline-block;
+    background: #5F8D4E;
+    color: white;
+    border-radius: 99px;
+    border-style: none;
+    padding: 0px 6px;
+    min-width: 26px;
+    margin-left: 5px;
+    font-size: 110%;
+    text-align: center;
+}

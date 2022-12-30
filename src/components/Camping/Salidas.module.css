@@ -35,7 +35,8 @@
 .divimagen {
   display:inline-block;
   position:relative;
- transition : 1s
+ transition : 1s;
+ cursor: pointer;
 }
 
 .divimagen > div {

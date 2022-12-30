@@ -24,48 +24,50 @@ export default function Page3({ setInput, input }: InputProps) {
     dispatch(getPeriodoAbierto())
   }, [dispatch]);
 
-  console.log(allPeriodoAbierto);
-
 
   const handlePeriodoAbierto = (e: SelectChangeEvent) => {
     e.preventDefault();
-    let cerradoDesde: string = 'dsadas';
-    let cerradoHasta: string = 'dsadas';
-    let anio: number = new Date().getFullYear()
+    let abiertoDesde: string = 'dsadas';
+    let abiertoHasta: string = 'dsadas';
+    let fecha: Date = new Date()
+    let anio: number = fecha.getFullYear()
+    let fechaInvierno: Date = new Date(anio, 9, 24)
     switch (Number(e.target.value)) {
       case 1:
-        cerradoDesde= `${anio}/01/01`;
-        cerradoHasta= `${anio}/12/31`;
+        abiertoDesde = `${anio}/01/01`;
+        abiertoHasta = `${anio}/12/31`;
         break;
       case 2:
-        cerradoDesde= `${anio}/03/22`;
-        cerradoHasta= `${anio}/12/21`;
+        abiertoDesde = `${anio}/12/21`;
+        abiertoHasta = `${anio + 1}/03/22`;
         break;
       case 3:
-        cerradoDesde= `${anio}/09/24`;
-        cerradoHasta= `${anio+1}/06/21`;
+        if (fecha > fechaInvierno) {
+          abiertoDesde = `${anio + 1}/06/21`
+          abiertoHasta = `${anio + 1}/09/24`
+        } else {
+          abiertoDesde = `${anio}/06/21`;
+          abiertoHasta = `${anio}/09/24`;
+        }
         break;
       default:
-        cerradoDesde= '';
-        cerradoHasta= '';
+        abiertoDesde = '';
+        abiertoHasta = '';
         break;
     }
-    console.log(cerradoDesde);
-    console.log(anio);
-    
-    
+
     setInput((inputs: Inputs) => {
       return {
         ...inputs,
         [e.target.name]: e.target.value,
-        cerrado_fecha_desde: cerradoDesde,
-        cerrado_fecha_hasta: cerradoHasta
+        abierto_fecha_desde: abiertoDesde,
+        abierto_fecha_hasta: abiertoHasta
       }
     })
   };
 
   console.log(input);
-  
+
 
   let img: Array<string> = ["1", "2", "3", "4"]
 
