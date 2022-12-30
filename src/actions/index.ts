@@ -44,7 +44,8 @@ export const FILTER_INGRESO_MAP:string ='FILTER_INGRESO_MAP'
 export const FILTER_EGRESO_MAP:string='FILTER_EGRESO_MAP'
 export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
 export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
-export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
+export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
+export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
 
 
 

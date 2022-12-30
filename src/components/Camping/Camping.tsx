@@ -257,37 +257,37 @@ console.log(ingreso1)
        
 
 
-  const handleIngresoCamping = (e:Dayjs | null) => {
-    dispatch(FilterIngreso(e))
-    dispatch(FilterIngresoMap(e))
-}
-
-const handleEgresoCamping = (e: Dayjs | null) => {
-  dispatch(FilterEgreso(e))
-  dispatch(FilterEgresoMap(e))
-  /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
-}
-
-    
+      
+      
       var json = await axios.post('/api/reservas/create', data)
-        // dispatch(postReserv(data));
+      // dispatch(postReserv(data));
         let idRes = json.data
         setIdm(json.data)
         setOpen(true);
       if (
         event.type === 'keydown' &&
         ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-      setState({ ...state,'bottom': open });
-      console.log(detailReserv.idRes)
-    };
-
-// hasta ahi 
-  return (
-    <Box>
+        (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+          return;
+        }
+        setState({ ...state,'bottom': open });
+        console.log(detailReserv.idRes)
+      };
+      
+      const handleIngresoCamping = (e:Dayjs | null) => {
+        dispatch(FilterIngreso(e))
+        dispatch(FilterIngresoMap(e))
+    }
+    
+    const handleEgresoCamping = (e: Dayjs | null) => {
+      dispatch(FilterEgreso(e))
+      dispatch(FilterEgresoMap(e))
+      /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
+    }
+      // hasta ahi 
+      return (
+        <Box>
       <Box className={Style.all}>
         <Box className={Style.portadacont}>
           <Box
@@ -354,7 +354,7 @@ const handleEgresoCamping = (e: Dayjs | null) => {
                         views={['year', 'month', 'day']}
                         value={fechaIngresoDayjs}
                         onChange={(newValue) => {
-                          handleIngresoCamping(newValue) ;
+                          setValue1(newValue) ;
                         
                           let day1 = {
                             target : {
@@ -365,7 +365,7 @@ const handleEgresoCamping = (e: Dayjs | null) => {
                             }
                           };
                             handleAlgo(day1);
-                          
+                            handleIngresoCamping(newValue);
                           
                         
                           
@@ -387,7 +387,7 @@ const handleEgresoCamping = (e: Dayjs | null) => {
                         views={['year', 'month', 'day']}
                         value={fechaEgresoDayjs}
                         onChange={(newValue) => {
-                          handleEgresoCamping(newValue);
+                          setValue2(newValue);
                           let day2 = {
                             target : {
                               name : "day2",
@@ -397,6 +397,8 @@ const handleEgresoCamping = (e: Dayjs | null) => {
                             }
                           };
                             handleAlgo(day2);
+                            handleEgresoCamping(newValue);
+
                         }}
                     
 
