@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import * as actions from "../../actions/Blog.action"
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -14,12 +15,15 @@ export default function CrearPost() {
 
   const dispatch: AppDispatch = useDispatch()
   const user = useSelector((state: RootState) => state.user);
+  const navigate =useNavigate()
 
   const [input, setInput] = React.useState<{titulo:string, texto:string, imagenes:string[], usuarioId: number}>({
     titulo: '',
     texto: '',
     imagenes:[],
     usuarioId:0})
+
+  const [habilitar, setHabilitar]= React.useState<boolean>(true)
     
     const handleChangeTitulo=(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
       setInput({
@@ -27,6 +31,7 @@ export default function CrearPost() {
           titulo: e.target.value,
           usuarioId: user.id
         })
+      if (!user.id){setHabilitar(false)}
     }
 
     const handleChangeTexto=(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
@@ -44,8 +49,7 @@ export default function CrearPost() {
      
     }
 
-
-    
+   
 
     const handleSubmit=(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
       e.preventDefault()
@@ -57,6 +61,8 @@ export default function CrearPost() {
           titulo:"",
           imagenes:[]
         })
+      dispatch(actions.getAll_posts())
+      setTimeout(()=>{navigate("/blog")},1000)
     }
 
   
@@ -122,7 +128,8 @@ export default function CrearPost() {
                 
               </Grid> */}
               <Grid display="flex" justifyContent="center">
-              <Button color="secondary" variant='contained'  sx={{mt:2}} onClick={(e)=>{handleSubmit(e)}} >Crear Post</Button>
+              {user === null ? <Button variant="outlined" color="error">Es necesario loguearse para crear un post</Button>
+              :<Button color="secondary" variant='contained'  sx={{mt:2}} onClick={(e)=>{handleSubmit(e)}} >Crear Post</Button>}
               </Grid>
               </React.Fragment>
         
