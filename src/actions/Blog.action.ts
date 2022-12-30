@@ -9,6 +9,7 @@ export const GET_POST_IMAGENES: string = 'GET_POST_IMAGENES'
 export const GET_POST_COMENTARIOS: string = 'GET_POST_COMENTARIOS'
 export const CREATE_POST: string = 'CREATE_POST'
 export const CREATE_COMENTARIO: string = 'CREATE_COMENTARIO '
+export const BUSCAR_POSTS = 'BUSCAR_POSTS';
 
 
 // TRAE TODOS LOS POSTS
@@ -139,4 +140,8 @@ export function crearComentario() {
             console.log(error)
         }
     }
+}
+
+export function getPosts_byname(name: string){
+    return { type: BUSCAR_POSTS, payload: name}    
 }
