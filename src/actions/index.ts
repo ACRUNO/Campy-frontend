@@ -67,7 +67,7 @@ export function getLocalidades(id: number): ThunkAction<void, RootState, unknown
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.get(`/api/localidades/${id}`);
+            var json = await axios.get(`/api/localidades/ConCampings/${id}`);
             return dispatch({
                 type: GET_LOCALIDADES,
                 payload: json.data
