@@ -26,7 +26,7 @@ export default function HabilitarAlert(props:Props) {
 
   const dispatch: AppDispatch = useDispatch()
   const user = useSelector((state: RootState) => state.user);
-  
+
   const handleClose = () => {
     props.setopen(false);
   };
