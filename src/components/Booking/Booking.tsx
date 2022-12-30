@@ -85,7 +85,7 @@ export default function Booking() {
 
     return (
 
-        <Box>
+        <Box sx={{bgcolor: 'rgb(245, 245, 245)' }}>
 
             <FiltrosPrincipales
                 setCurrentPage={setCurrentPage}
