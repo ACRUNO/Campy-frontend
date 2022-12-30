@@ -1,17 +1,20 @@
-import { Dispatch, SetStateAction, useState, ChangeEvent, FormEvent } from 'react';
+import { Dispatch, SetStateAction, useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import {Typography, TextField, Grid, Paper, Avatar, Box, Button} from '@mui/material';
+import { Cancel as CancelIcon } from '@mui/icons-material';
 import Title from './DashUsuario/Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import ConfirmAlert from '../helpers/ConfirmAlert';
 import { AlertConfirmType } from '../../auxiliar';
 import { updateUser } from '../../actions/Login.action';
-import { VERDE } from '../helpers/colors';
+import CloudinaryPerfilImage from './CloudinaryPerfilImage';
+import s from './Misdatos.module.css';
 
 export default function Misdatos() {
 
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+
   const [inputs, setInputs] = useState(
       {
         username: '',
@@ -32,11 +35,12 @@ export default function Misdatos() {
         [stateOpen: AlertConfirmType, setStateOpen: Dispatch<SetStateAction<AlertConfirmType>>] = 
         useState<AlertConfirmType>({
         open: false,
-        title: '¡CUIDADO!',
-        description: 'Estás a punto de cambiar datos de tu cuenta. Una vez que aceptes no se podrá volver hacia atrás.',
+        title: '¡ATENCIÓN! Estás por modificar información sensible sin posibilidad de revertirlo',
+        description: 'IMPORTANTE: si estás modificando la contraseña e iniciás sesión por Google, deberás loguearte a partir de ahora con el método tradicional, introduciendo tu correo y contraseña nueva.',
         confirm: () => {},
         denegate: () => {}
   });
+  const [openPerfilImage, setOpenPerfilImage] = useState(false);
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
       setInputs(inputs => ({ ...inputs, [e.target.name]: e.target.value }));
@@ -85,6 +89,11 @@ export default function Misdatos() {
       });
   }
 
+  const handleClickProfileImage = (e: any) => {
+    if(!e.target.closest('svg#cancel-profile-image')) setOpenPerfilImage(true)
+    else setOpenPerfilImage(false)
+  }
+
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
@@ -107,7 +116,7 @@ export default function Misdatos() {
 
     setStateOpen(state => (
       { ...state, open: true, 
-        confirm: () => dispatch(updateUser(structuredQuery, {token: user.token, userId: user.id})) 
+        confirm: () => dispatch(updateUser(structuredQuery, user.id, user.token)) 
       }));
     
     setInputs(
@@ -120,6 +129,10 @@ export default function Misdatos() {
       });
   }
 
+  const sendImageUrl = (photoUrl: string) => 
+    dispatch(updateUser(`foto=${photoUrl}`, user.id, user.token));
+
+
   return (
     <>
         <Grid item xs={12}>
@@ -127,10 +140,28 @@ export default function Misdatos() {
             <Title>Mis Datos</Title>
             {
               user.foto 
-              ? <Avatar src={`${user.foto}`} sx={{height: '150px', width: '150px', m: '20px auto'}} /> 
-              : <Avatar sx={{height: '150px', width: '150px', fontSize: '3.5rem', m: '20px auto', bgcolor: VERDE}} >
+              ? <div
+                  className={`${s['perfil-image']} ${openPerfilImage ? s['expand-perfil-image'] : ''}`.trim()}
+                  onClick={(e) => handleClickProfileImage(e)}
+                >
+                  <img src={user.foto} className={s['image']} alt='perfil-image-datos' />
+                  {openPerfilImage && 
+                    <>
+                      <CancelIcon 
+                        id='cancel-profile-image'
+                        className={s['cancel-icon']}
+                      />
+                      <CloudinaryPerfilImage sendImageUrl={sendImageUrl} />
+                    </>
+                  }
+                </div> 
+              : <div 
+                  className={`${s['perfil-image']} ${openPerfilImage ? s['expand-perfil-image'] : ''}`.trim()} 
+                  onClick={(e) => handleClickProfileImage(e)}
+                >
                   {user.username[0].toUpperCase()}
-                </Avatar>
+                  {openPerfilImage && <CancelIcon id='cancel-profile-image' />}
+                </div>
             }
             <Typography sx={{textAlign: 'center', m: '10px 0'}} variant='h5' fontWeight='bolder'>{user.username.toUpperCase()}</Typography>
             <Typography sx={{textAlign: 'center', m: '10px 0'}} variant='h6'>Email: {user.email}</Typography> 
