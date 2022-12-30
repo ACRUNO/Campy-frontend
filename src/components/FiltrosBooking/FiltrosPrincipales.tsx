@@ -53,7 +53,7 @@ export default function FiltrosPrincipales(props:Props) {
     const [ingreso, setIngreso] = React.useState<Dayjs | null>(null);
     const [egreso, setEgreso] = React.useState<Dayjs | null>(null);
 
-    // console.log(ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/'));
+   
     
 
 
@@ -77,17 +77,17 @@ export default function FiltrosPrincipales(props:Props) {
 
     const handleEgreso = (e: Dayjs | null) => {
         dispatch(FilterEgreso(e))
-        /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
     }
 
   
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        const fecha_ingreso: string | undefined = ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
-        const fecha_egreso: string | undefined = egreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
+        const fecha_ingreso: string | undefined = fechaIngreso
+        const fecha_egreso: string | undefined = fechaEgreso
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
-        props.setCurrentPage(1)        
+        props.setCurrentPage(1)
+        console.log(filtrosBook)    
     }
     
 
@@ -154,6 +154,7 @@ export default function FiltrosPrincipales(props:Props) {
                                 handleEgreso(newValue)
                             }}
                             minDate={fechaIngresoDayjs}
+                            maxDate={fechaIngresoDayjs?.add(4, 'week')}
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
