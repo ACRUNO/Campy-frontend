@@ -5,6 +5,7 @@ import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reserv
 import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME, GET_RESERVAS_CAMPING, CLEAN_RESERVAS_CAMPING } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
+import { POST_RESERV } from "../actions/Checkout.action";
 
 const initialState: {
     user: User | null;
@@ -459,6 +460,8 @@ function rootReducer(state: any = initialState, action: any): any {
                     ...state,
                     cardInfoMap: action.payload
                 }
+            case POST_RESERV:
+                return { ...state }
         default: return { ...state }
 
     }

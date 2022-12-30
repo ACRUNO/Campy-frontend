@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import { Box, Typography, TextField } from '@mui/material';
 import Portada from "./banner1.webp"
 import Style from "./Camping.module.css"
@@ -29,12 +30,11 @@ import { getDetails } from '../../actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from './Carousel'
-import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
-import { isGeneratorFunction } from 'util/types';
 import { AppDispatch, RootState } from '../../store';
 import { addFavoriteCamping } from '../../actions/User.action';
 import { Reviews } from '../Reviews/Reviews';
-import { type } from 'os';
+import { postReserv } from '../../actions/Checkout.action';
+
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
@@ -48,19 +48,19 @@ export default function Camping() {
   const [valid, setValid] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
-   const [kids, setKids] = React.useState(0);
   const [price, setPrice] = React.useState(0)
   const [value1, setValue1] = React.useState<Dayjs | null>(null);
   const [value2, setValue2] = React.useState<Dayjs | null>(null);
   const [open, setOpen] = React.useState(false);
   const [validate , setValidate] = React.useState({ 
     day1 : 0,
-    value2,
-    stay : 0,
-    date2 : 0,
+    alldate : 0,
+    day2 : 0,
+    alldate2 : 0,
+       stay : 0,
+    kids : 0,
     travellers : 0,
     total : 0,
-    day2 : 0,
   })
 
   let fav = favourites.favorites.some((camp: { id: string | undefined; }) => Number(camp.id) === Number(params.id))
@@ -85,7 +85,12 @@ export default function Camping() {
 
 
   const handleAlgo = (e: any) => {
+    if(e.target?.extra ){
+     { setValidate({...validate ,[e.target.name] : e.target.value , [e.target.extra] : e.target.extrav})}
+    }
+    else {
    setValidate({...validate ,[e.target.name] : e.target.value }) 
+    }
 
   }
 
@@ -97,8 +102,9 @@ export default function Camping() {
     if(counter == 3) return false
     if(counter < 3 ) return true
   }
-
-  const handleClickOpen = () => {
+ 
+  const handleClickOpen = async () => {
+    dispatch(postReserv({user , validate, price}));
     setOpen(true);
 
 
@@ -122,7 +128,7 @@ export default function Camping() {
       let rest = day2 - day1
       let total = 1
       if (rest > 0) { total = rest }
-      let final = (menores[0].precio * kids) + (mayores[0].precio * validate.travellers)
+      let final = (menores[0].precio * validate.kids) + (mayores[0].precio * validate.travellers)
       let finalPrice = (final * total) + validate.stay
       if(finalPrice > 60000){ 
         setDiscount((finalPrice * 95) /100 )
@@ -144,7 +150,7 @@ export default function Camping() {
 
       let total = 1
       if (rest > 0) { total = rest }
-      let final = (menores[0].precio * kids) + (mayores[0].precio * validate.travellers)
+      let final = (menores[0].precio * validate.kids) + (mayores[0].precio * validate.travellers)
 
       let finalPrice = (final * total) + validate.stay
       if(finalPrice > 60000){
@@ -236,6 +242,8 @@ export default function Camping() {
                             target : {
                               name : "day1",
                               value : newValue?.date(),
+                              extra : "alldate",
+                              extrav : newValue,
                             }
                           };
                             handleAlgo(day1);
@@ -243,7 +251,7 @@ export default function Camping() {
                           console.log(newValue?.month())
                           console.log(newValue?.daysInMonth())
                           console.log(newValue?.date())
-                          console.log(newValue?.day())
+                          console.log(newValue)
                         }}
 
                         renderInput={(params) => <TextField {...params} />}
@@ -266,6 +274,8 @@ export default function Camping() {
                           let day2 = {
                             target : {
                               name : "day2",
+                              extra : "alldate2",
+                              extrav : newValue,
                               value : newValue?.date(),
                             }
                           };
@@ -336,9 +346,9 @@ export default function Camping() {
                   <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Menores</InputLabel>
                     <Select
-                      onChange={(e) => { setKids(e.target.value as number) }}
-                      onClick={handleAlgo}
-                      value={kids}
+                    name="kids"
+                      onChange={handleAlgo}
+                      value={validate.kids}
                       labelId="demo-simple-select-helper-label"
                       id="demo-simple-select-helper"
                       label="estadia "
@@ -380,36 +390,27 @@ export default function Camping() {
                     <Stack className={Style.btn3} direction="row" spacing={1}>
 
 
-                    
-
-
-
-                         {price > 60000 ? price > 120000 ? <Box>
-
-                      <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={handleClickOpen} variant="contained" color="success">
-
+                    <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={handleClickOpen} variant="contained" color="success">
                         
-                       {discount } RESERVA YA! 
-                         
-                         </Button>
-                         
-
-
-
-                         </Box>
-                          :<></> :   <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={handleClickOpen} variant="contained" color="success">
-
-                        
-                          {price } RESERVA YA! 
+                         $ {price } RESERVA YA! 
                             
                             </Button>
+
+                    <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={() => postReserv({"HOLIS" : "HOLIS"})} variant="contained" color="success">
+                    $ {price } RESERVA YAAAAAAAAAAAAAAA! 
                             
-}
+                            </Button>
+
+                         
 {/* <Typography> ${price} OFERTA</Typography> */}
 
                       
-{price > 60000 ?
-                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando ${price - discount} </Typography>: <></> }
+{price > 60000 ? price > 120000 ? 
+                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(discount * 10) /100 } </Typography>:  
+                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(discount * 5) /100} </Typography>
+                    :  <></>  }
+                    
+                    
                     </Stack>
                   </Box></Box> : <></>}
 
