@@ -15,7 +15,13 @@ import { TodayTwoTone } from "@mui/icons-material";
 import { Root } from "react-dom/client";
 
 
-
+const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: '85%'
+      }
+    }
+  }
 
 type Props = {
     setCurrentPage: (value: React.SetStateAction<number>) => void
@@ -104,6 +110,7 @@ export default function FiltrosPrincipales(props:Props) {
                         label="provincia"
                         color="secondary"
                         value={String(provincia)}
+                        MenuProps={MenuProps}
                         onChange={handleChangeProvincia}>
                         {allProvincias?.map((m, i) => (
                             <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
@@ -121,6 +128,7 @@ export default function FiltrosPrincipales(props:Props) {
                         label="localidad"
                         color="secondary"
                         value={String(localidad)}
+                        MenuProps={MenuProps}
                         onChange={handleChangeLocalidad}>
                         {allLocalidades?.map(m => (
                             <MenuItem value={m.id}>{m.nombre}</MenuItem>

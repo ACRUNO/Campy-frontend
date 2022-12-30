@@ -15,6 +15,14 @@ interface InputProps {
   input: Inputs
 }
 
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: '85%'
+    }
+  }
+}
+
 export default function Page1({ setInput, input }: InputProps) {
 
   const dispatch: AppDispatch = useDispatch()
@@ -125,6 +133,7 @@ export default function Page1({ setInput, input }: InputProps) {
               name='provincia'
               label="provincia"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeProvincia}>
               {allProvincias?.map((m, i) => (
                 <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
@@ -144,6 +153,7 @@ export default function Page1({ setInput, input }: InputProps) {
               name='LocalidadeId'
               label="localidad"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeSelect}>
               {allLocalidades?.map((m, i) => (
                 <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
@@ -162,6 +172,7 @@ export default function Page1({ setInput, input }: InputProps) {
               name='CategoriaCampingId'
               label="categoria"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeCategoria}>
               {allCategorias?.map(m => (
                 <MenuItem value={m.id} key={m.id}>{m.categoria}</MenuItem>

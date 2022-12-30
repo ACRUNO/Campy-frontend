@@ -12,11 +12,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 
-
-
-
-
-
+const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: '85%'
+      }
+    }
+  }
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -126,6 +128,7 @@ export default function BasicSelect() {
                         id="demo-simple-select-helper"
                         label="provincia"
                         color="secondary"
+                        MenuProps={MenuProps}
                         onChange={handleChangeProvincia}>
                         {allProvincias?.map((m, i) => (
                             <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
@@ -142,6 +145,7 @@ export default function BasicSelect() {
                         id="demo-simple-select-helper"
                         label="localidad"
                         color="secondary"
+                        MenuProps={MenuProps}
                         onChange={handleChangeLocalidad}>
                         {allLocalidades?.map((m, i) => (
                             <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>

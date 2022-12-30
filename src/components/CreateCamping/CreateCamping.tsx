@@ -149,13 +149,13 @@ export default function Checkout() {
 
   let disabled =
     !(
-      input.nombre_camping.length &&
+      input.nombre_camping.length > 3 &&
       input.descripcion_camping.length &&
       input.direccion.length &&
       input.telefono.length &&
       input.contacto_nombre.length &&
       input.contacto_tel.length &&
-      input.imagenes.length
+      input.imagenes.length > 1
     ) ||
     input.CategoriaCampingId === 0 ||
     input.LocalidadeId === 0 ||
