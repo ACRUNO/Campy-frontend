@@ -160,7 +160,11 @@ export default function Misdatos() {
                   onClick={(e) => handleClickProfileImage(e)}
                 >
                   {user.username[0].toUpperCase()}
-                  {openPerfilImage && <CancelIcon id='cancel-profile-image' />}
+                  {openPerfilImage && <>
+                    <CancelIcon id='cancel-profile-image'
+                        className={s['cancel-icon']} />
+                        <CloudinaryPerfilImage sendImageUrl={sendImageUrl} />
+                  </>}
                 </div>
             }
             <Typography sx={{textAlign: 'center', m: '10px 0'}} variant='h5' fontWeight='bolder'>{user.username.toUpperCase()}</Typography>
