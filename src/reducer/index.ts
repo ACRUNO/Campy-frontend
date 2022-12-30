@@ -6,7 +6,7 @@ import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCA
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
 import { DISABLE_OWNER_CAMPING } from "../actions/Owner.action";
-import { GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO } from "../actions/Blog.action";
+import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO } from "../actions/Blog.action";
 
 const initialState: {
     user: User | null;
@@ -48,6 +48,7 @@ const initialState: {
     popUpCards: boolean,
     cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
     allPosts:{titulo:string,username: string, fecha: string,texto:string,}[],
+    postbuscados:{titulo:string,username: string, fecha: string,texto:string,}[],
     post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: Array<string>, comentarios:{username: string, comentario: string, createdAt: string}[]}[]
 } = {
 
@@ -111,7 +112,8 @@ const initialState: {
     popUpCards: false,
     cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' },
     allPosts:[],
-    post: []
+    post: [],
+    postbuscados:[]
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -484,7 +486,8 @@ function rootReducer(state: any = initialState, action: any): any {
         case GET_ALLPOSTS:
                 return{ 
                     ...state,
-                    allPosts: action.payload
+                    allPosts: action.payload,
+                    postbuscados: action.payload
                 }
         case GET_POST:
             return {
@@ -494,7 +497,16 @@ function rootReducer(state: any = initialState, action: any): any {
         case CREATE_POST:
             return { ...state }
         case CREATE_COMENTARIO:
-            return { ...state }      
+            return { ...state }     
+        case BUSCAR_POSTS:
+            if (action.payload.length>0){
+                var postsBuscados:{titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts.filter((p:{titulo:string,username: string, fecha: string,texto:string,})=>p.titulo.toLowerCase().includes(action.payload.toLowerCase()))}
+            else{var postsBuscados: {titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts}
+            return{
+                 ...state,
+                postbuscados: postsBuscados
+                }
+
         default: return { ...state }
     }
 }
