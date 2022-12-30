@@ -40,7 +40,11 @@ export const POP_UP_CARD: string = 'POP_UP_CARD'
 export const SET_CARD_INFO: string = 'SET_CARD_INFO'
 export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
 export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
-export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
+export const FILTER_INGRESO_MAP:string ='FILTER_INGRESO_MAP'
+export const FILTER_EGRESO_MAP:string='FILTER_EGRESO_MAP'
+export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
+export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
+export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
 
 
 
@@ -64,7 +68,7 @@ export function getLocalidades(id: number): ThunkAction<void, RootState, unknown
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.get(`/api/localidades/${id}`);
+            var json = await axios.get(`/api/localidades/ConCampings/${id}`);
             return dispatch({
                 type: GET_LOCALIDADES,
                 payload: json.data
@@ -404,6 +408,23 @@ export function filterLocalidadMap(localidad:number){
     }
 }
 
+
+export function FilterIngresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_INGRESO_MAP,
+        payload: date
+    } 
+}
+
+
+export function FilterEgresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_EGRESO_MAP,
+        payload: date
+    } 
+}
+
+
 export function getFiltersCamping(filters: filterCamps) {
     return async function (dispatch: AppDispatch) {
         try {
@@ -477,6 +498,16 @@ export function setCardInfo(id: number, nombre_camping: string, img: string, des
         payload: info
     }
 }
+
+
+
+export function zoomOutMap(){
+    return {
+        type: ZOOM_OUT_MAP
+    }
+}
+
+
 
 
 export function setdetailreserv(day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any) {

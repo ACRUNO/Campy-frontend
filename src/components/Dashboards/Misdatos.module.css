@@ -1,0 +1,49 @@
+div.perfil-image {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  margin: 20px auto;
+  border-radius: 50%;
+  font-size: 2.5rem;
+  overflow: hidden;
+  background-color: #5F8D4E;
+  cursor: pointer;
+  transition: all .7s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+div.perfil-image:hover {
+  filter: brightness(0.6);
+}
+
+img.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+div.expand-perfil-image {
+  width: 80%;
+  height: 450px;
+  border-radius: 10px;
+  cursor: default;
+}
+
+div.expand-perfil-image:hover {
+  filter: brightness(1);
+}
+
+svg.cancel-icon {
+  position: absolute;
+  fill: white;
+  font-size: 2rem;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: var(--dark-green);
+}

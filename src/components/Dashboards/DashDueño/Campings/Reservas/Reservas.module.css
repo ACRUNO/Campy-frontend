@@ -1,6 +1,6 @@
 .reserve-container {
   position: absolute;
-  z-index: 9999;
+  z-index: 999;
 }
 
 th.table-head {
@@ -42,6 +42,15 @@ td.Realizada {
 
 td.Finalizada {
   color: #a27c2b;
+}
+
+td.ver-detalle {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+td.ver-detalle:hover {
+  color: var(--red);
 }
 
 svg.close-button {

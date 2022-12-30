@@ -27,8 +27,8 @@ export default function Page3({ setInput, input }: InputProps) {
 
   const handlePeriodoAbierto = (e: SelectChangeEvent) => {
     e.preventDefault();
-    let abiertoDesde: string = 'dsadas';
-    let abiertoHasta: string = 'dsadas';
+    let abiertoDesde: string = '';
+    let abiertoHasta: string = '';
     let fecha: Date = new Date()
     let anio: number = fecha.getFullYear()
     let fechaInvierno: Date = new Date(anio, 9, 24)
@@ -81,7 +81,6 @@ export default function Page3({ setInput, input }: InputProps) {
       }
     })
   };
-
 
   return (
     <React.Fragment>
@@ -151,7 +150,7 @@ export default function Page3({ setInput, input }: InputProps) {
         </Grid>
         <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
           {img.map(m => (
-            <Grid item key={m}>
+            <Grid item key={m} >
               <Box
                 id={m}
                 component="img"

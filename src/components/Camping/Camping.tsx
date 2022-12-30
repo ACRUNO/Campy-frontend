@@ -25,7 +25,7 @@ import Details from './Details';
 import Salidas from './Salidas';
 import Resume from './Resume';
 import Footer from '../Footer/Footer';
-import { getDetails } from '../../actions';
+import { FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, getDetails } from '../../actions';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from './Carousel'
@@ -34,6 +34,7 @@ import { addFavoriteCamping } from '../../actions/User.action';
 import { Reviews } from '../Reviews/Reviews';
 import { postReserv } from '../../actions/Checkout.action';
 import { setdetailreserv } from '../../actions';
+import { userTypes } from '../../auxiliar';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
@@ -68,6 +69,7 @@ export default function Camping() {
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
   let navigate: any = useNavigate();
+  
   const [idm, setIdm] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
@@ -85,6 +87,9 @@ export default function Camping() {
     travellers : 0,
     total : 0,
   })
+
+  const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
+  const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
 
   let fav = favourites.favorites.some((camp: { id: string | undefined; }) => Number(camp.id) === Number(params.id))
   const [favorite, setFavorite] = React.useState(fav);
@@ -250,6 +255,19 @@ console.log(ingreso1)
         "precioextraRodante" : validate.stay,
       }
       
+
+
+  const handleIngresoCamping = (e:Dayjs | null) => {
+    dispatch(FilterIngreso(e))
+    dispatch(FilterIngresoMap(e))
+}
+
+const handleEgresoCamping = (e: Dayjs | null) => {
+  dispatch(FilterEgreso(e))
+  dispatch(FilterEgresoMap(e))
+  /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
+}
+
     
       var json = await axios.post('/api/reservas/create', data)
         // dispatch(postReserv(data));
@@ -288,7 +306,7 @@ console.log(ingreso1)
             </Box>
           </Box>
           {
-          user && 
+          user && user.tipo === userTypes.USER &&
             <FavoriteIcon
                 onClick={() => {
                   if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
@@ -334,9 +352,9 @@ console.log(ingreso1)
                         label="Ingreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={value1}
+                        value={fechaIngresoDayjs}
                         onChange={(newValue) => {
-                          setValue1(newValue) ;
+                          handleIngresoCamping(newValue) ;
                         
                           let day1 = {
                             target : {
@@ -362,14 +380,14 @@ console.log(ingreso1)
                       <DatePicker
                         disablePast
                         
-                        minDate={value1}
-                        maxDate={value1?.add(4, 'week')}
+                        minDate={fechaIngresoDayjs}
+                        maxDate={fechaIngresoDayjs?.add(4, 'week')}
                         label="Egreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={value2}
+                        value={fechaEgresoDayjs}
                         onChange={(newValue) => {
-                          setValue2(newValue);
+                          handleEgresoCamping(newValue);
                           let day2 = {
                             target : {
                               name : "day2",

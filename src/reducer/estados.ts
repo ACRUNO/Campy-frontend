@@ -166,4 +166,4 @@ export function reset(){
 })
 }
 
-export type Reservas ={id_reserva: number, fecha_desde_reserva: string, fecha_hasta_reserva: string, cant_noches: number, total: number, descrip_estado: string,id_usuario: number,username: string,id_campings: number,nombre_camping: string}
+export type Reservas ={id_reserva: number, fecha_desde_reserva: string, fecha_hasta_reserva: string, cant_noches: number, total: number, descrip_estado: string,id_usuario: number,username: string,id_campings: number,nombre_camping: string,id_estado:string}
