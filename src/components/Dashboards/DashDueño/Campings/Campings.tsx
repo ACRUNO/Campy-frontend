@@ -5,16 +5,19 @@ import { useDispatch, useSelector} from "react-redux";
 import { AppDispatch, RootState } from '../../../../store/index';
 import { useEffect, useState } from "react";
 import { getCampingByOwner } from '../../../../actions/User.action';
-import Reservas from './Reservas';
+import Reservas from './Reservas/Reservas';
 import s from './Campings.module.css';
 import { disableOwnerCamping } from '../../../../actions/Owner.action';
 import ConfirmAlert from '../../../helpers/ConfirmAlert';
 import Alert from '../../../helpers/Alert';
 import { AlertConfirmType, AlertType } from '../../../../auxiliar';
+import ReservasNotificaciones from './Reservas/ReservasNotificaciones';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Campings() {
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
   const { campings, done } = useSelector((state: RootState) => state.ownerCampings);
   const { id, token } = useSelector((state: RootState) => state.user);
 
@@ -56,7 +59,7 @@ export default function Campings() {
 
   return (
     <>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{position: 'relative'}}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   
                 
@@ -74,7 +77,9 @@ export default function Campings() {
         <TableBody>
           {campings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: any) => (
             <TableRow key={c.id}>
-              <TableCell className={s['table-row']}>{c.nombre_camping}</TableCell>
+              <TableCell 
+                className={s['table-row']}
+              >{c.nombre_camping}</TableCell>
               <TableCell className={`${s['table-row']} ${c.habilitado ? s.habilitado : s.deshabilitado}`}>
                 {c.habilitado ? 'SI' : 'NO'}
               </TableCell>
@@ -85,7 +90,11 @@ export default function Campings() {
                 >Ver</Typography>
               </TableCell>
               <TableCell className={s['table-row']} align="right">
-                <Button variant='text' className={s['edit-button']} disabled={!c.habilitado}>EDITAR</Button>
+                <Button 
+                  variant='text' 
+                  className={s['edit-button']} 
+                  disabled={!c.habilitado}
+                >EDITAR</Button>
               </TableCell>
               <TableCell className={s['table-row']} align="right">
                 <Button
@@ -135,6 +144,7 @@ export default function Campings() {
             setOpenReserves={setOpenReserves}
           />
         }
+        <ReservasNotificaciones />
       </Grid>
     </>
   );

@@ -1,6 +1,9 @@
 :root {
   --red: rgb(216, 80, 80);
+  --green: #5F8D4E;
   --dark-red: rgb(147, 58, 58);
+  --dark-green: #285430;
+  --light-green: #A4BE7B;
 }
 
 .App {
