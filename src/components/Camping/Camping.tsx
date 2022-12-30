@@ -254,7 +254,7 @@ console.log(ingreso1)
         "precioMenores" : menores[0].precio, 
         "precioextraRodante" : validate.stay,
       }
-      
+       
 
 
   const handleIngresoCamping = (e:Dayjs | null) => {
