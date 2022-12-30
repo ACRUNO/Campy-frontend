@@ -41,7 +41,7 @@ const initialState: {
     datos_graftorta: { provincias: string, cant_campings: number }[]
     datos_graftop: { nombre_camping: string, cant_reservas: number }[],
     datos_grafusuarios: { users: number, created: string }[],
-    datos_grafreservas: { reservas: number, total: number, created: string }[],
+    datos_grafreservas: {reservas: number,total: number, created: string;}[],
     linkMap: { lng: number, lat: number, zoom: number }
     reviews: { id: number, puntaje: number ,username: string, fecha: string ,comentario: string }[],
     campingBooking:Reservas[],
@@ -112,7 +112,7 @@ const initialState: {
     popUpCards: false,
     cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' },
     allPosts:[],
-    post: {id: 0, username: '', fecha: '', titulo: '', texto: '', imagenes: [''], comentarios:[{username: '', comentario: '', createdAt: ''}]}
+    post: {id: 0, username: '', fecha: '', titulo: '', texto: '', imagenes: [''], comentarios:[{username: '', comentario: '', createdAt: ''}]},
     postbuscados:[]
 
 };
@@ -386,22 +386,23 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
         case GET_RESERVASCAMPY:
-            let dia:Date = new Date (2022,11,14)
+            console.log(action.payload)
+            let ordenado = action.payload.sort((a:{createdAt: string, total: number},b:{createdAt: string, total: number}) => (new Date(a.createdAt).valueOf() > new Date(b.createdAt).valueOf()) ? 1 : ((new Date(b.createdAt).valueOf() > new Date(a.createdAt).valueOf()) ? -1 : 0))
+            console.log(ordenado)
+            let dia:Date = new Date (2022,11,18)
             let r: number = 0;
             let t: number = 0;
             let datos: { reservas: number, total: number, created: string }[] = [];
             let j: number = 0;
-            while (dia.toISOString() < new Date().toISOString() && j < action.payload.length){
-                if (new Date(action.payload[j].createdAt).valueOf() < dia.valueOf()) {
+            while (dia.toISOString().valueOf() < new Date().toISOString().valueOf() && j < ordenado.length){
+                if (new Date(ordenado[j].createdAt).valueOf() < dia.valueOf()) {
                     r++
-                    t = t + action.payload[j].total
+                    t = t + ordenado[j].total
                     j++
                 }
                 else {
                     let obj: { reservas: number, total: number, created:string} = { reservas: r, total: t, created: dia.toLocaleDateString('zh-Hans-CN') }
                     datos.push(obj)
-                    r++
-                    j++
                     //sumo 7 dias
                     dia.setDate(dia.getDate() + 7)
                     }}
