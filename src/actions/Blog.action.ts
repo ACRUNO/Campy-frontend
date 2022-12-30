@@ -112,10 +112,10 @@ export function modificarComentario(id: number, token: string): ThunkAction<void
     }
 }
 
-export function crearPost(token: string) {
+export function crearPost(data:{titulo:string, texto:string,imagenes:string[], usuarioId:number},token: string) {
     return async function (dispatch: AppDispatch) {
         try {
-            let result = await axios.post('/api/blog/create',{},
+            let result = await axios.post('/api/blog/create',data,
                 {
                     headers: { authorization: token }
                 });

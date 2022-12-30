@@ -234,3 +234,34 @@ svg.heart {
 .paper{
     width: 40rem;
 }
+
+
+
+.boxizq{
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .tresbox{
+    width : 25rem;
+  }
+  
+  
+  .container{
+    display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+        align-items: center;
+  }
+
+
+
+
+
+  .detailsreviews {
+    margin : 1rem;
+    display : flex;
+    flex-direction: row;
+    justify-content: space-around;
+        align-items: center;
+  }
