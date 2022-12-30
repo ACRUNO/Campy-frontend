@@ -40,7 +40,11 @@ export const POP_UP_CARD: string = 'POP_UP_CARD'
 export const SET_CARD_INFO: string = 'SET_CARD_INFO'
 export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
 export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
-
+export const FILTER_INGRESO_MAP:string ='FILTER_INGRESO_MAP'
+export const FILTER_EGRESO_MAP:string='FILTER_EGRESO_MAP'
+export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
+export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
+export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
 
 
 
@@ -400,6 +404,23 @@ export function filterLocalidadMap(localidad:number){
     }
 }
 
+
+export function FilterIngresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_INGRESO_MAP,
+        payload: date
+    } 
+}
+
+
+export function FilterEgresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_EGRESO_MAP,
+        payload: date
+    } 
+}
+
+
 export function getFiltersCamping(filters: filterCamps) {
     return async function (dispatch: AppDispatch) {
         try {
@@ -473,3 +494,12 @@ export function setCardInfo(id: number, nombre_camping: string, img: string, des
         payload: info
     }
 }
+
+
+
+export function zoomOutMap(){
+    return {
+        type: ZOOM_OUT_MAP
+    }
+}
+
