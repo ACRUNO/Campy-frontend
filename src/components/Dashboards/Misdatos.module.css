@@ -9,6 +9,10 @@ div.perfil-image {
   background-color: #5F8D4E;
   cursor: pointer;
   transition: all .7s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
 div.perfil-image:hover {
