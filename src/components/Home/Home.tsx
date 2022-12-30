@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Cards from "../Cards/Cards";
+import SkeletonCard from "../Cards/SkeletonCard"
 import Banner from "../Banner/Banner"
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Skeleton } from '@mui/material';
 import s from './Home.module.css'
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
@@ -13,15 +14,16 @@ import { Link } from "react-router-dom";
 import Loader from "../helpers/Loader";
 import { useNavigate } from "react-router-dom";
 
+interface MediaProps {
+    loading?: boolean;
+}
 
 
+export default function Home(props: MediaProps) {
+
+    const { loading = false } = props;
 
 
-
-
-export default function Home() {
-
-   
 
 
     const dispatch: AppDispatch = useDispatch()
@@ -48,7 +50,7 @@ export default function Home() {
         <>
             <Banner />
             <Filters />
-            <Box sx={{ p: '80px 0 150px', bgcolor: 'rgb(245, 245, 245)'}} >
+            <Box sx={{ p: '80px 0 150px', bgcolor: 'rgb(245, 245, 245)' }} >
                 <Box className={s.grid} >
 
                     {
@@ -56,8 +58,20 @@ export default function Home() {
                             return (
                                 <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.id}>
 
-                                    <Box onClick={(event: MouseEvent<HTMLElement>) => handleClick(e.id)} sx={{cursor:"pointer"}}>
-                                        <Cards id={e.id} name={e.nombre} img={e.imagen} />
+                                    <Box onClick={(event: MouseEvent<HTMLElement>) => handleClick(e.id)} sx={{ cursor: "pointer" }}>
+
+                                        {
+                                            loading ? 
+                                            ( <SkeletonCard id={e.id} name={e.nombre} img={e.imagen}></SkeletonCard>) 
+                                            : 
+                                            (<Cards id={e.id} name={e.nombre} img={e.imagen} /> )
+                                        }
+
+
+
+
+
+
                                     </Box>
                                 </Grid>
                             )
