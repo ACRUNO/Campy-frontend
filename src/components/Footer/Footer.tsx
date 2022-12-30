@@ -26,13 +26,12 @@ export default function Footer() {
 
 
   return (
-    <Box sx={{ p: '50px 0'}} component="footer" className={Style.footer}>
-        <Grid container direction="row"  justifyContent="center" sx={{mt: 5}} >
+    <Box sx={{ p: '100px 0', bgcolor: 'rgb(245, 245, 245)'}} component="footer" className={Style.footer}>
+        <Grid container direction="row"  justifyContent="center" sx={{pt: 5}} >
         <Box className={Style.img}
           component="img"
           sx={{
             ml: "1%",
-            bgcolor: "white",
           }}
           alt="Logo"
           src={"https://res.cloudinary.com/pfcampy/image/upload/v1670849448/campy/logo_CAMPY-BLANCO_hn507u.png"}/>

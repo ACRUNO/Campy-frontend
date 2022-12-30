@@ -2,7 +2,7 @@ import { Box, Grid, Paper, Card, CardMedia, Typography, Link } from "@mui/materi
 import Title from './Title';
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../../store/index';
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
 import { getUserFavoriteCampings, removeFavoriteCamping } from '../../../actions/User.action';
 import { Clear as ClearIcon } from "@mui/icons-material";
 import s from './Favoritos.module.css';
@@ -23,7 +23,13 @@ export default function Favoritos() {
 
   useEffect(() => {
     if (!favorites.length && !done) dispatch(getUserFavoriteCampings(id, token));
-  }, [favorites])
+  }, [favorites]);
+
+  const handleClick = (e: any, campingId: number) => 
+    !(e.target.matches('svg')) 
+      ? navigate(`/booking/camping/${campingId}`)
+      : dispatch(removeFavoriteCamping(campingId, token))
+  
 
   return (
     <>
@@ -34,7 +40,7 @@ export default function Favoritos() {
             {
               favorites.map((camping, i) => (
                   <Card className={s['card-container']} key={i}
-                        onClick={() => navigate(`/booking/camping/${camping.id}`)}>
+                        onClick={(e: MouseEvent<EventTarget>) => handleClick(e, camping.id)}>
                     <CardMedia className={s['card-image']} component="img" alt="Provincia" image={camping.imagen} />
                     <Typography
                       className={s['card-title']}
@@ -43,7 +49,6 @@ export default function Favoritos() {
                     >{camping.nombre}</Typography>
                     <ClearIcon
                       className={s['card-remove-icon']}
-                      onClick={() => dispatch(removeFavoriteCamping(camping.id, token))}
                     />
                   </Card>
               ))

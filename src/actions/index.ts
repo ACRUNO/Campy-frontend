@@ -292,11 +292,12 @@ export function cleanCampings_dash()  {
             });
 }
 
-export function habilitacion_camping(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function habilitacion_camping(id:number, habilitacion:number, { token }: {token: string }): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, data);
+            var json = await axios.put(`/api/campings/habilitacion/${id}?habilitar=${habilitacion}`, {}, { headers: { authorization: token } });
+
             return dispatch({
                 type: "HABILITACION_CAMPING",
                 payload: json.data
@@ -322,10 +323,11 @@ export function getUsuarios_dash(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
-export function habilitacion_usuario(id:number, habilitacion:number, data: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function habilitacion_usuario(id:number, habilitacion:number, { token }: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api/usuarios/deshabilitar/${id}?habilitar=${habilitacion}`, data);
+            var json = await axios.put(`/api/usuarios/deshabilitar/${id}?habilitar=${habilitacion}`, {}, { headers: { authorization: token } });
+
             return dispatch({
                 type: "HABILITACION_USUARIO",
                 payload: json.data
@@ -336,10 +338,11 @@ export function habilitacion_usuario(id:number, habilitacion:number, data: {toke
     }
 }
 
-export function tipo_usuario(id:number,  data: {token: string, userType:string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function tipo_usuario(id:number, {token, userType} :{token: string, userType:string}): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api/usuarios/tipo/${id}`, data);
+            var json = await axios.put(`/api/usuarios/tipo/${id}`, { userType }, { headers: { authorization: token } });
+
             return dispatch({
                 type: "TIPO_USUARIO",
                 payload: json.data
