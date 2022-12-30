@@ -26,6 +26,9 @@ export default function Home(props: MediaProps) {
 
 
 
+   
+
+
     const dispatch: AppDispatch = useDispatch()
     const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
 
@@ -57,21 +60,13 @@ export default function Home(props: MediaProps) {
                         allProvincias?.map((e: { id: number, nombre: string, imagen: string }) => {
                             return (
                                 <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.id}>
-
                                     <Box onClick={(event: MouseEvent<HTMLElement>) => handleClick(e.id)} sx={{ cursor: "pointer" }}>
-
                                         {
                                             loading ? 
                                             ( <SkeletonCard id={e.id} name={e.nombre} img={e.imagen}></SkeletonCard>) 
                                             : 
                                             (<Cards id={e.id} name={e.nombre} img={e.imagen} /> )
                                         }
-
-
-
-
-
-
                                     </Box>
                                 </Grid>
                             )
