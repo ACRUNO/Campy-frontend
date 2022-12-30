@@ -46,6 +46,7 @@ export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
 export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
 export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
 export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
+export const GET_ALL_LOCALIDADES:string = "GET_ALL_LOCALIDADES"
 
 
 
@@ -64,6 +65,22 @@ export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction
         }
     }
 }
+
+export function getAllLocalidades(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/localidades/${id}`);
+            return dispatch({
+                type: GET_ALL_LOCALIDADES,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
 
 export function getLocalidades(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
@@ -163,7 +180,7 @@ export function filterLocalidad(id: number): ThunkAction<void, RootState, unknow
 export function createCamping(camping: any): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.post('/api/create', camping)
+            var json = await axios.post('/api/campings/create', camping)
             return dispatch({
                 type: CREATE_CAMPING,
                 payload: json.data
