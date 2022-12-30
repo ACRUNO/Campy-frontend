@@ -171,7 +171,8 @@ console.log(ingreso1)
   };
 
   const handleCloseR = () => {
-    navigate("/booking")
+
+    navigate("/login")
   };
 
 
@@ -492,7 +493,9 @@ console.log(ingreso1)
 
                     { trueValid() ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
                       Generar Cotizacion
-                    </Button> : <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
+                    </Button> : user == null ?  <Button sx={{ minWidth: 190 }} onClick={handleCloseR} variant="contained" color="warning">
+                      Generar Cotizacion
+                    </Button> :<Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
                       Generar Cotizacion
                     </Button>
                     }
