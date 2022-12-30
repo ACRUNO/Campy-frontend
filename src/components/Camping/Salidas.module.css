@@ -66,3 +66,30 @@
     flex-direction: column;
     
 }
+
+
+
+
+
+
+
+
+
+
+
+.boxizq{
+  display: flex;
+  flex-direction: row;
+}
+
+.tresbox{
+  width : 25rem;
+}
+
+
+.container{
+  display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+      align-items: center;
+}

@@ -45,7 +45,9 @@ export const FILTER_EGRESO_MAP:string='FILTER_EGRESO_MAP'
 export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
 export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
 export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
+export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
 export const GET_ALL_LOCALIDADES:string = "GET_ALL_LOCALIDADES"
+
 
 
 
@@ -523,3 +525,13 @@ export function zoomOutMap(){
     }
 }
 
+
+
+
+export function setdetailreserv(day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any) {
+    let info = {day1 , alldate, day2, alldate2, stay, kids, travellers, total}
+    return {
+        type: SET_DETAIL_RESERV,
+        payload: info
+    }
+} 
