@@ -10,6 +10,7 @@ export const GET_USER_BOOKINGS = 'GET_USER_BOOKINGS';
 export const GET_OWNER_CAMPINGS = 'GET_OWNER_CAMPINGS';
 export const REMOVE_FAVORITE_CAMPING = 'REMOVE_FAVORITE_CAMPING';
 
+
 export function getUserFavoriteCampings(userId: number, token: string): ThunkAction<void, RootState, unknown, AnyAction> {
   return async function(dispatch: AppDispatch) {
     try {
@@ -102,3 +103,4 @@ export function removeFavoriteCamping(campingId: number, token: string): ThunkAc
     }
   }
 }
+

@@ -40,6 +40,7 @@ export default function Tipo_usuarios(props:Props) {
   const handleChange = (e:React.ChangeEvent<unknown>, id:number, tipo:string) => {
     e.preventDefault();
     let data:{token:string, userType:string} ={token:user.token, userType:tipo}
+    console.log("data", data);
     dispatch(actions.tipo_usuario(id,data))
     setTimeout(()=>dispatch(actions.getUsuarios_dash()))
     props.setopen(false); 

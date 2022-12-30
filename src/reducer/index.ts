@@ -5,6 +5,8 @@ import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reserv
 import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME, GET_RESERVAS_CAMPING, CLEAN_RESERVAS_CAMPING } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
+import { DISABLE_OWNER_CAMPING } from "../actions/Owner.action";
+import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO } from "../actions/Blog.action";
 
 const initialState: {
     user: User | null;
@@ -44,8 +46,10 @@ const initialState: {
     reviews: { id: number, puntaje: number ,username: string, fecha: string ,comentario: string }[],
     campingBooking:Reservas[],
     popUpCards: boolean,
-    cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string}
-
+    cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
+    allPosts:{titulo:string,username: string, fecha: string,texto:string,}[],
+    postbuscados:{titulo:string,username: string, fecha: string,texto:string,}[],
+    post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: Array<string>, comentarios:{username: string, comentario: string, createdAt: string}[]}
 } = {
 
     //ESTADOS GLOBALES
@@ -106,7 +110,10 @@ const initialState: {
     linkMap: { lat: -38.40725346022871, lng: -63.617129400239264, zoom: 5 },
     campingBooking:[],
     popUpCards: false,
-    cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' } ,
+    cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' },
+    allPosts:[],
+    post: {id: 0, username: '', fecha: '', titulo: '', texto: '', imagenes: [''], comentarios:[{username: '', comentario: '', createdAt: ''}]}
+    postbuscados:[]
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -477,28 +484,63 @@ function rootReducer(state: any = initialState, action: any): any {
                     ...state,
                     campingBooking: []
                 }
-            case POP_UP_CARD:
+            case DISABLE_OWNER_CAMPING: 
+                const campings = state.ownerCampings.campings.map(
+                    (camping: any) => {
+                        if(camping.id === action.payload) {
+                            camping.habilitado = 0;
+                        }
+                        return camping
+                    }
+                )
+                return {
+                    ...state,
+                    ownerCampings: {
+                        campings,
+                        done: true
+                    }
+                }
+        case POP_UP_CARD:
                 return {
                     ...state,
                     popUpCards: action.payload
                 }
-            case SET_CARD_INFO:
+        case SET_CARD_INFO:
                 return {
                     ...state,
                     cardInfoMap: action.payload
                 }
-        default: return { ...state }
+        case GET_ALLPOSTS:
+                return{ 
+                    ...state,
+                    allPosts: action.payload,
+                    postbuscados: action.payload
+                }
+        case GET_POST:
+            return {
+                ...state,
+                post: action.payload
+            }
+        case CREATE_POST:
+            return { ...state }
+        case CREATE_COMENTARIO:
+            return { ...state }     
+        case BUSCAR_POSTS:
+            if (action.payload.length>0){
+                var postsBuscados:{titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts.filter((p:{titulo:string,username: string, fecha: string,texto:string,})=>p.titulo.toLowerCase().includes(action.payload.toLowerCase()))}
+            else{var postsBuscados: {titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts}
+            return{
+                 ...state,
+                postbuscados: postsBuscados
+                }
 
+        default: return { ...state }
     }
 }
 
 
 
 export default rootReducer;
-
-
-
-
 
 
 

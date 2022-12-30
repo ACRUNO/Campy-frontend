@@ -122,7 +122,6 @@ export default function Misdatos() {
 
   return (
     <>
-    {console.log(user)}
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>  
             <Title>Mis Datos</Title>
@@ -173,7 +172,7 @@ export default function Misdatos() {
                   label="Número Celular"
                   type="text"
                   id="numero_celular"
-                  color='secondary'
+                  color='primary'
                   value={inputs.numero_celular}
                   onChange={handleChangeInput}
                   error={errors.numero_celular.active}
