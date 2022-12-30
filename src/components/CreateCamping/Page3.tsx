@@ -27,8 +27,8 @@ export default function Page3({ setInput, input }: InputProps) {
 
   const handlePeriodoAbierto = (e: SelectChangeEvent) => {
     e.preventDefault();
-    let abiertoDesde: string = 'dsadas';
-    let abiertoHasta: string = 'dsadas';
+    let abiertoDesde: string = '';
+    let abiertoHasta: string = '';
     let fecha: Date = new Date()
     let anio: number = fecha.getFullYear()
     let fechaInvierno: Date = new Date(anio, 9, 24)
