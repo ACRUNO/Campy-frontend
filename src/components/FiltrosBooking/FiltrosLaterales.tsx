@@ -34,14 +34,28 @@ export default function FiltrosLaterales(props: Props) {
     }, [dispatch, filtrosBook])
 
 
+
+
+
     const precioCamps = allCampings.map(c => c.precio)
 
     
     var min = Math.min(...precioCamps)
     var max = Math.max(...precioCamps)
 
+    const [precioLocal, setPrecioLocal] = React.useState<number[]>([0, 2500])
 
-    const [precioLocal, setPrecioLocal] = React.useState<number[]>([min | 500 , max |2500 ])
+
+    useEffect(() => {
+        if(!allCampings.length) return
+        const precioCamps = allCampings.map(c => c.precio)
+
+        var min = Math.min(...precioCamps)
+        var max = Math.max(...precioCamps)
+
+        setPrecioLocal([min,max])
+    },[allCampings])
+
 
 
     const handlePrecio = (e: Event, newValue: number | number[]) => {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Cards from "../Cards/Cards";
 import SkeletonCard from "../Cards/SkeletonCard"
@@ -14,28 +14,21 @@ import { Link } from "react-router-dom";
 import Loader from "../helpers/Loader";
 import { useNavigate } from "react-router-dom";
 
-interface MediaProps {
-    loading?: boolean;
-}
+
+export default function Home() {
 
 
-export default function Home(props: MediaProps) {
-
-    const { loading = false } = props;
-
-
-
-
-   
 
 
     const dispatch: AppDispatch = useDispatch()
     const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
+    const [loading, SetLoading] = useState(true);
+
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getProvincias())
+            dispatch(getProvincias())
     }, [dispatch]);
 
 
@@ -57,19 +50,22 @@ export default function Home(props: MediaProps) {
                 <Box className={s.grid} >
 
                     {
-                        allProvincias?.map((e: { id: number, nombre: string, imagen: string }) => {
-                            return (
-                                <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.id}>
-                                    <Box onClick={(event: MouseEvent<HTMLElement>) => handleClick(e.id)} sx={{ cursor: "pointer" }}>
-                                        {
-                                            loading ? 
-                                            ( <SkeletonCard id={e.id} name={e.nombre} img={e.imagen}></SkeletonCard>) 
-                                            : 
-                                            (<Cards id={e.id} name={e.nombre} img={e.imagen} /> )
-                                        }
-                                    </Box>
-                                </Grid>
+                        !allProvincias.length ?
+                          new Array(23).fill(1).map(p =>
+                            <SkeletonCard></SkeletonCard>
                             )
+                            :
+
+                        allProvincias?.map((e: {id: number, nombre: string, imagen: string }) => {
+                            return (
+                    <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.id}>
+
+                        <Box onClick={(event: MouseEvent<HTMLElement>) => handleClick(e.id)} sx={{ cursor: "pointer" }}>
+
+                                <Cards id={e.id} name={e.nombre} img={e.imagen} />
+                        </Box>
+                    </Grid>
+                    )
                         })
                     }
                     {/* <Loader open={allProvincias.length === 0} /> */}
@@ -79,6 +75,7 @@ export default function Home(props: MediaProps) {
         </>
     )
 }
+
 
 
 
