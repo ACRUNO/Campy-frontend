@@ -30,8 +30,12 @@ export default function FiltrosLaterales(props: Props) {
     useEffect(() => {
         dispatch(getAllCategorias())
         dispatch(getFiltersCamping(filtrosBook))
-        dispatch(getAllCampings())
     }, [dispatch, filtrosBook])
+
+
+    useEffect(() => {
+        dispatch(getAllCampings())
+    },[])
 
 
 
