@@ -49,7 +49,7 @@ const initialState: {
     cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
     allPosts:{titulo:string,username: string, fecha: string,texto:string,}[],
     postbuscados:{titulo:string,username: string, fecha: string,texto:string,}[],
-    post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: Array<string>, comentarios:{username: string, comentario: string, createdAt: string}[]}[]
+    post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: Array<string>, comentarios:{username: string, comentario: string, createdAt: string}[]}
 } = {
 
     //ESTADOS GLOBALES
@@ -112,8 +112,9 @@ const initialState: {
     popUpCards: false,
     cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' },
     allPosts:[],
-    post: [],
+    post: {id: 0, username: '', fecha: '', titulo: '', texto: '', imagenes: [''], comentarios:[{username: '', comentario: '', createdAt: ''}]}
     postbuscados:[]
+
 };
 
 function rootReducer(state: any = initialState, action: any): any {
