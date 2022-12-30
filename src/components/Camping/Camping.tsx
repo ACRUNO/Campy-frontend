@@ -35,6 +35,7 @@ import { AppDispatch, RootState } from '../../store';
 import { addFavoriteCamping } from '../../actions/User.action';
 import { Reviews } from '../Reviews/Reviews';
 import { type } from 'os';
+import { userTypes } from '../../auxiliar';
 
 export default function Camping() {
   const dispatch: AppDispatch = useDispatch()
@@ -182,7 +183,7 @@ export default function Camping() {
             </Box>
           </Box>
           {
-          user && 
+          user && user.tipo === userTypes.USER &&
             <FavoriteIcon
                 onClick={() => {
                   if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));

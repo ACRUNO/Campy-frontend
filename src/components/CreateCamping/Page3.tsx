@@ -82,7 +82,6 @@ export default function Page3({ setInput, input }: InputProps) {
     })
   };
 
-
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -151,7 +150,7 @@ export default function Page3({ setInput, input }: InputProps) {
         </Grid>
         <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
           {img.map(m => (
-            <Grid item key={m}>
+            <Grid item key={m} >
               <Box
                 id={m}
                 component="img"
