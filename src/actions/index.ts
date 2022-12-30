@@ -40,6 +40,7 @@ export const POP_UP_CARD: string = 'POP_UP_CARD'
 export const SET_CARD_INFO: string = 'SET_CARD_INFO'
 export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
 export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
+export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
 
 
 
@@ -476,3 +477,12 @@ export function setCardInfo(id: number, nombre_camping: string, img: string, des
         payload: info
     }
 }
+
+
+export function setdetailreserv(day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any) {
+    let info = {day1 , alldate, day2, alldate2, stay, kids, travellers, total}
+    return {
+        type: SET_DETAIL_RESERV,
+        payload: info
+    }
+} 

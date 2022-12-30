@@ -9,7 +9,7 @@ export function postReserv(reserv: any): ThunkAction<void, RootState, unknown, A
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.post('/api/checkout/provisoria', reserv);
+            var json = await axios.post('/api/reservas/create', reserv);
             return dispatch({
                 type: POST_RESERV,
                 payload: json.data

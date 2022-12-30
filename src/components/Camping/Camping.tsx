@@ -24,7 +24,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Details from './Details';
 import Salidas from './Salidas';
 import Resume from './Resume';
-import { LocationOn as LocationOnIcon, Favorite as FavoriteIcon } from '@mui/icons-material';
 import Footer from '../Footer/Footer';
 import { getDetails } from '../../actions';
 import { useEffect } from 'react';
@@ -34,6 +33,26 @@ import { AppDispatch, RootState } from '../../store';
 import { addFavoriteCamping } from '../../actions/User.action';
 import { Reviews } from '../Reviews/Reviews';
 import { postReserv } from '../../actions/Checkout.action';
+import { setdetailreserv } from '../../actions';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import ChildCareIcon from '@mui/icons-material/ChildCare';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import { LocationOn as LocationOnIcon, Favorite as FavoriteIcon } from '@mui/icons-material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 
 export default function Camping() {
@@ -41,11 +60,15 @@ export default function Camping() {
   const params = useParams()
   const user = useSelector((state: RootState) => state.user);
   const favourites = useSelector((state: RootState) => state.favoritesCampings);
+  const detailReserv = useSelector((state: RootState) => state.detailReserv);
+
   let camp = useSelector((state: any) => state.detailCamping);
+  let idReserva = useSelector((state: any) => state.idReserva);
+
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
   let navigate: any = useNavigate();
-  const [valid, setValid] = React.useState(0);
+  const [idm, setIdm] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
   const [price, setPrice] = React.useState(0)
@@ -54,9 +77,9 @@ export default function Camping() {
   const [open, setOpen] = React.useState(false);
   const [validate , setValidate] = React.useState({ 
     day1 : 0,
-    alldate : 0,
+    alldate : "",
     day2 : 0,
-    alldate2 : 0,
+    alldate2 : "",
        stay : 0,
     kids : 0,
     travellers : 0,
@@ -104,9 +127,36 @@ export default function Camping() {
   }
  
   const handleClickOpen = async () => {
-    dispatch(postReserv({user , validate, price}));
-    setOpen(true);
+    toggleDrawer('bottom', true)
+   
+    let ingreso1 = validate?.alldate.slice(0,10).replace("-" , "/").replace("-" , "/")
+  let ingreso2 = validate?.alldate2.slice(0,10).replace("-" , "/").replace("-" , "/")
+  let trailer = validate?.stay > 0 ?  1 : 0 
 
+console.log(ingreso1)
+
+  let data = {
+    "fecha_desde_reserva" : ingreso1,
+    "fecha_hasta_reserva" : ingreso2,
+    "cant_noches" : validate.total,
+    "total" : price,
+    "UsuarioId" : user?.id, 
+    "CampingId" : camp?.id,
+    "cantMayores" : validate.travellers,
+    "cantMenores" : validate.kids,
+    "extraRodante" : trailer,
+    "precioMayores" : mayores[0].precio,
+    "precioMenores" : menores[0].precio, 
+    "precioextraRodante" : validate.stay,
+  }
+  
+
+  var json = await axios.post('/api/reservas/create', data)
+    // dispatch(postReserv(data));
+    let idRes = json.data
+    setIdm(json.data)
+    setOpen(true);
+    // dispatch(setdetailreserv(validate.day1, validate.alldate, validate.day2, validate.alldate2 , validate.stay  , validate.kids  , validate.travellers  , validate.total , idRes))
 
   };
 
@@ -122,20 +172,24 @@ export default function Camping() {
 
 
   const handleCotizacion = (e: any) => {
+    let idRes = 2
+    dispatch(setdetailreserv(validate.day1, validate.alldate, validate.day2, validate.alldate2 , validate.stay  , validate.kids  , validate.travellers  , validate.total ,idRes))
+
     if (value1?.month() == value2?.month()) {
       let day1: any = value1?.date();
       let day2: any = value2?.date();
       let rest = day2 - day1
       let total = 1
       if (rest > 0) { total = rest }
+      setValidate({...validate , total : total})
       let final = (menores[0].precio * validate.kids) + (mayores[0].precio * validate.travellers)
       let finalPrice = (final * total) + validate.stay
       if(finalPrice > 60000){ 
-        setDiscount((finalPrice * 95) /100 )
+        setDiscount(finalPrice )
         setPrice((finalPrice * 95) /100 )
       }
       if(finalPrice > 120000){ 
-        setDiscount((finalPrice * 90) /100 )
+        setDiscount(finalPrice  )
         setPrice((finalPrice * 90) /100 )}
 
         if(finalPrice < 60000){
@@ -151,13 +205,13 @@ export default function Camping() {
       let total = 1
       if (rest > 0) { total = rest }
       let final = (menores[0].precio * validate.kids) + (mayores[0].precio * validate.travellers)
-
+      setValidate({...validate , total : total})
       let finalPrice = (final * total) + validate.stay
       if(finalPrice > 60000){
-         setDiscount((finalPrice * 95) /100 )
+         setDiscount(finalPrice )
          setPrice((finalPrice * 95) /100 )}
       if(finalPrice > 120000){ 
-        setDiscount((finalPrice * 90) /100 )
+        setDiscount(finalPrice )
         setPrice((finalPrice * 90) /100 )}
 
         if(finalPrice < 60000){
@@ -166,8 +220,54 @@ export default function Camping() {
     }
 
   }
+ // el pop up 
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
+  const toggleDrawer =  (anchor: Anchor, open: boolean) => async    (event: React.KeyboardEvent | React.MouseEvent) => {
+      let ingreso1 = validate?.alldate
+      let ingreso2 = validate?.alldate2
+      let trailer = validate?.stay > 0 ?  1 : 0 
+      handleClickOpen()
+    console.log(detailReserv)
+    
+      let data = {
+        "fecha_desde_reserva" : "2023/01/10",
+        "fecha_hasta_reserva" : "2023/01/11",
+        "cant_noches" : validate.total,
+        "total" : price,
+        "UsuarioId" : user?.id, 
+        "CampingId" : camp?.id,
+        "cantMayores" : validate.travellers,
+        "cantMenores" : validate.kids,
+        "extraRodante" : trailer,
+        "precioMayores" : mayores[0].precio,
+        "precioMenores" : menores[0].precio, 
+        "precioextraRodante" : validate.stay,
+      }
+      
+    
+      var json = await axios.post('/api/reservas/create', data)
+        // dispatch(postReserv(data));
+        let idRes = json.data
+        setIdm(json.data)
+        setOpen(true);
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+      setState({ ...state,'bottom': open });
+      console.log(detailReserv.idRes)
+    };
 
+// hasta ahi 
   return (
     <Box>
       <Box className={Style.all}>
@@ -243,15 +343,14 @@ export default function Camping() {
                               name : "day1",
                               value : newValue?.date(),
                               extra : "alldate",
-                              extrav : newValue,
+                              extrav : newValue?.format(),
                             }
                           };
                             handleAlgo(day1);
                           
-                          console.log(newValue?.month())
-                          console.log(newValue?.daysInMonth())
-                          console.log(newValue?.date())
-                          console.log(newValue)
+                          
+                        
+                          
                         }}
 
                         renderInput={(params) => <TextField {...params} />}
@@ -275,7 +374,7 @@ export default function Camping() {
                             target : {
                               name : "day2",
                               extra : "alldate2",
-                              extrav : newValue,
+                              extrav : newValue?.format(),
                               value : newValue?.date(),
                             }
                           };
@@ -390,24 +489,25 @@ export default function Camping() {
                     <Stack className={Style.btn3} direction="row" spacing={1}>
 
 
-                    <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={handleClickOpen} variant="contained" color="success">
+                    {/* <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 ,}}  onClick={handleClickOpen} variant="contained" color="secondary">
+
+                    $  RESERVssssssssssssA YA! 
+                           
+                           </Button>
+          */}
+
+<Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 ,}}  onClick={toggleDrawer('bottom', true)} variant="contained" color="secondary">
                         
-                         $ {price } RESERVA YA! 
-                            
-                            </Button>
-
-                    <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={() => postReserv({"HOLIS" : "HOLIS"})} variant="contained" color="success">
-                    $ {price } RESERVA YAAAAAAAAAAAAAAA! 
-                            
-                            </Button>
-
+                        ${price} RESERVA YA! 
+                           
+                           </Button>
                          
 {/* <Typography> ${price} OFERTA</Typography> */}
 
                       
 {price > 60000 ? price > 120000 ? 
-                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(discount * 10) /100 } </Typography>:  
-                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(discount * 5) /100} </Typography>
+                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(price * 10) /100 } </Typography>:  
+                    <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(price * 5) /100} </Typography>
                     :  <></>  }
                     
                     
@@ -423,59 +523,158 @@ export default function Camping() {
             </Box>
           </Box>
         </Box>
+        
+        
+
+
+
         <div>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Estas a un paso de convertirte en un Campy's"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Solo resta reservar y armar las valijas para vivir TU sueño por solo
-                <Typography className={Style.quini} variant="h4" color="secondary">  ${price} </Typography>
+           <React.Fragment key={'bottom'}>
+            
+        
+         
+          <Drawer
+            anchor={'bottom'}
+            open={state['bottom']}
+            onClose={toggleDrawer('bottom', false)} >
+             <Box className={Style.container}
+      sx={{ width: 'auto' }}
+      role="presentation"
+      // onClick={toggleDrawer('bottom', false)}
+      // onKeyDown={toggleDrawer('bottom', false)}
+    >
+  
+<Box sx={{width : 650}}>
+<TableContainer  component={Paper}>
+      <Table sx={{ minWidth: 100 }} aria-label="spanning table">
+        <TableHead>
+          <TableRow>
+            <TableCell  sx={{fontSize : 20 , fontWeight : "bold"}} align="center" colSpan={4}>
+                         Datos de la reserva con descuentos
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell  sx={{fontSize : 17}}>Fecha de inicio</TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell sx={{fontSize : 17}} align="right"> {validate?.alldate.slice(0,10).replace("-" , "/").replace("-" , "/")} </TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>          
+            <TableRow key={"row.desc"}>
+              <TableCell sx={{fontSize : 17}}>Fecha de finalización</TableCell>
+              <TableCell align="right"> </TableCell>
+              <TableCell sx={{fontSize : 17}} align="right"> {validate?.alldate2.slice(0,10).replace("-" , "/").replace("-" , "/")}</TableCell>
+              <TableCell align="right"></TableCell>
+            </TableRow>
+                    <TableRow>
+            <TableCell rowSpan={3} />
+            <TableCell colSpan={2}>Subtotal</TableCell>
+            <TableCell align="right"> $ {discount}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell sx={{ fontWeight : "bold"}}>Descuento</TableCell>
+            <TableCell sx={{ fontWeight : "bold"}} align="right">{price > 60000 ? price > 120000 ? "10%" : "5%" : "0%" }</TableCell>
 
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button className={Style.red} color="info" onClick={handleCloseR} sx={{marginRight : 30}}>Seguir mirando</Button>
+            <TableCell sx={{ fontWeight : "bold"}} align="right">{price > 60000 ? price > 120000 ?   ( (price * 10) /100 )  :((price * 5) /100 ) : "$0" }</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell sx={{fontSize : 17}} colSpan={2}>Precio Final</TableCell>
+            <TableCell sx={{ fontWeight : "bold" , fontSize : 17}} align="right">${price}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+</Box>
+<Box className={Style.boxizq}> 
+<List>
+  <Typography  sx={{marginTop : 1}} variant="subtitle1" color="black"> <LocationOnIcon /> {camp.nombre_camping }  </Typography>  
+  <Box className={Style.tresbox}> 
+  <ListItem sx={{minWidth : 300 , marginTop : 1 }}>
+  <ListItemAvatar>
+    <Avatar>
+    <PersonAddAlt1Icon/>
+    </Avatar>
+  </ListItemAvatar>
+  <ListItemText secondary={validate.travellers} primary="Personas mayores" />
+<Divider variant="inset" component="li" />
+  </ListItem> 
+  <Divider variant="inset" component="li"  />
+  <ListItem sx={{minWidth : 300  , marginTop : 1}}>
+  <ListItemAvatar>
+    <Avatar>
+    <ChildCareIcon/>
+    </Avatar>
+  </ListItemAvatar>
+  <ListItemText secondary={validate.kids} primary="Niños" />
+<Divider variant="inset" component="li" />
+  </ListItem> 
+  <Divider variant="inset" component="li"  />
+  <ListItem sx={{minWidth : 300 , marginTop : 1 }}>
+  <ListItemAvatar>
+    <Avatar>
+    <LocalShippingIcon/>
+    </Avatar>
+  </ListItemAvatar>
+  <ListItemText secondary={validate.stay } primary="Extra por Trailer" />
+<Divider variant="inset" component="li" />
+  </ListItem> 
+</Box>
+</List>
+  </Box>
+  <Box>
+                             <form action="http://localhost:3001/api/checkout" method="post">
+<input type="hidden" name="price" value={price} />
+<input type="hidden" name="mayores" value={validate.travellers} />
+<input type="hidden" name="menores" value={validate.kids} />
+<input type="hidden" name="stay" value={validate.stay} />
+<input type="hidden" name="ingreso " value={validate.alldate} />
+<input type="hidden" name="egreso" value={validate.alldate2} />
 
-              <form action="http://localhost:3001/api/checkout" method="post">
-                <input type="hidden" name="price" value={price} />
-                <input type="hidden" name="title" value={camp.nombre_camping} />
+<input type="hidden" name="title" value={camp.nombre_camping} />
+<input type="hidden" name="idm" value={idm}/>
+<Button sx={{ maxWidth: 90, minHeight: 70, fontSize: 18 }}type="submit" autoFocus variant="contained" color="success">
+                                   ir a pagar  
+                             </Button>
 {/* { user == null ? <Button className={Style.green} color="info" > Crea una cuenta para reservar </Button> : 
-                <Button className={Style.green} color="info" type="submit" autoFocus>
-                  Reservar!
-                </Button>            DESCOMENTAR ESTO CUANDO TE HAGAS UNA CUENTA DE USER Y BORRAR EL BUTTON DE ABAJO, DE MIENTRAS DEJAR COMENTADO  */}
- <Button className={Style.green} color="info" type="submit" autoFocus>PAGARAPRATA</Button>
-              </form>
-            </DialogActions>
-          </Dialog>
-        </div>
+<Button className={Style.green} color="info" type="submit" autoFocus>
+  Reservar!
+</Button>            DESCOMENTAR ESTO CUANDO TE HAGAS UNA CUENTA DE USER Y BORRAR EL BUTTON DE ABAJO, DE MIENTRAS DEJAR COMENTADO  */}
+{/* <Button className={Style.green} color="info" type="submit" autoFocus>PAGARAPRATA</Button> */}
+</form>
+                             </Box>
+    </Box> 
+          </Drawer>
+        </React.Fragment>     
+    </div>
+
+
+
+
 
 
         <Details />
+<Box className={Style.detailsreviews}>
+  
+          <Box className={Style.resume}>
+            <Resume></Resume>
+          </Box>
         <Reviews />
+</Box>
 
 
 
 
         <Box className={Style.endcont}>
 
-          <Box className={Style.resume}>
-            <Resume></Resume>
-          </Box>
           <Box className={Style.salidas}>
-            <Salidas {...infoCards}></Salidas>
+            {/* <Salidas {...infoCards}></Salidas> */}
           </Box>
 
         </Box>
       </Box>
 
-
+      
 
 
       {
@@ -499,4 +698,6 @@ export default function Camping() {
 
   )
 }
+
+
 

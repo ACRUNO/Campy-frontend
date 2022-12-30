@@ -1,4 +1,4 @@
-import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP } from "../actions";
+import { FILTER_PARCELA, USUARIOS_DASH,SET_DETAIL_RESERV , CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas } from './estados';
@@ -50,6 +50,8 @@ const initialState: {
     cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
     allPosts:{titulo:string,username: string, fecha: string,texto:string,}[],
     post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: Array<string>, comentarios:{username: string, comentario: string, createdAt: string}[]}[]
+    idReserva : number
+    detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
 } = {
 
     //ESTADOS GLOBALES
@@ -112,7 +114,9 @@ const initialState: {
     popUpCards: false,
     cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' },
     allPosts:[],
-    post: []
+    post: [],
+    idReserva : 0,
+    detailReserv : []
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -498,7 +502,10 @@ function rootReducer(state: any = initialState, action: any): any {
         case CREATE_COMENTARIO:
             return { ...state }      
             case POST_RESERV:
-                return { ...state }
+                return { ...state , idReserva : action.payload }
+        case SET_DETAIL_RESERV : 
+        return {...state , detailReserv : action.payload}
+        
         default: return { ...state }
     }
 }
