@@ -68,7 +68,7 @@ function Map({center,zoomMap,linkMap}:mapProps) {
 
 
 
-  const campings: Campings[] = useSelector((state: RootState) => state.campings)
+  const {result}: {result: Campings[]} = useSelector((state: RootState) => state.campings)
   const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
   let num = 0
@@ -160,7 +160,7 @@ function Map({center,zoomMap,linkMap}:mapProps) {
 
       {
 
-        campings?.map((c: any) => {
+        result?.map((c: any) => {
           return (
             <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={"https://res.cloudinary.com/pfcampy/image/upload/v1671067970/campy/mapIcon_ej0msp.png"} />
           )
