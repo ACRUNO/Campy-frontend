@@ -15,7 +15,7 @@ export default function Paginado (props: Props){
         document.documentElement.scrollTop = 0
     }
 return (
-    <Box sx={{display:"flex", justifyContent:"center", mb:1, mt:1}}>
+    <Box sx={{display:"flex", justifyContent:"center", pb:6, mt:1}}>
     <Stack  spacing={2}>
       <Pagination page={props.currentPage} count={Math.ceil(props.allCampings/props.campingsxPage)} color="secondary" onChange={handleChange}/>
     </Stack>
