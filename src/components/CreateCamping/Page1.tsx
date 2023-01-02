@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getAllCategorias } from "../../actions";
+import { getProvincias, getLocalidades, getAllCategorias, getAllLocalidades } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Inputs } from './CreateCamping';
 import MapCreate from './CreateMap';
@@ -42,7 +42,7 @@ export default function Page1({ setInput, input }: InputProps) {
   const handleChangeProvincia = (e: SelectChangeEvent) => {
     e.preventDefault();
     setProvincia(Number(e.target.value) as number);
-    dispatch(getLocalidades(Number(e.target.value) as number))
+    dispatch(getAllLocalidades(Number(e.target.value) as number))
     setInput((inputs: Inputs) => {
       return {
         ...inputs,

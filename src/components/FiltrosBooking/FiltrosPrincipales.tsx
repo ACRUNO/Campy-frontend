@@ -99,7 +99,7 @@ export default function FiltrosPrincipales(props:Props) {
 
 
     return (
-        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)"}}>
+        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)", bgcolor: 'white' }}>
             <Grid container direction="row" justifyContent="center" alignItems="center">
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
