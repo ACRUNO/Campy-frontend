@@ -53,7 +53,7 @@ import TableRow from '@mui/material/TableRow';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { cleanDetails } from '../../actions';
+import {cleanDetails} from '../../actions/index';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
