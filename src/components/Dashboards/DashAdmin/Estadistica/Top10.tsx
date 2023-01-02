@@ -43,7 +43,7 @@ export default function Top5() {
       <XAxis type="number" interval={1}>
       <Label value="Reservas" offset={2} position="bottom" />
       </XAxis>
-      <YAxis dataKey="nombre_camping" type="category" />
+      <YAxis dataKey="nombre_camping" type="category" fontSize={14}/>
       <Tooltip />
       {/* <Legend /> */}
       <Bar dataKey="cant_reservas" barSize={20} fill="#5F8D4E" />

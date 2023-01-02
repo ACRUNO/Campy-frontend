@@ -48,6 +48,7 @@ export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
 export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
 export const GET_ALL_LOCALIDADES:string = "GET_ALL_LOCALIDADES"
 export const CLEAN_DETAILS :string= 'CLEAN_DETAILS'
+export const RESET_FILTER_CAMPING: string = 'RESET_FILTER_CAMPING';
 
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
@@ -456,7 +457,7 @@ export function getFiltersCamping(filters: filterCamps) {
             return dispatch({
                 type: GET_FILTERS_CAMPING,
                 payload: result.data
-            })
+            });         
             
         } catch(error: any) {
             console.log(error)
@@ -541,4 +542,8 @@ export function cleanDetails()  {
     return ({
         type: CLEAN_DETAILS, 
     });
+}
+
+export function resetFilterCamping() {
+    return { type: RESET_FILTER_CAMPING }
 }

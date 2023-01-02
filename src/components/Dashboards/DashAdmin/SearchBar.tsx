@@ -4,9 +4,11 @@ import {  useDispatch} from "react-redux";
 import { useState} from "react";
 import {Grid, Paper, Button, Box, TextField} from "@mui/material";
 import * as actions from "../../../actions/Dash.admin.action"
+import { setSourceMapRange } from "typescript";
 
 type Props = {
-    type:string}
+    type:string
+setPage:React.Dispatch<React.SetStateAction<number>> }
 
 export default function SearchBar (props:Props){
 
@@ -16,6 +18,7 @@ export default function SearchBar (props:Props){
     const handleChange=(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, tipo:string)=>{
         e.preventDefault();
         // setInput(e.target.value);
+        props.setPage(0)
         if (tipo==="Usuario"){
         dispatch(actions.getUsuarios_byname(e.target.value))}
         if (tipo==="Camping"){
