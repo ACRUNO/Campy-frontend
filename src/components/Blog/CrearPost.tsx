@@ -24,7 +24,7 @@ export default function CrearPost() {
     usuarioId:0})
 
   const [habilitar, setHabilitar]= React.useState<boolean>(true)
-    
+  
     const handleChangeTitulo=(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
       setInput({
           ...input,
@@ -53,8 +53,7 @@ export default function CrearPost() {
 
     const handleSubmit=(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
       e.preventDefault()
-      console.log(input)
-      setTimeout(()=>{dispatch(actions.crearPost(input, user.token))},1000)
+      setTimeout(()=>{dispatch(actions.crearPost(input, user.token))})
       setInput({
         ...input,
           texto: "",
@@ -62,7 +61,7 @@ export default function CrearPost() {
           imagenes:[]
         })
       dispatch(actions.getAll_posts())
-      setTimeout(()=>{navigate("/blog")},1000)
+      setTimeout(()=>{navigate("/blog")},5000)
     }
 
   
@@ -129,9 +128,10 @@ export default function CrearPost() {
               </Grid> */}
               <Grid display="flex" justifyContent="center">
               {user === null ? <Button variant="outlined" color="error">Es necesario loguearse para crear un post</Button>
-              :<Button color="secondary" variant='contained'  sx={{mt:2}} onClick={(e)=>{handleSubmit(e)}} >Crear Post</Button>}
+              :<Button color="secondary" variant='contained' id='Crear' sx={{mt:2}} onClick={(e)=>{handleSubmit(e)}} value="Crear Post">Crear Post</Button>}
               </Grid>
               </React.Fragment>
+              
         
     )
 }
