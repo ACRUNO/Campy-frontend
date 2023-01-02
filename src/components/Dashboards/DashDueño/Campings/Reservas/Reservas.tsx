@@ -1,18 +1,18 @@
 import { useEffect, useState, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { Dialog, Table, TableRow, TableHead, TableBody, TablePagination, TableCell, Button, Typography } from '@mui/material/';
 import {Grid, Paper} from "@mui/material";
-import Title from './../Title';
-import { useDispatch, useSelector} from "react-redux";
-import { AppDispatch, RootState } from '../../../../store/index';
-import { Bookings } from '../../../../reducer/estados';
+import { useSelector} from "react-redux";
+import { RootState } from '../../../../../store/index';
+import { Bookings } from '../../../../../reducer/estados';
 import { Cancel as CancelIcon } from '@mui/icons-material';
 import s from './Reservas.module.css';
 import axios from 'axios';
-import { keyStateBooking, stateBooking } from '../../../../auxiliar';
-import { VERDE } from '../../../helpers/colors';
+import { keyStateBooking, stateBooking } from '../../../../../auxiliar';
+import { VERDE } from '../../../../helpers/colors';
 import { CircularProgress } from '@mui/material';
-import BasicMenu from '../../../helpers/BasicMenu';
-import { confirmReserva } from '../../../../actions/Owner.action';
+import BasicMenu from '../../../../helpers/BasicMenu';
+import { confirmReserva } from '../../../../../actions/Owner.action';
+import DetalleReserva from './DetalleReserva/DetalleReserva';
 
 type Props = { 
   setOpenReserves: Dispatch<SetStateAction<{open: boolean, campingId: number}>>;
@@ -26,6 +26,8 @@ export default function Reservas({open, campingId, setOpenReserves}: Props) {
     useState<{bookings: Bookings[], done: boolean}>({bookings: [], done: false});
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [openDetalleReserva, setOpenDetalleReserva] = 
+    useState({open: false, reservaId: 0})
 
   const handleChangePage = (_: unknown, newPage: number) => setPage(newPage);
 
@@ -71,13 +73,15 @@ export default function Reservas({open, campingId, setOpenReserves}: Props) {
                 <TableCell className={s['table-head']}>Noches</TableCell>
                 <TableCell className={s['table-head']}>Total</TableCell>
                 <TableCell className={s['table-head']} align="right">Estado</TableCell>
+                <TableCell className={s['table-head']} align="right">Detalle</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {
                 ownerBookings.bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings, i) => (
                   <TableRow key={i}>
-                    <TableCell className={s['table-row']}>{c.nombre_camping}</TableCell>
+                    <TableCell className={s['table-row']}>
+                      {c.nombre_camping}</TableCell>
                     <TableCell className={s['table-row']}>{c.email}</TableCell>
                     <TableCell className={s['table-row']}>
                       {new Date(c.fecha_desde_reserva).toLocaleDateString()}
@@ -106,6 +110,10 @@ export default function Reservas({open, campingId, setOpenReserves}: Props) {
                         : keyStateBooking[c.id_estado]
                       }
                     </TableCell>
+                    <TableCell 
+                      className={`${s['table-row']} ${s['ver-detalle']}`}
+                      onClick={() => setOpenDetalleReserva({open: true, reservaId: c.id})}  
+                    >Ver</TableCell>
                   </TableRow>
               ))}
             </TableBody>
@@ -127,6 +135,11 @@ export default function Reservas({open, campingId, setOpenReserves}: Props) {
             className={s['close-button']} 
           />
         </Grid>
+        <DetalleReserva 
+          open={openDetalleReserva.open}
+          reservaId={openDetalleReserva.reservaId}
+          setOpenDetalleReserva={setOpenDetalleReserva}
+        />
     </Dialog>
   );
 }

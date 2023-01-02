@@ -46,10 +46,10 @@ useEffect(()=>{
   
 return (
     <React.Fragment>
-      <Container maxWidth={false}>
+      <Container maxWidth={false} sx={{bgcolor: 'rgb(245, 245, 245)'}}>
         <main>
           <MainFeaturedPost/>
-          <Grid container columnSpacing={4} display="flex"  justifyContent="space-between" sx={{mb:4}} >
+          <Grid container columnSpacing={4} display="flex"  justifyContent="space-between" sx={{pb:4}} >
           <Grid item xs={6} md={9} >
           <TextField id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small"  onChange={(e)=>handleChange(e)} />
           </Grid>
@@ -57,7 +57,7 @@ return (
           <Button variant="contained" color="secondary" onClick={handleClick}>Crear nuevo POST</Button> 
           </Grid>
           </Grid>
-          <Grid container spacing={4} md={false} display="flex" flexDirection="column" alignContent="center" sx={{mb:4}} >
+          <Grid container spacing={4} md={false} display="flex" flexDirection="column" alignContent="center" sx={{pb:8}} >
             {allPosts.map((p) => (
             <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username}/>
             ))}

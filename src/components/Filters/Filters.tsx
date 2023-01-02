@@ -12,11 +12,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 
-
-
-
-
-
+const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: '85%'
+      }
+    }
+  }
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -74,7 +76,6 @@ export default function BasicSelect() {
     const localidad: number = useSelector((state: RootState) => state.localidad)
 
     useEffect(() => {
-        dispatch(getProvincias())
         dispatch(getAllCampings())
     }, [dispatch]);
 
@@ -105,7 +106,7 @@ export default function BasicSelect() {
 
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 70%)", pt: 1.25, pb: 1.25 }}>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 100%)", pt: 1.25, pb: 1.25}}>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
 
 {/*                 <Search>
@@ -127,6 +128,7 @@ export default function BasicSelect() {
                         id="demo-simple-select-helper"
                         label="provincia"
                         color="secondary"
+                        MenuProps={MenuProps}
                         onChange={handleChangeProvincia}>
                         {allProvincias?.map((m, i) => (
                             <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
@@ -143,6 +145,7 @@ export default function BasicSelect() {
                         id="demo-simple-select-helper"
                         label="localidad"
                         color="secondary"
+                        MenuProps={MenuProps}
                         onChange={handleChangeLocalidad}>
                         {allLocalidades?.map((m, i) => (
                             <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>

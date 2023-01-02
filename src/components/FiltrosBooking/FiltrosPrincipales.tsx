@@ -15,7 +15,13 @@ import { TodayTwoTone } from "@mui/icons-material";
 import { Root } from "react-dom/client";
 
 
-
+const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: '85%'
+      }
+    }
+  }
 
 type Props = {
     setCurrentPage: (value: React.SetStateAction<number>) => void
@@ -53,7 +59,7 @@ export default function FiltrosPrincipales(props:Props) {
     const [ingreso, setIngreso] = React.useState<Dayjs | null>(null);
     const [egreso, setEgreso] = React.useState<Dayjs | null>(null);
 
-    // console.log(ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/'));
+   
     
 
 
@@ -77,23 +83,23 @@ export default function FiltrosPrincipales(props:Props) {
 
     const handleEgreso = (e: Dayjs | null) => {
         dispatch(FilterEgreso(e))
-        /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
     }
 
   
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        const fecha_ingreso: string | undefined = ingreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
-        const fecha_egreso: string | undefined = egreso?.toDate().toLocaleDateString().split('/').reverse().join('/')
+        const fecha_ingreso: string | undefined = fechaIngreso
+        const fecha_egreso: string | undefined = fechaEgreso
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
-        props.setCurrentPage(1)        
+        props.setCurrentPage(1)
+        console.log(filtrosBook)    
     }
     
 
 
     return (
-        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)"}}>
+        <Box sx={{ pt: 1.25, pb: 1.25, mb: 2, boxShadow: "0 0 6px rgb(0 0 0 / 40%)", bgcolor: 'white' }}>
             <Grid container direction="row" justifyContent="center" alignItems="center">
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
@@ -104,6 +110,7 @@ export default function FiltrosPrincipales(props:Props) {
                         label="provincia"
                         color="secondary"
                         value={String(provincia)}
+                        MenuProps={MenuProps}
                         onChange={handleChangeProvincia}>
                         {allProvincias?.map((m, i) => (
                             <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
@@ -115,12 +122,13 @@ export default function FiltrosPrincipales(props:Props) {
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
 
                     <Select
-                        disabled={provincia === 0}
+                        disabled={provincia === 0 || !allLocalidades.length}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"
                         color="secondary"
                         value={String(localidad)}
+                        MenuProps={MenuProps}
                         onChange={handleChangeLocalidad}>
                         {allLocalidades?.map(m => (
                             <MenuItem value={m.id}>{m.nombre}</MenuItem>
@@ -154,6 +162,7 @@ export default function FiltrosPrincipales(props:Props) {
                                 handleEgreso(newValue)
                             }}
                             minDate={fechaIngresoDayjs}
+                            maxDate={fechaIngresoDayjs?.add(4, 'week')}
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
