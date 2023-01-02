@@ -559,9 +559,9 @@ console.log(ingreso1)
 
               </Box>
             </Paper>
-            <Box className={Style.lugar}>
+            {/* <Box className={Style.lugar}>
               <Typography variant="subtitle1" color="black"> <LocationOnIcon /> {camp.direccion} - {camp.provincia} </Typography>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
         
