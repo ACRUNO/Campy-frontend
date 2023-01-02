@@ -53,26 +53,19 @@ export default function Booking() {
 
 
     const dispatch: AppDispatch = useDispatch()
-    const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
-    const campings: Campings[] = useSelector((state: RootState) => state.campings)
+    const { result, done } = useSelector((state: RootState) => state.campings)
     const [open, setOpen] = React.useState(false);
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
-
+    useEffect(() => {
+        if(done && !result.length) setOpen(true)
+    }, [done])
 
     useEffect(() => {
-        dispatch(actions.getFiltersCamping(filtrosBook))
-        setTimeout(() => {
-            if (!campings.length) {
-                setOpen(true)
-            }
-        }, 2000)
+        dispatch(actions.resetFilterCamping());
+        dispatch(actions.getFiltersCamping(filtrosBook));
     }, [dispatch, filtrosBook]
     )
-
-
-    const provincia: number = useSelector((state: RootState) => state.provincia)
-    const localidad: number = useSelector((state: RootState) => state.localidad)
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -80,7 +73,7 @@ export default function Booking() {
     const indexLastCamping: number = currentPage * campingsxPage;
     const indexFirstCamping: number = indexLastCamping - campingsxPage;
 
-    const currentCampings: Campings[] = campings.slice(indexFirstCamping, indexLastCamping)
+    const currentCampings: Campings[] = result.slice(indexFirstCamping, indexLastCamping)
 
 
     return (
@@ -112,28 +105,23 @@ export default function Booking() {
                                 localidad={c.localidad} provincia={c.provincia}
                                 categoria={c.categoria} imagenes={c.imagenes} reviews={c.puntuacion_promedio} precio={c.precio}></CardCamping>
 
-                        )) : campings.length === 0 &&
-                        <>
-                            {
+                        )) : 
+                        result.length === 0 && !done ?
                                 new Array(5).fill(1).map(p =>
                                     <SkeletonCardCamping />
                                 )
-                            }
-
+                            :
                             <Alert_busqueda estadoopen={open} setestadoopen={setOpen} />
-                        </>
                     }
 
                 </Grid>
             </Grid>
             <Paginado
                 campingsxPage={campingsxPage}
-                allCampings={campings.length}
+                allCampings={result.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-            />
-            <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-            <div className="elfsight-app-d17e10b2-0548-4182-bee0-0eccaa8d4ba2"></div>
+                />
             <Footer />
         </Box >
 

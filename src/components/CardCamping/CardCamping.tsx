@@ -39,7 +39,7 @@ export default function CardCamping( props: Props){
             <strong>Categoría: </strong>{props.categoria}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div" >
-            {props.descripcion}
+            {props.descripcion.length>180?props.descripcion.slice(0,180)+"...":props.descripcion}
           </Typography>
         </CardContent>
       </Box>

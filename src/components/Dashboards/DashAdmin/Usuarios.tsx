@@ -87,7 +87,7 @@ export default function Usuarios() {
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>   
       <Grid container sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", mb:5, alignItems:"center"}}>
         <Grid item sx={{ml:3}}><Title>Usuarios</Title></Grid>
-        <Grid item sx={{mr:3}}><SearchBar type="Usuario"></SearchBar></Grid>
+        <Grid item sx={{mr:3}}><SearchBar type="Usuario" setPage={setPage}></SearchBar></Grid>
       </Grid> 
       <Table size="small">
         <TableHead>
