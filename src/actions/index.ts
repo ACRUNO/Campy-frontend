@@ -51,6 +51,7 @@ export const CLEAN_DETAILS :string= 'CLEAN_DETAILS'
 export const RESET_FILTER_CAMPING: string = 'RESET_FILTER_CAMPING';
 
 
+
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
