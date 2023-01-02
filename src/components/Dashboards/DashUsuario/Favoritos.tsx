@@ -19,14 +19,10 @@ export default function Favoritos() {
     { done: boolean, favorites: { id: number, nombre: string, imagen: string }[] } =
     useSelector((state: RootState) => state.favoritesCampings);
 
-  const { token, id }: { token: string, id: number } = useSelector((state: RootState) => state.user);
-
-  useEffect(() => {
-    if (!favorites.length && !done) dispatch(getUserFavoriteCampings(id, token));
-  }, [favorites]);
+  const { token }: { token: string, id: number } = useSelector((state: RootState) => state.user);
 
   const handleClick = (e: any, campingId: number) => 
-    !(e.target.matches('svg')) 
+    !(e.target.closest('svg')) 
       ? navigate(`/booking/camping/${campingId}`)
       : dispatch(removeFavoriteCamping(campingId, token))
   

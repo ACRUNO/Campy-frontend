@@ -24,8 +24,8 @@ export default function FeaturedPost(props: FeaturedPostProps) {
   }
 
   return (
-    <Grid item xs={12} md={10} onClick={()=>handleClick()}>
-      <CardActionArea component="a" href="#" >
+    <Grid  item xs={12} md={10} onClick={()=>handleClick()}>
+      <CardActionArea component="a" href="#" sx={{"&:hover":{boxShadow: "0px 4px 8px rgba(50, 50, 50, 1)"}}}>
         <Card sx={{ display: 'flex'}}>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">

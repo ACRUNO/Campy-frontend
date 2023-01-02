@@ -8,12 +8,7 @@ import { filterProvincia, getCampingsProvincias, getAllCampings } from '../../ac
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { MouseEvent } from 'react';
-
-type Props = {
-    name: string,
-    img: string,
-    id: number,
-}
+import { Margin } from '@mui/icons-material';
 
 
 
@@ -21,10 +16,9 @@ type Props = {
 
 
 
+export default function Cards() {
 
-export default function Cards(props: Props) {
 
-  
 
     const dispatch: AppDispatch = useDispatch()
 
@@ -35,12 +29,17 @@ export default function Cards(props: Props) {
 
 
     return (
-        <Card className={s.card} sx={{ bgcolor: 'd7d7d7' }} >
 
-            <CardMedia key={props.id} className={s.image} component="img" alt="Provincia" image={props.img}></CardMedia>
 
-            <Typography className={s.typography} gutterBottom align="center" variant="h4">{props.name}</Typography>
 
+        <Card>
+        
+             <CardMedia> <Skeleton animation="wave" variant="rectangular" sx={{height:"16rem", width:"25rem"}}></Skeleton> </CardMedia>
+        
+            <Typography className={s.typography} gutterBottom align="center" variant="h4"> <Skeleton sx={{ml:"5rem", mr:"5rem"}}/></Typography>
+            
         </Card>
+            
+        
     );
 }

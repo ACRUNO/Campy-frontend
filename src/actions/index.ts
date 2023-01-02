@@ -40,8 +40,15 @@ export const POP_UP_CARD: string = 'POP_UP_CARD'
 export const SET_CARD_INFO: string = 'SET_CARD_INFO'
 export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
 export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
-
-
+export const FILTER_INGRESO_MAP:string ='FILTER_INGRESO_MAP'
+export const FILTER_EGRESO_MAP:string='FILTER_EGRESO_MAP'
+export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
+export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
+export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
+export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
+export const GET_ALL_LOCALIDADES:string = "GET_ALL_LOCALIDADES"
+export const CLEAN_DETAILS :string= 'CLEAN_DETAILS'
+export const RESET_FILTER_CAMPING: string = 'RESET_FILTER_CAMPING';
 
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
@@ -59,11 +66,27 @@ export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction
     }
 }
 
-export function getLocalidades(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function getAllLocalidades(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get(`/api/localidades/${id}`);
+            return dispatch({
+                type: GET_ALL_LOCALIDADES,
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export function getLocalidades(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.get(`/api/localidades/ConCampings/${id}`);
             return dispatch({
                 type: GET_LOCALIDADES,
                 payload: json.data
@@ -154,14 +177,15 @@ export function filterLocalidad(id: number): ThunkAction<void, RootState, unknow
 }
 
 
-export function createCamping(camping: any): ThunkAction<void, RootState, unknown, AnyAction> {
+export function createCamping(camping: any, redirect: any): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.post('/api/create', camping)
-            return dispatch({
+            var json = await axios.post('/api/campings/create', camping)
+            dispatch({
                 type: CREATE_CAMPING,
                 payload: json.data
             })
+            redirect(process.env.REACT_APP_HOST || 'http://localhost:3000')
         } catch (error) {
             console.log(error);
         }
@@ -403,6 +427,23 @@ export function filterLocalidadMap(localidad:number){
     }
 }
 
+
+export function FilterIngresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_INGRESO_MAP,
+        payload: date
+    } 
+}
+
+
+export function FilterEgresoMap(date:Dayjs | null){
+    return {
+        type: FILTER_EGRESO_MAP,
+        payload: date
+    } 
+}
+
+
 export function getFiltersCamping(filters: filterCamps) {
     return async function (dispatch: AppDispatch) {
         try {
@@ -416,7 +457,7 @@ export function getFiltersCamping(filters: filterCamps) {
             return dispatch({
                 type: GET_FILTERS_CAMPING,
                 payload: result.data
-            })
+            });         
             
         } catch(error: any) {
             console.log(error)
@@ -475,4 +516,34 @@ export function setCardInfo(id: number, nombre_camping: string, img: string, des
         type: SET_CARD_INFO,
         payload: info
     }
+}
+
+
+
+export function zoomOutMap(){
+    return {
+        type: ZOOM_OUT_MAP
+    }
+}
+
+
+
+
+export function setdetailreserv(day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any) {
+    let info = {day1 , alldate, day2, alldate2, stay, kids, travellers, total}
+    return {
+        type: SET_DETAIL_RESERV,
+        payload: info
+    }
+} 
+
+
+export function cleanDetails()  {
+    return ({
+        type: CLEAN_DETAILS, 
+    });
+}
+
+export function resetFilterCamping() {
+    return { type: RESET_FILTER_CAMPING }
 }

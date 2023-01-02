@@ -149,13 +149,13 @@ export default function Checkout() {
 
   let disabled =
     !(
-      input.nombre_camping.length &&
+      input.nombre_camping.length > 3 &&
       input.descripcion_camping.length &&
       input.direccion.length &&
       input.telefono.length &&
       input.contacto_nombre.length &&
       input.contacto_tel.length &&
-      input.imagenes.length
+      input.imagenes.length > 1
     ) ||
     input.CategoriaCampingId === 0 ||
     input.LocalidadeId === 0 ||
@@ -179,8 +179,8 @@ export default function Checkout() {
 
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(createCamping(input))
-    redirect('http://localhost:3000')
+    dispatch(createCamping(input, redirect))
+    
   }
 
   const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536215/Fotos/Misiones.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]

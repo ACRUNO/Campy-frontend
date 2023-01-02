@@ -20,7 +20,7 @@ export default function CardCamping( props: Props){
     return (
     
     <Link to={`/booking/camping/${props.id}`} style={{textDecoration: 'none'}}>
-    <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around",}}>
+    <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb:2,  mr:5, height:200 , width:0.90, p:1,boxShadow: 3, justifyContent:"space-around"}}>
         <CardMedia
         component="img"
         image={props.imagenes[0]}
@@ -39,7 +39,7 @@ export default function CardCamping( props: Props){
             <strong>Categoría: </strong>{props.categoria}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div" >
-            {props.descripcion}
+            {props.descripcion.length>180?props.descripcion.slice(0,180)+"...":props.descripcion}
           </Typography>
         </CardContent>
       </Box>

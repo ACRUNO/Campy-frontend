@@ -45,7 +45,7 @@ export default function GrafReservas() {
       <CartesianGrid stroke="#f5f5f5"/>
       <XAxis dataKey="created"  />
           <YAxis yAxisId="left" stroke="#285430" label={{ value: 'Cantidad de Reservas', angle: -90, position: 'insideBottomLeft' }}/>
-          <YAxis type="number" yAxisId="right" orientation="right" stroke="#82ca9d" label={{ value: 'Monto Total de Reservas ($)', angle: 90, position: 'insideBottomRight', offset:-5 }} />
+          <YAxis type="number" yAxisId="right" orientation="right" stroke="#82ca9d" label={{ value: 'Monto Total de Reservas ($)', angle: 90, position: 'insideBottomRight', offset:- 10}} />
           <Tooltip />
           {/* <Legend /> */}
           <Line yAxisId="left" type="monotone" dataKey="reservas" stroke="#285430" overlineThickness="200"/>

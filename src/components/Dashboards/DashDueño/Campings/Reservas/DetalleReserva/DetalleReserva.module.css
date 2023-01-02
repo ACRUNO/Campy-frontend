@@ -1,0 +1,25 @@
+div.detalle-reserva-container {
+  position: absolute;
+  text-align: center;
+  z-index: 9999;
+}
+
+div.reserva-container {
+  width: 400px;
+
+  margin: 10px 0;
+}
+
+svg.close-button {
+  font-size: 2rem;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  fill: rgb(62, 62, 62);
+  cursor: pointer;
+}
+
+h5.title-reserva {
+  text-decoration: underline;
+  margin: 10px 0;
+}

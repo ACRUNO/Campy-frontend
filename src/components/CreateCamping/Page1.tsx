@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getAllCategorias } from "../../actions";
+import { getProvincias, getLocalidades, getAllCategorias, getAllLocalidades } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Inputs } from './CreateCamping';
 import MapCreate from './CreateMap';
@@ -13,6 +13,14 @@ import MapCreate from './CreateMap';
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
   input: Inputs
+}
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: '85%'
+    }
+  }
 }
 
 export default function Page1({ setInput, input }: InputProps) {
@@ -34,7 +42,7 @@ export default function Page1({ setInput, input }: InputProps) {
   const handleChangeProvincia = (e: SelectChangeEvent) => {
     e.preventDefault();
     setProvincia(Number(e.target.value) as number);
-    dispatch(getLocalidades(Number(e.target.value) as number))
+    dispatch(getAllLocalidades(Number(e.target.value) as number))
     setInput((inputs: Inputs) => {
       return {
         ...inputs,
@@ -125,6 +133,7 @@ export default function Page1({ setInput, input }: InputProps) {
               name='provincia'
               label="provincia"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeProvincia}>
               {allProvincias?.map((m, i) => (
                 <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
@@ -144,6 +153,7 @@ export default function Page1({ setInput, input }: InputProps) {
               name='LocalidadeId'
               label="localidad"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeSelect}>
               {allLocalidades?.map((m, i) => (
                 <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
@@ -162,6 +172,7 @@ export default function Page1({ setInput, input }: InputProps) {
               name='CategoriaCampingId'
               label="categoria"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeCategoria}>
               {allCategorias?.map(m => (
                 <MenuItem value={m.id} key={m.id}>{m.categoria}</MenuItem>
