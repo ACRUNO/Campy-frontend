@@ -47,8 +47,7 @@ export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
 export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
 export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
 export const GET_ALL_LOCALIDADES:string = "GET_ALL_LOCALIDADES"
-
-
+export const CLEAN_DETAILS :string= 'CLEAN_DETAILS'
 
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
@@ -535,3 +534,10 @@ export function setdetailreserv(day1: number, alldate: string, day2: number, all
         payload: info
     }
 } 
+
+
+export function cleanDetails()  {
+    return ({
+        type: CLEAN_DETAILS, 
+    });
+}
