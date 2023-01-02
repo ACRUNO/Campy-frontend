@@ -74,28 +74,29 @@ export default function Camping() {
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
   let navigate: any = useNavigate();
+
+  const value1:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
+  const value2:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
   
   const [back, setBack1] =  React.useState(true);
   const [idm, setIdm] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
   const [price, setPrice] = React.useState(0)
-  const [value1, setValue1] = React.useState<Dayjs | null>(null);
-  const [value2, setValue2] = React.useState<Dayjs | null>(null);
+  // const [value1, setValue1] = React.useState<Dayjs | null>(null);
+  // const [value2, setValue2] = React.useState<Dayjs | null>(null);
   const [open, setOpen] = React.useState(false);
   const [validate , setValidate] = React.useState({ 
-    day1 : 0,
-    alldate : "",
-    day2 : 0,
-    alldate2 : "",
+    day1 : value1 ? value1.date() : 0,
+    alldate : value1 ? value1.format() :  "",
+    day2 :value1 ? value1.date() : 0,
+    alldate2 : value2 ? value2.format() :  "",
        stay : 0,
     kids : 0,
     travellers : 0,
     total : 0,
   })
 
-  const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
-  const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
 
   let fav = favourites.favorites.some((camp: { id: string | undefined; }) => Number(camp.id) === Number(params.id))
   const [favorite, setFavorite] = React.useState(fav);
@@ -373,7 +374,8 @@ console.log(ingreso1)
                         views={['year', 'month', 'day']}
                         value={value1}
                         onChange={(newValue) => {
-                          setValue1(newValue) ;
+                          handleIngresoCamping(newValue);
+                          // setValue1(newValue) ;
                         
                           let day1 = {
                             target : {
@@ -384,7 +386,6 @@ console.log(ingreso1)
                             }
                           };
                             handleAlgo(day1);
-                            handleIngresoCamping(newValue);
                           
                         
                           
@@ -399,14 +400,15 @@ console.log(ingreso1)
                       <DatePicker
                         disablePast
                         
-                        minDate={fechaIngresoDayjs}
-                        maxDate={fechaIngresoDayjs?.add(4, 'week')}
+                        minDate={value1}
+                        maxDate={value1?.add(4, 'week')}
                         label="Egreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
                         value={value2}
                         onChange={(newValue) => {
-                          setValue2(newValue);
+                          handleEgresoCamping(newValue);
+                          // setValue2(newValue);
                           let day2 = {
                             target : {
                               name : "day2",
@@ -416,7 +418,6 @@ console.log(ingreso1)
                             }
                           };
                             handleAlgo(day2);
-                            handleEgresoCamping(newValue);
 
                         }}
                     
