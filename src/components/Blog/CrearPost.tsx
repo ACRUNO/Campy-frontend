@@ -1,4 +1,4 @@
-import { Grid, Typography, TextField, Box, Button } from '@mui/material';
+import { Grid, Typography, TextField, Box, Button, Dialog, DialogTitle,DialogContent } from '@mui/material';
 import { Container } from '@mui/system';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -16,6 +16,7 @@ export default function CrearPost() {
   const dispatch: AppDispatch = useDispatch()
   const user = useSelector((state: RootState) => state.user);
   const navigate =useNavigate()
+  const [open, setOpen]=React.useState(false)
 
   const [input, setInput] = React.useState<{titulo:string, texto:string, imagenes:string[], usuarioId: number}>({
     titulo: '',
@@ -53,6 +54,7 @@ export default function CrearPost() {
 
     const handleSubmit=(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
       e.preventDefault()
+      setOpen(true)
       setTimeout(()=>{dispatch(actions.crearPost(input, user.token))})
       setInput({
         ...input,
@@ -61,13 +63,34 @@ export default function CrearPost() {
           imagenes:[]
         })
       dispatch(actions.getAll_posts())
-      setTimeout(()=>{navigate("/blog")},5000)
+      setTimeout(()=>{setOpen(false)},5000)
+      navigate("/blog")
     }
 
   
 
     return(
         <React.Fragment>
+          <Dialog
+        fullWidth
+        maxWidth="md"
+        open={open}
+      >
+        <DialogTitle align='center'>Creando Post...</DialogTitle>
+        <DialogContent >
+        <Box
+            component="img"
+            alt="imagen"
+            src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              m: 'auto',
+              width: 'fit-content',
+            }}
+          />
+        </DialogContent>
+        </Dialog>
           <Typography align="center" variant='h3' sx={{mt:2}}>Formulario</Typography>
           <Typography align="center" variant="h6">**Funcionalidad en desarrollo**</Typography>
         <Grid container spacing={2} display="flex" flexDirection="column" alignItems="stretch" sx={{mt:2, pr:6, pl:6}} >
