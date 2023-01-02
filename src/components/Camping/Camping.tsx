@@ -543,7 +543,7 @@ console.log(ingreso1)
                            
                            </Button>
                          
-{/* <Typography> ${price} OFERTA</Typography> */}
+{/* <Typography> ${price} OFERTA</Typography>  */}
 
                       
 {price > 60000 ? price > 120000 ? 
