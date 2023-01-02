@@ -68,9 +68,9 @@ export default function GrafUsuarios() {
       data={datos_grafusuarios}
       margin={{
         top: 20,
-        right: 20,
+        right: 10,
         bottom: 20,
-        left: 20
+        left: 10
       }}
     >
       <CartesianGrid stroke="#f5f5f5" />
