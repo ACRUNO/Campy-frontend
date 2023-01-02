@@ -17,6 +17,7 @@ import { createCamping } from '../../actions/index'
 import { MouseEvent } from 'react';
 import Alert from "../helpers/Alert";
 import { AlertType } from "../../auxiliar";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 
 
@@ -106,6 +107,7 @@ export default function Checkout() {
   });
 
   const dispatch: AppDispatch = useDispatch();
+  const navigate: NavigateFunction = useNavigate();
 
   const [input, setInput] = React.useState<Inputs>({
     nombre_camping: '',
@@ -179,7 +181,7 @@ export default function Checkout() {
 
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(createCamping(input, redirect))
+    dispatch(createCamping(input, navigate))
     
   }
 

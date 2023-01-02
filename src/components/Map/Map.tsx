@@ -13,9 +13,6 @@ import { AppDispatch, RootState } from "../../store";
 import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Button, InputProps } from "@mui/material";
-import { ZoomOutMap } from "@mui/icons-material";
-
 
 
 
@@ -38,10 +35,9 @@ export default function Mapa() {
 
   useEffect(() => {
     dispatch(getFiltersCamping(filtrosBook))
-  }, [dispatch, filtrosBook,linkMap]
+  }, [dispatch, filtrosBook, linkMap]
   )
 
-  console.log(linkMap);
   
 
 

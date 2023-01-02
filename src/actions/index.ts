@@ -177,7 +177,7 @@ export function filterLocalidad(id: number): ThunkAction<void, RootState, unknow
 }
 
 
-export function createCamping(camping: any, redirect: any): ThunkAction<void, RootState, unknown, AnyAction> {
+export function createCamping(camping: any, navigate: NavigateFunction): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.post('/api/campings/create', camping)
@@ -185,7 +185,7 @@ export function createCamping(camping: any, redirect: any): ThunkAction<void, Ro
                 type: CREATE_CAMPING,
                 payload: json.data
             })
-            redirect(process.env.REACT_APP_HOST || 'http://localhost:3000')
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
@@ -489,16 +489,16 @@ export function FilterParcela (tamaño : number[]){
 }
 
 
-export function LinkMap(id: any): ThunkAction<void, RootState, unknown, AnyAction> {
+export function LinkMap(id: any, navigate: NavigateFunction): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
             let details = await axios.get(`/api/campings/${id}`);
-
-            return dispatch({
+            dispatch({
                 type: LINK_MAP,
                 payload: details.data
             })
+            navigate('/map')
         } catch (error: any) { console.log(error.message) }
     }
 }
