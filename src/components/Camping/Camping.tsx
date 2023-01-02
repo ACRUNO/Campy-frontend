@@ -492,24 +492,6 @@ const handleEgresoCamping = (e: Dayjs | null) => {
         </Box>
       </Box>
 
-
-
-
-      {
-        user &&
-        <Typography
-          className={Style['add-fav']}
-          variant="h5"
-          color="primary"
-          onClick={() => {
-            if (params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
-            setFavorite(true)
-          }}
-        >
-          Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
-        </Typography>
-      }
-
       <Footer />
 
     </Box>
