@@ -327,10 +327,10 @@ console.log(ingreso1)
           {
           user && user.tipo === userTypes.USER &&
             <FavoriteIcon
-                onClick={() => {
+                onClick={!favorite ? () => {
                   if(params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
                   setFavorite(true)
-                }}
+                } : undefined}
               className={`${Style['add-fav']} ${favorite ? Style.heart : ''}`.trim()} 
             />
           }
@@ -717,25 +717,6 @@ console.log(ingreso1)
 
         </Box>
       </Box>
-
-      
-
-
-      {
-        user &&
-        <Typography
-          className={Style['add-fav']}
-          variant="h5"
-          color="primary"
-          onClick={() => {
-            if (params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
-            setFavorite(true)
-          }}
-        >
-          Añadir a favoritos <FavoriteIcon className={favorite ? Style.heart : ''} />
-        </Typography>
-      }
-
       <Footer />
 
     </Box>
