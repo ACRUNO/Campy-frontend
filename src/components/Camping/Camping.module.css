@@ -177,12 +177,18 @@ border-radius : 1%;
     justify-content: space-between;
     flex-wrap: nowrap;
     flex-direction: row;
+    align-items : center;
+    justify-content: center;
 
 }
 
 
 .resume{
-    
+   margin-left : 2rem;  
+}
+
+.reviews{
+    margin-right: 2rem;
 }
 
 .salidas{
@@ -259,9 +265,10 @@ svg.heart {
 
 
   .detailsreviews {
-    margin : 1rem;
-    display : flex;
+    margin: 1rem;
+    display: flex;
     flex-direction: row;
-    justify-content: space-around;
-        align-items: center;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
   }
