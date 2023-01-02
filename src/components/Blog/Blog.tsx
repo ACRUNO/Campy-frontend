@@ -14,12 +14,13 @@ import FeaturedPost from './FeaturedPost';
 import { flexbox } from "@mui/system";
 import { useDispatch, useSelector} from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { useEffect } from "react";
+import { useEffect, useState} from "react";
 import * as actions from "../../actions/Blog.action"
 import Paper from '@mui/material/Paper';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import PaginadoBlog from "./Paginado";
 
 
 
@@ -31,8 +32,16 @@ const dispatch: AppDispatch = useDispatch()
 const navigate = useNavigate()
 const allPosts:{id:number, titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.postbuscados)
 
+const [currentPage, setCurrentPage] = useState(1);
+const [postsxPage, setPostsxPage] = useState(6);
+const indexLastPost: number = currentPage * postsxPage;
+const indexFirstPost: number = indexLastPost - postsxPage;
+
+const currentPosts: {id:number, titulo:string,username: string, fecha: string,texto:string,}[] = allPosts.slice(indexFirstPost, indexLastPost)
+
 const handleChange=(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
     e.preventDefault();
+    setCurrentPage(1)
     dispatch(actions.getPosts_byname(e.target.value))  
 }
 
@@ -54,17 +63,27 @@ return (
           <TextField id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small"  onChange={(e)=>handleChange(e)} />
           </Grid>
           <Grid item>
-          {/* hay que chequear que este logueado!!!!!!!! */}
           <Button variant="contained" color="secondary" onClick={handleClick}>Crear nuevo POST</Button> 
           </Grid>
           </Grid>
           <Grid container spacing={4} md={false} display="flex" flexDirection="column" alignContent="center" sx={{pb:8}} >
-            {allPosts.map((p) => (
+            {currentPosts.map((p) => (
             <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username}/>
             ))}
           </Grid>
         </main>
+        <PaginadoBlog
+                postsxPage={postsxPage}
+                allPosts={allPosts.length}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                />
       </Container>
+      
+         {/* <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+            <div className="elfsight-app-d17e10b2-0548-4182-bee0-0eccaa8d4ba2"></div> */}
+      <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+      <div className="elfsight-app-4b3e1e5e-fea2-4450-887b-8e3a7b32e3e5"></div>
       <Footer/>
       </React.Fragment>
   );

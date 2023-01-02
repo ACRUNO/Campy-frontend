@@ -177,14 +177,15 @@ export function filterLocalidad(id: number): ThunkAction<void, RootState, unknow
 }
 
 
-export function createCamping(camping: any): ThunkAction<void, RootState, unknown, AnyAction> {
+export function createCamping(camping: any, redirect: any): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.post('/api/campings/create', camping)
-            return dispatch({
+            dispatch({
                 type: CREATE_CAMPING,
                 payload: json.data
             })
+            redirect(process.env.REACT_APP_HOST || 'http://localhost:3000')
         } catch (error) {
             console.log(error);
         }

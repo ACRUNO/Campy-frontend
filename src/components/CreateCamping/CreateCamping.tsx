@@ -179,8 +179,8 @@ export default function Checkout() {
 
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(createCamping(input))
-    redirect('http://localhost:3000')
+    dispatch(createCamping(input, redirect))
+    
   }
 
   const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536215/Fotos/Misiones.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]

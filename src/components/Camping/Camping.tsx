@@ -371,7 +371,7 @@ console.log(ingreso1)
                         label="Ingreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={fechaIngresoDayjs}
+                        value={value1}
                         onChange={(newValue) => {
                           setValue1(newValue) ;
                         
@@ -384,7 +384,7 @@ console.log(ingreso1)
                             }
                           };
                             handleAlgo(day1);
-                            // handleIngresoCamping(newValue);
+                            handleIngresoCamping(newValue);
                           
                         
                           
@@ -404,7 +404,7 @@ console.log(ingreso1)
                         label="Egreso"
                         openTo="day"
                         views={['year', 'month', 'day']}
-                        value={fechaEgresoDayjs}
+                        value={value2}
                         onChange={(newValue) => {
                           setValue2(newValue);
                           let day2 = {
@@ -416,7 +416,7 @@ console.log(ingreso1)
                             }
                           };
                             handleAlgo(day2);
-                            // handleEgresoCamping(newValue);
+                            handleEgresoCamping(newValue);
 
                         }}
                     
