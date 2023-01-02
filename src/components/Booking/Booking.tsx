@@ -131,9 +131,7 @@ export default function Booking() {
                 allCampings={campings.length}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
-            />
-            <script src="https://apps.elfsight.com/p/platform.js" defer></script>
-            <div className="elfsight-app-d17e10b2-0548-4182-bee0-0eccaa8d4ba2"></div>
+                />
             <Footer />
         </Box >
 
