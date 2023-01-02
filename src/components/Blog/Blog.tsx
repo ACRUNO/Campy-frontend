@@ -54,7 +54,6 @@ return (
           <TextField id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small"  onChange={(e)=>handleChange(e)} />
           </Grid>
           <Grid item>
-          {/* hay que chequear que este logueado!!!!!!!! */}
           <Button variant="contained" color="secondary" onClick={handleClick}>Crear nuevo POST</Button> 
           </Grid>
           </Grid>
@@ -65,6 +64,10 @@ return (
           </Grid>
         </main>
       </Container>
+         {/* <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+            <div className="elfsight-app-d17e10b2-0548-4182-bee0-0eccaa8d4ba2"></div> */}
+      <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+      <div className="elfsight-app-4b3e1e5e-fea2-4450-887b-8e3a7b32e3e5"></div>
       <Footer/>
       </React.Fragment>
   );

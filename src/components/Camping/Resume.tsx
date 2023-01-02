@@ -20,10 +20,12 @@ let info = {
 
 
     return (
-        <Box sx={{maxWidth : 850}}>
+        <Box sx={{maxWidth : 750}}>
             <Typography variant="h3" > Queres conocer mas de {camp?.localidad}  y {camp?.provincia} ? </Typography>
+            <Box sx={{maxWidth : 600}}> 
             <Typography sx={{ marginTop : 1}} variant="body1"> {info.localidad} </Typography>
             <Typography sx={{ marginTop : 1 }} variant="body1"> {info.provincia} </Typography>
+            </Box>
         </Box>
     )
 }

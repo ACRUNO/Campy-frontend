@@ -52,6 +52,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { cleanDetails } from '../../actions';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -62,7 +68,6 @@ export default function Camping() {
   const user = useSelector((state: RootState) => state.user);
   const favourites = useSelector((state: RootState) => state.favoritesCampings);
   const detailReserv = useSelector((state: RootState) => state.detailReserv);
-
   let camp = useSelector((state: any) => state.detailCamping);
   let idReserva = useSelector((state: any) => state.idReserva);
 
@@ -70,6 +75,7 @@ export default function Camping() {
   let now = today.toLocaleDateString('es-US');
   let navigate: any = useNavigate();
   
+  const [back, setBack1] =  React.useState(true);
   const [idm, setIdm] = React.useState(0);
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
@@ -102,6 +108,16 @@ export default function Camping() {
 
   useEffect(() => {
     dispatch(getDetails(params.id));
+    console.log("esoooo")
+    console.log("esoooo")
+
+    console.log("esoooo")
+
+    console.log("esoooo")
+
+    return () => {
+      dispatch(cleanDetails())
+    }
   }, [dispatch, params.id])
 
   setTimeout(function () {
@@ -289,6 +305,8 @@ console.log(ingreso1)
       // hasta ahi 
       return (
         <Box>
+ 
+         
       <Box className={Style.all}>
         <Box className={Style.portadacont}>
           <Box
@@ -366,7 +384,7 @@ console.log(ingreso1)
                             }
                           };
                             handleAlgo(day1);
-                            handleIngresoCamping(newValue);
+                            // handleIngresoCamping(newValue);
                           
                         
                           
@@ -398,7 +416,7 @@ console.log(ingreso1)
                             }
                           };
                             handleAlgo(day2);
-                            handleEgresoCamping(newValue);
+                            // handleEgresoCamping(newValue);
 
                         }}
                     
@@ -525,7 +543,7 @@ console.log(ingreso1)
                            
                            </Button>
                          
-{/* <Typography> ${price} OFERTA</Typography> */}
+{/* <Typography> ${price} OFERTA</Typography>  */}
 
                       
 {price > 60000 ? price > 120000 ? 
@@ -541,9 +559,9 @@ console.log(ingreso1)
 
               </Box>
             </Paper>
-            <Box className={Style.lugar}>
+            {/* <Box className={Style.lugar}>
               <Typography variant="subtitle1" color="black"> <LocationOnIcon /> {camp.direccion} - {camp.provincia} </Typography>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
         
@@ -646,19 +664,20 @@ console.log(ingreso1)
 </List>
   </Box>
   <Box>
-                             <form action="http://localhost:3001/api/checkout" method="post">
+                             <form action={`${'https://campy-backend.onrender.com' || 'http://localhost:3001'}/api/checkout`} method="post">
 <input type="hidden" name="price" value={price} />
 <input type="hidden" name="mayores" value={validate.travellers} />
 <input type="hidden" name="menores" value={validate.kids} />
 <input type="hidden" name="stay" value={validate.stay} />
-<input type="hidden" name="ingreso " value={validate.alldate} />
+<input type="hidden" name="ingreso" value={validate.alldate} />
 <input type="hidden" name="egreso" value={validate.alldate2} />
 
 <input type="hidden" name="title" value={camp.nombre_camping} />
 <input type="hidden" name="idm" value={idm}/>
-<Button sx={{ maxWidth: 90, minHeight: 70, fontSize: 18 }}type="submit" autoFocus variant="contained" color="success">
-                                   ir a pagar  
-                             </Button>
+<Button sx={{ maxWidth: 90, minHeight: 70, fontSize: 18 }}type="submit" autoFocus variant="contained" endIcon={<ShoppingCartIcon />} color="success" >
+                                  Pagar  
+                             </Button>  
+                        
 {/* { user == null ? <Button className={Style.green} color="info" > Crea una cuenta para reservar </Button> : 
 <Button className={Style.green} color="info" type="submit" autoFocus>
   Reservar!
@@ -682,7 +701,9 @@ console.log(ingreso1)
           <Box className={Style.resume}>
             <Resume></Resume>
           </Box>
+          <Box className={Style.reviews}>
         <Reviews />
+          </Box>
 </Box>
 
 
@@ -691,7 +712,7 @@ console.log(ingreso1)
         <Box className={Style.endcont}>
 
           <Box className={Style.salidas}>
-            {/* <Salidas {...infoCards}></Salidas> */}
+            <Salidas {...infoCards}></Salidas>
           </Box>
 
         </Box>
