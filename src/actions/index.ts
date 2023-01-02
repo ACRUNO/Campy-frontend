@@ -48,6 +48,7 @@ export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
 export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
 export const GET_ALL_LOCALIDADES:string = "GET_ALL_LOCALIDADES"
 export const CLEAN_DETAILS :string= 'CLEAN_DETAILS'
+export const RESET_FILTER_CAMPING: string = 'RESET_FILTER_CAMPING';
 
 
 export function getProvincias(): ThunkAction<void, RootState, unknown, AnyAction> {
@@ -176,7 +177,7 @@ export function filterLocalidad(id: number): ThunkAction<void, RootState, unknow
 }
 
 
-export function createCamping(camping: any, redirect: any): ThunkAction<void, RootState, unknown, AnyAction> {
+export function createCamping(camping: any, navigate: NavigateFunction): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.post('/api/campings/create', camping)
@@ -184,7 +185,7 @@ export function createCamping(camping: any, redirect: any): ThunkAction<void, Ro
                 type: CREATE_CAMPING,
                 payload: json.data
             })
-            redirect(process.env.REACT_APP_HOST || 'http://localhost:3000')
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
@@ -456,7 +457,7 @@ export function getFiltersCamping(filters: filterCamps) {
             return dispatch({
                 type: GET_FILTERS_CAMPING,
                 payload: result.data
-            })
+            });         
             
         } catch(error: any) {
             console.log(error)
@@ -488,16 +489,16 @@ export function FilterParcela (tamaño : number[]){
 }
 
 
-export function LinkMap(id: any): ThunkAction<void, RootState, unknown, AnyAction> {
+export function LinkMap(id: any, navigate: NavigateFunction): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
             let details = await axios.get(`/api/campings/${id}`);
-
-            return dispatch({
+            dispatch({
                 type: LINK_MAP,
                 payload: details.data
             })
+            navigate('/map')
         } catch (error: any) { console.log(error.message) }
     }
 }
@@ -541,4 +542,8 @@ export function cleanDetails()  {
     return ({
         type: CLEAN_DETAILS, 
     });
+}
+
+export function resetFilterCamping() {
+    return { type: RESET_FILTER_CAMPING }
 }

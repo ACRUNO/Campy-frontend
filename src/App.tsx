@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUserWithToken } from './actions/Login.action';
 import Detalle from './components/Blog/Detalle_post';
 import CrearPost from './components/Blog/CrearPost';
+import { getUserFavoriteCampings } from './actions/User.action';
 
 
 
@@ -25,6 +26,11 @@ import CrearPost from './components/Blog/CrearPost';
 function App() {
 
   const dispatch: AppDispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (user) dispatch(getUserFavoriteCampings(user.id, user.token));
+  }, [user]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

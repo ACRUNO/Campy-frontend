@@ -1,13 +1,13 @@
-import React from "react"
-import { Link, useParams} from "react-router-dom";
+import React, { useEffect } from "react"
+import { Link, NavigateFunction, useParams} from "react-router-dom";
 import { Box } from '@mui/material';
 import fotito from "./salir.png"
 import fotito2 from "./comilona.webp"
 import mapss from "./maps.webp"
 import Style from "./Salidas.module.css"
 import { LinkMap, popUpCard, setCardInfo } from "../../actions";
-import { AppDispatch } from "../../store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -26,8 +26,7 @@ interface InfoCards {
 export default function Salidas({nombre_camping, imagenes, descripcion_camping} : InfoCards) {
 
 
-  const navigate = useNavigate();
-
+  const navigate: NavigateFunction = useNavigate();
   let saliditas = [
     {
       name: "Donde comer",
@@ -40,17 +39,10 @@ const params = useParams()
 const dispatch: AppDispatch = useDispatch()
 
 const handleMap = () => {
-  dispatch(LinkMap(params.id))
+  dispatch(LinkMap(params.id, navigate))
   dispatch(popUpCard(true))
   dispatch(setCardInfo(Number(params.id), nombre_camping, imagenes, descripcion_camping))
-  setTimeout(() => {
-    navigate("/map")
-  }, 100);
-  
 }
-
-
-
 
 
   return (
