@@ -166,7 +166,7 @@ function Map({center,zoomMap,linkMap}:mapProps) {
 
         campings?.map((c: any) => {
           return (
-            <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={icon} />
+            <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={"https://res.cloudinary.com/pfcampy/image/upload/v1671067970/campy/mapIcon_ej0msp.png"} />
           )
         })
       }
