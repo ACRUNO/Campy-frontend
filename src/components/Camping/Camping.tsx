@@ -676,7 +676,7 @@ console.log(ingreso1)
 <input type="hidden" name="idm" value={idm}/>
 <Button sx={{ maxWidth: 90, minHeight: 70, fontSize: 18 }}type="submit" autoFocus variant="contained" endIcon={<ShoppingCartIcon />} color="success" >
                                   Pagar  
-                             </Button>
+                             </Button>  
                         
 {/* { user == null ? <Button className={Style.green} color="info" > Crea una cuenta para reservar </Button> : 
 <Button className={Style.green} color="info" type="submit" autoFocus>
