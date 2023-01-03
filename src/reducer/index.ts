@@ -151,7 +151,7 @@ function rootReducer(state: any = initialState, action: any): any {
             })
             return {
                 ...state,
-                campings: filteredProv,
+                campings: {result: filteredProv, done: true}
             }
         case GET_CAMPINGS_LOCALIDADES:
             const allCampys: Campings[] = state.allCampings
@@ -160,7 +160,7 @@ function rootReducer(state: any = initialState, action: any): any {
             })
             return {
                 ...state,
-                campings: filteredLocal,
+                campings: {result: filteredLocal, done: true}
             }
         case GET_DETAILS:
             return {
@@ -175,13 +175,13 @@ function rootReducer(state: any = initialState, action: any): any {
                 localidad: 0
             }
         case FILTER_CATEGORIA:
-            const campys: Campings[] = state.campings
-            const filterCampys = campys.filter(c => {
+            const {result}: {result: Campings[], done: boolean}= state.campings
+            const filterCampys = result.filter(c => {
                 return c.id_categoria === action.payload
             })
             return {
                 ...state,
-                campings: filterCampys
+                campings: {result: filterCampys, done: true}
             }
         case CREATE_CAMPING:
             return { ...state }
@@ -258,6 +258,8 @@ function rootReducer(state: any = initialState, action: any): any {
             } else {
                 filtrosBook = filtrosBook.filter((r: number) => r !== action.payload.value)
             }
+            console.log(state.filtrosBooking);
+            
             return {
                 ...state,
                 filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: filtrosBook }
