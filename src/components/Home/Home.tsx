@@ -48,8 +48,8 @@ export default function Home() {
 
                     {
                         !allProvincias.length ?
-                            new Array(23).fill(1).map(p =>
-                                <SkeletonCard></SkeletonCard>
+                            new Array(23).fill(1).map((p,i) =>
+                                <SkeletonCard key={i}></SkeletonCard>
                             )
                             :
 
@@ -65,7 +65,6 @@ export default function Home() {
                                 )
                             })
                     }
-                    {/* <Loader open={allProvincias.length === 0} /> */}
                 </Box>
             </Box>
             <Footer />
