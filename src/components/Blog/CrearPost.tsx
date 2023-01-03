@@ -1,4 +1,4 @@
-import { Grid, Typography, TextField, Box, Button, Dialog, DialogTitle,DialogContent } from '@mui/material';
+import { Grid, Typography, TextField, Box, Button, Dialog, DialogTitle,DialogContent, Checkbox, FormControlLabel} from '@mui/material';
 import { Container } from '@mui/system';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import * as actions from "../../actions/Blog.action"
 import { useNavigate } from 'react-router-dom';
+import Cloudinary from './Cloudinary';
 
 
 
-let img: Array<string> = ["1", "2", "3", "4"]
+let img: Array<string> = ["1", "2", "3"]
 
 export default function CrearPost() {
 
@@ -17,6 +18,7 @@ export default function CrearPost() {
   const user = useSelector((state: RootState) => state.user);
   const navigate =useNavigate()
   const [open, setOpen]=React.useState(false)
+  const [boton, setBoton]=React.useState(true)
 
   const [input, setInput] = React.useState<{titulo:string, texto:string, imagenes:string[], usuarioId: number}>({
     titulo: '',
@@ -42,15 +44,8 @@ export default function CrearPost() {
         })
     }
 
-    const handleChangeImagenes=(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
-        setInput({
-        ...input,
-        imagenes: [...input.imagenes, e.target.value] 
-      })
-     
-    }
 
-   
+   const declaracion = "Declaro que la única finalidad del presente posteo es contribuir a la comunidad de Campy y que el mismo no posee ningún tipo de lenguaje inapropiado ni discriminatorio."
 
     const handleSubmit=(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
       e.preventDefault()
@@ -67,15 +62,20 @@ export default function CrearPost() {
       navigate("/blog")
     }
 
-  
+
+    const handleChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
+      if (input.texto.length>0 && input.titulo.length>0 && e.target.checked === true )
+      setBoton(false)
+    }
+
 
     return(
         <React.Fragment>
-          <Dialog
+        
+        <Dialog
         fullWidth
         maxWidth="md"
-        open={open}
-      >
+        open={open}>
         <DialogTitle align='center'>Creando Post...</DialogTitle>
         <DialogContent >
         <Box
@@ -91,8 +91,9 @@ export default function CrearPost() {
           />
         </DialogContent>
         </Dialog>
-          <Typography align="center" variant='h3' sx={{mt:2}}>Formulario</Typography>
-          <Typography align="center" variant="h6">**Funcionalidad en desarrollo**</Typography>
+          
+          
+        <Typography align="center" variant='h3' sx={{mt:2}}>Formulario</Typography>
         <Grid container spacing={2} display="flex" flexDirection="column" alignItems="stretch" sx={{mt:2, pr:6, pl:6}} >
               <Grid item xs={12} >
                 <TextField
@@ -114,24 +115,13 @@ export default function CrearPost() {
                   label="Texto"
                   name="Texto"
                   multiline
+                  minRows={10}
                   onChange={(e)=>{handleChangeTexto(e)}}
                 />
                 </Grid>
-                {/* ESTO ES DE PRUEBA SOLAMENTE, CAMBIAR POR CLOUDINARY */}
-                <Grid item xs={12}>
-                <TextField
-                color="secondary"
-                  required
-                  fullWidth
-                  id="Imagen"
-                  label="Imagen URL"
-                  name="Imagen"
-                  onBlur={(e)=>{handleChangeImagenes(e)}}
-                />
-                <Typography>Proximamente se podrá subir más de una foto y también desde el ordenador</Typography>
+                
                 </Grid>
-                </Grid>
-                {/* <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
+                <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
                 {img.map(m => (
                   <Grid item key={m}>
                     <Box
@@ -147,11 +137,15 @@ export default function CrearPost() {
                       src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
                   </Grid>
                 ))}
-                
-              </Grid> */}
-              <Grid display="flex" justifyContent="center">
-              {user === null ? <Button variant="outlined" color="error">Es necesario loguearse para crear un post</Button>
-              :<Button color="secondary" variant='contained' id='Crear' sx={{mt:2}} onClick={(e)=>{handleSubmit(e)}} value="Crear Post">Crear Post</Button>}
+              </Grid>
+              <Cloudinary setInput={setInput}></Cloudinary>
+              
+              <Grid display="flex" flexDirection="column" justifyContent="center" alignItems="center" sx={{mt:4, mb:4}}>
+              <FormControlLabel
+              label={declaracion}
+               control={<Checkbox color="secondary" onChange={(e)=>handleChange(e)}/>}
+      />
+              <Button disabled={boton} color="secondary" variant='contained' id='Crear' sx={{mt:2}} onClick={(e)=>{handleSubmit(e)}} value="Crear Post">Crear Post</Button>
               </Grid>
               </React.Fragment>
               

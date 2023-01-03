@@ -21,6 +21,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import PaginadoBlog from "./Paginado";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 
 
 
@@ -30,7 +31,11 @@ export default function Blog() {
 
 const dispatch: AppDispatch = useDispatch()
 const navigate = useNavigate()
-const allPosts:{id:number, foto:string, titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.postbuscados)
+
+const user = useSelector((state: RootState) => state.user);
+const allPosts:{id:number,foto:string, titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.postbuscados)
+const [alertForm, setAlertForm] = useState(false);
+
 
 const [currentPage, setCurrentPage] = useState(1);
 const [postsxPage, setPostsxPage] = useState(6);
@@ -45,8 +50,17 @@ const handleChange=(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     dispatch(actions.getPosts_byname(e.target.value))  
 }
 
+const handleSesion=(e: React.MouseEvent<HTMLTextAreaElement | HTMLButtonElement>)=>{
+  e.preventDefault();
+  navigate("/login")
+}
+
 const handleClick=() =>{
-    navigate("/blog/crearpost")
+  if(user !== null){
+    navigate("/blog/crearpost")}
+  else{
+    setAlertForm(true)
+  }
 }
 
 useEffect(()=>{
@@ -85,6 +99,16 @@ return (
       <script src="https://apps.elfsight.com/p/platform.js" defer></script>
       <div className="elfsight-app-4b3e1e5e-fea2-4450-887b-8e3a7b32e3e5"></div>
       <Footer/>
+      <Dialog
+        fullWidth
+        maxWidth="md"
+        open={alertForm}
+        >
+        <DialogTitle align='center'>Es necesario iniciar sesión en CAMPY para crear un post</DialogTitle>
+        <DialogContent sx={{display: 'flex', justifyContent:"center"}}>
+        <Button variant="contained" color="secondary" onClick={(e)=>handleSesion(e)}>Iniciar sesión</Button>
+        </DialogContent>
+        </Dialog>
       </React.Fragment>
   );
 }
