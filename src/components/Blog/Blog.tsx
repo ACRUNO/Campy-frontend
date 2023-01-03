@@ -30,14 +30,14 @@ export default function Blog() {
 
 const dispatch: AppDispatch = useDispatch()
 const navigate = useNavigate()
-const allPosts:{id:number, titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.postbuscados)
+const allPosts:{id:number, foto:string, titulo:string,username: string, fecha: string,texto:string,}[] = useSelector((state: RootState) => state.postbuscados)
 
 const [currentPage, setCurrentPage] = useState(1);
 const [postsxPage, setPostsxPage] = useState(6);
 const indexLastPost: number = currentPage * postsxPage;
 const indexFirstPost: number = indexLastPost - postsxPage;
 
-const currentPosts: {id:number, titulo:string,username: string, fecha: string,texto:string,}[] = allPosts.slice(indexFirstPost, indexLastPost)
+const currentPosts: {id:number, foto: string, titulo:string,username: string, fecha: string,texto:string,}[] = allPosts.slice(indexFirstPost, indexLastPost)
 
 const handleChange=(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
     e.preventDefault();
@@ -68,7 +68,7 @@ return (
           </Grid>
           <Grid container spacing={4} md={false} display="flex" flexDirection="column" alignContent="center" sx={{pb:8}} >
             {currentPosts.map((p) => (
-            <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username}/>
+            <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto}/>
             ))}
           </Grid>
         </main>
