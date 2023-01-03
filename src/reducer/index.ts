@@ -342,11 +342,13 @@ function rootReducer(state: any = initialState, action: any): any {
                 fechaIngresoDayjs: null,
                 fechaEgresoDayjs: null
             }
+            
         case GET_FILTERS_CAMPING:
             return {
                 ...state,
                 campings: {result: action.payload, done: true}
             }
+
         case RESET_FILTER_CAMPING: {
             return {
                 ...state,
