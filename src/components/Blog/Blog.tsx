@@ -1,22 +1,13 @@
 import Footer from "../Footer/Footer";
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Header from './Header';
 import MainFeaturedPost from './MainFeaturedPost';
 import FeaturedPost from './FeaturedPost';
-import { flexbox } from "@mui/system";
 import { useDispatch, useSelector} from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { useEffect, useState} from "react";
 import * as actions from "../../actions/Blog.action"
-import Paper from '@mui/material/Paper';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +29,7 @@ const [alertForm, setAlertForm] = useState(false);
 
 
 const [currentPage, setCurrentPage] = useState(1);
-const [postsxPage, setPostsxPage] = useState(6);
+const [postsxPage] = useState(6);
 const indexLastPost: number = currentPage * postsxPage;
 const indexFirstPost: number = indexLastPost - postsxPage;
 
