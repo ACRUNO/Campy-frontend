@@ -48,9 +48,9 @@ const initialState: {
     campingBooking:Reservas[],
     popUpCards: boolean,
     cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
-    allPosts:{titulo:string,username: string, fecha: string,texto:string,}[],
+    allPosts:{titulo:string, foto: string, username: string, fecha: string,texto:string,}[],
     postbuscados:{titulo:string,username: string, fecha: string,texto:string}[],
-    post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{username: string, comentario: string, createdAt: string}[]} | {}
+    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{foto: string, username: string, comentario: string, createdAt: string}[]} | {}
     idReserva : number
     detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
 } = {
