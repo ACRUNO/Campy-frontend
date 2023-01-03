@@ -48,9 +48,9 @@ const initialState: {
     campingBooking:Reservas[],
     popUpCards: boolean,
     cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
-    allPosts:{titulo:string,username: string, fecha: string,texto:string,}[],
-    postbuscados:{titulo:string,username: string, fecha: string,texto:string}[],
-    post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{username: string, comentario: string, createdAt: string}[]} | {}
+    allPosts:{titulo:string, foto: string, username: string, fecha: string,texto:string,}[],
+    postbuscados:{titulo:string, foto: string, username: string, fecha: string,texto:string}[],
+    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{foto: string, username: string, comentario: string, createdAt: string}[]} | {}
     idReserva : number
     detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
 } = {
@@ -545,8 +545,8 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state }     
         case BUSCAR_POSTS:
             if (action.payload.length>0){
-                var postsBuscados:{titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts.filter((p:{titulo:string,username: string, fecha: string,texto:string,})=>p.titulo.toLowerCase().includes(action.payload.toLowerCase()))}
-            else{var postsBuscados: {titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts}
+                var postsBuscados:{titulo:string,username: string,foto:string, fecha: string,texto:string,}[] = state.allPosts.filter((p:{titulo:string,username: string, foto:string, fecha: string,texto:string,})=>p.titulo.toLowerCase().includes(action.payload.toLowerCase()))}
+            else{var postsBuscados: {titulo:string,username: string,foto:string, fecha: string,texto:string,}[] = state.allPosts}
             return{
                  ...state,
                 postbuscados: postsBuscados

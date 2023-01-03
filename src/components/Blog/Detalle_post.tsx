@@ -19,12 +19,13 @@ export default function Detalle() {
 
     const post: {
         id: number,
+        foto: string,
         username: string,
         fecha: string,
         titulo: string,
         texto: string,
         imagenes: Array<string>,
-        comentarios: { username: string, comentario: string, createdAt: string }[]
+        comentarios: { username: string, foto: string, comentario: string, createdAt: string }[]
     } = useSelector((state: RootState) => state.post)
 
     useEffect(() => {
@@ -40,7 +41,7 @@ export default function Detalle() {
             <Grid container columnSpacing={4} display="flex"  justifyContent="space-between" sx={{mb:4}}>
           </Grid>
           <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{mb:4}} >
-          <Detail key={post.titulo} id={post.id} fecha={new Date (post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios}/>
+          <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date (post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios}/>
           </Grid>
         </Grid>
         </Container>
