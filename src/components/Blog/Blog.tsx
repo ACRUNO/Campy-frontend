@@ -55,6 +55,7 @@ const handleSesion=(e: React.MouseEvent<HTMLTextAreaElement | HTMLButtonElement>
   navigate("/login")
 }
 
+
 const handleClick=() =>{
   if(user !== null){
     navigate("/blog/crearpost")}
