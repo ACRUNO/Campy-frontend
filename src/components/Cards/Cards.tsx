@@ -1,13 +1,5 @@
-import * as React from 'react';
-import { useEffect } from 'react';
-import { Card, CardMedia, CardContent, Typography, Skeleton } from '@mui/material';
-import { Box } from '@mui/system';
+import { Card, CardMedia, Typography } from '@mui/material';
 import s from '../Cards/Cards.module.css'
-import { hover } from '@testing-library/user-event/dist/hover';
-import { filterProvincia, getCampingsProvincias, getAllCampings } from '../../actions/index'
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, RootState } from '../../store/index';
-import { MouseEvent } from 'react';
 
 type Props = {
     name: string,
@@ -15,24 +7,7 @@ type Props = {
     id: number,
 }
 
-
-
-
-
-
-
-
 export default function Cards(props: Props) {
-
-  
-
-    const dispatch: AppDispatch = useDispatch()
-
-
-
-
-
-
 
     return (
         <Card className={s.card} sx={{ bgcolor: 'd7d7d7' }} >

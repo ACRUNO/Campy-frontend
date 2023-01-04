@@ -101,21 +101,14 @@ export default function Camping() {
   let fav = favourites.favorites.some((camp: { id: string | undefined; }) => Number(camp.id) === Number(params.id))
   const [favorite, setFavorite] = React.useState(fav);
 
-  let mayores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Mayores");
-  let menores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Menores");
-  let rodantes = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Rodantes")
+  let mayores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "mayores");
+  let menores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "menores");
+  let rodantes = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "rodantes")
   
   let infoCards: {nombre_camping: string, imagenes: string, descripcion_camping: string} = {nombre_camping: camp.nombre_camping, imagenes: camp.imagenes, descripcion_camping: camp.descripcion_camping}
 
   useEffect(() => {
     dispatch(getDetails(params.id));
-    console.log("esoooo")
-    console.log("esoooo")
-
-    console.log("esoooo")
-
-    console.log("esoooo")
-
     return () => {
       dispatch(cleanDetails())
     }
@@ -127,6 +120,31 @@ export default function Camping() {
 
 
 
+/*   let day1 = {
+    target : {
+      name : "day1",
+      value : newValue?.date(),
+      extra : "alldate",
+      extrav : newValue?.format(),
+    }
+  }
+  
+  handleAlgo(day1)
+  
+
+    const [validate , setValidate] = React.useState({ 
+    day1 : value1 ? value1.date() : 0,
+    alldate : value1 ? value1.format() :  "",
+    day2 :value1 ? value1.date() : 0,
+    alldate2 : value2 ? value2.format() :  "",
+       stay : 0,
+    kids : 0,
+    travellers : 0,
+    total : 0,
+  })
+
+  
+  ; */
 
 
   const handleAlgo = (e: any) => {
@@ -136,7 +154,7 @@ export default function Camping() {
     else {
    setValidate({...validate ,[e.target.name] : e.target.value }) 
     }
-
+    console.log(validate)
   }
 
   let trueValid = () => {
@@ -197,7 +215,9 @@ console.log(ingreso1)
   const handleCotizacion = (e: any) => {
     let idRes = 2
     dispatch(setdetailreserv(validate.day1, validate.alldate, validate.day2, validate.alldate2 , validate.stay  , validate.kids  , validate.travellers  , validate.total ,idRes))
-
+    
+    console.log(camp);
+    
     if (value1?.month() == value2?.month()) {
       let day1: any = value1?.date();
       let day2: any = value2?.date();
@@ -258,7 +278,7 @@ console.log(ingreso1)
       handleClickOpen()
     console.log(detailReserv)
     
-      let data = {
+/*       let data = {
         "fecha_desde_reserva" : "2023/01/10",
         "fecha_hasta_reserva" : "2023/01/11",
         "cant_noches" : validate.total,
@@ -288,7 +308,8 @@ console.log(ingreso1)
         (event as React.KeyboardEvent).key === 'Shift')
         ) {
           return;
-        }
+        }  */
+        
         setState({ ...state,'bottom': open });
         console.log(detailReserv.idRes)
       };
@@ -385,6 +406,7 @@ console.log(ingreso1)
                               extrav : newValue?.format(),
                             }
                           };
+
                             handleAlgo(day1);
                           
                         
@@ -532,7 +554,6 @@ console.log(ingreso1)
 
 
                     {/* <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 ,}}  onClick={handleClickOpen} variant="contained" color="secondary">
-
                     $  RESERVssssssssssssA YA! 
                            
                            </Button>
@@ -724,6 +745,4 @@ console.log(ingreso1)
 
   )
 }
-
-
 
