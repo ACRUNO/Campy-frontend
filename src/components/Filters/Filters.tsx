@@ -54,7 +54,6 @@ export default function BasicSelect() {
         navigate("/booking")
         document.documentElement.scrollTop = 0
     }
-    
 
 
     return (
@@ -64,6 +63,7 @@ export default function BasicSelect() {
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
 
                     <Select
+                        defaultValue=""
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="provincia"
@@ -80,6 +80,7 @@ export default function BasicSelect() {
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
                     <Select
                         disabled={provincia === 0}
+                        defaultValue=""
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"

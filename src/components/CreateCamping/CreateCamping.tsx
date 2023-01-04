@@ -18,6 +18,8 @@ import { MouseEvent } from 'react';
 import Alert from "../helpers/Alert";
 import { AlertType } from "../../auxiliar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { Inputs, PreInputsValues } from "../../reducer/estados";
+import { updateCamping } from "../../actions/Camping.action";
 
 
 
@@ -52,51 +54,9 @@ function getStepContent(step: number, setInput: React.Dispatch<React.SetStateAct
   }
 }
 
-
-export interface Inputs {
-  nombre_camping: string,
-  descripcion_camping: string,
-  direccion: string,
-  telefono: string,
-  contacto_nombre: string,
-  contacto_tel: string,
-  CategoriaCampingId: number,
-  LocalidadeId: number,
-  provincia: number,
-  wifi: boolean,
-  duchas: number,
-  baños: number,
-  mascotas: boolean,
-  rodantes: boolean,
-  proveduria: boolean,
-  salon_sum: boolean,
-  restaurant: boolean,
-  vigilancia: boolean,
-  pileta: boolean,
-  estacionamiento: boolean,
-  juegos_infantiles: boolean,
-  maquinas_gimnasia: boolean,
-  AbiertoPeriodoId: number,
-  PeriodoAguaCalienteId: number,
-  techada: boolean,
-  agua_en_parcela: boolean,
-  iluminacion_toma_corriente: boolean,
-  superficie: number,
-  imagenes: string[],
-  mayores: number,
-  menores: number,
-  rodante: number,
-  abierto_fecha_desde: string,
-  abierto_fecha_hasta: string,
-  longitud: string,
-  latitud: string,
-  UsuarioId: number
-}
-
-
-export default function Checkout() {
+export default function Checkout({ preInputValues }: { preInputValues: PreInputsValues | null }) {
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const { tipo, id } = useSelector((state: RootState) => state.user)
+  const { tipo, id, token } = useSelector((state: RootState) => state.user)
   const [alert, setAlert] = React.useState<AlertType>({
     open: true,
     title: 'Ser Propietario',
@@ -109,7 +69,9 @@ export default function Checkout() {
   const dispatch: AppDispatch = useDispatch();
   const navigate: NavigateFunction = useNavigate();
 
-  const [input, setInput] = React.useState<Inputs>({
+
+
+  const [input, setInput] = React.useState<Inputs>(preInputValues || {
     nombre_camping: '',
     descripcion_camping: '',
     direccion: '',
@@ -118,7 +80,7 @@ export default function Checkout() {
     contacto_tel: '',
     CategoriaCampingId: 0,
     LocalidadeId: 0,
-    provincia: 0,
+    ProvinciaId: 0,
     wifi: false,
     duchas: 0,
     baños: 0,
@@ -134,10 +96,10 @@ export default function Checkout() {
     maquinas_gimnasia: false,
     AbiertoPeriodoId: 0,
     PeriodoAguaCalienteId: 0,
-    techada: false,
-    agua_en_parcela: false,
-    iluminacion_toma_corriente: false,
-    superficie: 0,
+    parcela_techada: false,
+    parcela_agua_en_parcela: false,
+    parcela_iluminacion_toma_corriente: false,
+    parcela_superficie: 0,
     imagenes: [],
     mayores: 0,
     menores: 0,
@@ -161,12 +123,12 @@ export default function Checkout() {
     ) ||
     input.CategoriaCampingId === 0 ||
     input.LocalidadeId === 0 ||
-    input.provincia === 0 ||
+    input.ProvinciaId === 0 ||
     input.duchas === 0 ||
     input.baños === 0 ||
     input.AbiertoPeriodoId === 0 ||
     input.PeriodoAguaCalienteId === 0 ||
-    input.superficie === 0;
+    input.parcela_superficie === 0;
 
 
   const handleNext = () => {
@@ -177,25 +139,18 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  const redirect: any = (url: any) => window.location.href = url
-
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(createCamping(input, navigate))
-    
+    if (!preInputValues) dispatch(createCamping(input, navigate))
+    else dispatch(updateCamping(input, preInputValues.id, token, navigate));
   }
-
-  const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536215/Fotos/Misiones.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
-
-  const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)]
-
 
   return (
     <Box sx={{ backgroundColor: "#16161F", paddingTop: "3rem", boxShadow: "0 0 6px rgb(0 0 0 / 80%)" }}>
       <Container component="main" maxWidth="sm">
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
-            Nuevo Camping
+            {preInputValues ? preInputValues.nombre_camping : "Nuevo Camping"}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -230,7 +185,7 @@ export default function Checkout() {
                     onClick={handleSubmit}
                     sx={{ mt: 3, ml: 1 }}
                     disabled={disabled}
-                  > Crear </Button>
+                  >{preInputValues ? "Actualizar" : "Crear"}</Button>
                   :
                   <Button
                     variant="contained"
