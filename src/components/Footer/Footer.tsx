@@ -1,8 +1,7 @@
 import React from "react";
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {CardMedia, Avatar, Grid} from '@mui/material';
+import { Grid} from '@mui/material';
 
 import Link from '@mui/material/Link';
 import Style from "./footer.module.css"
@@ -26,39 +25,42 @@ export default function Footer() {
 
 
   return (
-    <Box sx={{ p: '100px 0', bgcolor: 'rgb(245, 245, 245)'}} component="footer" className={Style.footer}>
-        <Grid container direction="row"  justifyContent="center" sx={{pt: 5}} >
-        <Box className={Style.img}
+    <Box className={Style.footer} sx={{ p: '1rem 0', bgcolor: 'rgb(245, 245, 245)'}} component="footer" >
+        <Grid container justifyContent="center" sx={{pt: 5}} >
+          <Box className={Style.img}
           component="img"
           sx={{
             ml: "1%",
           }}
           alt="Logo"
           src={"https://res.cloudinary.com/pfcampy/image/upload/v1670849448/campy/logo_CAMPY-BLANCO_hn507u.png"}/>
-          </Grid>
-        <Grid container direction="row"  justifyContent="center" columnSpacing={15} sx={{mt: 5}}>
-        <Grid item >
-          <Typography sx={{mt: 2}}
-              variant="subtitle1"
-              align="center"
-              > Quienes Somos
-          </Typography>
         </Grid>
-        <Grid item>
-          <Typography sx={{mt: 2}}
-              variant="subtitle1"
-              align="center"> Preguntas Frecuentes
-          </Typography>
+
+        <Grid container sx={{p: 3}}>
+             <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{p: 0.5}} > 
+              <Typography 
+                  variant="h5" component="h6" textAlign='center'                  
+                  > Quienes Somos
+              </Typography>
+             </Grid> 
+
+             <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{p: 0.5}}> 
+              <Typography 
+                   variant="h5" component="h6"
+                   textAlign='center'> Preguntas Frecuentes
+              </Typography>
+              </Grid> 
+
+            <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{p:0.5}}> 
+              <Typography variant="h5" component="h6"
+                  textAlign='center'> Contacto
+              </Typography>
+            </Grid> 
         </Grid>
-        <Grid item>
-          <Typography sx={{mt: 2}}
-              variant="subtitle1"
-              align="center"> Contacto
-          </Typography>
-        </Grid>
-        </Grid>
-        <Copyright sx={{ mt: 5, color: "white"}} />
+          
+        <Copyright variant="h6" component="h6" sx={{ mt: 5, color: "white"}} />
     </Box>
+    
     
   );
 }
