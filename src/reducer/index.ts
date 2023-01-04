@@ -1,4 +1,4 @@
-import { FILTER_PARCELA, USUARIOS_DASH, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP, FILTER_INGRESO_MAP, FILTER_EGRESO_MAP, NUM_FILTERS_MAP, RESET_NUM_FILTERS_MAP, ZOOM_OUT_MAP } from "../actions";
+import { FILTER_PARCELA, USUARIOS_DASH,SET_DETAIL_RESERV , CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP, FILTER_INGRESO_MAP, FILTER_EGRESO_MAP, ZOOM_OUT_MAP,CLEAN_DETAILS, GET_ALL_LOCALIDADES, RESET_FILTER_CAMPING } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas } from './estados';
@@ -7,6 +7,7 @@ import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
 import { DISABLE_OWNER_CAMPING } from "../actions/Owner.action";
 import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO } from "../actions/Blog.action";
+import { POST_RESERV } from "../actions/Checkout.action";
 
 const initialState: {
     user: User | null;
@@ -20,7 +21,7 @@ const initialState: {
     allLocalidades: { id: number, nombre: string, imagen: string }[];
     allCampings: Campings[];
     detailCamping: Campings[];
-    campings: Campings[];
+    campings: {result: Campings[], done: boolean};
     provincia: number;
     localidad: number;
     allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[];
@@ -41,15 +42,17 @@ const initialState: {
     datos_graftorta: { provincias: string, cant_campings: number }[]
     datos_graftop: { nombre_camping: string, cant_reservas: number }[],
     datos_grafusuarios: { users: number, created: string }[],
-    datos_grafreservas: { reservas: number, total: number, created: string }[],
+    datos_grafreservas: {reservas: number,total: number, created: string;}[],
     linkMap: { lng: number, lat: number, zoom: number }
     reviews: { id: number, puntaje: number ,username: string, fecha: string ,comentario: string }[],
     campingBooking:Reservas[],
     popUpCards: boolean,
     cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
-    allPosts:{titulo:string,username: string, fecha: string,texto:string,}[],
-    postbuscados:{titulo:string,username: string, fecha: string,texto:string}[],
-    post: {id: number, username: string, fecha: string, titulo: string, texto: string, imagenes: Array<string>, comentarios:{username: string, comentario: string, createdAt: string}[]}
+    allPosts:{titulo:string, foto: string, username: string, fecha: string,texto:string,}[],
+    postbuscados:{titulo:string, foto: string, username: string, fecha: string,texto:string}[],
+    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{foto: string, username: string, comentario: string, createdAt: string}[]} | {}
+    idReserva : number
+    detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
 } = {
 
     //ESTADOS GLOBALES
@@ -61,7 +64,7 @@ const initialState: {
     detailCamping: [],
     allCampings: [],
     allLocalidades: [],
-    campings: [],
+    campings: {result: [], done: false},
     provincia: 0,
     localidad: 0,
     allCategorias: [],
@@ -112,8 +115,10 @@ const initialState: {
     popUpCards: false,
     cardInfoMap: { id: 0, nombre_camping: '', imagenes: '', descripcion: '' },
     allPosts:[],
-    post: {id: 0, username: '', fecha: '', titulo: '', texto: '', imagenes: [''], comentarios:[{username: '', comentario: '', createdAt: ''}]},
-    postbuscados:[]
+    post: {},
+    postbuscados:[],
+    idReserva : 0,
+    detailReserv : []
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -128,6 +133,11 @@ function rootReducer(state: any = initialState, action: any): any {
                 ...state,
                 allCampings: action.payload,
             }
+        case GET_ALL_LOCALIDADES:
+            return {
+                ...state,
+                allLocalidades: action.payload
+            }
         case GET_LOCALIDADES:
             return {
                 ...state,
@@ -141,7 +151,7 @@ function rootReducer(state: any = initialState, action: any): any {
             })
             return {
                 ...state,
-                campings: filteredProv,
+                campings: {result: filteredProv, done: true}
             }
         case GET_CAMPINGS_LOCALIDADES:
             const allCampys: Campings[] = state.allCampings
@@ -150,7 +160,7 @@ function rootReducer(state: any = initialState, action: any): any {
             })
             return {
                 ...state,
-                campings: filteredLocal,
+                campings: {result: filteredLocal, done: true}
             }
         case GET_DETAILS:
             return {
@@ -165,13 +175,13 @@ function rootReducer(state: any = initialState, action: any): any {
                 localidad: 0
             }
         case FILTER_CATEGORIA:
-            const campys: Campings[] = state.campings
-            const filterCampys = campys.filter(c => {
+            const {result}: {result: Campings[], done: boolean}= state.campings
+            const filterCampys = result.filter(c => {
                 return c.id_categoria === action.payload
             })
             return {
                 ...state,
-                campings: filterCampys
+                campings: {result: filterCampys, done: true}
             }
         case CREATE_CAMPING:
             return { ...state }
@@ -192,11 +202,6 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 allCategorias: action.payload
-            }
-        case FILTER_CATEGORIA:
-            return {
-                ...state,
-                categoria: action.payload
             }
         case GET_PERIODO_AGUA:
             return {
@@ -248,6 +253,8 @@ function rootReducer(state: any = initialState, action: any): any {
             } else {
                 filtrosBook = filtrosBook.filter((r: number) => r !== action.payload.value)
             }
+            console.log(state.filtrosBooking);
+            
             return {
                 ...state,
                 filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: filtrosBook }
@@ -332,11 +339,19 @@ function rootReducer(state: any = initialState, action: any): any {
                 fechaIngresoDayjs: null,
                 fechaEgresoDayjs: null
             }
+            
         case GET_FILTERS_CAMPING:
             return {
                 ...state,
-                campings: action.payload
+                campings: {result: action.payload, done: true}
             }
+
+        case RESET_FILTER_CAMPING: {
+            return {
+                ...state,
+                campings: {result: [], done: false}
+            }
+        }
         case FILTER_INGRESO:
             return {
                 ...state,
@@ -412,22 +427,23 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
         case GET_RESERVASCAMPY:
-            let dia:Date = new Date (2022,11,14)
+            console.log(action.payload)
+            let ordenado = action.payload.sort((a:{createdAt: string, total: number},b:{createdAt: string, total: number}) => (new Date(a.createdAt).valueOf() > new Date(b.createdAt).valueOf()) ? 1 : ((new Date(b.createdAt).valueOf() > new Date(a.createdAt).valueOf()) ? -1 : 0))
+            console.log(ordenado)
+            let dia:Date = new Date (2022,11,18)
             let r: number = 0;
             let t: number = 0;
             let datos: { reservas: number, total: number, created: string }[] = [];
             let j: number = 0;
-            while (dia.toISOString() < new Date().toISOString() && j < action.payload.length){
-                if (new Date(action.payload[j].createdAt).valueOf() < dia.valueOf()) {
+            while (dia.toISOString().valueOf() < new Date().toISOString().valueOf() && j < ordenado.length){
+                if (new Date(ordenado[j].createdAt).valueOf() < dia.valueOf()) {
                     r++
-                    t = t + action.payload[j].total
+                    t = t + ordenado[j].total
                     j++
                 }
                 else {
                     let obj: { reservas: number, total: number, created:string} = { reservas: r, total: t, created: dia.toLocaleDateString('zh-Hans-CN') }
                     datos.push(obj)
-                    r++
-                    j++
                     //sumo 7 dias
                     dia.setDate(dia.getDate() + 7)
                     }}
@@ -492,7 +508,8 @@ function rootReducer(state: any = initialState, action: any): any {
                         }
                         return camping
                     }
-                )
+                    )
+                
                 return {
                     ...state,
                     ownerCampings: {
@@ -527,13 +544,19 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state }     
         case BUSCAR_POSTS:
             if (action.payload.length>0){
-                var postsBuscados:{titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts.filter((p:{titulo:string,username: string, fecha: string,texto:string,})=>p.titulo.toLowerCase().includes(action.payload.toLowerCase()))}
-            else{var postsBuscados: {titulo:string,username: string, fecha: string,texto:string,}[] = state.allPosts}
+                var postsBuscados:{titulo:string,username: string,foto:string, fecha: string,texto:string,}[] = state.allPosts.filter((p:{titulo:string,username: string, foto:string, fecha: string,texto:string,})=>p.titulo.toLowerCase().includes(action.payload.toLowerCase()))}
+            else{var postsBuscados: {titulo:string,username: string,foto:string, fecha: string,texto:string,}[] = state.allPosts}
             return{
                  ...state,
                 postbuscados: postsBuscados
                 }
-
+        case POST_RESERV:
+                return { ...state , idReserva : action.payload }
+        case SET_DETAIL_RESERV : 
+                return {...state , detailReserv : action.payload}
+        case CLEAN_DETAILS:
+            return{ ...state, detailCamping : [], detailReserv : [] }
+        
         default: return { ...state }
     }
 }

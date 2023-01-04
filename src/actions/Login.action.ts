@@ -90,12 +90,19 @@ export function logoutUser() {
 
 export function updateUser(
     queries: string, 
-    data: { token: string, userId: number }): ThunkAction<void, RootState, unknown, AnyAction> {
+    userId: number,
+    authorization: string): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function(dispatch: AppDispatch) {
         try {
-            const result: any = await axios.put(`/api/usuarios/actualizar?${queries}`, data);
+            const result: any = await axios.put(
+                `/api/usuarios/actualizar?${queries}`,
+                { userId },
+                { headers: { authorization } }
+            );
            
             dispatch({ type:  LOGIN_USER, payload: { ...result.data, remember: localStorage.getItem('remember') === 'true' } });
-        } catch(e) {}
+        } catch(e) {
+            console.log(e);
+        }
     }
 }

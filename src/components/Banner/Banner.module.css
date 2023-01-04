@@ -3,6 +3,11 @@
     width: 100vw;
 }
 
+.titulo {
+    font-size: 9rem;
+    letter-spacing: 25;
+    font-weight: 900;
+}
 
 /* //RESPONSIVE */
 

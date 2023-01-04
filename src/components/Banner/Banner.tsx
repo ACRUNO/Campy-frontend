@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography } from '@mui/material';
-
 import s from './Banner.module.css'
 
 
@@ -23,4 +22,4 @@ export default function Banner() {
         </Box>
        
     )
-} 
+}

@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import { Box, Select, MenuItem, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button, InputLabel, SelectChangeEvent, Rating, FormControl, TextField } from '@mui/material';
-import { fontWeight, width } from "@mui/system";
+import { Box, Select, MenuItem, Typography, Slider, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button, InputLabel, SelectChangeEvent, Rating, TextField } from '@mui/material';
 import { ChangeEvent, MouseEvent } from 'react'
-import { filterCategoria, FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, filterLocalidad, filterLocalidadMap, FilterParcela, filterProvincia, filterProvinciaMap, filtrosBooleanos, filtrosCombinados, filtrosPrecios, filtrosPrincipales, getAllCampings, getAllCategorias, getFiltersCamping, getLocalidades, getProvincias, resetFiltros } from '../../../actions/index'
+import { FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, filterLocalidad, filterLocalidadMap, FilterParcela, filterProvincia, filterProvinciaMap, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, getLocalidades, getProvincias, resetFiltros } from '../../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../../store/index';
-import { filterCamps } from "../../../reducer/estados";
 import { Campings } from '../../../reducer/estados';
 import StarIcon from '@mui/icons-material/Star';
 import s from "./FiltersMap.module.css"
@@ -18,7 +16,6 @@ import dayjs, { Dayjs } from 'dayjs';
 
 
 export default function FiltrosLaterales() {
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
     const dispatch: AppDispatch = useDispatch()
 
@@ -28,7 +25,6 @@ export default function FiltrosLaterales() {
     const localidad: number = useSelector((state: RootState) => state.localidad)
     const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
-    const campings: Campings[] = useSelector((state: RootState) => state.campings)
     const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
     const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
     const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
@@ -42,19 +38,31 @@ export default function FiltrosLaterales() {
         dispatch(getAllCategorias())
         dispatch(getFiltersCamping(filtrosBook))
         dispatch(getProvincias())
-        dispatch(getAllCampings())
     }, [dispatch, filtrosBook])
 
-
+    useEffect(() => {
+        dispatch(getAllCampings())
+    },[dispatch])
 
 
     const precioCamps = allCampings.map(c => c.precio)
 
-
+    
     var min = Math.min(...precioCamps)
     var max = Math.max(...precioCamps)
 
-    const [precioLocal, setPrecioLocal] = React.useState<number[]>([min | 500, max | 2500])
+    const [precioLocal, setPrecioLocal] = React.useState<number[]>([0, 2500])
+
+
+    useEffect(() => {
+        if(!allCampings.length) return
+        const precioCamps = allCampings.map(c => c.precio)
+
+        var min = Math.min(...precioCamps)
+        var max = Math.max(...precioCamps)
+
+        setPrecioLocal([min,max])
+    },[allCampings])
 
 
     const handlePrecio = (e: Event, newValue: number | number[]) => {
@@ -111,7 +119,6 @@ export default function FiltrosLaterales() {
     const handleEgresoMap = (e: Dayjs | null) => {
         dispatch(FilterEgreso(e))
         dispatch(FilterEgresoMap(e))
-        /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
     }
 
     const handleButtonPrecio = () => {
@@ -139,12 +146,12 @@ export default function FiltrosLaterales() {
                     <InputLabel sx={{fontSize:"12px",mt:"5px"}} id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
 
                     <Select
+                        defaultValue=""
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="provincia"
                         color="secondary"
                         sx={{height:"40px"}}
-                        value={String(provincia)}
                         onChange={handleProvinciaMap}>
                         {allProvincias?.map((m, i) => (
                             <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
@@ -156,13 +163,13 @@ export default function FiltrosLaterales() {
                     <InputLabel sx={{fontSize:"12px"}} id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
 
                     <Select
+                        defaultValue=""
                         disabled={provincia === 0}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"
                         color="secondary"
                         sx={{height:"40px",mb:"5px"}}
-                        value={String(localidad)}
                         onChange={handleLocalidadMap}>
                         {allLocalidades?.map(m => (
                             <MenuItem value={m.id}>{m.nombre}</MenuItem>
@@ -313,7 +320,7 @@ export default function FiltrosLaterales() {
                 {
                     allCategorias.map(c => {
                         return (
-                            <FormControlLabel
+                            <FormControlLabel key={c.id+1}
                                 control={<Checkbox onChange={handleCheck} value={c.id} color="secondary" name="id_categoria" checked={filtrosBook.id_categoria.includes(c.id)} />}
                                 label={c.categoria}
                             />
@@ -340,15 +347,15 @@ export default function FiltrosLaterales() {
             <Typography>Comodidades de parcela</Typography>
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_techada" checked={filtrosBook.parcela_techada} />}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_techada" checked={filtrosBook.parcela_techada ? true : false} />}
                     label="Techada"
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_agua_en_parcela" checked={filtrosBook.parcela_agua_en_parcela} />}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_agua_en_parcela" checked={filtrosBook.parcela_agua_en_parcela ? true : false} />}
                     label="Agua"
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_iluminacion_toma_corriente" checked={filtrosBook.parcela_iluminacion_toma_corriente} />}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_iluminacion_toma_corriente" checked={filtrosBook.parcela_iluminacion_toma_corriente ? true : false} />}
                     label="Electricidad"
                 />
             </FormGroup>
@@ -362,67 +369,60 @@ export default function FiltrosLaterales() {
                 <FormControlLabel
                     sx={{ marginTop: "1rem" }}
                     name="mascotas"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.mascotas} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.mascotas ? true : false} />}
                     label="Mascotas"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="rodantes"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.rodantes} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.rodantes ? true : false} />}
                     label="Rodantes"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="proveduria"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.proveduria} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.proveduria ? true : false} />}
                     label="Proveeduria"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="restaurant"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.restaurant} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.restaurant ? true : false} />}
                     label="Restaurant"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="pileta"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.pileta} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.pileta ? true : false} />}
                     label="Pileta"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="vigilancia"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.vigilancia} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.vigilancia ? true : false} />}
                     label="Vigilancia"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="maquinas_gimnasia"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.maquinas_gimnasia} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.maquinas_gimnasia ? true : false} />}
                     label="Gimnasio"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="juegos_infantiles"
-                    control={<Switch onChange={handleBoolean} color='secondary' checked={filtrosBook.juegos_infantiles} />}
+                    control={<Switch onChange={handleBoolean} color='secondary' checked={filtrosBook.juegos_infantiles ? true : false} />}
                     label="Juegos Infantiles"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="salon_sum"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.salon_sum} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.salon_sum ? true : false} />}
                     label="Salon SUM"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="wifi"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.wifi} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.wifi ? true : false} />}
                     label="Wifi"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="estacionamiento"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.estacionamiento} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.estacionamiento ? true : false} />}
                     label="Estacionamiento"
                     labelPlacement="end" />
             </FormGroup>
-
-
-
-
-
-
-
         </Box >
 
     )

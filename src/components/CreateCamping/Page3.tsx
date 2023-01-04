@@ -2,11 +2,13 @@ import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import { Box, Grid, Typography, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Cloudinary from "./Cloudinary";
-import { Inputs } from './CreateCamping';
+import { Inputs } from '../../reducer/estados';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAbierto } from '../../actions';
+import { Cancel } from '@mui/icons-material';
+import { VERDE } from '../helpers/colors';
 
 
 interface InputProps {
@@ -27,8 +29,8 @@ export default function Page3({ setInput, input }: InputProps) {
 
   const handlePeriodoAbierto = (e: SelectChangeEvent) => {
     e.preventDefault();
-    let abiertoDesde: string = 'dsadas';
-    let abiertoHasta: string = 'dsadas';
+    let abiertoDesde: string = '';
+    let abiertoHasta: string = '';
     let fecha: Date = new Date()
     let anio: number = fecha.getFullYear()
     let fechaInvierno: Date = new Date(anio, 9, 24)
@@ -66,9 +68,6 @@ export default function Page3({ setInput, input }: InputProps) {
     })
   };
 
-  console.log(input);
-
-
   let img: Array<string> = ["1", "2", "3", "4"]
 
 
@@ -82,6 +81,17 @@ export default function Page3({ setInput, input }: InputProps) {
     })
   };
 
+  const removeImage = (index: number) => {
+    setInput((inputs: Inputs) => {
+      return {
+        ...inputs,
+        imagenes: inputs.imagenes.filter((_, i) => i !== index)
+      }
+    })
+  }
+
+
+  if (!allPeriodoAbierto.length) return <div>cargando periodo abierto</div>
 
   return (
     <React.Fragment>
@@ -136,7 +146,7 @@ export default function Page3({ setInput, input }: InputProps) {
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo Abierto</InputLabel>
             <Select
               defaultValue=''
-              value={`${input.AbiertoPeriodoId}`}
+              value={`${input.AbiertoPeriodoId || ""}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='AbiertoPeriodoId'
@@ -150,19 +160,32 @@ export default function Page3({ setInput, input }: InputProps) {
           </FormControl>
         </Grid>
         <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
-          {img.map(m => (
-            <Grid item key={m}>
+          {img.map((m, i) => (
+            <Grid item key={m} position="relative">
               <Box
-                id={m}
                 component="img"
                 sx={{
                   ml: "1%",
                   bgcolor: "white",
                   height: 200,
-                  width: 200
+                  width: 200,
+                  objectFit: 'cover'
                 }}
                 alt="Logo"
-                src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
+                src={input.imagenes[i] || "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
+              {input.imagenes[i] &&
+                <Cancel
+                  sx={{
+                    fontSize: "1.3rem",
+                    position: "absolute",
+                    top: 5, right: 3,
+                    fill: VERDE, bgcolor: "white",
+                    borderRadius: "50%",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => removeImage(i)}
+                />
+              }
             </Grid>
           ))}
         </Grid>

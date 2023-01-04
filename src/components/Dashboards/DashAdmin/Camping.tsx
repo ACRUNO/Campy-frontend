@@ -74,7 +74,7 @@ export default function Camping() {
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>   
         <Grid container sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", mb:5, alignItems:"center"}}>
         <Grid item sx={{ml:3}}><Title>Campings</Title></Grid>
-        <Grid item sx={{mr:3}}><SearchBar type="Camping"></SearchBar></Grid>
+        <Grid item sx={{mr:3}}><SearchBar type="Camping" setPage={setPage}></SearchBar></Grid>
       </Grid> 
       <Table size="small">
         <TableHead>

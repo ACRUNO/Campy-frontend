@@ -13,9 +13,6 @@ import { AppDispatch, RootState } from "../../store";
 import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Button, InputProps } from "@mui/material";
-import { ZoomOutMap } from "@mui/icons-material";
-
 
 
 
@@ -38,10 +35,9 @@ export default function Mapa() {
 
   useEffect(() => {
     dispatch(getFiltersCamping(filtrosBook))
-  }, [dispatch, filtrosBook,linkMap]
+  }, [dispatch, filtrosBook, linkMap]
   )
 
-  console.log(linkMap);
   
 
 
@@ -72,7 +68,7 @@ function Map({center,zoomMap,linkMap}:mapProps) {
 
 
 
-  const campings: Campings[] = useSelector((state: RootState) => state.campings)
+  const {result}: {result: Campings[]} = useSelector((state: RootState) => state.campings)
   const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
   let num = 0
@@ -164,9 +160,9 @@ function Map({center,zoomMap,linkMap}:mapProps) {
 
       {
 
-        campings?.map((c: any) => {
+        result?.map((c: any) => {
           return (
-            <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={icon} />
+            <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={"https://res.cloudinary.com/pfcampy/image/upload/v1671067970/campy/mapIcon_ej0msp.png"} />
           )
         })
       }

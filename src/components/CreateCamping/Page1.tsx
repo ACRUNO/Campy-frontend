@@ -5,14 +5,23 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getAllCategorias } from "../../actions";
+import { getProvincias, getLocalidades, getAllCategorias, getAllLocalidades } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { Inputs } from './CreateCamping';
+import { Inputs } from '../../reducer/estados';
 import MapCreate from './CreateMap';
+import { all } from 'axios';
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
   input: Inputs
+}
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: '85%'
+    }
+  }
 }
 
 export default function Page1({ setInput, input }: InputProps) {
@@ -24,17 +33,17 @@ export default function Page1({ setInput, input }: InputProps) {
   const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
 
   useEffect(() => {
-    dispatch(getProvincias())
-    dispatch(getAllCategorias())
+    if (!allProvincias.length) dispatch(getProvincias())
+    if (!allCategorias.length) dispatch(getAllCategorias())
   }, [dispatch]);
 
-  const [provincia, setProvincia] = useState<number>(0);
+  const [provincia, setProvincia] = useState<number>(input.ProvinciaId || 0);
 
 
   const handleChangeProvincia = (e: SelectChangeEvent) => {
     e.preventDefault();
     setProvincia(Number(e.target.value) as number);
-    dispatch(getLocalidades(Number(e.target.value) as number))
+
     setInput((inputs: Inputs) => {
       return {
         ...inputs,
@@ -73,6 +82,9 @@ export default function Page1({ setInput, input }: InputProps) {
     })
   };
 
+  useEffect(() => {
+    if (provincia) dispatch(getAllLocalidades(provincia))
+  }, [provincia])
 
   return (
     <React.Fragment>
@@ -119,12 +131,14 @@ export default function Page1({ setInput, input }: InputProps) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
             <Select
-              value={`${input.provincia}`}
+              defaultValue=""
+              value={`${input.ProvinciaId || ''}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
-              name='provincia'
+              name='ProvinciaId'
               label="provincia"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeProvincia}>
               {allProvincias?.map((m, i) => (
                 <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
@@ -137,13 +151,14 @@ export default function Page1({ setInput, input }: InputProps) {
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
             <Select
               defaultValue=''
+              value={`${input.LocalidadeId || ''}`}
               disabled={provincia === 0}
-              value={`${input.LocalidadeId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='LocalidadeId'
               label="localidad"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeSelect}>
               {allLocalidades?.map((m, i) => (
                 <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
@@ -156,12 +171,13 @@ export default function Page1({ setInput, input }: InputProps) {
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Categoria</InputLabel>
             <Select
               defaultValue=''
-              value={`${input.CategoriaCampingId}`}
+              value={`${input.CategoriaCampingId || ''}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='CategoriaCampingId'
               label="categoria"
               color="secondary"
+              MenuProps={MenuProps}
               onChange={handleChangeCategoria}>
               {allCategorias?.map(m => (
                 <MenuItem value={m.id} key={m.id}>{m.categoria}</MenuItem>
