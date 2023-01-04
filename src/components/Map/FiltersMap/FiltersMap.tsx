@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import { Box, Select, MenuItem, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button, InputLabel, SelectChangeEvent, Rating, FormControl, TextField } from '@mui/material';
-import { fontWeight, width } from "@mui/system";
+import { Box, Select, MenuItem, Typography, Slider, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button, InputLabel, SelectChangeEvent, Rating, TextField } from '@mui/material';
 import { ChangeEvent, MouseEvent } from 'react'
-import { filterCategoria, FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, filterLocalidad, filterLocalidadMap, FilterParcela, filterProvincia, filterProvinciaMap, filtrosBooleanos, filtrosCombinados, filtrosPrecios, filtrosPrincipales, getAllCampings, getAllCategorias, getFiltersCamping, getLocalidades, getProvincias, resetFiltros } from '../../../actions/index'
+import { FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, filterLocalidad, filterLocalidadMap, FilterParcela, filterProvincia, filterProvinciaMap, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, getLocalidades, getProvincias, resetFiltros } from '../../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../../store/index';
-import { filterCamps } from "../../../reducer/estados";
 import { Campings } from '../../../reducer/estados';
 import StarIcon from '@mui/icons-material/Star';
 import s from "./FiltersMap.module.css"
@@ -18,7 +16,6 @@ import dayjs, { Dayjs } from 'dayjs';
 
 
 export default function FiltrosLaterales() {
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
     const dispatch: AppDispatch = useDispatch()
 
@@ -28,7 +25,6 @@ export default function FiltrosLaterales() {
     const localidad: number = useSelector((state: RootState) => state.localidad)
     const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
-    const campings: Campings[] = useSelector((state: RootState) => state.campings)
     const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
     const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
     const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
@@ -46,7 +42,7 @@ export default function FiltrosLaterales() {
 
     useEffect(() => {
         dispatch(getAllCampings())
-    },[])
+    },[dispatch])
 
 
     const precioCamps = allCampings.map(c => c.precio)
@@ -123,7 +119,6 @@ export default function FiltrosLaterales() {
     const handleEgresoMap = (e: Dayjs | null) => {
         dispatch(FilterEgreso(e))
         dispatch(FilterEgresoMap(e))
-        /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
     }
 
     const handleButtonPrecio = () => {
@@ -428,13 +423,6 @@ export default function FiltrosLaterales() {
                     label="Estacionamiento"
                     labelPlacement="end" />
             </FormGroup>
-
-
-
-
-
-
-
         </Box >
 
     )

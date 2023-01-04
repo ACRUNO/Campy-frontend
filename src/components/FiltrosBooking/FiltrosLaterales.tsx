@@ -1,29 +1,22 @@
 import React, { useEffect } from "react";
-import { Box, Card, Grid, Typography, Slider, CardContent, CardMedia, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button } from '@mui/material';
-import { fontWeight } from "@mui/system";
+import { Box, Typography, Slider, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button } from '@mui/material';
 import { ChangeEvent, MouseEvent } from 'react'
-import { filterCategoria, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
+import { FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { filterCamps } from "../../reducer/estados";
 import { Campings } from '../../reducer/estados';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
-
 
 type Props = {
     setCurrentPage: (value: React.SetStateAction<number>) => void
 }
 
-
 export default function FiltrosLaterales(props: Props) {
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
     const dispatch: AppDispatch = useDispatch()
-
     const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
-    const campings: Campings[] = useSelector((state: RootState) => state.campings)
     const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
 
 
@@ -35,7 +28,7 @@ export default function FiltrosLaterales(props: Props) {
 
     useEffect(() => {
         dispatch(getAllCampings())
-    },[])
+    },[dispatch])
 
 
 
@@ -58,6 +51,7 @@ export default function FiltrosLaterales(props: Props) {
         var max = Math.max(...precioCamps)
 
         setPrecioLocal([min,max])
+        // dispatch(filtrosPrecios('precio', precioLocal))
     },[allCampings])
 
 
