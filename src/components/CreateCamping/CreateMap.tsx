@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { libraries } from "../../auxiliar";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import { Box } from "@mui/material";
 import "./CreateMap.css"
-import { Inputs } from "./CreateCamping";
+import { Inputs } from '../../reducer/estados';
 
 
 const containerStyle = {
@@ -23,7 +24,7 @@ export default function MapCreate({ setInput, input }: InputProps) {
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8",
-        libraries: ["places"]
+        libraries
     });
 
     if (!isLoaded) return <div>Loading...</div>;
@@ -42,7 +43,7 @@ const option = {
     streetViewControl: false,
     minZoom: 4,
     maxZoom: 18,
-    mapTypeId:'terrain'
+    mapTypeId: 'terrain'
 }
 
 
@@ -52,7 +53,6 @@ function Map({ setInput, input }: InputProps) {
 
     const center = selected ? selected : { lat: -38.40725346022871, lng: -63.617129400239264 };
     const zoom = selected ? 15 : 5;
-
 
     return (
         <>
@@ -85,7 +85,7 @@ const PlacesAutocomplete = ({ setInput, input, setSelected }: InputPropsPlace) =
 
     const {
         ready,
-        value= input.direccion,
+        value = input.direccion,
         setValue,
         suggestions: { status, data },
         clearSuggestions,

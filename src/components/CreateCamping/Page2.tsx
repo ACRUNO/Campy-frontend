@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { Inputs } from './CreateCamping';
+import { Inputs } from '../../reducer/estados';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAgua } from '../../actions';
@@ -56,6 +56,8 @@ export default function Page2({ setInput, input }: InputProps) {
     })
   };
 
+  if (!allPeriodoAgua.length) return <div>cargando periodo agua</div>
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -63,15 +65,15 @@ export default function Page2({ setInput, input }: InputProps) {
       </Typography>
       <Grid item xs={12}>
         <FormControlLabel
-          control={<Checkbox checked={input.techada} color="secondary" name="techada" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.parcela_techada)} color="secondary" name="parcela_techada" onChange={handleCheckBox} />}
           label="Techada"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.iluminacion_toma_corriente} color="secondary" name="iluminacion_toma_corriente" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.parcela_iluminacion_toma_corriente)} color="secondary" name="parcela_iluminacion_toma_corriente" onChange={handleCheckBox} />}
           label="Toma corriente"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.agua_en_parcela} color="secondary" name="agua_en_parcela" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.parcela_agua_en_parcela)} color="secondary" name="parcela_agua_en_parcela" onChange={handleCheckBox} />}
           label="Agua en parcela"
         />
       </Grid>
@@ -79,9 +81,9 @@ export default function Page2({ setInput, input }: InputProps) {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            value={input.superficie}
+            value={input.parcela_superficie}
             id="Superficie m2"
-            name="superficie"
+            name="parcela_superficie"
             label="Superficie m2"
             fullWidth
             autoComplete="given-name"
@@ -129,16 +131,16 @@ export default function Page2({ setInput, input }: InputProps) {
           <FormControl sx={{ m: 1, minWidth: "15rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo de agua caliente</InputLabel>
             <Select
-              defaultValue=""
-              //value={`${input.PeriodoAguaCalienteId}`}
+              defaultValue=''
+              value={`${input.PeriodoAguaCalienteId || ""}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='PeriodoAguaCalienteId'
               label="Período de agua caliente"
               color="secondary"
               onChange={handlePeriodoAgua}>
-              {allPeriodoAgua?.map(m => (
-                <MenuItem key={m.id+1} value={m.id}>{m.descripcion_periodo_agua}</MenuItem>
+              {allPeriodoAgua?.map((m, i) => (
+                <MenuItem value={m.id} key={i}>{m.descripcion_periodo_agua}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -147,53 +149,53 @@ export default function Page2({ setInput, input }: InputProps) {
 
       <Grid item xs={12}>
         <FormControlLabel
-          control={<Checkbox checked={input.mascotas} color="secondary" name="mascotas" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.mascotas)} color="secondary" name="mascotas" onChange={handleCheckBox} />}
           label="Mascotas"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.rodantes} color="secondary" name="rodantes" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.rodantes)} color="secondary" name="rodantes" onChange={handleCheckBox} />}
           label="Casa Rodante"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.proveduria} color="secondary" name="proveduria" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.proveduria)} color="secondary" name="proveduria" onChange={handleCheckBox} />}
           label="Proveeduría"
         />
       </Grid>
       <Grid item xs={12}>
         <FormControlLabel
-          control={<Checkbox checked={input.salon_sum} color="secondary" name="salon_sum" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.salon_sum)} color="secondary" name="salon_sum" onChange={handleCheckBox} />}
           label="Salón SUM"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.restaurant} color="secondary" name="restaurant" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.restaurant)} color="secondary" name="restaurant" onChange={handleCheckBox} />}
           label="Restaurant"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.vigilancia} color="secondary" name="vigilancia" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.vigilancia)} color="secondary" name="vigilancia" onChange={handleCheckBox} />}
           label="Vigilancia"
         />
       </Grid>
       <Grid item xs={12}>
         <FormControlLabel
-          control={<Checkbox checked={input.pileta} color="secondary" name="pileta" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.pileta)} color="secondary" name="pileta" onChange={handleCheckBox} />}
           label="Pileta"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.estacionamiento} color="secondary" name="estacionamiento" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.estacionamiento)} color="secondary" name="estacionamiento" onChange={handleCheckBox} />}
           label="Estacionamiento"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.juegos_infantiles} color="secondary" name="juegos_infantiles" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.juegos_infantiles)} color="secondary" name="juegos_infantiles" onChange={handleCheckBox} />}
           label="Juegos Infantiles"
         />
       </Grid>
       <Grid item xs={12}>
         <FormControlLabel
-          control={<Checkbox checked={input.maquinas_gimnasia} color="secondary" name="maquinas_gimnasia" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.maquinas_gimnasia)} color="secondary" name="maquinas_gimnasia" onChange={handleCheckBox} />}
           label="Gimnasio"
         />
         <FormControlLabel
-          control={<Checkbox checked={input.wifi} color="secondary" name="wifi" onChange={handleCheckBox} />}
+          control={<Checkbox checked={Boolean(input.wifi)} color="secondary" name="wifi" onChange={handleCheckBox} />}
           label="Wifi"
         />
 
