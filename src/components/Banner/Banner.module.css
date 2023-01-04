@@ -1,7 +1,11 @@
-.banner{
-    max-height: 550px;
+.banner {
+    max-height: 34.5 rem;
     width: 100vw;
 }
 
 
+/* //RESPONSIVE */
 
+@media all and (max-width: 800px) {}
+
+@media all and (max-width: 500px) {}

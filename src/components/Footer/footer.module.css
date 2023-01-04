@@ -1,8 +1,7 @@
-.footer{
-  background-image: url(https://res.cloudinary.com/pfcampy/image/upload/v1670444056/Footer_CAMPY_ehsk96.png);
-  color: white;
-  position: absolute;
-  width: 100vw;
-  background-repeat: no-repeat;
+.footer {
+    background-image: url(https://res.cloudinary.com/pfcampy/image/upload/v1670444056/Footer_CAMPY_ehsk96.png);
+    color: white;
+    position: absolute;
+    width: 100vw;
+    background-repeat: no-repeat;
 }
-
