@@ -71,14 +71,14 @@ export default function Booking() {
                         currentCampings.length > 0 ? currentCampings.map((c: Campings) => (
 
 
-                            <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
+                            <CardCamping key={c.id+1} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                                 localidad={c.localidad} provincia={c.provincia}
                                 categoria={c.categoria} imagenes={c.imagenes} reviews={c.puntuacion_promedio} precio={c.precio}></CardCamping>
 
                         )) : 
                         result.length === 0 && !done ?
-                                new Array(5).fill(1).map(p =>
-                                    <SkeletonCardCamping />
+                                new Array(5).fill(1).map((p, i) =>
+                                    <SkeletonCardCamping key={i}/>
                                 )
                             :
                             <Alert_busqueda estadoopen={open} setestadoopen={setOpen} />

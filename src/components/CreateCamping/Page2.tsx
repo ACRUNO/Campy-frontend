@@ -129,8 +129,8 @@ export default function Page2({ setInput, input }: InputProps) {
           <FormControl sx={{ m: 1, minWidth: "15rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo de agua caliente</InputLabel>
             <Select
-              defaultValue=''
-              value={`${input.PeriodoAguaCalienteId}`}
+              defaultValue=""
+              //value={`${input.PeriodoAguaCalienteId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='PeriodoAguaCalienteId'
@@ -138,7 +138,7 @@ export default function Page2({ setInput, input }: InputProps) {
               color="secondary"
               onChange={handlePeriodoAgua}>
               {allPeriodoAgua?.map(m => (
-                <MenuItem value={m.id}>{m.descripcion_periodo_agua}</MenuItem>
+                <MenuItem key={m.id+1} value={m.id}>{m.descripcion_periodo_agua}</MenuItem>
               ))}
             </Select>
           </FormControl>

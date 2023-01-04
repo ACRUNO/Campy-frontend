@@ -75,7 +75,6 @@ export default function FiltrosPrincipales(props: Props) {
         const fecha_egreso: string | undefined = fechaEgreso
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
         props.setCurrentPage(1)
-        console.log(filtrosBook)
     }
 
 
@@ -87,15 +86,15 @@ export default function FiltrosPrincipales(props: Props) {
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
 
                     <Select
+                        defaultValue=""
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="provincia"
                         color="secondary"
-                        value={String(provincia)}
                         MenuProps={MenuProps}
                         onChange={handleChangeProvincia}>
                         {allProvincias?.map((m, i) => (
-                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
+                            <MenuItem value={m.id} key={i+1}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
 
@@ -105,15 +104,15 @@ export default function FiltrosPrincipales(props: Props) {
 
                     <Select
                         disabled={provincia === 0 || !allLocalidades.length}
+                        defaultValue=""
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"
                         color="secondary"
-                        value={String(localidad)}
                         MenuProps={MenuProps}
                         onChange={handleChangeLocalidad}>
-                        {allLocalidades?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
+                        {allLocalidades?.map((m, i)=> (
+                            <MenuItem value={m.id} key={i+1}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
 

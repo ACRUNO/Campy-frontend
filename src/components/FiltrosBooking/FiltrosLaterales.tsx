@@ -27,11 +27,8 @@ export default function FiltrosLaterales(props: Props) {
 
 
     useEffect(() => {
-        dispatch(getAllCampings())
+        dispatch(getAllCampings())  
     },[dispatch])
-
-
-
 
 
     const precioCamps = allCampings.map(c => c.precio)
@@ -215,7 +212,7 @@ export default function FiltrosLaterales(props: Props) {
                 {
                     allCategorias.map(c => {
                         return (
-                            <FormControlLabel
+                            <FormControlLabel key={c.id+1}
                                 control={<Checkbox onChange={handleCheck} value={c.id} color="secondary" name="id_categoria" checked={filtrosBook.id_categoria.includes(c.id)} />}
                                 label={c.categoria}
                             />
@@ -241,15 +238,15 @@ export default function FiltrosLaterales(props: Props) {
             <Typography>Comodidades de parcela</Typography>
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_techada" checked={filtrosBook.parcela_techada} />}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_techada" checked={filtrosBook.parcela_techada ? true : false} />}
                     label="Techada"
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_agua_en_parcela" checked={filtrosBook.parcela_agua_en_parcela} />}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_agua_en_parcela" checked={filtrosBook.parcela_agua_en_parcela ? true : false} />}
                     label="Agua"
                 />
                 <FormControlLabel
-                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_iluminacion_toma_corriente" checked={filtrosBook.parcela_iluminacion_toma_corriente} />}
+                    control={<Checkbox onChange={handleBoolean} color="secondary" name="parcela_iluminacion_toma_corriente" checked={filtrosBook.parcela_iluminacion_toma_corriente ? true : false} />}
                     label="Electricidad"
                 />
             </FormGroup>
@@ -263,57 +260,57 @@ export default function FiltrosLaterales(props: Props) {
                 <FormControlLabel
                     sx={{ marginTop: "1rem" }}
                     name="mascotas"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.mascotas} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.mascotas ? true : false} />}
                     label="Mascotas"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="rodantes"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.rodantes} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.rodantes ? true : false} />}
                     label="Rodantes"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="proveduria"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.proveduria} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.proveduria ? true : false} />}
                     label="Proveeduria"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="restaurant"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.restaurant} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.restaurant ? true : false} />}
                     label="Restaurant"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="pileta"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.pileta} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.pileta ? true : false} />}
                     label="Pileta"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="vigilancia"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.vigilancia} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.vigilancia ? true : false} />}
                     label="Vigilancia"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="maquinas_gimnasia"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.maquinas_gimnasia} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.maquinas_gimnasia ? true : false} />}
                     label="Gimnasio"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="juegos_infantiles"
-                    control={<Switch onChange={handleBoolean} color='secondary' checked={filtrosBook.juegos_infantiles} />}
+                    control={<Switch onChange={handleBoolean} color='secondary' checked={filtrosBook.juegos_infantiles ? true : false} />}
                     label="Juegos Infantiles"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="salon_sum"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.salon_sum} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.salon_sum ? true : false} />}
                     label="Salon SUM"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="wifi"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.wifi} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.wifi ? true : false} />}
                     label="Wifi"
                     labelPlacement="end" />
                 <FormControlLabel
                     name="estacionamiento"
-                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.estacionamiento} />}
+                    control={<Switch onChange={handleBoolean} color="secondary" checked={filtrosBook.estacionamiento ? true : false} />}
                     label="Estacionamiento"
                     labelPlacement="end" />
             </FormGroup>

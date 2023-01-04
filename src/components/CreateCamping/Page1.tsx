@@ -127,7 +127,8 @@ export default function Page1({ setInput, input }: InputProps) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
             <Select
-              value={`${input.provincia}`}
+              // value={`${input.provincia}`}
+              defaultValue=""
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='provincia'
@@ -145,9 +146,9 @@ export default function Page1({ setInput, input }: InputProps) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
             <Select
-              defaultValue=''
+              defaultValue=""
               disabled={provincia === 0}
-              value={`${input.LocalidadeId}`}
+              // value={`${input.LocalidadeId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='LocalidadeId'
@@ -165,8 +166,8 @@ export default function Page1({ setInput, input }: InputProps) {
           <FormControl sx={{ m: 1, minWidth: "12rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Categoria</InputLabel>
             <Select
-              defaultValue=''
-              value={`${input.CategoriaCampingId}`}
+              defaultValue=""
+              // value={`${input.CategoriaCampingId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='CategoriaCampingId'

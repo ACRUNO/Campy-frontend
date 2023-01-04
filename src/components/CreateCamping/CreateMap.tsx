@@ -53,7 +53,6 @@ function Map({ setInput, input }: InputProps) {
     const center = selected ? selected : { lat: -38.40725346022871, lng: -63.617129400239264 };
     const zoom = selected ? 15 : 5;
 
-    console.log(selected);
 
     return (
         <>
@@ -118,8 +117,6 @@ const PlacesAutocomplete = ({ setInput, input, setSelected }: InputPropsPlace) =
             }
         })
     }
-
-    console.log(input);
 
 
     return (

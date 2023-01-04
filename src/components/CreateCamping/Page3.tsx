@@ -66,8 +66,6 @@ export default function Page3({ setInput, input }: InputProps) {
     })
   };
 
-  console.log(input);
-
 
   let img: Array<string> = ["1", "2", "3", "4"]
 
@@ -134,8 +132,8 @@ export default function Page3({ setInput, input }: InputProps) {
           <FormControl sx={{ minWidth: "15rem" }}>
             <InputLabel id="demo-simple-select-helper-label" color="secondary">Periodo Abierto</InputLabel>
             <Select
-              defaultValue=''
-              value={`${input.AbiertoPeriodoId}`}
+              defaultValue=""
+              //value={`${input.AbiertoPeriodoId}`}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               name='AbiertoPeriodoId'
