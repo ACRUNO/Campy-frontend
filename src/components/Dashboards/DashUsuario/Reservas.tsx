@@ -12,6 +12,7 @@ import TablePagination from '@mui/material/TablePagination';
 import { getUserBookings } from '../../../actions/User.action';
 import { Bookings } from '../../../reducer/estados';
 import { keyStateBooking } from '../../../auxiliar';
+import formatDate from '../../helpers/formatDate';
 
 
 export default function Reservas() {
@@ -56,8 +57,8 @@ export default function Reservas() {
                 <TableRow key={c.id}>
                   <TableCell>{c.nombre_camping}</TableCell>
                   <TableCell>{c.email}</TableCell>
-                  <TableCell>{new Date(c.fecha_desde_reserva).toLocaleDateString()}</TableCell>
-                  <TableCell>{new Date(c.fecha_hasta_reserva).toLocaleDateString()}</TableCell>
+                  <TableCell>{formatDate(c.fecha_desde_reserva)}</TableCell>
+                  <TableCell>{formatDate(c.fecha_hasta_reserva)}</TableCell>
                   <TableCell>$ {c.total}</TableCell>
                   <TableCell align="right">{keyStateBooking[c.id_estado]}</TableCell>
                 </TableRow>
