@@ -35,17 +35,18 @@ export default function Detalle() {
 
     return (
         <Box>
-        <Container maxWidth="lg">
-        <Grid>
-            <MainFeaturedPost/>
-            <Grid container columnSpacing={4} display="flex"  justifyContent="space-between" sx={{mb:4}}>
-          </Grid>
-          <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{mb:4}} >
-          <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date (post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios}/>
-          </Grid>
-        </Grid>
-        </Container>
-        <Footer/>
+
+            <Container maxWidth="lg">
+                <Grid>
+                    <MainFeaturedPost />
+                    <Grid container columnSpacing={4} display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
+                    </Grid>
+                    <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{ mb: 4 }} >
+                        <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date(post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios} />
+                    </Grid>
+                </Grid>
+            </Container>
+            <Footer />
         </Box>
     )
 };
