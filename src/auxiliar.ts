@@ -81,15 +81,17 @@ export const userTypes = {
 export const stateBooking = {
   PENDIENTE: process.env.REACT_APP_PENDIENTE,
   RECHAZADA: process.env.REACT_APP_RECHAZADA,
-  REALIZADA: process.env.REACT_APP_REALIZADA,
+  ABONADA: process.env.REACT_APP_ABONADA,
   FINALIZADA: process.env.REACT_APP_FINALIZADA,
+  VENCIDA: process.env.REACT_APP_VENCIDA,
 };
 
 export const keyStateBooking = {
   [process.env.REACT_APP_PENDIENTE as string]: "Pendiente",
   [process.env.REACT_APP_RECHAZADA as string]: "Rechazada",
-  [process.env.REACT_APP_REALIZADA as string]: "Realizada",
+  [process.env.REACT_APP_ABONADA as string]: "ABONADA",
   [process.env.REACT_APP_FINALIZADA as string]: "Finalizada",
+  [process.env.REACT_APP_VENCIDA as string]: "Vinalizada",
 };
 
 export const libraries: ["places"] = ["places"];
