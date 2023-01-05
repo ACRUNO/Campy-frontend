@@ -52,7 +52,7 @@ const initialState: {
     postbuscados:allPosts[],
     postscomentados:allPosts[],
     postsvistos:allPosts[],
-    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{foto: string, username: string, comentario: string, createdAt: string}[]} | {}
+    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{id: number, foto: string, username: string, comentario: string, createdAt: string}[]} | {}
     idReserva : number
     detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
 } = {
