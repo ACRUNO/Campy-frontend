@@ -4,7 +4,8 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
-import { useNavigate } from 'react-router-dom';
+import CardMedia from '@mui/material/CardMedia';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -23,7 +24,7 @@ interface FeaturedPostProps {
   vistas: number
 }
 
-export default function FeaturedPost(props: FeaturedPostProps) {
+export default function Card_chica(props: FeaturedPostProps) {
   const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
 
@@ -35,26 +36,15 @@ export default function FeaturedPost(props: FeaturedPostProps) {
   }
 
   return (
-    <Grid item xs={12} md={10} onClick={() => handleClick()}>
+    <Grid item xs={12} md={3} onClick={() => handleClick()} display="flex"  >
       <CardActionArea component="a" href="#" sx={{ "&:hover": { boxShadow: "0px 4px 8px rgba(50, 50, 50, 1)" } }}>
-        <Card sx={{ display: 'flex' }}>
-          <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
-              {props.title}
-            </Typography>
-
-            <Grid display="flex" alignItems="center" >
-              <Typography variant="subtitle1" color="text.secondary" sx={{ mr: 1 }}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
-              <Avatar sx={{ mr: 1 }} src={props.foto} />
-              <Typography variant="subtitle1" color="text.secondary">{props.username}</Typography>
+        <Card sx={{ display: "flex", height: "10rem" }}>
+          <CardContent sx={{ flex: 2, height: "6rem" }}>
+            <Typography component="h2" variant="h5" align="center">{props.title}</Typography>
+            <Grid display="flex" flexDirection="row" alignItems="center" justifyContent="center" justifyItems="flex-end">
+              <Typography variant="subtitle1" color="text.secondary" sx={{ mr: 1, p: 0, mb: 0 }}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
+              <Avatar src={props.foto} />
             </Grid>
-
-            <Typography sx={{ mb: 1, mt: 1 }} variant="subtitle1" paragraph>
-              {props.description.length > 250 ? props.description.slice(0, 250) + "..." : props.description}
-            </Typography>
-            <Typography variant="subtitle1" color="secondary">
-              Continuar leyendo...
-            </Typography>
             <Grid display="flex" alignItems="center" sx={{ mt: 1 }}>
               <Typography sx={{ mr: 1 }}>{props.comentarios}</Typography>
               <ChatBubbleOutlineIcon></ChatBubbleOutlineIcon>
