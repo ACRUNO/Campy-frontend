@@ -13,7 +13,7 @@ import { AppDispatch, RootState } from "../../store";
 import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-const { GOOGLEMAPS_API_KEY } = process.env
+
 
 
 
