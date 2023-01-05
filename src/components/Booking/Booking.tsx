@@ -12,37 +12,7 @@ import { getAllCampings, filterProvincia, getCampingsProvincias, getCampingsLoca
 import { useEffect, useState } from "react";
 import * as actions from "../../actions";
 import { AppDispatch, RootState } from '../../store/index';
-import { Campings } from '../../reducer/estados';
-
-
-
-
-
-const filterVacios = {
-    id_provincia: "",
-    id_localidad: "",
-    abierto_fecha_desde: "",
-    abierto_fecha_hasta: "",
-    precio: [],
-    id_categoria: [],
-    parcela_superficie: [],
-    parcela_techada: 0,
-    parcela_agua_en_parcela: 0,
-    parcela_iluminacion_toma_corriente: 0,
-    mascotas: 0,
-    rodantes: 0,
-    proveduria: 0,
-    restaurant: 0,
-    pileta: 0,
-    vigilancia: 0,
-    maquinas_gimnasia: 0,
-    juegos_infantiles: 0,
-    salon_sum: 0,
-    wifi: 0,
-    estacionamient: 0
-}
-
-
+import { Campings, filterCamps } from '../../reducer/estados';
 
 
 
@@ -55,7 +25,7 @@ export default function Booking() {
     const dispatch: AppDispatch = useDispatch()
     const { result, done } = useSelector((state: RootState) => state.campings)
     const [open, setOpen] = React.useState(false);
-    const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
+    const filtrosBook: filterCamps = useSelector((state: RootState) => state.filtrosBooking)
 
     useEffect(() => {
         if(done && !result.length) setOpen(true)
@@ -101,14 +71,14 @@ export default function Booking() {
                         currentCampings.length > 0 ? currentCampings.map((c: Campings) => (
 
 
-                            <CardCamping key={c.id} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
+                            <CardCamping key={c.id+1} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
                                 localidad={c.localidad} provincia={c.provincia}
                                 categoria={c.categoria} imagenes={c.imagenes} reviews={c.puntuacion_promedio} precio={c.precio}></CardCamping>
 
                         )) : 
                         result.length === 0 && !done ?
-                                new Array(5).fill(1).map(p =>
-                                    <SkeletonCardCamping />
+                                new Array(5).fill(1).map((p, i) =>
+                                    <SkeletonCardCamping key={i}/>
                                 )
                             :
                             <Alert_busqueda estadoopen={open} setestadoopen={setOpen} />

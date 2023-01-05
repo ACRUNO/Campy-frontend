@@ -101,9 +101,9 @@ export default function Camping() {
   let fav = favourites.favorites.some((camp: { id: string | undefined; }) => Number(camp.id) === Number(params.id))
   const [favorite, setFavorite] = React.useState(fav);
 
-  let mayores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Mayores");
-  let menores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Menores");
-  let rodantes = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "Rodantes")
+  let mayores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "mayores");
+  let menores = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "menores");
+  let rodantes = camp?.precios?.filter((eso: any) => eso.descrip_tarifa == "rodantes")
   
   let infoCards: {nombre_camping: string, imagenes: string, descripcion_camping: string} = {nombre_camping: camp.nombre_camping, imagenes: camp.imagenes, descripcion_camping: camp.descripcion_camping}
 
@@ -215,7 +215,9 @@ console.log(ingreso1)
   const handleCotizacion = (e: any) => {
     let idRes = 2
     dispatch(setdetailreserv(validate.day1, validate.alldate, validate.day2, validate.alldate2 , validate.stay  , validate.kids  , validate.travellers  , validate.total ,idRes))
-
+    
+    console.log(camp);
+    
     if (value1?.month() == value2?.month()) {
       let day1: any = value1?.date();
       let day2: any = value2?.date();

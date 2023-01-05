@@ -10,14 +10,14 @@ import s from './Campings.module.css';
 import { disableOwnerCamping } from '../../../../actions/Owner.action';
 import ConfirmAlert from '../../../helpers/ConfirmAlert';
 import Alert from '../../../helpers/Alert';
-import { AlertConfirmType, AlertType } from '../../../../auxiliar';
+import { AlertConfirmType, AlertType, CampingOwner } from '../../../../auxiliar';
 import ReservasNotificaciones from './Reservas/ReservasNotificaciones';
 import { useNavigate } from 'react-router-dom';
 
 
 export default function Campings() {
-  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
   const { campings, done } = useSelector((state: RootState) => state.ownerCampings);
   const { id, token } = useSelector((state: RootState) => state.user);
 
@@ -44,7 +44,7 @@ export default function Campings() {
     }
   );
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -55,7 +55,7 @@ export default function Campings() {
 
   useEffect(() => {
     if(!campings.length && !done) dispatch(getCampingByOwner(id, token));
-  }, [campings])
+  }, [campings]);
 
   return (
     <>
@@ -75,7 +75,7 @@ export default function Campings() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {campings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: any) => (
+          {campings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: CampingOwner) => (
             <TableRow key={c.id}>
               <TableCell 
                 className={s['table-row']}
@@ -94,6 +94,7 @@ export default function Campings() {
                   variant='text' 
                   className={s['edit-button']} 
                   disabled={!c.habilitado}
+                  onClick={() => navigate("/update", { state: { campingId: c.id } })}
                 >EDITAR</Button>
               </TableCell>
               <TableCell className={s['table-row']} align="right">
@@ -102,7 +103,7 @@ export default function Campings() {
                   className={s['delete-button']}
                   disabled={!c.habilitado}
                   onClick={() => setStateAlertConfirm(prev => ({...prev, open: true, confirm: () => {
-                    dispatch(disableOwnerCamping(c.id, token, setStateAlert))
+                    dispatch(disableOwnerCamping(String(c.id), token, setStateAlert))
                   }}))}
                 >DESHABILITAR</Button>
               </TableCell>

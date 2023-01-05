@@ -19,6 +19,8 @@ import Detalle from './components/Blog/Detalle_post';
 import CrearPost from './components/Blog/CrearPost';
 import { getUserFavoriteCampings } from './actions/User.action';
 import AboutUs from './components/AboutUs/AboutUs'
+import UpdateCamping from './components/Dashboards/DashDueño/UpdateCamping';
+
 
 
 
@@ -35,7 +37,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    if(token) dispatch(loginUserWithToken(token));
+    if (token) dispatch(loginUserWithToken(token));
   }, [])
 
   return (
@@ -44,17 +46,19 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path = "/booking" element={ <Booking/> }/>
-          <Route path="/booking/camping/:id" element={<Camping/>} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/booking/camping/:id" element={<Camping />} />
           <Route path="/login" element={<LogIn />} />
-          <Route path="/map" element={<Mapa/>}/>
-          <Route path="/blog" element={<Blog/>}/>
-          <Route path="/create" element={<CreateCamping/>} />
-          <Route path="/about"  />
+          <Route path="/map" element={<Mapa />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/create" element={user ? <CreateCamping preInputValues={null} /> : <div>a esperar chaval</div>} />
+          <Route path="/update" element={<UpdateCamping />} />
+          <Route path="/about" />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
-          <Route path="/blog/crearpost" element={<CrearPost/>} />
-          <Route path="/aboutus" element={<AboutUs/>} />
+          <Route path="/blog/crearpost" element={<CrearPost />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+
 
         </Routes>
       </ThemeProvider>
