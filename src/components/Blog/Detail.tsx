@@ -43,7 +43,7 @@ export default function Detail(props: PostDetail) {
             </Card>
             <Card sx={{ display: 'flex', mt: '10px' }}>
                 <CardContent sx={{ flex: 1 }}>
-                    <Typography variant="h6">Comentarios</Typography>
+                    <Typography variant="h5" pb={2}>Comentarios</Typography>
                     {props.comentarios?.map((e) => (
                         <Grid>
                             <List>
@@ -59,6 +59,7 @@ export default function Detail(props: PostDetail) {
                             </List>
                         </Grid>
                     ))}
+                    <CrearComentario id={props.id}/>
                 </CardContent>
             </Card>
         </Grid>
