@@ -20,6 +20,7 @@ import { AlertType } from "../../auxiliar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Inputs, PreInputsValues } from "../../reducer/estados";
 import { updateCamping } from "../../actions/Camping.action";
+import { join } from "path";
 
 
 
@@ -142,7 +143,7 @@ export default function Checkout({ preInputValues }: { preInputValues: PreInputs
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (!preInputValues) dispatch(createCamping(input, navigate))
-    else dispatch(updateCamping(input, preInputValues.id, token, navigate));
+    else updateCamping(input, preInputValues.id, token, navigate);
   }
 
   return (
