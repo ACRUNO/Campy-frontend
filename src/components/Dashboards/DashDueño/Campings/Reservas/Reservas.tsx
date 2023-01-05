@@ -96,20 +96,7 @@ export default function Reservas({ open, campingId, setOpenReserves }: Props) {
                             className={`${s['table-row']} ${s[keyStateBooking[c.id_estado]]}`}
                             align="right"
                           >
-                            {
-                              c.id_estado === stateBooking.PENDIENTE
-                                ? <BasicMenu
-                                  idButton='menu-reservas'
-                                  menuItems={[
-                                    { key: 'Realizar', value: stateBooking.REALIZADA as string },
-                                    { key: 'Rechazar', value: stateBooking.RECHAZADA as string }
-                                  ]}
-                                  handleSelectItems={(data: any) => confirmReserva(c.id, data, token, getOwnerBookings)}
-                                  button='Pendiente'
-                                  s={s}
-                                />
-                                : keyStateBooking[c.id_estado]
-                            }
+                            {keyStateBooking[c.id_estado]}
                           </TableCell>
                           <TableCell
                             className={`${s['table-row']} ${s['ver-detalle']}`}
