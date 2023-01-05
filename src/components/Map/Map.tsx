@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "../../store";
 import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+const { GOOGLEMAPS_API_KEY } = process.env
 
 
 
@@ -38,27 +39,27 @@ export default function Mapa() {
   }, [dispatch, filtrosBook, linkMap]
   )
 
-  
+
 
 
 
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8"
+    googleMapsApiKey: 'AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8'
   });
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map center={center} zoomMap={zoomMap} linkMap={linkMap}/>
+  return <Map center={center} zoomMap={zoomMap} linkMap={linkMap} />
 }
 
-interface mapProps{
-  center: { lat: number, lng: number},
+interface mapProps {
+  center: { lat: number, lng: number },
   zoomMap: number,
   linkMap: { lat: number, lng: number, zoom: number }
 }
 
 
-function Map({center,zoomMap,linkMap}:mapProps) {
+function Map({ center, zoomMap, linkMap }: mapProps) {
 
 
 
@@ -68,7 +69,7 @@ function Map({center,zoomMap,linkMap}:mapProps) {
 
 
 
-  const {result}: {result: Campings[]} = useSelector((state: RootState) => state.campings)
+  const { result }: { result: Campings[] } = useSelector((state: RootState) => state.campings)
   const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
   let num = 0
@@ -154,7 +155,7 @@ function Map({center,zoomMap,linkMap}:mapProps) {
       </button>
 
 
-     {/*  <button className={s.buttonZoomOut} onClick={handleZoomOut}>ZoomOut</button> */}
+      {/*  <button className={s.buttonZoomOut} onClick={handleZoomOut}>ZoomOut</button> */}
 
 
 
