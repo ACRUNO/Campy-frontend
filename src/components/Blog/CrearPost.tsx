@@ -26,7 +26,7 @@ export default function CrearPost() {
     imagenes:[],
     usuarioId:0})
 
-  const [habilitar, setHabilitar]= React.useState<boolean>(true)
+  
   
     const handleChangeTitulo=(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
       setInput({
@@ -34,7 +34,7 @@ export default function CrearPost() {
           titulo: e.target.value,
           usuarioId: user.id
         })
-      if (!user.id){setHabilitar(false)}
+      
     }
 
     const handleChangeTexto=(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
@@ -47,31 +47,23 @@ export default function CrearPost() {
 
    const declaracion = "Declaro que la única finalidad del presente posteo es contribuir a la comunidad de Campy y que el mismo no posee ningún tipo de lenguaje inapropiado ni discriminatorio."
 
-    const handleSubmit=(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
-      e.preventDefault()
-      setOpen(true)
-      setTimeout(()=>{dispatch(actions.crearPost(input, user.token))})
-      setInput({
-        ...input,
-          texto: "",
-          titulo:"",
-          imagenes:[]
-        })
-      dispatch(actions.getAll_posts())
-      setTimeout(()=>{setOpen(false)},5000)
-      navigate("/blog")
+    const handleSubmit=(e:React.ChangeEvent<unknown>)=>{
+      e.preventDefault();
+      dispatch(actions.crearPost(input, user.token));
+      setOpen(true);
+      dispatch(actions.getAll_posts());
+      setTimeout(()=>{navigate("/blog")},3000);
     }
 
 
     const handleChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
-      if (input.texto.length>0 && input.titulo.length>0 && e.target.checked === true )
-      setBoton(false)
+      if (input.texto.length>0 && input.titulo.length>0 && e.target.checked === true ){
+      setBoton(false)}
     }
 
 
     return(
         <React.Fragment>
-        
         <Dialog
         fullWidth
         maxWidth="md"
@@ -145,7 +137,7 @@ export default function CrearPost() {
               label={declaracion}
                control={<Checkbox color="secondary" onChange={(e)=>handleChange(e)}/>}
       />
-              <Button disabled={boton} color="secondary" variant='contained' id='Crear' sx={{mt:2}} onClick={(e)=>{handleSubmit(e)}} value="Crear Post">Crear Post</Button>
+              <Button disabled={boton} color="secondary" variant='contained' id='Crear' sx={{mt:2}} onClick={(e)=>handleSubmit(e)} value="Crear Post">Crear Post</Button>
               </Grid>
               </React.Fragment>
               

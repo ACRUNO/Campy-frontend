@@ -98,6 +98,11 @@ export type User = {
     token: string
 }
 
+export type allPosts = {
+    id:number,
+    titulo:string, foto: string, username: string, fecha: string,texto:string,  cant_comentarios:number, cant_visualizaciones:number}
+
+
 export type FavoritesCampings = { id: number, nombre: string, imagen: string }
 
 export type Bookings = { 

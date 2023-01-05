@@ -148,3 +148,17 @@ export function crearComentario() {
 export function getPosts_byname(name: string){
     return { type: BUSCAR_POSTS, payload: name}    
 }
+
+export function visualizaciones(id:number, data:{visitas:number}): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            var json = await axios.put(`/api/blog/visualizaciones/${id}`, data);
+            return dispatch({
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}

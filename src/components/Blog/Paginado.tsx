@@ -1,5 +1,6 @@
 import React from "react";
 import { Pagination , Stack, Box} from "@mui/material";
+import { WindowSharp } from "@mui/icons-material";
 
 type Props = {
     postsxPage:number,
@@ -12,7 +13,9 @@ export default function PaginadoBlog (props: Props){
 
     const handleChange=(e:React.ChangeEvent<unknown>,page:number)=>{
         props.setCurrentPage(page)
-        document.documentElement.scrollTop = 0
+        window.scroll({top:800})
+        
+
     }
 return (
     <Box sx={{display:"flex", justifyContent:"center", pb:6, mt:1}}>
