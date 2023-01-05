@@ -26,11 +26,11 @@ export default function FiltrosLaterales() {
     const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
     const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
-    const fechaIngresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaIngresoDayjs)
-    const fechaEgresoDayjs:Dayjs = useSelector((state:RootState) => state.fechaEgresoDayjs)
+    const fechaIngresoDayjs: Dayjs = useSelector((state: RootState) => state.fechaIngresoDayjs)
+    const fechaEgresoDayjs: Dayjs = useSelector((state: RootState) => state.fechaEgresoDayjs)
 
 
-    const today:Dayjs = dayjs();
+    const today: Dayjs = dayjs();
 
 
 
@@ -42,12 +42,12 @@ export default function FiltrosLaterales() {
 
     useEffect(() => {
         dispatch(getAllCampings())
-    },[dispatch])
+    }, [dispatch])
 
 
     const precioCamps = allCampings.map(c => c.precio)
 
-    
+
     var min = Math.min(...precioCamps)
     var max = Math.max(...precioCamps)
 
@@ -55,14 +55,14 @@ export default function FiltrosLaterales() {
 
 
     useEffect(() => {
-        if(!allCampings.length) return
+        if (!allCampings.length) return
         const precioCamps = allCampings.map(c => c.precio)
 
         var min = Math.min(...precioCamps)
         var max = Math.max(...precioCamps)
 
-        setPrecioLocal([min,max])
-    },[allCampings])
+        setPrecioLocal([min, max])
+    }, [allCampings])
 
 
     const handlePrecio = (e: Event, newValue: number | number[]) => {
@@ -107,11 +107,11 @@ export default function FiltrosLaterales() {
 
     const handleLocalidadMap = (e: SelectChangeEvent) => {
         e.preventDefault();
-        dispatch(filterLocalidad(Number(e.target.value) as number)) 
+        dispatch(filterLocalidad(Number(e.target.value) as number))
         dispatch(filterLocalidadMap(Number(e.target.value) as number))
     };
 
-    const handleIngresoMap = (e:Dayjs | null) => {
+    const handleIngresoMap = (e: Dayjs | null) => {
         dispatch(FilterIngreso(e))
         dispatch(FilterIngresoMap(e))
     }
@@ -130,7 +130,7 @@ export default function FiltrosLaterales() {
 
     return (
 
-        <Box sx={{ borderRadius: 1, backgroundColor: "white",height: "43.5rem", overflowY: "auto", pl: 3, mr: 4, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
+        <Box sx={{ borderRadius: 1, backgroundColor: "white", height: "43.5rem", overflowY: "auto", pl: 3, mr: 4, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
             < Typography variant="h6" sx={{ paddingTop: "1.5rem", fontSize: "800", mb: "0.5rem" }}> Filtros:</Typography >
             <Button
                 onClick={handleReset}
@@ -138,105 +138,107 @@ export default function FiltrosLaterales() {
             >
                 Reset Filtros
             </Button>
-            
+
             <hr />
 
             <Typography >Ubicacion</Typography>
-            <FormGroup sx={{minWidth: 120 }}>
-                    <InputLabel sx={{fontSize:"12px",mt:"5px"}} id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
+            <FormGroup sx={{ minWidth: 120 }}>
+                <InputLabel sx={{ fontSize: "12px", mt: "5px" }} id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
 
-                    <Select
-                        defaultValue=""
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        label="provincia"
-                        color="secondary"
-                        sx={{height:"40px"}}
-                        onChange={handleProvinciaMap}>
-                        {allProvincias?.map((m, i) => (
-                            <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
-                        ))}
-                    </Select>
+                <Select
+                    defaultValue=""
+                    value={`${provincia || filtrosBook.id_provincia || ''}`}
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    label="provincia"
+                    color="secondary"
+                    sx={{ height: "40px" }}
+                    onChange={handleProvinciaMap}>
+                    {allProvincias?.map((m, i) => (
+                        <MenuItem value={m.id} key={i}>{m.nombre}</MenuItem>
+                    ))}
+                </Select>
 
-                </FormGroup>
-                <FormGroup sx={{mt:"5px",minWidth: 120 }}>
-                    <InputLabel sx={{fontSize:"12px"}} id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
+            </FormGroup>
+            <FormGroup sx={{ mt: "5px", minWidth: 120 }}>
+                <InputLabel sx={{ fontSize: "12px" }} id="demo-simple-select-helper-label" color="secondary">Localidad</InputLabel>
 
-                    <Select
-                        defaultValue=""
-                        disabled={provincia === 0}
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        label="localidad"
-                        color="secondary"
-                        sx={{height:"40px",mb:"5px"}}
-                        onChange={handleLocalidadMap}>
-                        {allLocalidades?.map(m => (
-                            <MenuItem value={m.id}>{m.nombre}</MenuItem>
-                        ))}
-                    </Select>
+                <Select
+                    defaultValue=""
+                    value={`${localidad || filtrosBook.id_localidad || ''}`}
+                    disabled={provincia === 0}
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    label="localidad"
+                    color="secondary"
+                    sx={{ height: "40px", mb: "5px" }}
+                    onChange={handleLocalidadMap}>
+                    {allLocalidades?.map((m, i) => (
+                        <MenuItem key={i} value={m.id}>{m.nombre}</MenuItem>
+                    ))}
+                </Select>
 
-                </FormGroup>
+            </FormGroup>
 
-                <hr />
-                <Typography >Fechas</Typography>
-                <FormGroup color="secondary" sx={{mt:"5px",minWidth: 120}}>
-                    <LocalizationProvider className={s.fechas} dateAdapter={AdapterDayjs} >
-                        <DatePicker
-                            label="Ingreso"
-                            openTo="day"
-                            views={['year', 'month', 'day']}
-                            value={fechaIngresoDayjs}
-                            onChange={(newValue) => {
-                                handleIngresoMap(newValue);
-                            }}
-                            minDate={today}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
-                </FormGroup>
+            <hr />
+            <Typography >Fechas</Typography>
+            <FormGroup color="secondary" sx={{ mt: "5px", minWidth: 120 }}>
+                <LocalizationProvider className={s.fechas} dateAdapter={AdapterDayjs} >
+                    <DatePicker
+                        label="Ingreso"
+                        openTo="day"
+                        views={['year', 'month', 'day']}
+                        value={fechaIngresoDayjs}
+                        onChange={(newValue) => {
+                            handleIngresoMap(newValue);
+                        }}
+                        minDate={today}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+            </FormGroup>
 
-                <FormGroup  color="secondary"sx={{mt:"12px",mb:"15px",minWidth: 120}}>
-                    <LocalizationProvider  dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Egreso"
-                            openTo="day"
-                            views={['year', 'month', 'day']}
-                            value={fechaEgresoDayjs}
-                            onChange={(newValue) => {
-                                handleEgresoMap(newValue)
-                            }}
-                            minDate={fechaIngresoDayjs}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
-                </FormGroup>
+            <FormGroup color="secondary" sx={{ mt: "12px", mb: "15px", minWidth: 120 }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Egreso"
+                        openTo="day"
+                        views={['year', 'month', 'day']}
+                        value={fechaEgresoDayjs}
+                        onChange={(newValue) => {
+                            handleEgresoMap(newValue)
+                        }}
+                        minDate={fechaIngresoDayjs}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+            </FormGroup>
 
 
-                <hr /> 
+            <hr />
 
             <Typography >Precio</Typography>
 
 
-            <Box sx={{display:"flex",justifyContent:"flex-start",alignItems:"center",columnGap:"4.5rem"}}>
+            <Box sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center", columnGap: "4.5rem" }}>
 
-            <Typography >${precioLocal[0]}- +${precioLocal[1]}</Typography>
-            <Button  onClick={handleButtonPrecio} sx={{ fontSize:"0.625rem",p:"0.313rem"}} variant="contained" color="success">Aplicar</Button>
+                <Typography >${precioLocal[0]}- +${precioLocal[1]}</Typography>
+                <Button onClick={handleButtonPrecio} sx={{ fontSize: "0.625rem", p: "0.313rem" }} variant="contained" color="success">Aplicar</Button>
 
             </Box>
 
-                <Slider
-                    sx={{ ml:"0px" , mt: "1rem", mb: "0.5rem", width: "90%" }}
-                    name="precio"
-                    value={precioLocal}
-                    onChange={(e, value) => handlePrecio(e, value)}
-                    valueLabelDisplay="off"
-                    color="secondary"
-                    min={min}
-                    max={max}
-                />
+            <Slider
+                sx={{ ml: "0px", mt: "1rem", mb: "0.5rem", width: "90%" }}
+                name="precio"
+                value={precioLocal}
+                onChange={(e, value) => handlePrecio(e, value)}
+                valueLabelDisplay="off"
+                color="secondary"
+                min={min}
+                max={max}
+            />
 
-            <hr/>
+            <hr />
 
             <Typography >Reviews</Typography>
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
@@ -312,15 +314,15 @@ export default function FiltrosLaterales() {
                 />
             </FormGroup>
 
-            <hr/>
-            
+            <hr />
+
             <Typography >Categoría</Typography>
             <FormGroup sx={{ mt: "0.5rem", mb: "0.5rem" }}>
 
                 {
                     allCategorias.map(c => {
                         return (
-                            <FormControlLabel key={c.id+1}
+                            <FormControlLabel key={c.id + 1}
                                 control={<Checkbox onChange={handleCheck} value={c.id} color="secondary" name="id_categoria" checked={filtrosBook.id_categoria.includes(c.id)} />}
                                 label={c.categoria}
                             />
