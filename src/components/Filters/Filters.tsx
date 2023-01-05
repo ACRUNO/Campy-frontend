@@ -4,16 +4,16 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MouseEvent } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getLocalidades, filterProvincia,filterLocalidad,getAllCampings, filtrosPrincipales} from "../../actions";
+import { getLocalidades, filterProvincia, filterLocalidad, getAllCampings, filtrosPrincipales } from "../../actions";
 import { useNavigate } from "react-router-dom";
 
 const MenuProps = {
     PaperProps: {
-      style: {
-        maxHeight: '85%'
-      }
+        style: {
+            maxHeight: '85%'
+        }
     }
-  }
+}
 
 
 export default function BasicSelect() {
@@ -22,8 +22,8 @@ export default function BasicSelect() {
     const navigate = useNavigate()
 
 
-   
-    
+
+
     const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
     const allLocalidades: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allLocalidades)
     const provincia: number = useSelector((state: RootState) => state.provincia)
@@ -57,13 +57,14 @@ export default function BasicSelect() {
 
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 100%)", pt: 1.25, pb: 1.25}}>
+        <Box sx={{ minWidth: 120, display: "flex", justifyContent: "center", boxShadow: "0 0 6px rgb(0 0 0 / 100%)", pt: 1.25, pb: 1.25 }}>
             <Grid container direction="row" justifyContent="center" alignItems="center" >
                 <FormControl sx={{ m: 1, minWidth: "10rem" }}>
                     <InputLabel id="demo-simple-select-helper-label" color="secondary">Provincia</InputLabel>
 
                     <Select
                         defaultValue=""
+                        value={`${provincia || ""}`}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="provincia"
@@ -81,6 +82,7 @@ export default function BasicSelect() {
                     <Select
                         disabled={provincia === 0}
                         defaultValue=""
+                        value={`${localidad || ""}`}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"

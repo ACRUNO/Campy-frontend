@@ -5,11 +5,10 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
-import { getProvincias, getLocalidades, getAllCategorias, getAllLocalidades } from "../../actions";
+import { getProvincias, getAllCategorias, getAllLocalidades } from "../../actions";
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Inputs } from '../../reducer/estados';
 import MapCreate from './CreateMap';
-import { all } from 'axios';
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
@@ -85,6 +84,9 @@ export default function Page1({ setInput, input }: InputProps) {
   useEffect(() => {
     if (provincia) dispatch(getAllLocalidades(provincia))
   }, [provincia])
+
+  if (!allProvincias.length || !allCategorias.length || (provincia && !allLocalidades.length))
+    return <div>cargando</div>
 
   return (
     <React.Fragment>
