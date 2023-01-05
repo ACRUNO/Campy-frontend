@@ -10,7 +10,7 @@ th.table-head {
 }
 
 td.table-row {
-  cursor:default;
+  cursor: default;
   font-size: 1rem;
 }
 
@@ -19,7 +19,7 @@ button.menu-button {
   color: #5481d0;
   cursor: pointer;
   padding-right: 0px;
-  transition: all .4s ease;
+  transition: all 0.4s ease;
 }
 
 button.menu-button:hover {
@@ -36,12 +36,16 @@ td.Rechazada {
   color: #bd4242;
 }
 
-td.Realizada {
+td.Abonada {
   color: #4c8a45;
 }
 
+td.Vencida {
+  color: #ff600a;
+}
+
 td.Finalizada {
-  color: #a27c2b;
+  color: #b38931;
 }
 
 td.ver-detalle {
