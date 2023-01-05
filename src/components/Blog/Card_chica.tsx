@@ -14,7 +14,7 @@ import { AppDispatch } from '../../store';
 import * as actions from "../../actions/Blog.action"
 
 interface FeaturedPostProps {
-  id:number
+  id: number
   date: string;
   foto: string,
   description: string;
@@ -25,36 +25,36 @@ interface FeaturedPostProps {
 }
 
 export default function Card_chica(props: FeaturedPostProps) {
-  const navigate =useNavigate()
+  const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
 
-  const handleClick=()=>{
-    let data:{visitas:number}={visitas:props.vistas+1}
-    dispatch(actions.visualizaciones(props.id, data))
-    setTimeout(()=>{navigate(`/blog/${props.id}`)},100)
-    
+  const handleClick = () => {
+    let data: { visitas: number } = { visitas: props.vistas + 1 }
+    //dispatch(actions.visualizaciones(props.id, data))
+    setTimeout(() => { navigate(`/blog/${props.id}`) }, 100)
+
   }
 
   return (
-    <Grid  item xs={12} md={3} onClick={()=>handleClick()} display="flex"  >
-      <CardActionArea component="a" href="#"  sx={{"&:hover":{boxShadow: "0px 4px 8px rgba(50, 50, 50, 1)"}}}>
-        <Card sx={{display:"flex", height:"10rem"}}>
-          <CardContent sx={{ flex: 2, height: "6rem"}}>
-            <Typography component="h2" variant="h5" align= "center">{props.title}</Typography>
-            <Grid display="flex" flexDirection="row" alignItems="center"  justifyContent="center" justifyItems="flex-end">
-            <Typography variant="subtitle1" color="text.secondary" sx={{mr:1, p:0, mb:0}}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
-            <Avatar  src={props.foto}/> 
+    <Grid item xs={12} md={3} onClick={() => handleClick()} display="flex"  >
+      <CardActionArea component="a" href="#" sx={{ "&:hover": { boxShadow: "0px 4px 8px rgba(50, 50, 50, 1)" } }}>
+        <Card sx={{ display: "flex", height: "10rem" }}>
+          <CardContent sx={{ flex: 2, height: "6rem" }}>
+            <Typography component="h2" variant="h5" align="center">{props.title}</Typography>
+            <Grid display="flex" flexDirection="row" alignItems="center" justifyContent="center" justifyItems="flex-end">
+              <Typography variant="subtitle1" color="text.secondary" sx={{ mr: 1, p: 0, mb: 0 }}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
+              <Avatar src={props.foto} />
             </Grid>
-            <Grid display="flex" alignItems="center"  sx={{mt:1}}>
-            <Typography sx={{mr:1}}>{props.comentarios}</Typography>
-            <ChatBubbleOutlineIcon></ChatBubbleOutlineIcon>
-            <Typography sx={{ml:2, mr:1}}>{props.vistas}</Typography>
-            <VisibilityIcon/>
+            <Grid display="flex" alignItems="center" sx={{ mt: 1 }}>
+              <Typography sx={{ mr: 1 }}>{props.comentarios}</Typography>
+              <ChatBubbleOutlineIcon></ChatBubbleOutlineIcon>
+              <Typography sx={{ ml: 2, mr: 1 }}>{props.vistas}</Typography>
+              <VisibilityIcon />
             </Grid>
           </CardContent>
         </Card>
       </CardActionArea>
     </Grid>
-    
+
   );
 }
