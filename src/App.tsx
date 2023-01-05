@@ -18,7 +18,7 @@ import { loginUserWithToken } from './actions/Login.action';
 import Detalle from './components/Blog/Detalle_post';
 import CrearPost from './components/Blog/CrearPost';
 import { getUserFavoriteCampings } from './actions/User.action';
-
+import AboutUs from './components/AboutUs/AboutUs'
 
 
 
@@ -54,6 +54,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
           <Route path="/blog/crearpost" element={<CrearPost/>} />
+          <Route path="/aboutus" element={<AboutUs/>} />
 
         </Routes>
       </ThemeProvider>

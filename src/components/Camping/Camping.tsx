@@ -324,7 +324,7 @@ console.log(ingreso1)
     }
       // hasta ahi 
       return (
-        <Box>
+        <Box sx={{ bgcolor: 'rgb(245, 245, 245)'}}>
  
          
       <Box className={Style.all}>
