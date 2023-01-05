@@ -87,6 +87,7 @@ export default function FiltrosPrincipales(props: Props) {
 
                     <Select
                         defaultValue=""
+                        value={`${provincia || filtrosBook.id_provincia || ""}`}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="provincia"
@@ -94,7 +95,7 @@ export default function FiltrosPrincipales(props: Props) {
                         MenuProps={MenuProps}
                         onChange={handleChangeProvincia}>
                         {allProvincias?.map((m, i) => (
-                            <MenuItem value={m.id} key={i+1}>{m.nombre}</MenuItem>
+                            <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
 
@@ -105,14 +106,15 @@ export default function FiltrosPrincipales(props: Props) {
                     <Select
                         disabled={provincia === 0 || !allLocalidades.length}
                         defaultValue=""
+                        value={`${localidad || filtrosBook.id_localidad || ''}`}
                         labelId="demo-simple-select-helper-label"
                         id="demo-simple-select-helper"
                         label="localidad"
                         color="secondary"
                         MenuProps={MenuProps}
                         onChange={handleChangeLocalidad}>
-                        {allLocalidades?.map((m, i)=> (
-                            <MenuItem value={m.id} key={i+1}>{m.nombre}</MenuItem>
+                        {allLocalidades?.map((m, i) => (
+                            <MenuItem value={m.id} key={i + 1}>{m.nombre}</MenuItem>
                         ))}
                     </Select>
 
