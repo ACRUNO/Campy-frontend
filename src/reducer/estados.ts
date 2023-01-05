@@ -218,3 +218,11 @@ export type Reservas = {
   nombre_camping: string;
   id_estado: string;
 };
+
+
+export type Reviews = {
+  usuario: number | null;
+  camping: number | undefined;
+  puntaje: number | null;
+  comentario: string;
+}

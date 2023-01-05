@@ -57,7 +57,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
           <Route path="/blog/crearpost" element={<CrearPost />} />
-          <Route path="/reviews" element={<DejarReviews />} />
+          <Route path="/reviews/:id" element={<DejarReviews />} />
         </Routes>
       </ThemeProvider>
     </React.Fragment>
