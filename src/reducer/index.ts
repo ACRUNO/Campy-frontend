@@ -1,4 +1,4 @@
-import { FILTER_PARCELA, USUARIOS_DASH,SET_DETAIL_RESERV , CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP, FILTER_INGRESO_MAP, FILTER_EGRESO_MAP, NUM_FILTERS_MAP, RESET_NUM_FILTERS_MAP, ZOOM_OUT_MAP,CLEAN_DETAILS, GET_ALL_LOCALIDADES, RESET_FILTER_CAMPING } from "../actions";
+import { FILTER_PARCELA, USUARIOS_DASH,SET_DETAIL_RESERV , CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP, FILTER_INGRESO_MAP, FILTER_EGRESO_MAP, ZOOM_OUT_MAP,CLEAN_DETAILS, GET_ALL_LOCALIDADES, RESET_FILTER_CAMPING } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas, allPosts } from './estados';
@@ -155,7 +155,7 @@ function rootReducer(state: any = initialState, action: any): any {
             })
             return {
                 ...state,
-                campings: filteredProv,
+                campings: {result: filteredProv, done: true}
             }
         case GET_CAMPINGS_LOCALIDADES:
             const allCampys: Campings[] = state.allCampings
@@ -164,7 +164,7 @@ function rootReducer(state: any = initialState, action: any): any {
             })
             return {
                 ...state,
-                campings: filteredLocal,
+                campings: {result: filteredLocal, done: true}
             }
         case GET_DETAILS:
             return {
@@ -179,13 +179,13 @@ function rootReducer(state: any = initialState, action: any): any {
                 localidad: 0
             }
         case FILTER_CATEGORIA:
-            const campys: Campings[] = state.campings
-            const filterCampys = campys.filter(c => {
+            const {result}: {result: Campings[], done: boolean}= state.campings
+            const filterCampys = result.filter(c => {
                 return c.id_categoria === action.payload
             })
             return {
                 ...state,
-                campings: filterCampys
+                campings: {result: filterCampys, done: true}
             }
         case CREATE_CAMPING:
             return { ...state }
@@ -206,11 +206,6 @@ function rootReducer(state: any = initialState, action: any): any {
             return {
                 ...state,
                 allCategorias: action.payload
-            }
-        case FILTER_CATEGORIA:
-            return {
-                ...state,
-                categoria: action.payload
             }
         case GET_PERIODO_AGUA:
             return {
@@ -262,6 +257,8 @@ function rootReducer(state: any = initialState, action: any): any {
             } else {
                 filtrosBook = filtrosBook.filter((r: number) => r !== action.payload.value)
             }
+            console.log(state.filtrosBooking);
+            
             return {
                 ...state,
                 filtrosBooking: { ...state.filtrosBooking, [action.payload.name]: filtrosBook }
@@ -346,11 +343,13 @@ function rootReducer(state: any = initialState, action: any): any {
                 fechaIngresoDayjs: null,
                 fechaEgresoDayjs: null
             }
+            
         case GET_FILTERS_CAMPING:
             return {
                 ...state,
                 campings: {result: action.payload, done: true}
             }
+
         case RESET_FILTER_CAMPING: {
             return {
                 ...state,

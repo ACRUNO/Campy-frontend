@@ -1,5 +1,4 @@
 import Footer from "../Footer/Footer";
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import * as React from 'react';
 import Container from '@mui/material/Container';
@@ -34,6 +33,7 @@ const [alertForm, setAlertForm] = useState(false);
 
 
 const [currentPage, setCurrentPage] = useState(1);
+
 const [postsxPage, setPostsxPage] = useState(4);
 const indexLastPost: number = currentPage * postsxPage;
 const indexFirstPost: number = indexLastPost - postsxPage;
