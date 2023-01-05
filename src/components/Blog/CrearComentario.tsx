@@ -1,7 +1,5 @@
 import { Grid, Typography, TextField, Box, Button, Dialog, DialogTitle, DialogContent, Checkbox, FormControlLabel } from '@mui/material';
-import { Container } from '@mui/system';
 import * as React from 'react';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import * as actions from "../../actions/Blog.action"
@@ -9,13 +7,72 @@ import { useNavigate } from 'react-router-dom';
 import Cloudinary from './Cloudinary';
 
 
-export default function CrearComentario() {
+type Props = {
+    id: number}
+
+export default function CrearComentario(props: Props) {
 
     const dispatch: AppDispatch = useDispatch()
+    const user = useSelector((state: RootState) => state.user);
+    const navigate = useNavigate()
+    const [boton, setBoton] = React.useState(true)
+    const [input, setInput] = React.useState<{ comentario: string, usuarioId: number, postId: number }>({
+        comentario: '',
+        usuarioId: 0,
+        postId: props.id
+    })
+
+    const [habilitar, setHabilitar] = React.useState<boolean>(true)
+
+
+    const handleChangeComentario = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setInput({
+            ...input,
+            comentario: e.target.value,
+            usuarioId: user.id
+        })
+        if (!user.id) { setHabilitar(false) }
+        if (input.comentario.length)
+            setBoton(false)
+    }
+
+
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        if (habilitar == true)
+            dispatch(actions.crearComentario(input, user.token))
+
+        setInput({
+            ...input,
+            comentario: ""
+        })
+        window.location.reload()
+    /* navigate(`/blog/${props.id}`) */
+    }
+
 
     return (
-        <Grid>
-            <Typography>COMENTAR</Typography>
-        </Grid>
+        <React.Fragment>
+            <Grid container spacing={2} display="flex" flexDirection="column" alignItems="stretch" sx={{ mt: 1, pr: 2 }} >
+                <Grid item xs={12}>
+                    <TextField
+                        color="secondary"
+                        required
+                        fullWidth
+                        id="Comentario"
+                        label="Comentar"
+                        name="Comentario"
+                        multiline
+                        minRows={10}
+                        onChange={(e) => { handleChangeComentario(e) }}
+                    />
+                </Grid>
+                <Grid display="flex" justifyContent="flex-end" sx={{ mt: 1 }}>
+                    <Button disabled={boton} color="secondary" variant='contained' id='Crear' sx={{ mt: 1 }} onClick={(e) => { handleSubmit(e) }} value="Crear comentario">Crear comentario</Button>
+                </Grid>
+            </Grid>
+        </React.Fragment>
+
+
     )
 }

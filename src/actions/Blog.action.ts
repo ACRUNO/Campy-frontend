@@ -130,10 +130,13 @@ export function crearPost(data:{titulo:string, texto:string,imagenes:string[], u
     }
 }
 
-export function crearComentario() {
+export function crearComentario(data:{ comentario: string, usuarioId: number, postId: number},token: string) {
     return async function (dispatch: AppDispatch) {
         try {
-            let result = await axios.post('/api/blog/comentario');
+            let result = await axios.post('/api/blog/comentario', data, 
+            {
+                headers: { authorization: token }
+            });
             return dispatch({
                 type: CREATE_COMENTARIO,
                 payload: result.data
