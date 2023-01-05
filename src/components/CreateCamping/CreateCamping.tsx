@@ -20,7 +20,6 @@ import { AlertType } from "../../auxiliar";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Inputs, PreInputsValues } from "../../reducer/estados";
 import { updateCamping } from "../../actions/Camping.action";
-import { join } from "path";
 
 
 
