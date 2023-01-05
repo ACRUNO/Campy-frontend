@@ -52,7 +52,7 @@ function App() {
           <Route path="/map" element={<Mapa />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/create" element={user ? <CreateCamping preInputValues={null} /> : <div>a esperar chaval</div>} />
-          <Route path="/update" element={<UpdateCamping />} />
+          <Route path="/update" element={user ? <UpdateCamping /> : <div>a esperar chaval</div>} />
           <Route path="/about" />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
