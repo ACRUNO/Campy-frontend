@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import * as actions from "../../actions/Blog.action"
 import { useNavigate } from 'react-router-dom';
-import Cloudinary from './Cloudinary';
 
 
 type Props = {
-    id: number}
+    id: number,
+    reload: number,
+    setReload: React.Dispatch<React.SetStateAction<number>>
+}
 
 export default function CrearComentario(props: Props) {
 
@@ -46,8 +48,7 @@ export default function CrearComentario(props: Props) {
             ...input,
             comentario: ""
         })
-        window.location.reload()
-    /* navigate(`/blog/${props.id}`) */
+        props.setReload(props.reload+1)  
     }
 
 
@@ -62,8 +63,9 @@ export default function CrearComentario(props: Props) {
                         id="Comentario"
                         label="Comentar"
                         name="Comentario"
+                        value={input.comentario}
                         multiline
-                        minRows={10}
+                        minRows={5}
                         onChange={(e) => { handleChangeComentario(e) }}
                     />
                 </Grid>

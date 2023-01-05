@@ -47,14 +47,14 @@ const initialState: {
     reviews: { id: number, puntaje: number, username: string, fecha: string, comentario: string }[],
     campingBooking: Reservas[],
     popUpCards: boolean,
-    cardInfoMap: { id: number, nombre_camping: string, imagenes: string, descripcion: string },
-    allPosts: allPosts[],
-    postbuscados: allPosts[],
-    postscomentados: allPosts[],
-    postsvistos: allPosts[],
-    post: { id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios: { foto: string, username: string, comentario: string, createdAt: string }[] } | {}
-    idReserva: number
-    detailReserv: { day1: number, alldate: string, day2: number, alldate2: string, stay: number, kids: number, travellers: number, total: number, idRes: any }[]
+    cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
+    allPosts:allPosts[],
+    postbuscados:allPosts[],
+    postscomentados:allPosts[],
+    postsvistos:allPosts[],
+    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{id: number, foto: string, username: string, comentario: string, createdAt: string}[]} | {}
+    idReserva : number
+    detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
 } = {
 
     //ESTADOS GLOBALES

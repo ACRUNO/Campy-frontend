@@ -16,16 +16,18 @@ interface PostDetail {
     titulo: string,
     texto: string,
     imagenes: Array<string>,
-    comentarios: { username: string, foto: string, comentario: string, createdAt: string }[]
+    comentarios: { id: number, username: string, foto: string, comentario: string, createdAt: string }[]
+    reload: number,
+    setReload: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function Detail(props: PostDetail) {
 
     return (
-        <Grid item xs={12} md={10}>
+        <Grid item xs={12} md={9}>
             <Card sx={{ display: 'flex'}}>
                 <CardContent sx={{ flex: 1 }}>
-                    <Typography component="h2" variant="h3" pb={4}>{props.titulo}</Typography>
+                    <Typography component="h2" variant="h4" pb={4} /* fontSize={30} */>{props.titulo}</Typography>
 
                     <Grid display="flex" alignItems="center" rowSpacing={3} justifyContent="space-between" pb={3}>
                     <Grid display="flex" alignItems="center">
@@ -35,7 +37,7 @@ export default function Detail(props: PostDetail) {
                     <Typography variant="subtitle1" color="text.secondary">{props.fecha}</Typography>
                     </Grid>
 
-                    <Typography variant="h6" pb={2}>{props.texto}</Typography>
+                    <Typography variant="h6" pb={2} fontSize={18}>{props.texto}</Typography>
                     {props.imagenes?.map(e => (
                         <Box sx={{width: '100%'}} pt={1} component="img" src={e}></Box>
                     ))}
@@ -59,7 +61,7 @@ export default function Detail(props: PostDetail) {
                             </List>
                         </Grid>
                     ))}
-                    <CrearComentario id={props.id}/>
+                    <CrearComentario id={props.id} reload={props.reload} setReload={props.setReload}/>
                 </CardContent>
             </Card>
         </Grid>
