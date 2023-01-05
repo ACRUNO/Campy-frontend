@@ -1,7 +1,7 @@
 import { FILTER_PARCELA, USUARIOS_DASH, SET_DETAIL_RESERV, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP, FILTER_INGRESO_MAP, FILTER_EGRESO_MAP, ZOOM_OUT_MAP, CLEAN_DETAILS, GET_ALL_LOCALIDADES, RESET_FILTER_CAMPING } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
-import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas } from './estados';
+import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas, allPosts } from './estados';
 import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME, GET_RESERVAS_CAMPING, CLEAN_RESERVAS_CAMPING } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS, SUBMIT_REVIEW } from "../actions/Reviews.action";
@@ -51,6 +51,8 @@ const initialState: {
     allPosts: { titulo: string, foto: string, username: string, fecha: string, texto: string, }[],
     postbuscados: { titulo: string, foto: string, username: string, fecha: string, texto: string }[],
     post: { id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios: { foto: string, username: string, comentario: string, createdAt: string }[] } | {}
+    postscomentados: [],
+    postsvistos: [],
     idReserva: number
     detailReserv: { day1: number, alldate: string, day2: number, alldate2: string, stay: number, kids: number, travellers: number, total: number, idRes: any }[]
 } = {
@@ -117,6 +119,8 @@ const initialState: {
     allPosts: [],
     post: {},
     postbuscados: [],
+    postscomentados: [],
+    postsvistos: [],
     idReserva: 0,
     detailReserv: []
 };
@@ -531,10 +535,15 @@ function rootReducer(state: any = initialState, action: any): any {
                 cardInfoMap: action.payload
             }
         case GET_ALLPOSTS:
+            var posts = action.payload.sort((a: allPosts, b: allPosts) => (new Date(a.fecha).valueOf() < new Date(b.fecha).valueOf()) ? 1 : ((new Date(b.fecha).valueOf() < new Date(a.fecha).valueOf()) ? -1 : 0));
+            var postscom = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_comentarios < b.cant_comentarios) ? 1 : (b.cant_comentarios < a.cant_comentarios) ? -1 : 0).slice(0, 4);
+            var postsvis = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_visualizaciones < b.cant_visualizaciones) ? 1 : (b.cant_visualizaciones < a.cant_visualizaciones) ? -1 : 0).slice(0, 4);
             return {
                 ...state,
-                allPosts: action.payload,
-                postbuscados: action.payload
+                allPosts: posts,
+                postbuscados: posts,
+                postscomentados: postscom,
+                postsvistos: postsvis
             }
         case GET_POST:
             return {
@@ -547,9 +556,9 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state }
         case BUSCAR_POSTS:
             if (action.payload.length > 0) {
-                var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, }[] = state.allPosts.filter((p: { titulo: string, username: string, foto: string, fecha: string, texto: string, }) => p.titulo.toLowerCase().includes(action.payload.toLowerCase()))
+                var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }[] = state.allPosts.filter((p: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }) => p.titulo.toLowerCase().includes(action.payload.toLowerCase()))
             }
-            else { var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, }[] = state.allPosts }
+            else { var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }[] = state.allPosts }
             return {
                 ...state,
                 postbuscados: postsBuscados
