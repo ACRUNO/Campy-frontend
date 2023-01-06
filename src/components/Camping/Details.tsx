@@ -48,6 +48,7 @@ export default function Details() {
           sx={{
             width: '100%',
             maxWidth: 360,
+
           }}
         >
           <ListItem sx={{ minWidth: 300 }}>

@@ -25,7 +25,7 @@ export default function MainFeaturedPost() {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundImage: `url(${randomPhoto})`,
-        opacity: 0.65
+        // opacity: 0.65
       }}
     >
 
@@ -39,7 +39,7 @@ export default function MainFeaturedPost() {
               pr: { md: 0 },
             }}
           >
-            <Typography component="h1" variant="h3" color="inherit"  >
+            <Typography component="h1" variant="h3" color="inherit" sx={{ textShadow: "5px 2px 36px #070707" }} >
               Bienvenidos al blog de Campy
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>

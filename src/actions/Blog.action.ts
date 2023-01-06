@@ -10,6 +10,8 @@ export const GET_POST_COMENTARIOS: string = 'GET_POST_COMENTARIOS'
 export const CREATE_POST: string = 'CREATE_POST'
 export const CREATE_COMENTARIO: string = 'CREATE_COMENTARIO '
 export const BUSCAR_POSTS = 'BUSCAR_POSTS';
+export const VISITAS = 'VISITAS';
+export const LIMPIAR_DETALLE = 'LIMPIAR_DETALLE';
 
 
 // TRAE TODOS LOS POSTS
@@ -17,7 +19,7 @@ export function getAll_posts(): ThunkAction<void, RootState, unknown, AnyAction>
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.get('/api/blog');
+            let json = await axios.get(`/api/blog`);
             return dispatch({
                 type: GET_ALLPOSTS,
                 payload: json.data
@@ -33,7 +35,7 @@ export function getPostById(id: any): ThunkAction<void, RootState, unknown, AnyA
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.get(`/api/blog/${id}`);
+            let json = await axios.get(`/api/blog/${id}`);
             return dispatch({
                 type: GET_POST,
                 payload: json.data
@@ -49,7 +51,7 @@ export function getImagenesByPostId(id: number): ThunkAction<void, RootState, un
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.get(`/api/blog/imagenes/${id}`);
+            let json = await axios.get(`/api/blog/imagenes/${id}`);
             return dispatch({
                 type: GET_POST_IMAGENES,
                 payload: json.data
@@ -65,7 +67,7 @@ export function getComentariosByPostId(id: number): ThunkAction<void, RootState,
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.get(`/api/blog/comentarios/${id}`);
+            let json = await axios.get(`/api/blog/comentarios/${id}`);
             return dispatch({
                 type: GET_POST_COMENTARIOS,
                 payload: json.data
@@ -81,7 +83,7 @@ export function modificarPost(id: number, token: string): ThunkAction<void, Root
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api//blog/${id}`, {
+            let json = await axios.put(`/api//blog/${id}`, {
                 headers: { authorization: token }
             });
             return dispatch({
@@ -99,7 +101,7 @@ export function modificarComentario(id: number, token: string): ThunkAction<void
 
     return async function (dispatch: AppDispatch) {
         try {
-            var json = await axios.put(`/api//blog/comentarios/${id}`, {
+            let json = await axios.put(`/api//blog/comentarios/${id}`, {
                 headers: { authorization: token }
             });
             return dispatch({
@@ -112,10 +114,10 @@ export function modificarComentario(id: number, token: string): ThunkAction<void
     }
 }
 
-export function crearPost(data:{titulo:string, texto:string,imagenes:string[], usuarioId:number},token: string) {
+export function crearPost(data: { titulo: string, texto: string, imagenes: string[], usuarioId: number }, token: string) {
     return async function (dispatch: AppDispatch) {
         try {
-            let result = await axios.post('/api/blog/create',data,
+            let result = await axios.post('/api/blog/create', data,
                 {
                     headers: { authorization: token }
                 });
@@ -130,10 +132,13 @@ export function crearPost(data:{titulo:string, texto:string,imagenes:string[], u
     }
 }
 
-export function crearComentario() {
+export function crearComentario(data: { comentario: string, usuarioId: number, postId: number }, token: string) {
     return async function (dispatch: AppDispatch) {
         try {
-            let result = await axios.post('/api/blog/comentario');
+            let result = await axios.post('/api/blog/comentario', data,
+                {
+                    headers: { authorization: token }
+                });
             return dispatch({
                 type: CREATE_COMENTARIO,
                 payload: result.data
@@ -145,6 +150,26 @@ export function crearComentario() {
     }
 }
 
-export function getPosts_byname(name: string){
-    return { type: BUSCAR_POSTS, payload: name}    
+export function getPosts_byname(name: string) {
+    return { type: BUSCAR_POSTS, payload: name }
+}
+
+export function visualizaciones(id: number, data: { visitas: number }): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            let json = await axios.put(`/api/blog/visualizaciones/${id}`, data);
+            return dispatch({
+                type: VISITAS,
+                payload: json.data
+
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function limpiarDetalle() {
+    return { type: LIMPIAR_DETALLE }
 }

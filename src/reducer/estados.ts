@@ -83,16 +83,28 @@ export const Campys = {
 };
 
 export type User = {
-  id: number;
-  nombre_completo: string;
-  email: string;
-  numero_celular: string | null;
-  dni: string | null;
-  direccion: string | null;
-  foto: string | null;
-  tipo: string;
-  token: string;
-};
+  id: number,
+  nombre_completo: string,
+  email: string,
+  numero_celular: string | null,
+  dni: string | null,
+  direccion: string | null,
+  foto: string | null,
+  tipo: string,
+  token: string
+}
+
+export type allPosts = {
+  id: number,
+  titulo: string,
+  foto: string,
+  username: string,
+  fecha: string,
+  texto: string,
+  cant_comentarios: number,
+  cant_visualizaciones: number
+}
+
 
 export type FavoritesCampings = { id: number; nombre: string; imagen: string };
 
@@ -218,3 +230,11 @@ export type Reservas = {
   nombre_camping: string;
   id_estado: string;
 };
+
+
+export type Reviews = {
+  usuario: number | null;
+  camping: number | undefined;
+  puntaje: number | null;
+  comentario: string;
+}

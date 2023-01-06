@@ -1,29 +1,29 @@
 import React, { useCallback, useState } from "react";
 import { PieChart, Pie, Sector } from "recharts";
 import { VERDE, VERDE_CLARO, VERDE_OSCURO } from '../../../helpers/colors';
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../../../store/index';
 import { useEffect } from "react";
 import * as actions from "../../../../actions/Dash.admin.action";
-import { Typography, Box} from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 
 export default function Torta() {
   const dispatch: AppDispatch = useDispatch()
 
-  const datos_graftorta:{provincias: string,cant_campings: number}[] = useSelector((state: RootState) => state.datos_graftorta);
+  const datos_graftorta: { provincias: string, cant_campings: number }[] = useSelector((state: RootState) => state.datos_graftorta);
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = useCallback(
-    (_ :any, index:any) => {
+    (_: any, index: any) => {
       setActiveIndex(index);
     },
     [setActiveIndex]
   );
 
-  const calculartotal= (props:{provincias: string,cant_campings: number}[] )=>{
-    let total=0
-    for(let i=0; i<datos_graftorta.length; i++){
-      total=total + datos_graftorta[i].cant_campings
+  const calculartotal = (props: { provincias: string, cant_campings: number }[]) => {
+    let total = 0
+    for (let i = 0; i < datos_graftorta.length; i++) {
+      total = total + datos_graftorta[i].cant_campings
     }
     return total
   }
@@ -53,7 +53,7 @@ export default function Torta() {
     const ex = mx + (cos >= 0 ? 1 : -1) * 22;
     const ey = my;
     const textAnchor = cos >= 0 ? "start" : "end";
-  
+
     return (
       <g>
         <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
@@ -102,27 +102,27 @@ export default function Torta() {
     );
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(actions.getCampsxprov())
-  },[dispatch])
+  }, [dispatch])
 
   return (
-    <Box>
-    <PieChart width={490} height={380} >
-      <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={datos_graftorta}
-        cx={240}
-        cy={200}
-        innerRadius={60}
-        outerRadius={100}
-        fill="#A4BE7B"
-        dataKey="cant_campings"
-        onMouseEnter={onPieEnter}
-      />
-    </PieChart>
-    <Typography align="center">Total de campings: {calculartotal(datos_graftorta)}</Typography>
+    <Box sx={{ align: "center", pl: 2 }}>
+      <PieChart width={510} height={380} >
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          data={datos_graftorta}
+          cx={250}
+          cy={200}
+          innerRadius={60}
+          outerRadius={100}
+          fill="#A4BE7B"
+          dataKey="cant_campings"
+          onMouseEnter={onPieEnter}
+        />
+      </PieChart>
+      <Typography align="center">Total de campings: {calculartotal(datos_graftorta)}</Typography>
     </Box>
   );
 }

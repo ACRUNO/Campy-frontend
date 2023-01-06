@@ -1,66 +1,78 @@
 import React from "react";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Grid} from '@mui/material';
+import { Grid } from '@mui/material';
 
 import Link from '@mui/material/Link';
 import Style from "./footer.module.css"
+import { useNavigate } from "react-router-dom";
 
 
 function Copyright(props: any) {
+
+
+
+
   return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-          {'Copyright © '}
-          <Link color="inherit" href="http://localhost:3000/">
-              CAMPY S.A.
-          </Link>{' '}
-          {new Date().getFullYear()}
-          {'.'}
-      </Typography>
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="http://localhost:3000/">
+        CAMPY S.A.
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }
 
 
 export default function Footer() {
+  let navigate: any = useNavigate();
 
+  let handleAbout = () => {
+    navigate("/aboutus")
+    window.scrollTo(0, 0);
+  }
 
   return (
-    <Box className={Style.footer} sx={{ p: '1rem 0', bgcolor: 'rgb(245, 245, 245)'}} component="footer" >
-        <Grid container justifyContent="center" sx={{pt: 5}} >
-          <Box className={Style.img}
+    <Box className={Style.footer} sx={{ p: '1rem 0', bgcolor: 'rgb(245, 245, 245)' }} component="footer" >
+      <Grid container justifyContent="center" sx={{ pt: 5 }} >
+        <Box className={Style.img}
           component="img"
           sx={{
             ml: "1%",
           }}
           alt="Logo"
-          src={"https://res.cloudinary.com/pfcampy/image/upload/v1670849448/campy/logo_CAMPY-BLANCO_hn507u.png"}/>
+          src={"https://res.cloudinary.com/pfcampy/image/upload/v1670849448/campy/logo_CAMPY-BLANCO_hn507u.png"} />
+      </Grid>
+
+      <Grid container sx={{ p: 3 }}>
+        <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{ p: 0.5 }} >
+          <Typography sx={{ cursor: "pointer" }}
+            onClick={handleAbout}
+            variant="h5" component="h6" textAlign='center'
+          > Quienes Somos
+          </Typography>
         </Grid>
 
-        <Grid container sx={{p: 3}}>
-             <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{p: 0.5}} > 
-              <Typography 
-                  variant="h5" component="h6" textAlign='center'                  
-                  > Quienes Somos
-              </Typography>
-             </Grid> 
-
-             <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{p: 0.5}}> 
-              <Typography 
-                   variant="h5" component="h6"
-                   textAlign='center'> Preguntas Frecuentes
-              </Typography>
-              </Grid> 
-
-            <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{p:0.5}}> 
-              <Typography variant="h5" component="h6"
-                  textAlign='center'> Contacto
-              </Typography>
-            </Grid> 
+        <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{ p: 0.5 }}>
+          <Typography sx={{ cursor: "pointer" }}
+            variant="h5" component="h6"
+            textAlign='center'> Preguntas Frecuentes
+          </Typography>
         </Grid>
-          
-        <Copyright variant="h6" component="h6" sx={{ mt: 5, color: "white"}} />
+
+        <Grid item xs={12} sm={12} md={4} justifyContent='center' alignItems='center' sx={{ p: 0.5 }}>
+          <Typography variant="h5" component="h6"
+            sx={{ cursor: "pointer" }}
+            textAlign='center'> Contacto
+          </Typography>
+        </Grid>
+      </Grid>
+
+      <Copyright variant="h6" component="h6" sx={{ mt: 5, color: "white" }} />
     </Box>
-    
-    
+
+
   );
 }
