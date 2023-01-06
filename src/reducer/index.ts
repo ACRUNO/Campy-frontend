@@ -6,7 +6,7 @@ import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCA
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
 import { DISABLE_OWNER_CAMPING } from "../actions/Owner.action";
-import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO } from "../actions/Blog.action";
+import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO, LIMPIAR_DETALLE } from "../actions/Blog.action";
 import { POST_RESERV } from "../actions/Checkout.action";
 
 const initialState: {
@@ -535,13 +535,14 @@ function rootReducer(state: any = initialState, action: any): any {
                 cardInfoMap: action.payload
             }
         case GET_ALLPOSTS:
-            var posts = action.payload.sort((a: allPosts, b: allPosts) => (new Date(a.fecha).valueOf() < new Date(b.fecha).valueOf()) ? 1 : ((new Date(b.fecha).valueOf() < new Date(a.fecha).valueOf()) ? -1 : 0));
-            var postscom = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_comentarios < b.cant_comentarios) ? 1 : (b.cant_comentarios < a.cant_comentarios) ? -1 : 0).slice(0, 4);
-            var postsvis = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_visualizaciones < b.cant_visualizaciones) ? 1 : (b.cant_visualizaciones < a.cant_visualizaciones) ? -1 : 0).slice(0, 4);
+            //no mover de lugar que se rompe!
+            let postsvis = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_visualizaciones < b.cant_visualizaciones) ? 1 : (b.cant_visualizaciones < a.cant_visualizaciones) ? -1 : 0).slice(0, 4);
+            let postscom = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_comentarios < b.cant_comentarios) ? 1 : (b.cant_comentarios < a.cant_comentarios) ? -1 : 0).slice(0, 4);
+            let postsxfecha = action.payload.sort((a: allPosts, b: allPosts) => (a.id < b.id) ? 1 : (b.id < a.id) ? -1 : 0);
             return {
                 ...state,
-                allPosts: posts,
-                postbuscados: posts,
+                allPosts: postsxfecha,
+                postbuscados: postsxfecha,
                 postscomentados: postscom,
                 postsvistos: postsvis
             }
@@ -569,6 +570,12 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state, detailReserv: action.payload }
         case CLEAN_DETAILS:
             return { ...state, detailCamping: [], detailReserv: [] }
+        case LIMPIAR_DETALLE:
+            return {
+                ...state,
+                post: {}
+            }
+
 
         default: return { ...state }
     }

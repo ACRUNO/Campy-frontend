@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { useEffect, useState } from "react";
-import { getPostById } from "../../actions/Blog.action";
+import { getPostById, limpiarDetalle } from "../../actions/Blog.action";
 import { useParams } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import { Box, Container } from "@mui/system";
@@ -31,23 +31,26 @@ export default function Detalle() {
     } = useSelector((state: RootState) => state.post)
 
     useEffect(() => {
-        dispatch(getPostById(params.id))
+        dispatch(getPostById(params.id));
+        return () => {
+            dispatch(limpiarDetalle())
+        }
     }, [dispatch, params.id, reload])
-    console.log(post);
+
 
     return (
         <Box>
-        <Container maxWidth="lg">
-        <Grid>
-            <MainFeaturedPost/>
-            <Grid container columnSpacing={4} display="flex"  justifyContent="space-between" sx={{mb:4}}>
-          </Grid>
-          <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{mb:4}} >
-          <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date (post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios} reload={reload} setReload={setReload}/>
-          </Grid>
-        </Grid>
-        </Container>
-        <Footer/>
+            <Container maxWidth={false} sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
+                <Grid>
+                    <MainFeaturedPost />
+                    <Grid container columnSpacing={4} display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
+                    </Grid>
+                    <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{ mb: 4 }} >
+                        <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date(post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios} reload={reload} setReload={setReload} />
+                    </Grid>
+                </Grid>
+            </Container>
+            <Footer />
         </Box>
     )
 };
