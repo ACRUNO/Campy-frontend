@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Typography, Slider, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button } from '@mui/material';
 import { ChangeEvent, MouseEvent } from 'react'
-import { FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
+import { diasReservadosBooking, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { Campings } from '../../reducer/estados';
@@ -18,6 +18,7 @@ export default function FiltrosLaterales(props: Props) {
     const allCategorias: { id: number, categoria: string, cantidad_estrellas: number, descripcion_categoria: string }[] = useSelector((state: RootState) => state.allCategorias)
     const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
     const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
+    const diasReservados: number = useSelector((state: RootState) => state.diasReservadosBooking)
 
 
     useEffect(() => {
@@ -27,13 +28,13 @@ export default function FiltrosLaterales(props: Props) {
 
 
     useEffect(() => {
-        dispatch(getAllCampings())  
-    },[dispatch])
+        dispatch(getAllCampings())
+    }, [dispatch])
 
 
     const precioCamps = allCampings.map(c => c.precio)
 
-    
+
     var min = Math.min(...precioCamps)
     var max = Math.max(...precioCamps)
 
@@ -41,15 +42,15 @@ export default function FiltrosLaterales(props: Props) {
 
 
     useEffect(() => {
-        if(!allCampings.length) return
+        if (!allCampings.length) return
         const precioCamps = allCampings.map(c => c.precio)
 
         var min = Math.min(...precioCamps)
         var max = Math.max(...precioCamps)
 
-        setPrecioLocal([min,max])
+        setPrecioLocal([min, max])
         // dispatch(filtrosPrecios('precio', precioLocal))
-    },[allCampings])
+    }, [allCampings])
 
 
 
@@ -78,7 +79,8 @@ export default function FiltrosLaterales(props: Props) {
         dispatch(resetFiltros());
         setPrecioLocal([min, max])
         props.setCurrentPage(1)
-        
+        dispatch(diasReservadosBooking(0))
+
     }
 
     const handleRadio = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,28 +106,28 @@ export default function FiltrosLaterales(props: Props) {
             >Reset Filtros</Button>
 
             <hr />
-            <Typography >Precio</Typography>
+            <Typography >Precio por dia</Typography>
 
 
-            <Box sx={{display:"flex",justifyContent:"flex-start",alignItems:"center",columnGap:"3.3rem"}}>
+            <Box sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center", columnGap: "3.3rem" }}>
 
-            <Typography >${precioLocal[0]}- +${precioLocal[1]}</Typography>
-            <Button  onClick={handleButtonPrecio} sx={{ fontSize:"0.625rem",p:"0.313rem"}} variant="contained" color="success">Aplicar</Button>
+                <Typography >${precioLocal[0]}- +${precioLocal[1]}</Typography>
+                <Button onClick={handleButtonPrecio} sx={{ fontSize: "0.625rem", p: "0.313rem" }} variant="contained" color="success">Aplicar</Button>
 
             </Box>
 
-                <Slider
-                    sx={{ ml:"0px" , mt: "1rem", mb: "0.5rem", width: "90%" }}
-                    name="precio"
-                    value={precioLocal}
-                    onChange={(e, value) => handlePrecio(e, value)}
-                    valueLabelDisplay="off"
-                    color="secondary"
-                    min={min}
-                    max={max}
-                />
+            <Slider
+                sx={{ ml: "0px", mt: "1rem", mb: "0.5rem", width: "90%" }}
+                name="precio"
+                value={precioLocal}
+                onChange={(e, value) => handlePrecio(e, value)}
+                valueLabelDisplay="off"
+                color="secondary"
+                min={min}
+                max={max}
+            />
 
-            <hr/>
+            <hr />
 
             <Typography >Reviews</Typography>
 
@@ -200,6 +202,7 @@ export default function FiltrosLaterales(props: Props) {
                     }
 
                 />
+
             </FormGroup>
 
 
@@ -212,7 +215,7 @@ export default function FiltrosLaterales(props: Props) {
                 {
                     allCategorias.map(c => {
                         return (
-                            <FormControlLabel key={c.id+1}
+                            <FormControlLabel key={c.id + 1}
                                 control={<Checkbox onChange={handleCheck} value={c.id} color="secondary" name="id_categoria" checked={filtrosBook.id_categoria.includes(c.id)} />}
                                 label={c.categoria}
                             />

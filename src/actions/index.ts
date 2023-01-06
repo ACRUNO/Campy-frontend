@@ -33,22 +33,23 @@ export const RESET_FILTROS: string = 'RESET_FILTROS'
 export const GET_FILTERS_CAMPING: string = 'GET_FILTERS_CAMPING'
 export const FILTER_INGRESO: string = 'FILTER_INGRESO'
 export const FILTER_EGRESO: string = 'FILTER_EGRESO'
-export const FILTER_PARCELA:string = 'FILTER_PARCELA'
-export const CLEAN_CAMPINGS_DASH:string = "CLEAN_CAMPINGS_DASH"
-export const LINK_MAP:string = 'LINK_MAP'
+export const FILTER_PARCELA: string = 'FILTER_PARCELA'
+export const CLEAN_CAMPINGS_DASH: string = "CLEAN_CAMPINGS_DASH"
+export const LINK_MAP: string = 'LINK_MAP'
 export const POP_UP_CARD: string = 'POP_UP_CARD'
 export const SET_CARD_INFO: string = 'SET_CARD_INFO'
 export const FILTER_PROVINCIA_MAP: string = 'FILTER_PROVINCIA_MAP'
-export const FILTER_LOCALIDAD_MAP:string= 'FILTER_LOCALIDAD_MAP'
-export const FILTER_INGRESO_MAP:string ='FILTER_INGRESO_MAP'
-export const FILTER_EGRESO_MAP:string='FILTER_EGRESO_MAP'
-export const NUM_FILTERS_MAP:string='NUM_FILTERS_MAP'
-export const RESET_NUM_FILTERS_MAP:string='RESET_NUM_FILTERS_MAP'
-export const ZOOM_OUT_MAP:string='ZOOM_OUT_MAP'
-export const SET_DETAIL_RESERV :string= 'SET_DETAIL_RESERV'
-export const GET_ALL_LOCALIDADES:string = "GET_ALL_LOCALIDADES"
-export const CLEAN_DETAILS :string= 'CLEAN_DETAILS'
+export const FILTER_LOCALIDAD_MAP: string = 'FILTER_LOCALIDAD_MAP'
+export const FILTER_INGRESO_MAP: string = 'FILTER_INGRESO_MAP'
+export const FILTER_EGRESO_MAP: string = 'FILTER_EGRESO_MAP'
+export const NUM_FILTERS_MAP: string = 'NUM_FILTERS_MAP'
+export const RESET_NUM_FILTERS_MAP: string = 'RESET_NUM_FILTERS_MAP'
+export const ZOOM_OUT_MAP: string = 'ZOOM_OUT_MAP'
+export const SET_DETAIL_RESERV: string = 'SET_DETAIL_RESERV'
+export const GET_ALL_LOCALIDADES: string = "GET_ALL_LOCALIDADES"
+export const CLEAN_DETAILS: string = 'CLEAN_DETAILS'
 export const RESET_FILTER_CAMPING: string = 'RESET_FILTER_CAMPING';
+export const DIAS_RESERVADOS_BOOKING: string = 'DIAS_RESERVADOS_BOOKING'
 
 
 
@@ -209,9 +210,9 @@ export function getDetails(id: any): ThunkAction<void, RootState, unknown, AnyAc
 }
 
 
-export function filterCategoria(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function filterCategoria(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             return dispatch({
                 type: FILTER_CATEGORIA,
@@ -225,7 +226,7 @@ export function filterCategoria(id:number): ThunkAction<void, RootState, unknown
 
 export function getPeriodoAgua(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get('/api/campings/agua_caliente');
             return dispatch({
@@ -238,9 +239,9 @@ export function getPeriodoAgua(): ThunkAction<void, RootState, unknown, AnyActio
     }
 }
 
-export function filterPeriodoAgua(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function filterPeriodoAgua(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             return dispatch({
                 type: FILTER_PERIODO_AGUA,
@@ -254,7 +255,7 @@ export function filterPeriodoAgua(id:number): ThunkAction<void, RootState, unkno
 
 export function getPeriodoAbierto(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get('/api/campings/abierto');
             return dispatch({
@@ -267,9 +268,9 @@ export function getPeriodoAbierto(): ThunkAction<void, RootState, unknown, AnyAc
     }
 }
 
-export function filterPeriodoAbierto(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function filterPeriodoAbierto(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             return dispatch({
                 type: FILTER_PERIODO_ABIERTO,
@@ -283,7 +284,7 @@ export function filterPeriodoAbierto(id:number): ThunkAction<void, RootState, un
 
 export function getAllCategorias(): ThunkAction<void, RootState, unknown, AnyAction> {
 
-    return async function (dispatch:AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get('/api/campings/categorias');
             return dispatch({
@@ -311,13 +312,13 @@ export function getCampings_dash(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
-export function cleanCampings_dash()  {
-            return ({
-                type: CLEAN_CAMPINGS_DASH, 
-            });
+export function cleanCampings_dash() {
+    return ({
+        type: CLEAN_CAMPINGS_DASH,
+    });
 }
 
-export function habilitacion_camping(id:number, habilitacion:number, { token }: {token: string }): ThunkAction<void, RootState, unknown, AnyAction> {
+export function habilitacion_camping(id: number, habilitacion: number, { token }: { token: string }): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
@@ -348,7 +349,7 @@ export function getUsuarios_dash(): ThunkAction<void, RootState, unknown, AnyAct
     }
 }
 
-export function habilitacion_usuario(id:number, habilitacion:number, { token }: {token: string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function habilitacion_usuario(id: number, habilitacion: number, { token }: { token: string }): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.put(`/api/usuarios/deshabilitar/${id}?habilitar=${habilitacion}`, {}, { headers: { authorization: token } });
@@ -363,7 +364,7 @@ export function habilitacion_usuario(id:number, habilitacion:number, { token }: 
     }
 }
 
-export function tipo_usuario(id:number, {token, userType} :{token: string, userType:string}): ThunkAction<void, RootState, unknown, AnyAction> {
+export function tipo_usuario(id: number, { token, userType }: { token: string, userType: string }): ThunkAction<void, RootState, unknown, AnyAction> {
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.put(`/api/usuarios/tipo/${id}`, { userType }, { headers: { authorization: token } });
@@ -374,34 +375,36 @@ export function tipo_usuario(id:number, {token, userType} :{token: string, userT
             })
         } catch (error) {
             console.log(error);
-        }}}
-        
-export function filtrosCombinados(name: string, value: number){
-    const data = {name: name, value: value}
+        }
+    }
+}
+
+export function filtrosCombinados(name: string, value: number) {
+    const data = { name: name, value: value }
     return {
         type: FILTROS_COMBINADOS,
         payload: data
     }
 }
 
-export function filtrosBooleanos(name: string, value: boolean){
-    const data = {name: name, value: value}
+export function filtrosBooleanos(name: string, value: boolean) {
+    const data = { name: name, value: value }
     return {
         type: FILTROS_BOOLEANOS,
         payload: data
     }
 }
 
-export function filtrosPrecios(name: string, value: number | number[]){
-    const data = {name: name, value: value}
+export function filtrosPrecios(name: string, value: number | number[]) {
+    const data = { name: name, value: value }
     return {
         type: FILTROS_PRECIOS,
         payload: data
     }
 }
 
-export function filtrosPrincipales(provincia: number, localidad: number, ingreso: string | undefined, egreso: string | undefined){
-    const data = {provincia: provincia, localidad: localidad, ingreso: ingreso, egreso: egreso}
+export function filtrosPrincipales(provincia: number, localidad: number, ingreso: string | undefined, egreso: string | undefined) {
+    const data = { provincia: provincia, localidad: localidad, ingreso: ingreso, egreso: egreso }
     return {
         type: FILTROS_PRINCIPALES,
         payload: data
@@ -414,34 +417,34 @@ export function resetFiltros() {
     }
 }
 
-export function filterProvinciaMap(provincia: number){
-    return{
+export function filterProvinciaMap(provincia: number) {
+    return {
         type: FILTER_PROVINCIA_MAP,
         payload: provincia
     }
 }
 
-export function filterLocalidadMap(localidad:number){
-    return{
+export function filterLocalidadMap(localidad: number) {
+    return {
         type: FILTER_LOCALIDAD_MAP,
         payload: localidad
     }
 }
 
 
-export function FilterIngresoMap(date:Dayjs | null){
+export function FilterIngresoMap(date: Dayjs | null) {
     return {
         type: FILTER_INGRESO_MAP,
         payload: date
-    } 
+    }
 }
 
 
-export function FilterEgresoMap(date:Dayjs | null){
+export function FilterEgresoMap(date: Dayjs | null) {
     return {
         type: FILTER_EGRESO_MAP,
         payload: date
-    } 
+    }
 }
 
 
@@ -458,32 +461,32 @@ export function getFiltersCamping(filters: filterCamps) {
             return dispatch({
                 type: GET_FILTERS_CAMPING,
                 payload: result.data
-            });         
-            
-        } catch(error: any) {
+            });
+
+        } catch (error: any) {
             console.log(error)
         }
     }
 }
 
 
-export function FilterIngreso(date:Dayjs | null){
+export function FilterIngreso(date: Dayjs | null) {
     return {
         type: FILTER_INGRESO,
         payload: date
-    }   
+    }
 }
 
 
-export function FilterEgreso(date:Dayjs | null){
+export function FilterEgreso(date: Dayjs | null) {
     return {
         type: FILTER_EGRESO,
         payload: date
-    }   
+    }
 }
 
-export function FilterParcela (tamaño : number[]){
-    return{
+export function FilterParcela(tamaño: number[]) {
+    return {
         type: FILTER_PARCELA,
         payload: tamaño
     }
@@ -512,7 +515,7 @@ export function popUpCard(bool: boolean) {
 }
 
 export function setCardInfo(id: number, nombre_camping: string, img: string, desc_camping: string) {
-    let info = {id: id, nombre_camping: nombre_camping, imagenes: img[0], descripcion_camping: desc_camping}
+    let info = { id: id, nombre_camping: nombre_camping, imagenes: img[0], descripcion_camping: desc_camping }
     return {
         type: SET_CARD_INFO,
         payload: info
@@ -521,7 +524,7 @@ export function setCardInfo(id: number, nombre_camping: string, img: string, des
 
 
 
-export function zoomOutMap(){
+export function zoomOutMap() {
     return {
         type: ZOOM_OUT_MAP
     }
@@ -530,21 +533,29 @@ export function zoomOutMap(){
 
 
 
-export function setdetailreserv(day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any) {
-    let info = {day1 , alldate, day2, alldate2, stay, kids, travellers, total}
+export function setdetailreserv(day1: number, alldate: string, day2: number, alldate2: string, stay: number, kids: number, travellers: number, total: number, idRes: any) {
+    let info = { day1, alldate, day2, alldate2, stay, kids, travellers, total }
     return {
         type: SET_DETAIL_RESERV,
         payload: info
     }
-} 
+}
 
 
-export function cleanDetails()  {
+export function cleanDetails() {
     return ({
-        type: CLEAN_DETAILS, 
+        type: CLEAN_DETAILS,
     });
 }
 
 export function resetFilterCamping() {
     return { type: RESET_FILTER_CAMPING }
+}
+
+export function diasReservadosBooking(num: number) {
+    return {
+        type: DIAS_RESERVADOS_BOOKING,
+        payload: num
+    }
+
 }
