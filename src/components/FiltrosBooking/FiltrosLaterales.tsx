@@ -202,6 +202,7 @@ export default function FiltrosLaterales(props: Props) {
                     }
 
                 />
+
             </FormGroup>
 
 
