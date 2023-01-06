@@ -24,7 +24,7 @@ export default function CrearComentario(props: Props) {
         postId: props.id
     })
 
-    const [habilitar, setHabilitar] = React.useState<boolean>(true)
+    const [habilitar, setHabilitar] = React.useState<boolean>(false)
 
 
     const handleChangeComentario = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,9 +33,9 @@ export default function CrearComentario(props: Props) {
             comentario: e.target.value,
             usuarioId: user.id
         })
-        if (!user.id) { setHabilitar(false) }
-        if (input.comentario.length)
-            setBoton(false)
+        if (user.id) { setHabilitar(true) }
+        if (e.target.value.length) { setBoton(false) }
+        if (e.target.value.length === 0) { setBoton(true) }
     }
 
 
@@ -48,7 +48,7 @@ export default function CrearComentario(props: Props) {
             ...input,
             comentario: ""
         })
-        props.setReload(props.reload+1)  
+        props.setReload(props.reload + 1)
     }
 
 

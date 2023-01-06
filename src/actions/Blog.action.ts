@@ -11,6 +11,7 @@ export const CREATE_POST: string = 'CREATE_POST'
 export const CREATE_COMENTARIO: string = 'CREATE_COMENTARIO '
 export const BUSCAR_POSTS = 'BUSCAR_POSTS';
 export const VISITAS = 'VISITAS';
+export const LIMPIAR_DETALLE = 'LIMPIAR_DETALLE';
 
 
 // TRAE TODOS LOS POSTS
@@ -167,4 +168,8 @@ export function visualizaciones(id: number, data: { visitas: number }): ThunkAct
             console.log(error);
         }
     }
+}
+
+export function limpiarDetalle() {
+    return { type: LIMPIAR_DETALLE }
 }
