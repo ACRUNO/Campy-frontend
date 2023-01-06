@@ -1,4 +1,5 @@
-import { FILTER_PARCELA, USUARIOS_DASH, SET_DETAIL_RESERV, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP, FILTER_INGRESO_MAP, FILTER_EGRESO_MAP, ZOOM_OUT_MAP, CLEAN_DETAILS, GET_ALL_LOCALIDADES, RESET_FILTER_CAMPING } from "../actions";
+
+import { FILTER_PARCELA, USUARIOS_DASH, SET_DETAIL_RESERV, CAMPINGS_DASH, GET_PROVINCIAS, GET_ALLCAMPINGS, GET_LOCALIDADES, GET_CAMPINGS_PROVINCIAS, GET_CAMPINGS_LOCALIDADES, GET_DETAILS, FILTER_PROVINCIA, FILTER_LOCALIDAD, CREATE_CAMPING, GET_CATEGORIAS, FILTER_CATEGORIA, GET_PERIODO_AGUA, FILTER_PERIODO_AGUA, GET_PERIODO_ABIERTO, FILTER_PERIODO_ABIERTO, FILTROS_COMBINADOS, FILTROS_BOOLEANOS, FILTROS_PRECIOS, FILTROS_PRINCIPALES, RESET_FILTROS, GET_FILTERS_CAMPING, FILTER_INGRESO, FILTER_EGRESO, CLEAN_CAMPINGS_DASH, LINK_MAP, POP_UP_CARD, SET_CARD_INFO, FILTER_PROVINCIA_MAP, FILTER_LOCALIDAD_MAP, FILTER_INGRESO_MAP, FILTER_EGRESO_MAP, ZOOM_OUT_MAP, CLEAN_DETAILS, GET_ALL_LOCALIDADES, RESET_FILTER_CAMPING, DIAS_RESERVADOS_BOOKING } from "../actions";
 import { LOGIN_USER, LOGOUT_USER } from "../actions/Login.action";
 import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_FAVORITE_CAMPING } from "../actions/User.action";
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas, allPosts } from './estados';
@@ -6,7 +7,7 @@ import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCA
 import { Dayjs } from 'dayjs';
 import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
 import { DISABLE_OWNER_CAMPING } from "../actions/Owner.action";
-import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO } from "../actions/Blog.action";
+import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO, LIMPIAR_DETALLE } from "../actions/Blog.action";
 import { POST_RESERV } from "../actions/Checkout.action";
 
 const initialState: {
@@ -47,14 +48,16 @@ const initialState: {
     reviews: { id: number, puntaje: number, username: string, fecha: string, comentario: string }[],
     campingBooking: Reservas[],
     popUpCards: boolean,
-    cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
-    allPosts:allPosts[],
-    postbuscados:allPosts[],
-    postscomentados:allPosts[],
-    postsvistos:allPosts[],
-    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{id: number, foto: string, username: string, comentario: string, createdAt: string}[]} | {}
-    idReserva : number
-    detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
+    cardInfoMap: { id: number, nombre_camping: string, imagenes: string, descripcion: string },
+    allPosts: { titulo: string, foto: string, username: string, fecha: string, texto: string, }[],
+    postbuscados: { titulo: string, foto: string, username: string, fecha: string, texto: string }[],
+    post: { id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios: { foto: string, username: string, comentario: string, createdAt: string }[] } | {}
+    diasReservadosBooking: number
+    postscomentados: [],
+    postsvistos: [],
+    idReserva: number
+    detailReserv: { day1: number, alldate: string, day2: number, alldate2: string, stay: number, kids: number, travellers: number, total: number, idRes: any }[]
+
 } = {
 
     //ESTADOS GLOBALES
@@ -119,10 +122,12 @@ const initialState: {
     allPosts: [],
     post: {},
     postbuscados: [],
+    diasReservadosBooking: 0,
     postscomentados: [],
     postsvistos: [],
     idReserva: 0,
     detailReserv: []
+
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -431,6 +436,7 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
         case GET_RESERVASCAMPY:
+            console.log(action.payload)
             let ordenado = action.payload.sort((a: { createdAt: string, total: number }, b: { createdAt: string, total: number }) => (new Date(a.createdAt).valueOf() > new Date(b.createdAt).valueOf()) ? 1 : ((new Date(b.createdAt).valueOf() > new Date(a.createdAt).valueOf()) ? -1 : 0))
             console.log(ordenado)
             let dia: Date = new Date(2022, 11, 18)
@@ -534,13 +540,15 @@ function rootReducer(state: any = initialState, action: any): any {
                 cardInfoMap: action.payload
             }
         case GET_ALLPOSTS:
-            var posts = action.payload.sort((a: allPosts, b: allPosts) => (new Date(a.fecha).valueOf() < new Date(b.fecha).valueOf()) ? 1 : ((new Date(b.fecha).valueOf() < new Date(a.fecha).valueOf()) ? -1 : 0));
-            var postscom = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_comentarios < b.cant_comentarios) ? 1 : (b.cant_comentarios < a.cant_comentarios) ? -1 : 0).slice(0, 4);
-            var postsvis = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_visualizaciones < b.cant_visualizaciones) ? 1 : (b.cant_visualizaciones < a.cant_visualizaciones) ? -1 : 0).slice(0, 4);
+
+            //no mover de lugar que se rompe!
+            let postsvis = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_visualizaciones < b.cant_visualizaciones) ? 1 : (b.cant_visualizaciones < a.cant_visualizaciones) ? -1 : 0).slice(0, 4);
+            let postscom = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_comentarios < b.cant_comentarios) ? 1 : (b.cant_comentarios < a.cant_comentarios) ? -1 : 0).slice(0, 4);
+            let postsxfecha = action.payload.sort((a: allPosts, b: allPosts) => (a.id < b.id) ? 1 : (b.id < a.id) ? -1 : 0);
             return {
                 ...state,
-                allPosts: posts,
-                postbuscados: posts,
+                allPosts: postsxfecha,
+                postbuscados: postsxfecha,
                 postscomentados: postscom,
                 postsvistos: postsvis
             }
@@ -555,9 +563,11 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state }
         case BUSCAR_POSTS:
             if (action.payload.length > 0) {
+
                 var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }[] = state.allPosts.filter((p: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }) => p.titulo.toLowerCase().includes(action.payload.toLowerCase()))
             }
             else { var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }[] = state.allPosts }
+
             return {
                 ...state,
                 postbuscados: postsBuscados
@@ -568,6 +578,18 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state, detailReserv: action.payload }
         case CLEAN_DETAILS:
             return { ...state, detailCamping: [], detailReserv: [] }
+        case DIAS_RESERVADOS_BOOKING:
+            return {
+                ...state,
+                diasReservadosBooking: action.payload
+            }
+
+
+        case LIMPIAR_DETALLE:
+            return {
+                ...state,
+                post: {}
+            }
 
         default: return { ...state }
     }

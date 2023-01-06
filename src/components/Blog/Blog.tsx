@@ -82,7 +82,7 @@ export default function Blog() {
           <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ mb: 2, backgroundColor: '#D8E3C5', borderStyle: "double", borderColor: "#273115", borderRadius: 1.5 }}>
             <Typography component="h2" variant="h4" sx={{ mb: 2, pl: 1, pt: 2, textShadow: "5px 2px 36px #070707" }}>Lo más visto</Typography>
             <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" sx={{ pb: 4, pl: 1, pr: 1 }} >
-              {postsVistos?.slice(0, 4).map((p) => (
+              {postsVistos?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} />
               ))}
             </Grid>

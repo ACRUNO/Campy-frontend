@@ -1,7 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Box, Typography, TextField } from '@mui/material';
-import Portada from "./banner1.webp"
 import Style from "./Camping.module.css"
 import Galery from "./portada.jpg"
 import Paper from '@mui/material/Paper';
@@ -59,6 +58,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 
+
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 
@@ -70,6 +70,16 @@ export default function Camping() {
   const detailReserv = useSelector((state: RootState) => state.detailReserv);
   let camp = useSelector((state: any) => state.detailCamping);
   let idReserva = useSelector((state: any) => state.idReserva);
+
+
+
+  const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
+
+
+  const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+
+
+
 
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
@@ -131,6 +141,7 @@ export default function Camping() {
     
     handleAlgo(day1)
     
+
   
       const [validate , setValidate] = React.useState({ 
       day1 : value1 ? value1.date() : 0,
@@ -143,11 +154,15 @@ export default function Camping() {
       total : 0,
     })
   
+
     
     ; */
 
 
   const handleAlgo = (e: any) => {
+
+    setPrice(0)
+
     if (e.target?.extra) {
       { setValidate({ ...validate, [e.target.name]: e.target.value, [e.target.extra]: e.target.extrav }) }
     }
@@ -216,8 +231,6 @@ export default function Camping() {
     let idRes = 2
     dispatch(setdetailreserv(validate.day1, validate.alldate, validate.day2, validate.alldate2, validate.stay, validate.kids, validate.travellers, validate.total, idRes))
 
-    console.log(camp);
-
     if (value1?.month() == value2?.month()) {
       let day1: any = value1?.date();
       let day2: any = value2?.date();
@@ -281,6 +294,8 @@ export default function Camping() {
     handleClickOpen()
     console.log(detailReserv)
 
+    if (open == false) { setPrice(0) }
+
     /*       let data = {
             "fecha_desde_reserva" : "2023/01/10",
             "fecha_hasta_reserva" : "2023/01/11",
@@ -329,24 +344,28 @@ export default function Camping() {
   }
   // hasta ahi 
   return (
-    <Box>
+
+    <Box sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
+
 
 
       <Box className={Style.all}>
+
         <Box className={Style.portadacont}>
           {console.log("hola")}
           <Box
             component="img"
             className={Style.imagencita}
             alt="Logo"
-            src={Portada}
+            src={randomPhoto}
           />
+
           <Box className={Style.text}>
             <Typography variant="h1" color="primary">
               {camp.nombre_camping}
             </Typography>
             <Box className={Style.rankingcont}>
-              <Typography color="primary" component="legend">Ranking</Typography>
+              <Typography color="primary" component="legend">Puntuación  </Typography>
               <Rating name="read-only" value={value} readOnly />
             </Box>
           </Box>
@@ -360,7 +379,17 @@ export default function Camping() {
               className={`${Style['add-fav']} ${favorite ? Style.heart : ''}`.trim()}
             />
           }
+
+
         </Box>
+
+
+
+
+
+
+
+
 
         <Box className={Style.booking}>
           <Box className={Style.imageplace} >
@@ -536,14 +565,16 @@ export default function Camping() {
                   <Stack direction="row" spacing={2}>
 
 
-                    {trueValid() ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
+
+                    {price == 0 ? trueValid() ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
+
                       Generar Cotizacion
                     </Button> : user == null ? <Button sx={{ minWidth: 190 }} onClick={handleCloseR} variant="contained" color="warning">
                       Generar Cotizacion
                     </Button> : <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
                       Generar Cotizacion
                     </Button>
-                    }
+                      : []}
 
                   </Stack>
 
@@ -720,8 +751,11 @@ export default function Camping() {
 
 
 
+        <Box className={Style.detailsComodidades}>
+          <Details />
+        </Box>
 
-        <Details />
+
         <Box className={Style.detailsreviews}>
 
           <Box className={Style.resume}>
@@ -745,7 +779,7 @@ export default function Camping() {
       </Box>
       <Footer />
 
-    </Box>
+    </Box >
 
   )
 }

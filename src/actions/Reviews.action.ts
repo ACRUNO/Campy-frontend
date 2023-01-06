@@ -7,7 +7,7 @@ import { AppDispatch, RootState } from '../store';
 export const GET_CAMPING_REVIEWS: string = "GET_CAMPING_REVIEWS";
 
 
-export function getCampingReviews(id:string | undefined): ThunkAction<void, RootState, unknown, AnyAction> {
+export function getCampingReviews(id: string | undefined): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {

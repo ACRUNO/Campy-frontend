@@ -28,18 +28,8 @@ export default function MainFeaturedPost() {
         // opacity: 0.65
       }}
     >
-      {/* Increase the priority of the hero background image */}
-      {/* {<img style={{ display: 'none' }} src={randomPhoto} alt={"imagen"} />} */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          bottom: 0,
-          right: 0,
-          left: 0,
-          backgroundColor: 'rgba(0,0,0,.3)',
-        }}
-      />
+
+
       <Grid container>
         <Grid item md={6}>
           <Box

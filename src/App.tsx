@@ -18,7 +18,9 @@ import { loginUserWithToken } from './actions/Login.action';
 import Detalle from './components/Blog/Detalle_post';
 import CrearPost from './components/Blog/CrearPost';
 import { getUserFavoriteCampings } from './actions/User.action';
+import AboutUs from './components/AboutUs/AboutUs'
 import UpdateCamping from './components/Dashboards/DashDueño/UpdateCamping';
+import { DejarReviews } from './components/Reviews/DejarReview';
 
 
 
@@ -56,6 +58,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
           <Route path="/blog/crearpost" element={<CrearPost />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/reviews/:id" element={<DejarReviews />} />
 
         </Routes>
       </ThemeProvider>
