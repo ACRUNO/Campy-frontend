@@ -7,9 +7,9 @@ import Box from '@mui/material/Box';
 import { Opacity } from '@mui/icons-material';
 
 
-const logInPhotos: string [] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg","https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
+const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
 
-const randomPhoto:string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
 
 export default function MainFeaturedPost() {
 
@@ -25,7 +25,7 @@ export default function MainFeaturedPost() {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundImage: `url(${randomPhoto})`,
-        opacity: 0.65
+        // opacity: 0.65
       }}
     >
       {/* Increase the priority of the hero background image */}
@@ -49,11 +49,11 @@ export default function MainFeaturedPost() {
               pr: { md: 0 },
             }}
           >
-            <Typography component="h1" variant="h3" color="inherit"  >
+            <Typography component="h1" variant="h3" color="inherit" sx={{ textShadow: "5px 2px 36px #070707" }} >
               Bienvenidos al blog de Campy
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
-              Un espacio para compartir con la comunidad experiencias y recomendaciones sobre el mundo del camping 
+              Un espacio para compartir con la comunidad experiencias y recomendaciones sobre el mundo del camping
             </Typography>
             {/* <Typography variant="subtitle1" color="inherit" paragraph>
               

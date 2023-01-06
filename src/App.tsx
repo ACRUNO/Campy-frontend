@@ -20,6 +20,7 @@ import CrearPost from './components/Blog/CrearPost';
 import { getUserFavoriteCampings } from './actions/User.action';
 import AboutUs from './components/AboutUs/AboutUs'
 import UpdateCamping from './components/Dashboards/DashDueño/UpdateCamping';
+import { DejarReviews } from './components/Reviews/DejarReview';
 
 
 
@@ -52,13 +53,13 @@ function App() {
           <Route path="/map" element={<Mapa />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/create" element={user ? <CreateCamping preInputValues={null} /> : <div>a esperar chaval</div>} />
-          <Route path="/update" element={<UpdateCamping />} />
+          <Route path="/update" element={user ? <UpdateCamping /> : <div>a esperar chaval</div>} />
           <Route path="/about" />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
           <Route path="/blog/crearpost" element={<CrearPost />} />
           <Route path="/aboutus" element={<AboutUs />} />
-
+          <Route path="/reviews/:id" element={<DejarReviews />} />
 
         </Routes>
       </ThemeProvider>

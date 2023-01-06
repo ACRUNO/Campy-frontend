@@ -131,6 +131,7 @@ export default function Camping() {
     
     handleAlgo(day1)
     
+
   
       const [validate , setValidate] = React.useState({ 
       day1 : value1 ? value1.date() : 0,
@@ -143,12 +144,15 @@ export default function Camping() {
       total : 0,
     })
   
+
     
     ; */
 
 
   const handleAlgo = (e: any) => {
+
     setPrice(0)
+
     if (e.target?.extra) {
       { setValidate({ ...validate, [e.target.name]: e.target.value, [e.target.extra]: e.target.extrav }) }
     }
@@ -216,8 +220,7 @@ export default function Camping() {
   const handleCotizacion = (e: any) => {
     let idRes = 2
     dispatch(setdetailreserv(validate.day1, validate.alldate, validate.day2, validate.alldate2, validate.stay, validate.kids, validate.travellers, validate.total, idRes))
-    console.log(menores)
-    console.log(camp)
+
     if (value1?.month() == value2?.month()) {
       let day1: any = value1?.date();
       let day2: any = value2?.date();
@@ -280,7 +283,9 @@ export default function Camping() {
     let trailer = validate?.stay > 0 ? 1 : 0
     handleClickOpen()
     console.log(detailReserv)
+
     if (open == false) { setPrice(0) }
+
     /*       let data = {
             "fecha_desde_reserva" : "2023/01/10",
             "fecha_hasta_reserva" : "2023/01/11",
@@ -329,11 +334,14 @@ export default function Camping() {
   }
   // hasta ahi 
   return (
+
     <Box sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
+
 
 
       <Box className={Style.all}>
         <Box className={Style.portadacont}>
+          {console.log("hola")}
           <Box
             component="img"
             className={Style.imagencita}
@@ -535,7 +543,9 @@ export default function Camping() {
                   <Stack direction="row" spacing={2}>
 
 
+
                     {price == 0 ? trueValid() ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
+
                       Generar Cotizacion
                     </Button> : user == null ? <Button sx={{ minWidth: 190 }} onClick={handleCloseR} variant="contained" color="warning">
                       Generar Cotizacion
