@@ -1,7 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Box, Typography, TextField } from '@mui/material';
-import Portada from "./banner1.webp"
 import Style from "./Camping.module.css"
 import Galery from "./portada.jpg"
 import Paper from '@mui/material/Paper';
@@ -59,6 +58,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 
+
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 
@@ -70,6 +70,16 @@ export default function Camping() {
   const detailReserv = useSelector((state: RootState) => state.detailReserv);
   let camp = useSelector((state: any) => state.detailCamping);
   let idReserva = useSelector((state: any) => state.idReserva);
+
+
+
+  const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
+
+
+  const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+
+
+
 
   let today = new Date();
   let now = today.toLocaleDateString('es-US');
@@ -340,14 +350,16 @@ export default function Camping() {
 
 
       <Box className={Style.all}>
+
         <Box className={Style.portadacont}>
           {console.log("hola")}
           <Box
             component="img"
             className={Style.imagencita}
             alt="Logo"
-            src={Portada}
+            src={randomPhoto}
           />
+
           <Box className={Style.text}>
             <Typography variant="h1" color="primary">
               {camp.nombre_camping}
@@ -367,7 +379,17 @@ export default function Camping() {
               className={`${Style['add-fav']} ${favorite ? Style.heart : ''}`.trim()}
             />
           }
+
+
         </Box>
+
+
+
+
+
+
+
+
 
         <Box className={Style.booking}>
           <Box className={Style.imageplace} >
@@ -729,8 +751,11 @@ export default function Camping() {
 
 
 
+        <Box className={Style.detailsComodidades}>
+          <Details />
+        </Box>
 
-        <Details />
+
         <Box className={Style.detailsreviews}>
 
           <Box className={Style.resume}>
@@ -754,7 +779,7 @@ export default function Camping() {
       </Box>
       <Footer />
 
-    </Box>
+    </Box >
 
   )
 }

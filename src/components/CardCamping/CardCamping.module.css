@@ -1,0 +1,30 @@
+.card:hover {
+    box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
+}
+
+
+
+
+/* //RESPONSIVE */
+
+@media all and (max-width: 1000px) {
+    .card {
+        background-color: greenyellow;
+    }
+
+}
+
+@media all and (max-width: 850px) {
+    .card {
+        background-color: red;
+
+    }
+}
+
+/* @media all and (max-width: 500px) */
+@media only screen and (max-device-width : 640px) {
+    .card {
+        background-color: blue;
+
+    }
+}
