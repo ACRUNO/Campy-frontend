@@ -47,14 +47,14 @@ const initialState: {
     reviews: { id: number, puntaje: number, username: string, fecha: string, comentario: string }[],
     campingBooking: Reservas[],
     popUpCards: boolean,
-    cardInfoMap: {id: number, nombre_camping: string, imagenes: string, descripcion: string},
-    allPosts:allPosts[],
-    postbuscados:allPosts[],
-    postscomentados:allPosts[],
-    postsvistos:allPosts[],
-    post: {id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios:{id: number, foto: string, username: string, comentario: string, createdAt: string}[]} | {}
-    idReserva : number
-    detailReserv : {day1: number, alldate: string, day2: number, alldate2: string , stay : number , kids : number , travellers : number , total : number , idRes : any}[]
+    cardInfoMap: { id: number, nombre_camping: string, imagenes: string, descripcion: string },
+    allPosts: { titulo: string, foto: string, username: string, fecha: string, texto: string, }[],
+    postbuscados: { titulo: string, foto: string, username: string, fecha: string, texto: string }[],
+    post: { id: number, foto: string, username: string, fecha: string, titulo: string, texto: string, imagenes: string[], comentarios: { foto: string, username: string, comentario: string, createdAt: string }[] } | {}
+    postscomentados: [],
+    postsvistos: [],
+    idReserva: number
+    detailReserv: { day1: number, alldate: string, day2: number, alldate2: string, stay: number, kids: number, travellers: number, total: number, idRes: any }[]
 } = {
 
     //ESTADOS GLOBALES
@@ -431,6 +431,7 @@ function rootReducer(state: any = initialState, action: any): any {
             }
 
         case GET_RESERVASCAMPY:
+            console.log(action.payload)
             let ordenado = action.payload.sort((a: { createdAt: string, total: number }, b: { createdAt: string, total: number }) => (new Date(a.createdAt).valueOf() > new Date(b.createdAt).valueOf()) ? 1 : ((new Date(b.createdAt).valueOf() > new Date(a.createdAt).valueOf()) ? -1 : 0))
             console.log(ordenado)
             let dia: Date = new Date(2022, 11, 18)

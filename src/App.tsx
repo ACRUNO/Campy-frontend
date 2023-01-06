@@ -19,6 +19,7 @@ import Detalle from './components/Blog/Detalle_post';
 import CrearPost from './components/Blog/CrearPost';
 import { getUserFavoriteCampings } from './actions/User.action';
 import UpdateCamping from './components/Dashboards/DashDueño/UpdateCamping';
+import { DejarReviews } from './components/Reviews/DejarReview';
 
 
 
@@ -56,7 +57,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
           <Route path="/blog/crearpost" element={<CrearPost />} />
-
+          <Route path="/reviews/:id" element={<DejarReviews />} />
         </Routes>
       </ThemeProvider>
     </React.Fragment>

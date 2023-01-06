@@ -8,7 +8,7 @@ import s from './Home.module.css'
 import Filters from "../Filters/Filters";
 import { AppDispatch, RootState } from '../../store/index';
 import Footer from "../Footer/Footer";
-import { getProvincias, filterProvincia, filtrosPrincipales } from "../../actions";
+import { getProvincias, filterProvincia, filtrosPrincipales, getLocalidades } from "../../actions";
 import { MouseEvent } from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -32,6 +32,7 @@ export default function Home() {
 
     function handleClick(id: number) {
         dispatch(filterProvincia(id))
+        dispatch(getLocalidades(id))
         dispatch(filtrosPrincipales(id, 0, undefined, undefined))
         setTimeout(() => {
             navigate('/booking')
@@ -48,7 +49,7 @@ export default function Home() {
 
                     {
                         !allProvincias.length ?
-                            new Array(23).fill(1).map((p,i) =>
+                            new Array(23).fill(1).map((p, i) =>
                                 <SkeletonCard key={i}></SkeletonCard>
                             )
                             :
