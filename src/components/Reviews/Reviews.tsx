@@ -1,4 +1,7 @@
-import { Backdrop, Box, Button, Fade, Modal, Rating, Typography, Card, CardContent } from "@mui/material";
+
+import { Backdrop, Box, Button, Fade, Grid, Modal, Rating, TextField, Typography, Card, CardContent, CardMedia } from "@mui/material";
+import { borderColor, width } from "@mui/system";
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -75,12 +78,14 @@ export function Reviews() {
     var cuatro: any = []
     var cinco: any = []
 
+
     reviews?.forEach((rev: any) => {
         if (rev.puntaje === 1) uno.push(1)
         if (rev.puntaje === 2) dos.push(1)
         if (rev.puntaje === 3) tres.push(1)
         if (rev.puntaje === 4) cuatro.push(1)
         if (rev.puntaje === 5) cinco.push(1)
+
     })
 
     useEffect(() => {
@@ -128,7 +133,9 @@ export function Reviews() {
                 <Box display='flex' p='1%' alignItems='center' sx={{ flexDirection: "column" }}>
                     <Box display='table-row' textAlign='center'>
                         <Typography variant="h3">Reviews </Typography>
-                        <Typography> {puntuacion > 1 ? `${puntuacion} estrellas de 5 posibles` : `${puntuacion} estrella de 5 posibles`} </Typography>
+
+                        {/* <Typography> {puntuacion > 1 ? `${puntuacion} estrellas de 5 posibles` : `${puntuacion} estrella de 5 posibles`} </Typography> */}
+
                         <Rating name="read-only" value={puntuacion} readOnly />
                         <Box display='flex' flexDirection='column' alignItems='center' p='2%' >
                             <Typography variant="h2">{puntuacion}.0</Typography>
@@ -158,7 +165,9 @@ export function Reviews() {
                         {/* <Tooltip /> */}
                         {/* <Legend /> */}
                         {/* <Area dataKey="amt" fill="#8884d8" stroke="#8884d8" /> */}
-                        <Bar dataKey="pv" barSize={10} fill="#413ea0" />
+
+                        <Bar dataKey="pv" barSize={10} fill="#285430" color="#285430" />
+
                         {/* <Line dataKey="uv" stroke="#ff7300" /> */}
                     </ComposedChart>
                 </Box>
