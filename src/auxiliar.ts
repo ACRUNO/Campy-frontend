@@ -72,6 +72,13 @@ export interface CampingOwner {
   habilitado: number;
 }
 
+export interface EmailContact {
+  name: string;
+  email: string;
+  subject: string;
+  text: string;
+}
+
 export const userTypes = {
   USER: process.env.REACT_APP_TIPO_USUARIO,
   PROPIETARIO: process.env.REACT_APP_TIPO_PROPIETARIO,
