@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import * as actions from "../../actions";
 import { AppDispatch, RootState } from '../../store/index';
 import { Campings, filterCamps } from '../../reducer/estados';
-import s from './Booking.module.css';
 
 
 
@@ -48,31 +47,26 @@ export default function Booking() {
 
 
     return (
- 
-        <Box className={s.contenedor_gral} >
 
-            <Box className={s.filtrosJuntos}>
-                <h1>Boton para Filtros Juntos</h1>
-            </Box>
+        <Box sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
 
-            <Box className={s.FiltrosPrinc}>
-                <FiltrosPrincipales 
-                    setCurrentPage={setCurrentPage}
-                />
-            </Box>
+            <FiltrosPrincipales
+                setCurrentPage={setCurrentPage}
+            />
 
-            {/* GRID CONTIENE FILROS LATERALES + CARD */}
-            <Grid className={s.ContenedorFilCards} container>
-                {/* MUESTRA FILTROS LATERALES */}
-                <Grid className={s.FiltrosLaterales} item >
+            <Grid container direction="row">
+                <Grid item justifyContent="left" xs={0} sm={4} md={2}>
 
                     <FiltrosLaterales
                         setCurrentPage={setCurrentPage}
                     />
 
                 </Grid>
-                {/* MUESTRA CARDS */}
-                <Grid className={s.Cards} item >
+                <Grid item justifyContent="right" xs={12} sm={8} md={10}>
+
+
+
+
                     {
                         currentCampings.length > 0 ? currentCampings.map((c: Campings) => (
 
@@ -92,7 +86,6 @@ export default function Booking() {
 
                 </Grid>
             </Grid>
-
             <Paginado
                 campingsxPage={campingsxPage}
                 allCampings={result.length}
