@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DialogContent, DialogTitle, Grid, Rating, TextField, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Style from "../Camping/Camping.module.css"
 import Portada from "../Camping/banner1.webp"
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,10 @@ import { cleanDetails, getDetails } from "../../actions";
 import StarIcon from '@mui/icons-material/Star';
 import { Reviews } from "../../reducer/estados";
 import { MouseEvent } from 'react';
-import { submitReview } from "../../actions/Reviews.action";
 import { loginUserWithToken } from "../../actions/Login.action";
+import { AlertType } from "../../auxiliar";
+import axios from "axios";
+import Alert from "../helpers/Alert";
 
 
 const labels: { [index: string]: string } = {
@@ -33,12 +35,19 @@ export function DejarReviews() {
     const user = useSelector((state: RootState) => state.user)
     const dispatch: AppDispatch = useDispatch()
     const params: Readonly<Params<string>> = useParams()
-    const [open, setOpen] = React.useState(false)
+    const [openLoader, setOpenLoader] = React.useState(false)
     const [estrellasPuntadas, setEstrellasPuntadas] = React.useState<number | null>(0);
     const [estrellasCamping, setEstrellasCamping] = React.useState<number | null>(0)
     const [hover, setHover] = React.useState(-1);
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const [stateOpen, setStateOpen]: [stateOpen: AlertType, setStateOpen: Dispatch<SetStateAction<AlertType>>] = useState<AlertType>({
+        open: false,
+        title: '',
+        description: '',
+        confirm: '',
+        type: 'success',
+        navigateTo: null
+    });
 
 
     setTimeout(() => {
@@ -88,9 +97,24 @@ export function DejarReviews() {
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        console.log(input);
-        setOpen(true)
-        dispatch(submitReview(input))
+        setOpenLoader(true)
+        axios.post("/api/reviews",
+            input
+        ).then(() => setStateOpen(() => ({
+            open: true,
+            title: 'REVIEW ENVIADA CON EXITO!',
+            description: 'Muchas gracias por aportar a esta hermosa comunidad.',
+            confirm: 'OK',
+            type: 'success',
+            navigateTo: "/"
+        }))).catch(({ response }) => setStateOpen(() => ({
+            open: true,
+            title: `ERROR: ${response.data.error}`,
+            description: response.data.message,
+            confirm: 'ok...',
+            type: 'error',
+            navigateTo: null
+        }))).finally(() => setOpenLoader(false));
     }
 
 
@@ -100,7 +124,7 @@ export function DejarReviews() {
             <Dialog
                 fullWidth
                 maxWidth="md"
-                open={open}>
+                open={openLoader}>
                 <DialogTitle align='center'>Subiendo Review...</DialogTitle>
                 <DialogContent >
                     <Box
@@ -134,16 +158,6 @@ export function DejarReviews() {
                             <Rating name="read-only" value={estrellasCamping} readOnly />
                         </Box>
                     </Box>
-                    {/* {
-                        user && user.tipo === userTypes.USER &&
-                        <FavoriteIcon
-                            onClick={!favorite ? () => {
-                                if (params.id) dispatch(addFavoriteCamping(Number(params.id), user.token));
-                                setFavorite(true)
-                            } : undefined}
-                            className={`${Style['add-fav']} ${favorite ? Style.heart : ''}`.trim()}
-                        />
-                    } */}
                 </Box>
             </Box>
             <Typography align="center" variant='h2' fontWeight="bold" sx={{ pt: 5 }}>Deja tu Reseña...</Typography>
@@ -189,6 +203,18 @@ export function DejarReviews() {
             <Grid item xs={6} display="flex" justifyContent="center" alignContent="center" sx={{ pt: 8 }}>
                 <Button size="large" disabled={disabled} color="secondary" variant='contained' id='Crear' sx={{ mt: 2 }} onClick={(e) => { handleSubmit(e) }} value="Crear Post">Crear Post</Button>
             </Grid>
+            {
+                stateOpen.open &&
+                <Alert
+                    setStateOpen={setStateOpen}
+                    open={stateOpen.open}
+                    description={stateOpen.description}
+                    title={stateOpen.title}
+                    confirm={stateOpen.confirm}
+                    type={stateOpen.type}
+                    navigateTo={stateOpen.navigateTo}
+                />
+            }
         </Grid>
     )
 

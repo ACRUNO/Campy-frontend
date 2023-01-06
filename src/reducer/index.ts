@@ -4,7 +4,7 @@ import { GET_FAVORITES_CAMPINGS, GET_OWNER_CAMPINGS, GET_USER_BOOKINGS, REMOVE_F
 import { Bookings, Campings, FavoritesCampings, User, filterCamps, reset, Reservas, allPosts } from './estados';
 import { GET_CAMPINGSXPROV, GET_MASRESERVADOS, GET_USUARIOSCAMPY, GET_RESERVASCAMPY, CLEAN_USUARIOS_DASH, GET_USUARIOS_BYNAME, GET_CAMPINGS_BYNAME, GET_RESERVAS_CAMPING, CLEAN_RESERVAS_CAMPING } from "../actions/Dash.admin.action";
 import { Dayjs } from 'dayjs';
-import { GET_CAMPING_REVIEWS, SUBMIT_REVIEW } from "../actions/Reviews.action";
+import { GET_CAMPING_REVIEWS } from "../actions/Reviews.action";
 import { DISABLE_OWNER_CAMPING } from "../actions/Owner.action";
 import { BUSCAR_POSTS, GET_ALLPOSTS, GET_POST, /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST, CREATE_COMENTARIO } from "../actions/Blog.action";
 import { POST_RESERV } from "../actions/Checkout.action";
@@ -569,8 +569,6 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state, detailReserv: action.payload }
         case CLEAN_DETAILS:
             return { ...state, detailCamping: [], detailReserv: [] }
-        case SUBMIT_REVIEW:
-            return { ...state }
 
         default: return { ...state }
     }
