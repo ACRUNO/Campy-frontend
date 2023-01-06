@@ -27,6 +27,15 @@ export default function Booking() {
     const [open, setOpen] = React.useState(false);
     const filtrosBook: filterCamps = useSelector((state: RootState) => state.filtrosBooking)
 
+
+
+
+
+
+
+
+
+
     useEffect(() => {
         if (done && !result.length) setOpen(true)
     }, [done])
@@ -44,6 +53,8 @@ export default function Booking() {
     const indexFirstCamping: number = indexLastCamping - campingsxPage;
 
     const currentCampings: Campings[] = result.slice(indexFirstCamping, indexLastCamping)
+
+
 
 
     return (

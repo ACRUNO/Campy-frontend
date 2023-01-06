@@ -217,7 +217,7 @@ export default function FiltrosLaterales() {
 
             <hr />
 
-            <Typography >Precio</Typography>
+            <Typography >Precio por dia</Typography>
 
 
             <Box sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center", columnGap: "4.5rem" }}>
