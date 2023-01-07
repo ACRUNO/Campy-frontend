@@ -26,7 +26,6 @@ export default function Blog() {
 
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
-
   const user = useSelector((state: RootState) => state.user);
   const allPosts: allPosts[] = useSelector((state: RootState) => state.postbuscados)
   const postsVistos: allPosts[] = useSelector((state: RootState) => state.postsvistos)

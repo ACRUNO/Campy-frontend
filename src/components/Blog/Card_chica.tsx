@@ -31,10 +31,11 @@ export default function Card_chica(props: FeaturedPostProps) {
   const dispatch: AppDispatch = useDispatch()
 
   const handleClick = () => {
-    let data: { visitas: number } = { visitas: props.vistas + 1 }
+    
     if (props.userNow === props.userId) { dispatch(actions.cambiarComentariosVistos(props.id)) }
-    if (props.userNow !== props.userId) { dispatch(actions.visualizaciones(props.id, data)) }
-    setTimeout(() => { navigate(`/blog/${props.id}`) }, 100)
+    if (props.userNow !== props.userId) { 
+    let data: { visitas: number } = { visitas: props.vistas + 1 }
+    dispatch(actions.visualizaciones(props.id, data, () => { navigate(`/blog/${props.id}`) })) }
 
   }
 

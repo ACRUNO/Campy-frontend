@@ -235,8 +235,9 @@ export type Reservas = {
 
 
 export type Reviews = {
-  usuario: number | null;
+  usuario: string | null;
   camping: number | undefined;
   puntaje: number | null;
   comentario: string;
+  email: string | null;
 }

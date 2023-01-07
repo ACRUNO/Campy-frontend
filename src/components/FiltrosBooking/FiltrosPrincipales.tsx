@@ -8,7 +8,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
-import { filterLocalidad, filterProvincia, getProvincias, getLocalidades, filtrosPrincipales, getFiltersCamping, FilterIngreso, FilterEgreso, } from '../../actions/index'
+import { filterLocalidad, filterProvincia, getProvincias, getLocalidades, filtrosPrincipales, getFiltersCamping, FilterIngreso, FilterEgreso, diasReservadosBooking, } from '../../actions/index'
 
 const MenuProps = {
     PaperProps: {
@@ -35,6 +35,14 @@ export default function FiltrosPrincipales(props: Props) {
     const fechaEgreso: string = useSelector((state: RootState) => state.fechaEgreso)
     const fechaIngresoDayjs: Dayjs = useSelector((state: RootState) => state.fechaIngresoDayjs)
     const fechaEgresoDayjs: Dayjs = useSelector((state: RootState) => state.fechaEgresoDayjs)
+
+    var fecha1: any = new Date(fechaIngreso).getTime();
+    var fecha2: any = new Date(fechaEgreso).getTime();
+
+    var diff = fecha2 - fecha1;
+
+
+
 
 
     useEffect(() => {
@@ -75,6 +83,8 @@ export default function FiltrosPrincipales(props: Props) {
         const fecha_egreso: string | undefined = fechaEgreso
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
         props.setCurrentPage(1)
+        dispatch(diasReservadosBooking(diff / (1000 * 60 * 60 * 24)))
+
     }
 
 

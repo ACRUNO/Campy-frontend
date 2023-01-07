@@ -9,10 +9,10 @@ import { cleanDetails, getDetails } from "../../actions";
 import StarIcon from '@mui/icons-material/Star';
 import { Reviews } from "../../reducer/estados";
 import { MouseEvent } from 'react';
-import { loginUserWithToken } from "../../actions/Login.action";
 import { AlertType } from "../../auxiliar";
 import axios from "axios";
 import Alert from "../helpers/Alert";
+import Carousel from "../Camping/Carousel";
 
 
 const labels: { [index: string]: string } = {
@@ -49,16 +49,12 @@ export function DejarReviews() {
         navigateTo: null
     });
 
-
-    setTimeout(() => {
-        setEstrellasCamping(puntuacion_promedio);
-    }, 100);
-
     const [input, setInput] = React.useState<Reviews>({
-        usuario: null,
+        usuario: searchParams.get('ultraT'),
         camping: Number(params.id),
         puntaje: 0,
-        comentario: ''
+        comentario: '',
+        email: searchParams.get('xlr8')
     })
 
 
@@ -66,24 +62,20 @@ export function DejarReviews() {
 
     useEffect(() => {
         dispatch(getDetails(params.id));
-        dispatch(loginUserWithToken(String(searchParams.get('xlr8'))))
         return () => {
             dispatch(cleanDetails())
         }
     }, [dispatch])
 
     useEffect(() => {
-        setInput({
-            ...input,
-            usuario: user?.id
-        })
-    }, [user])
+        setEstrellasCamping(puntuacion_promedio);
+    }, [puntuacion_promedio])
 
     const handlePuntuacion = (event: any, newValue: React.SetStateAction<number | null>) => {
         setEstrellasPuntadas(newValue);
         setInput({
             ...input,
-            puntaje: event.target.value
+            puntaje: event.target.value,
         })
     }
 
@@ -92,7 +84,6 @@ export function DejarReviews() {
             ...input,
             comentario: e.target.value
         })
-        console.log(input);
     }
 
     const handleSubmit = (e: MouseEvent<HTMLElement>) => {
@@ -160,49 +151,63 @@ export function DejarReviews() {
                     </Box>
                 </Box>
             </Box>
-            <Typography align="center" variant='h2' fontWeight="bold" sx={{ pt: 5 }}>Deja tu Reseña...</Typography>
-            <Grid container spacing={2} display="flex" flexDirection="row" justifyContent="space-evenly" alignItems="center" sx={{ pt: 5 }} >
+
+
+            <Grid container spacing={0} display="flex" flexDirection="row" justifyContent="space-around" alignItems="flex-start" sx={{ pt: 5 }} >
                 <Box
                     alignContent="center"
                     sx={{
                         '& > legend': { mt: 2 },
+                    }}>
+                    <Carousel />
+
+                </Box>
+
+                <Box
+                    alignContent="flex-start"
+                    sx={{
+                        '& > legend': { mt: 2 },
                     }}
                 >
-                    <Typography variant="h2" textAlign="center" component="legend">Puntuacion: </Typography>
-                    <Box alignItems="center" display="flex" sx={{ pl: 3 }}>
-                        <Rating
-                            name="simple-controlled"
-                            size="large"
-                            value={estrellasPuntadas}
-                            getLabelText={getLabelText}
-                            onChange={handlePuntuacion}
-                            onChangeActive={(event, newHover) => {
-                                setHover(newHover);
-                            }}
-                            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                        />
-                        {estrellasPuntadas !== null && (
-                            <Box sx={{ pl: 4, fontSize: 25, fontStyle: "italic" }}>{labels[hover !== -1 ? hover : estrellasPuntadas]}</Box>
-                        )}
+                    <Typography textAlign="center" variant='h2' fontWeight="bold" >Deja tu Reseña...</Typography>
+                    <Box display='flex' flexDirection="column" sx={{ pt: 5 }}>
+                        <Typography alignItems="center" variant="h2" textAlign="center" component="legend">Puntuacion: </Typography>
+                        <Box alignItems="center" display="flex" sx={{ pl: 12 }}>
+                            <Rating
+                                name="simple-controlled"
+                                size="large"
+                                value={estrellasPuntadas}
+                                getLabelText={getLabelText}
+                                onChange={handlePuntuacion}
+                                onChangeActive={(event, newHover) => {
+                                    setHover(newHover);
+                                }}
+                                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                            />
+                            {estrellasPuntadas !== null && (
+                                <Box sx={{ pl: 4, fontSize: 25, fontStyle: "italic" }}>{labels[hover !== -1 ? hover : estrellasPuntadas]}</Box>
+                            )}
+                        </Box>
                     </Box>
+                    <Grid item xs={12} sx={{ pt: 3 }} display="flex" direction="column" justifyContent="center">
+                        <TextField
+                            color="secondary"
+                            required
+                            fullWidth
+                            id="Texto"
+                            label="Texto"
+                            name="Texto"
+                            multiline
+                            minRows={5}
+                            onChange={(e) => { handleChangeTexto(e) }}
+                        />
+                        <Button size="large" disabled={disabled} color="secondary" variant='contained' id='Crear' sx={{ mt: 4 }} onClick={(e) => { handleSubmit(e) }} value="Crear Post">Crear Review</Button>
+                    </Grid>
                 </Box>
-                <Grid item xs={6}>
-                    <TextField
-                        color="secondary"
-                        required
-                        fullWidth
-                        id="Texto"
-                        label="Texto"
-                        name="Texto"
-                        multiline
-                        minRows={5}
-                        onChange={(e) => { handleChangeTexto(e) }}
-                    />
-                </Grid>
             </Grid>
-            <Grid item xs={6} display="flex" justifyContent="center" alignContent="center" sx={{ pt: 8 }}>
-                <Button size="large" disabled={disabled} color="secondary" variant='contained' id='Crear' sx={{ mt: 2 }} onClick={(e) => { handleSubmit(e) }} value="Crear Post">Crear Post</Button>
-            </Grid>
+            {/* <Grid item xs={6} display="flex" justifyContent="center" alignContent="center" sx={{ pt: 8 }}>
+            </Grid> */}
+
             {
                 stateOpen.open &&
                 <Alert
@@ -215,7 +220,7 @@ export function DejarReviews() {
                     navigateTo={stateOpen.navigateTo}
                 />
             }
-        </Grid>
+        </Grid >
     )
 
 }

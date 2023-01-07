@@ -72,6 +72,13 @@ export interface CampingOwner {
   habilitado: number;
 }
 
+export interface EmailContact {
+  name: string;
+  email: string;
+  subject: string;
+  text: string;
+}
+
 export const userTypes = {
   USER: process.env.REACT_APP_TIPO_USUARIO,
   PROPIETARIO: process.env.REACT_APP_TIPO_PROPIETARIO,
@@ -89,9 +96,9 @@ export const stateBooking = {
 export const keyStateBooking = {
   [process.env.REACT_APP_PENDIENTE as string]: "Pendiente",
   [process.env.REACT_APP_RECHAZADA as string]: "Rechazada",
-  [process.env.REACT_APP_ABONADA as string]: "ABONADA",
+  [process.env.REACT_APP_ABONADA as string]: "Abonada",
   [process.env.REACT_APP_FINALIZADA as string]: "Finalizada",
-  [process.env.REACT_APP_VENCIDA as string]: "Vinalizada",
+  [process.env.REACT_APP_VENCIDA as string]: "Vencida",
 };
 
 export const libraries: ["places"] = ["places"];

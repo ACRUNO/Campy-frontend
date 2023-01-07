@@ -1,0 +1,140 @@
+.buttonFilters {
+    background: none padding-box rgb(255, 255, 255);
+    display: table-cell;
+    border: 0px;
+    margin: 0px;
+    padding-left: 1rem;
+    padding-top: 0.3rem;
+    text-transform: none;
+    appearance: none;
+    cursor: pointer;
+    user-select: none;
+    direction: ltr;
+    overflow: hidden;
+    text-align: center;
+    height: 40px;
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    min-width: 48px;
+    font-weight: 500;
+
+}
+
+.buttonFilters:hover {
+    background: #f1f1f1;
+}
+
+
+.filtersArrow {
+    float: right;
+    margin-left: 0.1rem;
+
+}
+
+.filterCounter {
+    display: inline-block;
+    background: #5F8D4E;
+    color: white;
+    border-radius: 99px;
+    border-style: none;
+    padding: 0px 6px;
+    min-width: 26px;
+    margin-left: 5px;
+    font-size: 110%;
+    text-align: center;
+}
+
+
+
+.contenedor_gral {
+    background-color: rgb(245, 245, 245);
+}
+
+.ContenedorFilCards {
+    display: flex;
+    flex-direction: row;
+}
+
+.Cards {
+    width: 80%;
+}
+
+.FiltrosLaterales {
+    width: 20%;
+}
+
+.filtrosJuntos {
+    display: none;
+}
+
+
+/* //RESPONSIVE */
+
+@media all and (max-width: 1000px) {
+    .contenedor_gral {
+        background-color: greenyellow;
+    }
+
+    .ContenedorFilCards {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .Cards {
+        width: 60%;
+    }
+
+    .FiltrosLaterales {
+        width: 40%;
+    }
+
+
+}
+
+@media all and (max-width: 850px) {
+    .contenedor_gral {
+        background-color: red;
+    }
+
+    .FiltrosPrinc {
+        display: none;
+    }
+
+    .FiltrosLaterales {
+        display: none;
+    }
+
+    .ContenedorFilCards {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        flex-direction: row;
+    }
+
+    .Cards {
+        width: 100%;
+    }
+
+    .filtrosJuntos {
+        display: flex;
+        height: 4rem;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0 0 6px rgb(0 0 0 / 100%);
+    }
+
+    .filters {
+        width: 100vw;
+    }
+}
+
+/* @media all and (max-width: 500px) */
+@media only screen and (max-device-width : 640px) {
+    .contenedor_gral {
+        background-color: blue;
+    }
+}

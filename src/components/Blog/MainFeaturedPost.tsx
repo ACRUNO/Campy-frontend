@@ -48,6 +48,7 @@ export default function MainFeaturedPost(props: Props) {
       }}
     >
 
+
       <Box
         sx={{
           position: 'absolute',
@@ -59,6 +60,7 @@ export default function MainFeaturedPost(props: Props) {
         }}
       />
       <Grid container display="flex" flexDirection="row" >
+
         <Grid item md={6}>
           <Box
             sx={{
