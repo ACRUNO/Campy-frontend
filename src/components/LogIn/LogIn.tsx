@@ -22,10 +22,10 @@ import Loader from '../helpers/Loader';
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="text.secondary" align="center">
+        <Typography display='flex' variant="body2" color="secondary" justifyContent="center">
             {'Copyright © '}
-            <Link color="inherit" href="/">
-                CAMPY S.A.
+            <Link color="primary" href="/">
+                <Typography variant="body2" color="secondary"> CAMPY S.A. </Typography>
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
