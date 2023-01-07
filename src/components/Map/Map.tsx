@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF, Marker } from "@react-google-maps/api";
 import s from "./Map.module.css"
 import { Link, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "../../store";
 import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Badge, Typography } from "@mui/material";
 
 
 
@@ -45,7 +46,7 @@ export default function Mapa() {
 
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8'
+    googleMapsApiKey: process.env.REACT_APP_GOOGLEMAPS_API_KEY as string
   });
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -97,16 +98,15 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
   const [cardInfo, SetCardInfo] = useState<Campings>(Campys)
   const cardInfoo: { id: number, nombre_camping: string, imagenes: string, descripcion_camping: string } = useSelector((state: RootState) => state.cardInfoMap)
   const popUpBool: boolean = useSelector((state: RootState) => state.popUpCards)
-  const [popUpFilters, SetPopUpFilters] = useState<boolean>(false)
-  const [filtersArrow, SetFiltersArrow] = useState<boolean>(false)
-  const [icon, SetIcon] = useState<string>(iconImage1)
-
+  const [popUpFilters, SetPopUpFilters] = useState<boolean>(false);
+  const [filtersArrow, SetFiltersArrow] = useState<boolean>(false);
+  const [markers, setMarkers] = useState<any>({});
   function handleMarker(c: any) {
+
     c.id !== cardInfoo.id ?
       dispatch(popUpCard(true)) :
       popUpBool === false ? dispatch(popUpCard(true)) : dispatch(popUpCard(false))
-    dispatch(setCardInfo(c.id, c.nombre_camping, c.imagenes, c.descripcion_camping))
-    SetIcon(iconImage2)
+    dispatch(setCardInfo(c.id, c.nombre_camping, c.imagenes, c.descripcion_camping));
   }
 
 
@@ -116,17 +116,25 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
     filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false)
   }
 
-  const handleZoomOut = () => {
-    dispatch(zoomOutMap())
-    console.log(linkMap)
-  }
+  /*   const handleZoomOut = () => {
+      dispatch(zoomOutMap())
+      console.log(linkMap)
+    }
+   */
+
 
 
   const OPTIONS = {
     minZoom: 4,
     maxZoom: 18,
     mapTypeId: 'terrain',
-    fullscreenControl: true,
+    fullscreenControl: false,
+    zoomControl: false,
+    streetViewControl: true,
+    streetViewControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_TOP,
+    },
+
   }
 
 
@@ -147,7 +155,7 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
           }
         </Box>
         {
-          num > 0 ? <button className={s.filterCounter} disabled >{num}</button> : <Box />
+          num > 0 ? <Badge badgeContent={num} color="secondary" sx={{ ml: "1rem", mr: "0.5rem" }}> <Typography></Typography> </Badge> : <Box />
         }
 
 
@@ -161,9 +169,22 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
 
       {
 
-        result?.map((c: any) => {
+        result?.map((c: any, i: number) => {
+
           return (
-            <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={"https://res.cloudinary.com/pfcampy/image/upload/v1671067970/campy/mapIcon_ej0msp.png"} />
+            <MarkerF
+              onLoad={(markerInstance: google.maps.Marker) =>
+                setMarkers((prevMarkers: any) => ({ ...prevMarkers, [i]: markerInstance }))
+              }
+              onClick={() => {
+                for (let key in markers) if (i !== +key) markers[key].setIcon(iconImage1);
+
+                markers[i].setIcon(markers[i]?.getIcon() === iconImage1 ? iconImage2 : iconImage1)
+                handleMarker(c);
+              }}
+              key={c.id}
+              position={{ lat: +c.latitud, lng: +c.longitud }}
+              icon={iconImage1} />
           )
         })
       }

@@ -102,7 +102,9 @@ export type allPosts = {
   fecha: string,
   texto: string,
   cant_comentarios: number,
-  cant_visualizaciones: number
+  cant_visualizaciones: number,
+  comentarios_vistos: number,
+  UsuarioId: number
 }
 
 
@@ -233,8 +235,9 @@ export type Reservas = {
 
 
 export type Reviews = {
-  usuario: number | null;
+  usuario: string | null;
   camping: number | undefined;
   puntaje: number | null;
   comentario: string;
+  email: string | null;
 }

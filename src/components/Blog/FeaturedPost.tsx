@@ -11,6 +11,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 import * as actions from "../../actions/Blog.action"
+import { allPosts } from '../../reducer/estados';
 
 interface FeaturedPostProps {
   id: number
@@ -20,7 +21,9 @@ interface FeaturedPostProps {
   title: string;
   username: string
   comentarios: number,
-  vistas: number
+  vistas: number,
+  userNow: number,
+  userId: number
 }
 
 export default function FeaturedPost(props: FeaturedPostProps) {
@@ -28,9 +31,11 @@ export default function FeaturedPost(props: FeaturedPostProps) {
   const dispatch: AppDispatch = useDispatch()
 
   const handleClick = () => {
+    
+    if (props.userNow === props.userId) { dispatch(actions.cambiarComentariosVistos(props.id)) }
+    if (props.userNow !== props.userId) { 
     let data: { visitas: number } = { visitas: props.vistas + 1 }
-    //dispatch(actions.visualizaciones(props.id, data))
-    setTimeout(() => { navigate(`/blog/${props.id}`) }, 100)
+    dispatch(actions.visualizaciones(props.id, data, () => { navigate(`/blog/${props.id}`) })) }
 
   }
 
