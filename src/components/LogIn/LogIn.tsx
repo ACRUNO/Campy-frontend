@@ -4,7 +4,12 @@ import {
     FormControlLabel, Checkbox, Link, Paper, Box, Grid,
     Typography
 } from '@mui/material';
-import { LockOutlined as LockOutlinedIcon, Google as GoogleIcon } from '@mui/icons-material';
+import {
+    LockOutlined as LockOutlinedIcon,
+    Google as GoogleIcon,
+    Visibility as VisibilityIcon,
+    VisibilityOff as VisibilityOffIcon
+} from '@mui/icons-material';
 import { AppDispatch, RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -40,7 +45,8 @@ export default function SignIn() {
     const dispatch: AppDispatch = useDispatch();
     const globalUser = useSelector((state: RootState) => state.user);
 
-    const [typeOfSign, setTypeOfSign] = useState('signin');
+    const [typeOfSign, setTypeOfSign] = useState<string>('signin');
+    const [seePassword, setSeePassword] = useState<boolean>(false);
     const [openLoader, setOpenLoader]: [openLoader: boolean, setOpenLoader: Dispatch<SetStateAction<boolean>>] = useState(false);
     const [stateOpen, setStateOpen]: [stateOpen: AlertType, setStateOpen: Dispatch<SetStateAction<AlertType>>] = useState<AlertType>({
         open: false,
@@ -180,7 +186,7 @@ export default function SignIn() {
                             fullWidth
                             name="password"
                             label="Password"
-                            type="password"
+                            type={seePassword ? "text" : "password"}
                             id="password"
                             autoComplete="current-password"
                             color='secondary'

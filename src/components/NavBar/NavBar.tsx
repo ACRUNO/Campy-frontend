@@ -23,7 +23,7 @@ import { AppDispatch, RootState } from "../../store";
 import { useAuth0 } from "@auth0/auth0-react";
 import { logoutUser } from "../../actions/Login.action";
 
-const pages: string[] = ['blog', 'booking', 'map'];
+const pages: string[] = ['blog', 'camping', 'map'];
 const logo: string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
