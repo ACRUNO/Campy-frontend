@@ -82,6 +82,7 @@ import {
 import { POST_RESERV } from "../actions/Checkout.action";
 
 const initialState: {
+
   user: User | null;
   ownerCampings: {
     campings: { id: number; nombre_camping: string; habilitado: boolean }[];
@@ -162,20 +163,8 @@ const initialState: {
     imagenes: string;
     descripcion: string;
   };
-  allPosts: {
-    titulo: string;
-    foto: string;
-    username: string;
-    fecha: string;
-    texto: string;
-  }[];
-  postbuscados: {
-    titulo: string;
-    foto: string;
-    username: string;
-    fecha: string;
-    texto: string;
-  }[];
+  allPosts: allPosts[];
+  postbuscados: allPosts[];
   post:
     | {
         id: number;
@@ -194,8 +183,8 @@ const initialState: {
       }
     | {};
   diasReservadosBooking: number;
-  postscomentados: [];
-  postsvistos: [];
+  postscomentados: allPosts[];
+  postsvistos: allPosts[];
   idReserva: number;
   detailReserv: {
     day1: number;
@@ -208,6 +197,7 @@ const initialState: {
     total: number;
     idRes: any;
   }[];
+
 } = {
   //ESTADOS GLOBALES
   user: null,
@@ -276,6 +266,7 @@ const initialState: {
   postsvistos: [],
   idReserva: 0,
   detailReserv: [],
+
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -656,6 +647,7 @@ function rootReducer(state: any = initialState, action: any): any {
           //sumo 7 dias
           dia.setDate(dia.getDate() + 7);
         }
+
       }
       return {
         ...state,
@@ -887,6 +879,7 @@ function rootReducer(state: any = initialState, action: any): any {
     default:
       return { ...state };
   }
+
 }
 
 export default rootReducer;

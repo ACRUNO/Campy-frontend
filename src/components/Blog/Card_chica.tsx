@@ -21,7 +21,9 @@ interface FeaturedPostProps {
   title: string;
   username: string
   comentarios: number,
-  vistas: number
+  vistas: number,
+  userNow: number,
+  userId: number
 }
 
 export default function Card_chica(props: FeaturedPostProps) {
@@ -29,8 +31,12 @@ export default function Card_chica(props: FeaturedPostProps) {
   const dispatch: AppDispatch = useDispatch()
 
   const handleClick = () => {
+    
+    if (props.userNow === props.userId) { dispatch(actions.cambiarComentariosVistos(props.id)) }
+    if (props.userNow !== props.userId) { 
     let data: { visitas: number } = { visitas: props.vistas + 1 }
-    dispatch(actions.visualizaciones(props.id, data, () => { navigate(`/blog/${props.id}`) }))
+    dispatch(actions.visualizaciones(props.id, data, () => { navigate(`/blog/${props.id}`) })) }
+
   }
 
   return (

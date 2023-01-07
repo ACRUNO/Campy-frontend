@@ -1,17 +1,21 @@
-import axios from "axios";
-import { RootState, AppDispatch } from "../store";
-import { AnyAction } from "redux";
-import { ThunkAction } from "redux-thunk";
 
-export const GET_ALLPOSTS: string = "GET_ALLPOSTS";
-export const GET_POST: string = "GET_POST";
-export const GET_POST_IMAGENES: string = "GET_POST_IMAGENES";
-export const GET_POST_COMENTARIOS: string = "GET_POST_COMENTARIOS";
-export const CREATE_POST: string = "CREATE_POST";
-export const CREATE_COMENTARIO: string = "CREATE_COMENTARIO ";
-export const BUSCAR_POSTS = "BUSCAR_POSTS";
-export const VISITAS = "VISITAS";
-export const LIMPIAR_DETALLE = "LIMPIAR_DETALLE";
+import axios from 'axios'
+import { RootState, AppDispatch } from '../store'
+import { AnyAction } from 'redux'
+import { ThunkAction } from 'redux-thunk'
+
+export const GET_ALLPOSTS: string = 'GET_ALLPOSTS'
+export const GET_POST: string = 'GET_POST'
+export const GET_POST_IMAGENES: string = 'GET_POST_IMAGENES'
+export const GET_POST_COMENTARIOS: string = 'GET_POST_COMENTARIOS'
+export const CREATE_POST: string = 'CREATE_POST'
+export const CREATE_COMENTARIO: string = 'CREATE_COMENTARIO '
+export const BUSCAR_POSTS = 'BUSCAR_POSTS';
+export const VISITAS = 'VISITAS';
+export const LIMPIAR_DETALLE = 'LIMPIAR_DETALLE';
+export const COMENT_VISTOS = 'COMENT_VISTOS';
+
+
 
 // TRAE TODOS LOS POSTS
 export function getAll_posts(): ThunkAction<
@@ -193,5 +197,23 @@ export function visualizaciones(
 }
 
 export function limpiarDetalle() {
-  return { type: LIMPIAR_DETALLE };
+
+    return { type: LIMPIAR_DETALLE }
+}
+
+export function cambiarComentariosVistos(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            let json = await axios.put(`/api/blog/comentarios/vistos/${id}`);
+            return dispatch({
+                type: COMENT_VISTOS,
+                payload: json.data
+
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 }
