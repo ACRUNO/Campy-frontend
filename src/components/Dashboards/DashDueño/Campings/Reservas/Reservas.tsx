@@ -37,7 +37,7 @@ export default function Reservas({ open, campingId, setOpenReserves }: Props) {
   };
 
   const getOwnerBookings = async () => {
-    const { data }: { data: Bookings[] } = await axios.get(`/api/reservas/${campingId}`,
+    const { data }: { data: Bookings[] } = await axios.get(`/api/reservas/${campingId}?filter=true`,
       {
         headers: { authorization: token }
       });

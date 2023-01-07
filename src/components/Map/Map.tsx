@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF, Marker } from "@react-google-maps/api";
 import s from "./Map.module.css"
 import { Link, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -97,16 +97,15 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
   const [cardInfo, SetCardInfo] = useState<Campings>(Campys)
   const cardInfoo: { id: number, nombre_camping: string, imagenes: string, descripcion_camping: string } = useSelector((state: RootState) => state.cardInfoMap)
   const popUpBool: boolean = useSelector((state: RootState) => state.popUpCards)
-  const [popUpFilters, SetPopUpFilters] = useState<boolean>(false)
-  const [filtersArrow, SetFiltersArrow] = useState<boolean>(false)
-  const [icon, SetIcon] = useState<string>(iconImage1)
-
+  const [popUpFilters, SetPopUpFilters] = useState<boolean>(false);
+  const [filtersArrow, SetFiltersArrow] = useState<boolean>(false);
+  const [markers, setMarkers] = useState<any>({});
   function handleMarker(c: any) {
+
     c.id !== cardInfoo.id ?
       dispatch(popUpCard(true)) :
       popUpBool === false ? dispatch(popUpCard(true)) : dispatch(popUpCard(false))
-    dispatch(setCardInfo(c.id, c.nombre_camping, c.imagenes, c.descripcion_camping))
-    SetIcon(iconImage2)
+    dispatch(setCardInfo(c.id, c.nombre_camping, c.imagenes, c.descripcion_camping));
   }
 
 
@@ -161,9 +160,22 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
 
       {
 
-        result?.map((c: any) => {
+        result?.map((c: any, i: number) => {
+
           return (
-            <MarkerF onClick={() => handleMarker(c)} key={c.id} position={{ lat: +c.latitud, lng: +c.longitud }} icon={"https://res.cloudinary.com/pfcampy/image/upload/v1671067970/campy/mapIcon_ej0msp.png"} />
+            <MarkerF
+              onLoad={(markerInstance: google.maps.Marker) =>
+                setMarkers((prevMarkers: any) => ({ ...prevMarkers, [i]: markerInstance }))
+              }
+              onClick={() => {
+                for (let key in markers) if (i !== +key) markers[key].setIcon(iconImage1);
+
+                markers[i].setIcon(markers[i]?.getIcon() === iconImage1 ? iconImage2 : iconImage1)
+                handleMarker(c);
+              }}
+              key={c.id}
+              position={{ lat: +c.latitud, lng: +c.longitud }}
+              icon={iconImage1} />
           )
         })
       }
