@@ -29,17 +29,17 @@ export default function CardCamping(props: Props) {
   return (
 
     <Link to={`/booking/camping/${props.id}`} style={{ textDecoration: 'none' }}>
-      <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb: 2, mr: 5, height: 200, width: 0.90, p: 1, boxShadow: 3, justifyContent: "space-around" }}>
+      <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb: 2, height: 200, width: "97%", p: 1, boxShadow: 3, justifyContent: "space-around" }}>
 
         <CardMedia
           component="img"
           image={props.imagenes[0]}
           alt="Camping"
-          sx={{ width: "15.6rem" }}
+          sx={{ width: "20%", height: "100%", pr: "1rem" }}
         />
 
-        <Box >
-          <CardContent sx={{ display: 'flex', flexDirection: 'column', width: 500, p: 0, m: 0 }}>
+        <Box sx={{ width: "50%", height: "100%" }} >
+          <CardContent sx={{ display: 'flex', flexDirection: 'column', p: 0, m: 0 }}>
 
             <Typography component="div" variant="h4" sx={{ mb: 1 }}>
               {props.nombre}
@@ -60,7 +60,7 @@ export default function CardCamping(props: Props) {
           </CardContent>
         </Box>
 
-        <Box flexDirection="column" display="flex" component="div" justifyContent="space-between" alignItems="flex-end">
+        <Box sx={{ pr: "1rem", width: "30%", height: "100%" }} flexDirection="column" display="flex" component="div" justifyContent="space-between" alignItems="flex-end">
           <Box className={Style.rankingcont} display="flex" alignContent="flex-end">
             <Typography color="secondary" component="legend">Reviews</Typography>
             <Rating name="read-only" value={props.reviews} readOnly />

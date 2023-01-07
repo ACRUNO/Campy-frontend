@@ -351,6 +351,7 @@ export default function Camping() {
 
       <Box className={Style.all}>
 
+        {/* Portada */}
         <Box className={Style.portadacont}>
           {console.log("hola")}
           <Box
@@ -390,7 +391,7 @@ export default function Camping() {
 
 
 
-
+        {/* Carrousel imagenes y formulario de reseva */}
         <Box className={Style.booking}>
           <Box className={Style.imageplace} >
 
@@ -400,221 +401,211 @@ export default function Camping() {
           </Box>
 
 
-          <Box className={Style.inputCont}
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              '& > :not(style)': {
-                m: 1,
-                width: 720,
+          <Box className={Style.inputCont}>
+            <Paper elevation={5} className={Style.paperContainer}>
 
+              <Box>
+                <Typography className={Style.coti} variant="h4" color="black"> Cotiza tu estadia al mejor precio</Typography>
+              </Box>
 
-              },
-            }}
-          >
-            <Paper elevation={5}   >
-              <Box className={Style.inputCont}>
-                <Box sx={{ marginTop: 4 }}>
-                  <Typography className={Style.coti} variant="h5" color="black"> Cotiza tu estadia al mejor precio</Typography>
-                </Box>
-                <Box >
-                  <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs} >
-                      <DatePicker
-                        disablePast
-                        maxDate={value2}
-                        label="Ingreso"
-                        openTo="day"
-                        views={['year', 'month', 'day']}
-                        value={value1}
-                        onChange={(newValue) => {
-                          handleIngresoCamping(newValue);
-                          // setValue1(newValue) ;
+              <Box className={Style.Fechas}>
+                <FormControl className={Style.FechaIngreso}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs} >
+                    <DatePicker
+                      disablePast
+                      maxDate={value2}
+                      label="Ingreso"
+                      openTo="day"
+                      views={['year', 'month', 'day']}
+                      value={value1}
+                      onChange={(newValue) => {
+                        handleIngresoCamping(newValue);
+                        // setValue1(newValue) ;
 
-                          let day1 = {
-                            target: {
-                              name: "day1",
-                              value: newValue?.date(),
-                              extra: "alldate",
-                              extrav: newValue?.format(),
-                            }
-                          };
+                        let day1 = {
+                          target: {
+                            name: "day1",
+                            value: newValue?.date(),
+                            extra: "alldate",
+                            extrav: newValue?.format(),
+                          }
+                        };
 
-                          handleAlgo(day1);
+                        handleAlgo(day1);
 
 
 
-                        }}
+                      }}
 
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
-                  </FormControl>
-                  <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        disablePast
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+                <FormControl className={Style.FechaEgreso}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disablePast
 
-                        minDate={value1}
-                        maxDate={value1?.add(4, 'week')}
-                        label="Egreso"
-                        openTo="day"
-                        views={['year', 'month', 'day']}
-                        value={value2}
-                        onChange={(newValue) => {
-                          handleEgresoCamping(newValue);
-                          // setValue2(newValue);
-                          let day2 = {
-                            target: {
-                              name: "day2",
-                              extra: "alldate2",
-                              extrav: newValue?.format(),
-                              value: newValue?.date(),
-                            }
-                          };
-                          handleAlgo(day2);
+                      minDate={value1}
+                      maxDate={value1?.add(4, 'week')}
+                      label="Egreso"
+                      openTo="day"
+                      views={['year', 'month', 'day']}
+                      value={value2}
+                      onChange={(newValue) => {
+                        handleEgresoCamping(newValue);
+                        // setValue2(newValue);
+                        let day2 = {
+                          target: {
+                            name: "day2",
+                            extra: "alldate2",
+                            extrav: newValue?.format(),
+                            value: newValue?.date(),
+                          }
+                        };
+                        handleAlgo(day2);
 
-                        }}
-
-
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </LocalizationProvider>
-                  </FormControl>
-                </Box>
-
-                <Box className={Style.input}>
-                  <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-helper-label" color="secondary">Estadia</InputLabel>
-                    <Select
-
-                      // onChange={(e) => { setStay(e.target.value as number) }}
-                      onChange={handleAlgo}
+                      }}
 
 
-                      name="stay"
-                      value={validate.stay}
-                      labelId="demo-simple-select-helper-label"
-                      id="demo-simple-select-helper"
-                      label="estadia"
-                      color="secondary"
-                    >
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                </FormControl>
+              </Box>
 
-                      <MenuItem value={0}>Zona Carpas</MenuItem>
-                      {camp.rodantes > 0 ? <MenuItem value={rodantes[0]?.precio}>Trailer Park</MenuItem> : <></>}
+              <Box className={Style.detalleReserva}>
+                <FormControl className={Style.itemReserva}>
+                  <InputLabel id="demo-simple-select-helper-label" color="secondary">Estadia</InputLabel>
+                  <Select
+
+                    // onChange={(e) => { setStay(e.target.value as number) }}
+                    onChange={handleAlgo}
 
 
-                    </Select>
-                  </FormControl>
+                    name="stay"
+                    value={validate.stay}
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    label="estadia"
+                    color="secondary"
+                  >
+
+                    <MenuItem value={0}>Zona Carpas</MenuItem>
+                    {camp.rodantes > 0 ? <MenuItem value={rodantes[0]?.precio}>Trailer Park</MenuItem> : <></>}
+
+
+                  </Select>
+                </FormControl>
 
 
 
 
 
-                  <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-helper-label" color="secondary">Viajeros</InputLabel>
-                    <Select
-                      // onChange={(e) => { setTravellers(e.target.value as number) }}
-                      onChange={handleAlgo}
-                      name="travellers"
-                      value={validate.travellers}
-                      labelId="demo-simple-select-helper-label"
-                      id="demo-simple-select-helper"
+                <FormControl className={Style.itemReserva}>
+                  <InputLabel id="demo-simple-select-helper-label" color="secondary">Viajeros</InputLabel>
+                  <Select
+                    // onChange={(e) => { setTravellers(e.target.value as number) }}
+                    onChange={handleAlgo}
+                    name="travellers"
+                    value={validate.travellers}
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
 
-                      label="Viajeros"
-                      color="secondary"
-                    >
-                      {/* { travellers >= 1 ?  <h1> {travellers}</h1> : <h1>nono</h1>} */}
-                      <MenuItem value={0}> Viajeros</MenuItem>
-                      <MenuItem value={1}>1 Persona</MenuItem>
-                      <MenuItem value={2}>2 Personas</MenuItem>
-                      <MenuItem value={3}>3 Personas</MenuItem>
-                      <MenuItem value={4}>4 Personas</MenuItem>
-                      <MenuItem value={5}>5 Personas</MenuItem>
-                      <MenuItem value={6}>6 Personas</MenuItem>
-                    </Select>
-                  </FormControl>
-
-
-
-                  <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="demo-simple-select-helper-label" color="secondary">Menores</InputLabel>
-                    <Select
-                      name="kids"
-                      onChange={handleAlgo}
-                      value={validate.kids}
-                      labelId="demo-simple-select-helper-label"
-                      id="demo-simple-select-helper"
-                      label="estadia "
-                      color="secondary"
-                    >
-                      <MenuItem value={0}>Sin menores</MenuItem>
-                      <MenuItem value={1}>1 menor</MenuItem>
-                      <MenuItem value={2}>2 menores</MenuItem>
-                      <MenuItem value={3}>3 menores</MenuItem>
-                      <MenuItem value={4}>4 menores</MenuItem>
-                      <MenuItem value={5}>5 menores</MenuItem>
-
-                    </Select>
-                  </FormControl>
-                </Box>
-
-                <Box className={Style.btn2} >
-
-
-                  <Stack direction="row" spacing={2}>
+                    label="Viajeros"
+                    color="secondary"
+                  >
+                    {/* { travellers >= 1 ?  <h1> {travellers}</h1> : <h1>nono</h1>} */}
+                    <MenuItem value={0}> Viajeros</MenuItem>
+                    <MenuItem value={1}>1 Persona</MenuItem>
+                    <MenuItem value={2}>2 Personas</MenuItem>
+                    <MenuItem value={3}>3 Personas</MenuItem>
+                    <MenuItem value={4}>4 Personas</MenuItem>
+                    <MenuItem value={5}>5 Personas</MenuItem>
+                    <MenuItem value={6}>6 Personas</MenuItem>
+                  </Select>
+                </FormControl>
 
 
 
-                    {price == 0 ? trueValid() ? <Button disabled sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
+                <FormControl className={Style.itemReserva}>
+                  <InputLabel id="demo-simple-select-helper-label" color="secondary">Menores</InputLabel>
+                  <Select
+                    name="kids"
+                    onChange={handleAlgo}
+                    value={validate.kids}
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    label="estadia "
+                    color="secondary"
+                  >
+                    <MenuItem value={0}>Sin menores</MenuItem>
+                    <MenuItem value={1}>1 menor</MenuItem>
+                    <MenuItem value={2}>2 menores</MenuItem>
+                    <MenuItem value={3}>3 menores</MenuItem>
+                    <MenuItem value={4}>4 menores</MenuItem>
+                    <MenuItem value={5}>5 menores</MenuItem>
 
-                      Generar Cotizacion
-                    </Button> : user == null ? <Button sx={{ minWidth: 190 }} onClick={handleCloseR} variant="contained" color="warning">
-                      Generar Cotizacion
-                    </Button> : <Button sx={{ minWidth: 190 }} onClick={handleCotizacion} variant="contained" color="warning">
-                      Generar Cotizacion
-                    </Button>
-                      : []}
+                  </Select>
+                </FormControl>
+              </Box>
 
-                  </Stack>
-
-                </Box>
-                {price > 0 ?
-                  <Box>
-                    <Box className={Style.btn1} >
-                      <Typography variant="subtitle1"> Precio valido hasta el {now}  a las 24:00Hs</Typography>
+              <Box className={Style.btn2} >
 
 
-                      <Stack className={Style.btn3} direction="row" spacing={1}>
+                <Stack direction="row" spacing={2}>
 
 
-                        {/* <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 ,}}  onClick={handleClickOpen} variant="contained" color="secondary">
+
+                  {price == 0 ? trueValid() ? <Button size='large' disabled onClick={handleCotizacion} variant="contained" color="secondary">
+
+                    Generar Cotizacion
+                  </Button> : user == null ? <Button size='large' onClick={handleCloseR} variant="contained" color="secondary">
+                    Generar Cotizacion
+                  </Button> : <Button size='large' onClick={handleCotizacion} variant="contained" color="secondary">
+                    Generar Cotizacion
+                  </Button>
+                    : []}
+
+                </Stack>
+
+              </Box>
+              {price > 0 ?
+                <Box>
+                  <Box className={Style.btn1} >
+                    <Typography variant="subtitle1"> Precio valido hasta el {now}  a las 24:00Hs</Typography>
+
+
+                    <Stack className={Style.btn3} direction="row" spacing={1}>
+
+
+                      {/* <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 ,}}  onClick={handleClickOpen} variant="contained" color="secondary">
                     $  RESERVssssssssssssA YA! 
                            
                            </Button>
           */}
 
-                        <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25, }} onClick={toggleDrawer('bottom', true)} variant="contained" color="secondary">
+                      <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 }} onClick={toggleDrawer('bottom', true)} variant="contained" color="secondary">
 
-                          ${price} RESERVA YA!
+                        ${price} RESERVA YA!
 
-                        </Button>
+                      </Button>
 
-                        {/* <Typography> ${price} OFERTA</Typography>  */}
-
-
-                        {price > 60000 ? price > 120000 ?
-                          <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(price * 10) / 100} </Typography> :
-                          <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(price * 5) / 100} </Typography>
-                          : <></>}
+                      {/* <Typography> ${price} OFERTA</Typography>  */}
 
 
-                      </Stack>
-                    </Box></Box> : <></>}
+                      {price > 60000 ? price > 120000 ?
+                        <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(price * 10) / 100} </Typography> :
+                        <Typography variant="subtitle1"> Acabas de obtener un descuento exclusivo de Campy, estas ahorrando $ {(price * 5) / 100} </Typography>
+                        : <></>}
+
+
+                    </Stack>
+                  </Box></Box> : <></>}
 
 
 
-              </Box>
+
             </Paper>
             {/* <Box className={Style.lugar}>
               <Typography variant="subtitle1" color="black"> <LocationOnIcon /> {camp.direccion} - {camp.provincia} </Typography>
@@ -625,7 +616,7 @@ export default function Camping() {
 
 
 
-
+        {/* Detalle de reserva(popUp) */}
         <div>
           <React.Fragment key={'bottom'}>
 
@@ -750,33 +741,37 @@ export default function Camping() {
 
 
 
+        <Box className={Style.ReviewsMapa}>
 
-        <Box className={Style.detailsComodidades}>
-          <Details />
-        </Box>
-
-
-        <Box className={Style.detailsreviews}>
 
           <Box className={Style.resume}>
             <Resume></Resume>
           </Box>
+
           <Box className={Style.reviews}>
             <Reviews />
           </Box>
-        </Box>
-
-
-
-
-        <Box className={Style.endcont}>
-
-          <Box className={Style.salidas}>
-            <Salidas {...infoCards}></Salidas>
-          </Box>
 
         </Box>
+
       </Box>
+
+
+
+      {/* Comodidades */}
+      <Box className={Style.detailsComodidades}>
+        <Details />
+      </Box>
+
+
+      {/*  Mapa */}
+
+      <Box className={Style.salidas}>
+        <Salidas {...infoCards}></Salidas>
+      </Box>
+
+
+
       <Footer />
 
     </Box >

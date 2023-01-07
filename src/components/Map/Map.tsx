@@ -13,6 +13,7 @@ import { AppDispatch, RootState } from "../../store";
 import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../actions";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Badge, Typography } from "@mui/material";
 
 
 
@@ -45,7 +46,7 @@ export default function Mapa() {
 
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8'
+    googleMapsApiKey: process.env.REACT_APP_GOOGLEMAPS_API_KEY as string
   });
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -115,17 +116,25 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
     filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false)
   }
 
-  const handleZoomOut = () => {
-    dispatch(zoomOutMap())
-    console.log(linkMap)
-  }
+  /*   const handleZoomOut = () => {
+      dispatch(zoomOutMap())
+      console.log(linkMap)
+    }
+   */
+
 
 
   const OPTIONS = {
     minZoom: 4,
     maxZoom: 18,
     mapTypeId: 'terrain',
-    fullscreenControl: true,
+    fullscreenControl: false,
+    zoomControl: false,
+    streetViewControl: true,
+    streetViewControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_TOP,
+    },
+
   }
 
 
@@ -146,7 +155,7 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
           }
         </Box>
         {
-          num > 0 ? <button className={s.filterCounter} disabled >{num}</button> : <Box />
+          num > 0 ? <Badge badgeContent={num} color="secondary" sx={{ ml: "1rem", mr: "0.5rem" }}> <Typography></Typography> </Badge> : <Box />
         }
 
 
