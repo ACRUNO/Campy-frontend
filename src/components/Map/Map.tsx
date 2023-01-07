@@ -45,7 +45,7 @@ export default function Mapa() {
 
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyChcClmha8e-qVgQpXurFMDX0X57--Nqh8'
+    googleMapsApiKey: process.env.REACT_APP_GOOGLEMAPS_API_KEY as string
   });
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -116,10 +116,12 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
     filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false)
   }
 
-  const handleZoomOut = () => {
-    dispatch(zoomOutMap())
-    console.log(linkMap)
-  }
+  /*   const handleZoomOut = () => {
+      dispatch(zoomOutMap())
+      console.log(linkMap)
+    }
+   */
+
 
 
   const OPTIONS = {
