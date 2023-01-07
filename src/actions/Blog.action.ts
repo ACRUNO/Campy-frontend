@@ -12,6 +12,8 @@ export const CREATE_COMENTARIO: string = 'CREATE_COMENTARIO '
 export const BUSCAR_POSTS = 'BUSCAR_POSTS';
 export const VISITAS = 'VISITAS';
 export const LIMPIAR_DETALLE = 'LIMPIAR_DETALLE';
+export const DELETE_POST = 'DELETE_POST';
+export const DELETE_COMENTARIO = 'DELETE_COMENTARIO';
 
 
 // TRAE TODOS LOS POSTS
@@ -83,7 +85,7 @@ export function modificarPost(id: number, token: string): ThunkAction<void, Root
 
     return async function (dispatch: AppDispatch) {
         try {
-            let json = await axios.put(`/api//blog/${id}`, {
+            let json = await axios.put(`/api/blog/${id}`, {
                 headers: { authorization: token }
             });
             return dispatch({
@@ -97,11 +99,11 @@ export function modificarPost(id: number, token: string): ThunkAction<void, Root
 }
 
 // MODIFICA EL COMENTARIO DE UN POST
-export function modificarComentario(id: number, token: string): ThunkAction<void, RootState, unknown, AnyAction> {
+export function modificarComentario(id: any, token: string): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
-            let json = await axios.put(`/api//blog/comentarios/${id}`, {
+            let json = await axios.put(`/api/blog/comentarios/${id}`, {
                 headers: { authorization: token }
             });
             return dispatch({
@@ -172,4 +174,38 @@ export function visualizaciones(id: number, data: { visitas: number }): ThunkAct
 
 export function limpiarDetalle() {
     return { type: LIMPIAR_DETALLE }
+}
+
+export function deletePost(id: any, token: string): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            let json = await axios.delete(`/api/blog/${id}`, {
+                headers: { authorization: token }
+            });
+            return dispatch({
+                type: "DELETE_POST",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function deleteComentario(id: any, token: string): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            let json = await axios.delete(`/api//blog/comentarios/${id}`, {
+                headers: { authorization: token }
+            });
+            return dispatch({
+                type: "DELETE_COMENTARIO",
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
