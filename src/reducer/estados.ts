@@ -102,7 +102,9 @@ export type allPosts = {
   fecha: string,
   texto: string,
   cant_comentarios: number,
-  cant_visualizaciones: number
+  cant_visualizaciones: number,
+  comentarios_vistos: number,
+  UsuarioId: number
 }
 
 

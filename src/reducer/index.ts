@@ -55,6 +55,8 @@ const initialState: {
     postsvistos: [],
     idReserva: number
     detailReserv: { day1: number, alldate: string, day2: number, alldate2: string, stay: number, kids: number, travellers: number, total: number, idRes: any }[]
+    userPosts: allPosts[],
+    userPosts_nuevoscomentarios: allPosts[]
 } = {
 
     //ESTADOS GLOBALES
@@ -122,7 +124,9 @@ const initialState: {
     postscomentados: [],
     postsvistos: [],
     idReserva: 0,
-    detailReserv: []
+    detailReserv: [],
+    userPosts: [],
+    userPosts_nuevoscomentarios: []
 };
 
 function rootReducer(state: any = initialState, action: any): any {
@@ -539,12 +543,14 @@ function rootReducer(state: any = initialState, action: any): any {
             let postsvis = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_visualizaciones < b.cant_visualizaciones) ? 1 : (b.cant_visualizaciones < a.cant_visualizaciones) ? -1 : 0).slice(0, 4);
             let postscom = action.payload.sort((a: allPosts, b: allPosts) => (a.cant_comentarios < b.cant_comentarios) ? 1 : (b.cant_comentarios < a.cant_comentarios) ? -1 : 0).slice(0, 4);
             let postsxfecha = action.payload.sort((a: allPosts, b: allPosts) => (a.id < b.id) ? 1 : (b.id < a.id) ? -1 : 0);
+
             return {
                 ...state,
                 allPosts: postsxfecha,
                 postbuscados: postsxfecha,
                 postscomentados: postscom,
-                postsvistos: postsvis
+                postsvistos: postsvis,
+
             }
         case GET_POST:
             return {
@@ -557,9 +563,9 @@ function rootReducer(state: any = initialState, action: any): any {
             return { ...state }
         case BUSCAR_POSTS:
             if (action.payload.length > 0) {
-                var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }[] = state.allPosts.filter((p: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }) => p.titulo.toLowerCase().includes(action.payload.toLowerCase()))
+                var postsBuscados: allPosts[] = state.allPosts.filter((p: allPosts) => p.titulo.toLowerCase().includes(action.payload.toLowerCase()))
             }
-            else { var postsBuscados: { titulo: string, username: string, foto: string, fecha: string, texto: string, cant_comentarios: number, cant_visualizaciones: number }[] = state.allPosts }
+            else { var postsBuscados: allPosts[] = state.allPosts }
             return {
                 ...state,
                 postbuscados: postsBuscados

@@ -12,6 +12,7 @@ export const CREATE_COMENTARIO: string = 'CREATE_COMENTARIO '
 export const BUSCAR_POSTS = 'BUSCAR_POSTS';
 export const VISITAS = 'VISITAS';
 export const LIMPIAR_DETALLE = 'LIMPIAR_DETALLE';
+export const COMENT_VISTOS = 'COMENT_VISTOS';
 
 
 // TRAE TODOS LOS POSTS
@@ -172,4 +173,20 @@ export function visualizaciones(id: number, data: { visitas: number }): ThunkAct
 
 export function limpiarDetalle() {
     return { type: LIMPIAR_DETALLE }
+}
+
+export function cambiarComentariosVistos(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
+
+    return async function (dispatch: AppDispatch) {
+        try {
+            let json = await axios.put(`/api/blog/comentarios/vistos/${id}`);
+            return dispatch({
+                type: COMENT_VISTOS,
+                payload: json.data
+
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
