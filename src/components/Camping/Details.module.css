@@ -1,8 +1,15 @@
-.cont{
+.cont {
     width: 95%;
     display: flex;
     justify-content: space-around;
     flex-wrap: nowrap;
     flex-direction: row;
     margin-top: 4rem;
+}
+
+.contenedorResponsive {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 50rem;
 }
