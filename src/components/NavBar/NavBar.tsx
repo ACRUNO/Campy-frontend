@@ -23,7 +23,8 @@ import { AppDispatch, RootState } from "../../store";
 import { useAuth0 } from "@auth0/auth0-react";
 import { logoutUser } from "../../actions/Login.action";
 
-const pages: string[] = ['blog', 'booking', 'map'];
+const pages: string[] = ['camping', 'blog', 'map'];
+const rutes: string[] = ['booking', 'blog', 'map']
 const logo: string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
@@ -119,12 +120,12 @@ export default function NavBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <Link onClick={() => document.documentElement.scrollTop = 0} className={s.links} to={`/${page}`} key={page}>
+              {pages.map((page, i: number) => (
+                <Link onClick={() => document.documentElement.scrollTop = 0} className={s.links} to={`/${rutes[i]}`} key={rutes[i]}>
 
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Typography
-                      sx={{ textAlign: 'left' }}>{page}</Typography>
+                      sx={{ textAlign: 'left' }}>{page.toLocaleUpperCase()}</Typography>
                   </MenuItem>
                 </Link>
               ))}
@@ -139,8 +140,8 @@ export default function NavBar() {
           {/* muestra dispositivos GRANDES */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, px: 6, justifyContent: 'center' }}>
 
-            {pages.map((page) => (
-              <Link onClick={() => document.documentElement.scrollTop = 0} className={s.links} to={`/${page}`} key={page}>
+            {pages.map((page, i: number) => (
+              <Link onClick={() => document.documentElement.scrollTop = 0} className={s.links} to={`/${rutes[i]}`} key={rutes[i]}>
 
                 <Button
                   key={page}

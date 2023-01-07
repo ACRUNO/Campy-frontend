@@ -19,6 +19,9 @@ export default function Detalle() {
 
     const [reload, setReload] = useState(0)
 
+    //
+    const [avisoComentario, setAvisoComentario] = useState(true)
+
     const post: {
         id: number,
         foto: string,
@@ -42,7 +45,7 @@ export default function Detalle() {
         <Box>
             <Container maxWidth={false} sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
                 <Grid>
-                    <MainFeaturedPost />
+                    <MainFeaturedPost avisoComentario={avisoComentario} setAvisoComentario={setAvisoComentario} posts={[]} />
                     <Grid container columnSpacing={4} display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
                     </Grid>
                     <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{ mb: 4 }} >

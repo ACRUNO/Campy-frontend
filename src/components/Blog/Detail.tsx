@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import { useParams } from "react-router-dom";
-import { deletePost, deleteComentario, modificarComentario } from "../../actions/Blog.action";
+import { deleteComentario, deletePost, modificarComentario } from "../../actions/Blog.action";
 import { userTypes } from "../../auxiliar";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
