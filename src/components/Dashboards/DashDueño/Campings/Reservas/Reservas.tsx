@@ -7,10 +7,9 @@ import { Bookings } from '../../../../../reducer/estados';
 import { Cancel as CancelIcon } from '@mui/icons-material';
 import s from './Reservas.module.css';
 import axios from 'axios';
-import { keyStateBooking, stateBooking } from '../../../../../auxiliar';
+import { keyStateBooking } from '../../../../../auxiliar';
 import { VERDE } from '../../../../helpers/colors';
 import { CircularProgress } from '@mui/material';
-import BasicMenu from '../../../../helpers/BasicMenu';
 import { confirmReserva } from '../../../../../actions/Owner.action';
 import DetalleReserva from './DetalleReserva/DetalleReserva';
 import formatDate from '../../../../helpers/formatDate';
@@ -38,7 +37,7 @@ export default function Reservas({ open, campingId, setOpenReserves }: Props) {
   };
 
   const getOwnerBookings = async () => {
-    const { data }: { data: Bookings[] } = await axios.get(`/api/reservas/${campingId}`,
+    const { data }: { data: Bookings[] } = await axios.get(`/api/reservas/${campingId}?filter=true`,
       {
         headers: { authorization: token }
       });

@@ -29,8 +29,7 @@ export default function FeaturedPost(props: FeaturedPostProps) {
 
   const handleClick = () => {
     let data: { visitas: number } = { visitas: props.vistas + 1 }
-    //dispatch(actions.visualizaciones(props.id, data))
-    setTimeout(() => { navigate(`/blog/${props.id}`) }, 100)
+    dispatch(actions.visualizaciones(props.id, data, () => { navigate(`/blog/${props.id}`) }))
 
   }
 
