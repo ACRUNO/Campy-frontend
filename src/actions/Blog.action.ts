@@ -91,11 +91,14 @@ export function getComentariosByPostId(
 }
 
 // MODIFICA EL TEXTO O IMAGEN DE UN POST
-export function modificarPost(id: number, token: string): ThunkAction<void, RootState, unknown, AnyAction> {
+export function modificarPost(id: number, token: string, texto: any, imagenes: any): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
-            let json = await axios.put(`/api/blog/${id}`, {
+            let objetoTexto = {texto: texto, ...imagenes}
+            console.log(objetoTexto);
+
+            let json = await axios.put(`/api/blog/${id}`, objetoTexto, {
                 headers: { authorization: token }
             });
             return dispatch({
@@ -116,7 +119,7 @@ export function modificarComentario(id: any, token: string, comentario: string):
     return async function (dispatch: AppDispatch) {
         try {
             let objetoComentario = {comentario: comentario}
-            
+
             let json = await axios.put(`/api/blog/comentarios/${id}`, objetoComentario, {
                 headers: { authorization: token }
             });
