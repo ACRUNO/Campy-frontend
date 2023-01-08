@@ -16,6 +16,7 @@ export const LIMPIAR_DETALLE = 'LIMPIAR_DETALLE';
 export const DELETE_POST = 'DELETE_POST';
 export const DELETE_COMENTARIO = 'DELETE_COMENTARIO';
 export const COMENT_VISTOS = 'COMENT_VISTOS';
+export const MODIFICAR_COMENTARIO = 'MODIFICAR_COMENTARIO';
 
 
 // TRAE TODOS LOS POSTS
@@ -109,11 +110,14 @@ export function modificarPost(id: number, token: string): ThunkAction<void, Root
 
 
 // MODIFICA EL COMENTARIO DE UN POST
-export function modificarComentario(id: any, token: string): ThunkAction<void, RootState, unknown, AnyAction> {
+export function modificarComentario(id: any, token: string, comentario: string): ThunkAction<void, RootState, unknown, AnyAction> {
+
 
     return async function (dispatch: AppDispatch) {
         try {
-            let json = await axios.put(`/api/blog/comentarios/${id}`, {
+            let objetoComentario = {comentario: comentario}
+            
+            let json = await axios.put(`/api/blog/comentarios/${id}`, objetoComentario, {
                 headers: { authorization: token }
             });
             return dispatch({

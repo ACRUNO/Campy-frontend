@@ -78,6 +78,7 @@ import {
   /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST,
   CREATE_COMENTARIO,
   LIMPIAR_DETALLE,
+  MODIFICAR_COMENTARIO
 } from "../actions/Blog.action";
 import { POST_RESERV } from "../actions/Checkout.action";
 
@@ -875,6 +876,10 @@ function rootReducer(state: any = initialState, action: any): any {
         ...state,
         post: {},
       };
+    case MODIFICAR_COMENTARIO:
+      return {
+        ...state
+      }
 
     default:
       return { ...state };

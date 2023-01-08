@@ -28,16 +28,17 @@ interface PostDetail {
     comentarios: { id: number, username: string, foto: string, comentario: string, createdAt: string }[]
     reload: number,
     setReload: React.Dispatch<React.SetStateAction<number>>
+    editar: boolean,
+    setEditar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function Detail(props: PostDetail) {
-
-    const [editar, setEditar] = useState(false)
 
     const navigate = useNavigate()
     const params = useParams();
     const dispatch: AppDispatch = useDispatch()
     const user = useSelector((state: RootState) => state.user);
+    const [comentarioEditado, setComentarioEditado] = useState('')
 
     const handleDeleteComentario = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
@@ -51,11 +52,20 @@ export default function Detail(props: PostDetail) {
         navigate("/blog")
     }
 
-    const handleClick = (e: React.ChangeEvent<unknown>) => {
+    const handleClickOpenDialogo = (e: React.ChangeEvent<unknown>) => {
         e.preventDefault();
-        setEditar(true)
-        console.log(editar);
-        
+        props.setEditar(true)
+    }
+
+    const handleEditComentario = (e: React.ChangeEvent<unknown>, id: number, i: number) => {
+        e.preventDefault();
+        console.log(props.comentarios[i].id);
+        dispatch(modificarComentario(props.comentarios[i].id, user.token, comentarioEditado))
+    }
+
+    const handleModificacionComentario = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        e.preventDefault();
+        setComentarioEditado(e.target.value)
     }
 
     return (
@@ -65,8 +75,10 @@ export default function Detail(props: PostDetail) {
                     <Grid sx={{ display: 'flex', justifyContent: "space-between" }} >
                         <Typography component="h2" variant="h4" pb={3}>{props.titulo}</Typography>
                         <Grid sx={{ display: 'flex' }} pb={3}>
-                            {user && user.username === props.username && <Button onClick={e => handleClick(e)} size="small" variant="outlined" color="secondary" id="Editar">Editar</Button>}
-                            {user && user.tipo === userTypes.ADMIN && <IconButton onClick={e => { handleDeletePost(e) }} aria-label="delete" size="large" color="error">
+                            {user && user.username === props.username && 
+                            <Button /* onClick={e => handleClick(e)} */ size="small" variant="outlined" color="secondary" id="Editar">Editar</Button>}
+                            {user && user.tipo === userTypes.ADMIN && 
+                            <IconButton onClick={e => { handleDeletePost(e) }} aria-label="delete" size="large" color="error">
                                 <DeleteIcon fontSize="inherit" />
                             </IconButton>}
                         </Grid>
@@ -88,7 +100,7 @@ export default function Detail(props: PostDetail) {
             <Card sx={{ display: 'flex', mt: '10px' }}>
                 <CardContent sx={{ flex: 1 }}>
                     <Typography variant="h5" pb={2}>Comentarios</Typography>
-                    {props.comentarios?.map((e) => (
+                    {props.comentarios?.map((e, i) => (
                         <Grid>
                             <List>
                                 <Grid display="flex" justifyContent="space-between" alignItems="center">
@@ -102,12 +114,38 @@ export default function Detail(props: PostDetail) {
                                 <Grid display="flex" justifyContent="flex-end">
 
                                     {user && user.username === e.username &&
-                                        <Button size="small" variant="outlined" color="secondary" id="Editar">Editar</Button>}
+                                        <Button onClick={e => handleClickOpenDialogo(e)} size="small" variant="outlined" color="secondary" id="Editar">Editar</Button>}
 
                                     {user && user.tipo === userTypes.ADMIN && <IconButton aria-label="delete" size="small" color="error">
                                         <DeleteIcon onClick={(error) => handleDeleteComentario(error, e.id)} fontSize="small" />
+                                        {props.editar && <Dialog
+                                            fullWidth
+                                            maxWidth="md"
+                                            open={props.editar}>
+                                            <DialogTitle align='center'>Editar Comentario</DialogTitle>
+                                            <DialogContent >
+                                                <Grid container spacing={2} display="flex" flexDirection="column" alignItems="stretch" sx={{ mt: 1, pr: 2 }} >
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                            color="secondary"
+                                                            required
+                                                            fullWidth
+                                                            id="Comentario"
+                                                            label="Comentar"
+                                                            name="Comentario"
+                                                            multiline
+                                                            minRows={5}
+                                                            onChange={handleModificacionComentario}
+                                                            defaultValue={e.comentario}
+                                                        />
+                                                    </Grid>
+                                                    <Grid display="flex" justifyContent="flex-end" sx={{ mt: 1 }}>
+                                                        <Button onClick={(error) => handleEditComentario(error, e.id, i)} color="success" variant='contained' id='Editar' sx={{ mt: 1 }} value="Editar comentario">Enviar</Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </DialogContent>
+                                        </Dialog>}
                                     </IconButton>}
-
                                 </Grid>
                                 <ListItem divider></ListItem>
                             </List>
@@ -116,31 +154,6 @@ export default function Detail(props: PostDetail) {
                     <CrearComentario id={props.id} reload={props.reload} setReload={props.setReload} />
                 </CardContent>
             </Card>
-            {editar && <Dialog
-                fullWidth
-                maxWidth="md"
-                open={editar}>
-                <DialogTitle align='center'>Editar Comentario</DialogTitle>
-                <DialogContent >
-                    <Grid container spacing={2} display="flex" flexDirection="column" alignItems="stretch" sx={{ mt: 1, pr: 2 }} >
-                        <Grid item xs={12}>
-                            <TextField
-                                color="secondary"
-                                required
-                                fullWidth
-                                id="Comentario"
-                                label="Comentar"
-                                name="Comentario"
-                                multiline
-                                minRows={5}
-                            />
-                        </Grid>
-                        <Grid display="flex" justifyContent="flex-end" sx={{ mt: 1 }}>
-                            <Button color="success" variant='contained' id='Crear' sx={{ mt: 1 }} value="Crear comentario">Enviar</Button>
-                        </Grid>
-                    </Grid>
-                </DialogContent>
-            </Dialog>}
         </Grid>
     )
 }
