@@ -1,7 +1,7 @@
 .MapCard {
     position: fixed;
     bottom: 3%;
-    right: 4%;
+    right: 1.5%;
 }
 
 button.buttonFilters {
@@ -32,7 +32,7 @@ button.buttonFilters {
 
 }
 
-.buttonFilters:hover{
+.buttonFilters:hover {
     background: #f1f1f1;
 }
 
@@ -65,35 +65,36 @@ button.buttonZoomOut {
     min-width: 65px;
 }
 
-.buttonZoomOut:hover{
+.buttonZoomOut:hover {
     background: #f1f1f1;
 }
+
 .filters {
     position: fixed;
     bottom: 8%;
     left: 0.5%;
 }
 
-.link{
+.link {
     text-decoration: none;
 }
 
-button{
+button {
     font-family: "Sen" !important;
 }
 
-li{
+li {
     font-family: "Sen" !important;
 }
 
 
-.filtersArrow{
+.filtersArrow {
     float: right;
     margin-left: 0.1rem;
 
 }
 
-.filterCounter{
+.filterCounter {
     display: inline-block;
     background: #5F8D4E;
     color: white;

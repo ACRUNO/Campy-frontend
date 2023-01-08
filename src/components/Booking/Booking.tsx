@@ -6,7 +6,7 @@ import FiltrosPrincipales from "../FiltrosBooking/FiltrosPrincipales";
 import Alert_busqueda from "../AlertBusqueda/Alert_busqueda";
 import CardCamping from "../CardCamping/CardCamping";
 import SkeletonCardCamping from '../CardCamping/SkeletonCardCamping'
-import { Box, Grid } from '@mui/material'
+import { Badge, Box, Grid } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCampings, filterProvincia, getCampingsProvincias, getCampingsLocalidades } from "../../actions/index"
 import { useEffect, useState } from "react";
@@ -17,6 +17,9 @@ import s from './Booking.module.css';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FiltersMap from "../Map/FiltersMap/FiltersMap";
+import CardCampingChica from "../CardCamping/CardCampingChica";
+import SkeletonCardChica from "../CardCamping/SkeletonCardChica";
+import Typography from "@mui/material/Typography";
 
 
 
@@ -29,7 +32,7 @@ export default function Booking() {
     const dispatch: AppDispatch = useDispatch()
     const { result, done } = useSelector((state: RootState) => state.campings)
     const [open, setOpen] = React.useState(false);
-    const filtrosBook: filterCamps = useSelector((state: RootState) => state.filtrosBooking)
+    const filtrosBook: any = useSelector((state: RootState) => state.filtrosBooking)
 
 
 
@@ -61,7 +64,7 @@ export default function Booking() {
 
     let num = 0
 
-    if (Number(filtrosBook.id_provincia) > 0 || filtrosBook.id_localidad) num++
+    if (filtrosBook.id_provincia > 0 || filtrosBook.id_localidad) num++
     if (filtrosBook.abierto_fecha_desde || filtrosBook.abierto_fecha_hasta) num++
     if (filtrosBook.precio.length > 0) num++
     if (filtrosBook.reviews.length > 0) num++
@@ -98,11 +101,11 @@ export default function Booking() {
                         }
                     </Box>
                     {
-                        num > 0 ? <button className={s.filterCounter} disabled >{num}</button> : <Box />
+                        num > 0 ? <Badge badgeContent={num} color="secondary" sx={{ ml: "1rem", mr: "0.5rem" }}> <Typography></Typography> </Badge> : <Box />
                     }
                 </button>
 
-
+                {/*  /*  <button className={s.filterCounter} disabled >{num}</button> */}
 
             </Box>
 
@@ -151,6 +154,35 @@ export default function Booking() {
                     }
 
                 </Grid>
+
+
+                <Grid className={s.CardsChicas} item>
+
+                    {
+                        currentCampings.length > 0 ? currentCampings.map((c: Campings) => (
+
+
+                            <CardCampingChica key={c.id + 1} id={c.id} nombre={c.nombre_camping} descripcion={c.descripcion_camping}
+                                localidad={c.localidad} provincia={c.provincia}
+                                categoria={c.categoria} imagenes={c.imagenes} reviews={c.puntuacion_promedio} precio={c.precio}></CardCampingChica>
+
+                        )) :
+                            result.length === 0 && !done ?
+                                new Array(5).fill(1).map((p, i) =>
+                                    <SkeletonCardChica key={i} />
+                                )
+                                :
+                                <Alert_busqueda estadoopen={open} setestadoopen={setOpen} />
+                    }
+
+                </Grid>
+
+
+
+
+
+
+
             </Grid>
 
             <Paginado

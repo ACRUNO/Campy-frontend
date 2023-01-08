@@ -1,9 +1,8 @@
-import { Grid, Typography, TextField, Box, Button, Dialog, DialogTitle, DialogContent, Checkbox, FormControlLabel } from '@mui/material';
+import { Grid, Button, TextField } from '@mui/material';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import * as actions from "../../actions/Blog.action"
-import { useNavigate } from 'react-router-dom';
 
 
 type Props = {
@@ -16,7 +15,6 @@ export default function CrearComentario(props: Props) {
 
     const dispatch: AppDispatch = useDispatch()
     const user = useSelector((state: RootState) => state.user);
-    const navigate = useNavigate()
     const [boton, setBoton] = React.useState(true)
     const [input, setInput] = React.useState<{ comentario: string, usuarioId: number, postId: number }>({
         comentario: '',
@@ -70,7 +68,7 @@ export default function CrearComentario(props: Props) {
                     />
                 </Grid>
                 <Grid display="flex" justifyContent="flex-end" sx={{ mt: 1 }}>
-                    <Button disabled={boton} color="secondary" variant='contained' id='Crear' sx={{ mt: 1 }} onClick={(e) => { handleSubmit(e) }} value="Crear comentario">Crear comentario</Button>
+                    <Button disabled={boton} color="success" variant='contained' id='Crear' sx={{ mt: 1 }} onClick={(e) => { handleSubmit(e) }} value="Crear comentario">Enviar</Button>
                 </Grid>
             </Grid>
         </React.Fragment>

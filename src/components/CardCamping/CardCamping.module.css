@@ -5,6 +5,8 @@
 
 
 
+
+
 /* //RESPONSIVE */
 
 @media all and (max-width: 1000px) {
@@ -16,15 +18,38 @@
 
 @media all and (max-width: 850px) {
     .card {
-        background-color: red;
-
+        margin: 0;
     }
+
+    .cardChica {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        margin-top: 1.2rem;
+    }
+
+    .cardChica:hover {
+        box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
+    }
+
+    .titulo {
+        font-weight: 700;
+    }
+
+    .desde {
+        font-size: 1.3rem;
+    }
+
+
+
 }
 
 /* @media all and (max-width: 500px) */
 @media only screen and (max-device-width : 640px) {
-    .card {
-        background-color: blue;
 
+    .titulo {
+        font-weight: 700 !important;
     }
+
+
+
 }

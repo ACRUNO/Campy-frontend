@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Select, MenuItem, Typography, Slider, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button, InputLabel, SelectChangeEvent, Rating, TextField } from '@mui/material';
 import { ChangeEvent, MouseEvent } from 'react'
-import { FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, filterLocalidad, filterLocalidadMap, FilterParcela, filterProvincia, filterProvinciaMap, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, getLocalidades, getProvincias, resetFiltros } from '../../../actions/index'
+import { diasReservadosBooking, FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, filterLocalidad, filterLocalidadMap, FilterParcela, filterProvincia, filterProvinciaMap, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, getLocalidades, getProvincias, resetFiltros } from '../../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../../store/index';
 import { Campings } from '../../../reducer/estados';
@@ -28,6 +28,14 @@ export default function FiltrosLaterales() {
     const allCampings: Campings[] = useSelector((state: RootState) => state.allCampings)
     const fechaIngresoDayjs: Dayjs = useSelector((state: RootState) => state.fechaIngresoDayjs)
     const fechaEgresoDayjs: Dayjs = useSelector((state: RootState) => state.fechaEgresoDayjs)
+    const fechaIngreso: string = useSelector((state: RootState) => state.fechaIngreso)
+    const fechaEgreso: string = useSelector((state: RootState) => state.fechaEgreso)
+
+
+    var fecha1: any = new Date(fechaIngreso).getTime();
+    var fecha2: any = new Date(fechaEgreso).getTime();
+
+    var diff = fecha2 - fecha1;
 
 
     const today: Dayjs = dayjs();
@@ -114,6 +122,9 @@ export default function FiltrosLaterales() {
     const handleIngresoMap = (e: Dayjs | null) => {
         dispatch(FilterIngreso(e))
         dispatch(FilterIngresoMap(e))
+
+
+
     }
 
     const handleEgresoMap = (e: Dayjs | null) => {
@@ -123,6 +134,7 @@ export default function FiltrosLaterales() {
 
     const handleButtonPrecio = () => {
         dispatch(filtrosPrecios('precio', precioLocal))
+        console.log(diff / (1000 * 60 * 60 * 24));
     }
 
 
