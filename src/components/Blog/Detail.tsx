@@ -68,10 +68,16 @@ export default function Detail(props: PostDetail) {
         props.setEditar(true)
     }
 
+    const handleClickOpenDialogoPost = (e: React.ChangeEvent<unknown>) => {
+        e.preventDefault();
+        props.setEditarPost(true)
+    }
+
     const handleEditComentario = (e: React.ChangeEvent<unknown>, id: number, i: number) => {
         e.preventDefault();
         console.log(props.comentarios[i].id);
         dispatch(modificarComentario(props.comentarios[i].id, user.token, comentarioEditado))
+        props.setReload(props.reload + 1)
         props.setEditar(false)
     }
 
@@ -86,16 +92,13 @@ export default function Detail(props: PostDetail) {
         setPostImagenesEditado([...postImagenesEditado, e.target.value])
     }
 
-    const handleModificacionImagenesPost = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        e.preventDefault();
-        setPostImagenesEditado([...postImagenesEditado, e.target.value])
-    }
-
     const handleEditPost = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
         console.log(props.id)
         dispatch(modificarPost(props.id, user.token, postEditado, input))
+        props.setReload(props.reload + 1)
         props.setEditarPost(false)
+
     }
 
     return (
@@ -107,7 +110,7 @@ export default function Detail(props: PostDetail) {
                         <Grid sx={{ display: 'flex' }} pb={3}>
 
                             {user && user.username === props.username &&
-                                <Button onClick={e => handleClickOpenDialogo(e)} size="small" variant="outlined" color="secondary" id="Editar">Editar</Button>}
+                                <Button onClick={e => handleClickOpenDialogoPost(e)} size="small" variant="outlined" color="secondary" id="Editar">Editar</Button>}
 
                             {user && user.tipo === userTypes.ADMIN &&
                                 <IconButton onClick={e => { handleDeletePost(e) }} aria-label="delete" size="large" color="error">
@@ -152,6 +155,7 @@ export default function Detail(props: PostDetail) {
                                         <DeleteIcon onClick={(error) => handleDeleteComentario(error, e.id)} fontSize="small" />
                                         {/* DIALOGO DE EDITAR COMENTARIO */}
                                         {props.editar && <Dialog
+                                            onClose={() => props.setEditar(false)}
                                             fullWidth
                                             maxWidth="md"
                                             open={props.editar}>
@@ -186,6 +190,7 @@ export default function Detail(props: PostDetail) {
                     ))}
                     {/* DIALOGO DE EDITAR POST */}
                     {props.editarPost && <Dialog
+                        onClose={() => props.setEditarPost(false)}
                         fullWidth
                         maxWidth="md"
                         open={props.editarPost}>
@@ -218,7 +223,9 @@ export default function Detail(props: PostDetail) {
                                                         width: 200
                                                     }}
                                                     alt="Logo"
-                                                    src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
+                                                    src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"}
+                                                    /* defaultValue= */
+                                                />
                                             </Grid>
                                         ))}
                                         <Cloudinary setInput={setInput}></Cloudinary>

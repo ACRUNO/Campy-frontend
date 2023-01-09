@@ -185,12 +185,16 @@ export default function Booking() {
 
             </Grid>
 
-            <Paginado
-                campingsxPage={campingsxPage}
-                allCampings={result.length}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
+
+            <Box className={s.paginado}>
+                <Paginado
+                    campingsxPage={campingsxPage}
+                    allCampings={result.length}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            </Box>
+
             <Footer />
         </Box >
 
