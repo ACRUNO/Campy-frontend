@@ -95,7 +95,7 @@ export function modificarPost(id: number, token: string, texto: any, imagenes: a
 
     return async function (dispatch: AppDispatch) {
         try {
-            let objetoTexto = {texto: texto, ...imagenes}
+            let objetoTexto = { texto: texto, ...imagenes }
             console.log(objetoTexto);
 
             let json = await axios.put(`/api/blog/${id}`, objetoTexto, {
@@ -113,14 +113,12 @@ export function modificarPost(id: number, token: string, texto: any, imagenes: a
 
 
 // MODIFICA EL COMENTARIO DE UN POST
-export function modificarComentario(id: any, token: string, comentario: string): ThunkAction<void, RootState, unknown, AnyAction> {
+export function modificarComentario(idComentario: any, token: string, comentario: string): ThunkAction<void, RootState, unknown, AnyAction> {
 
 
     return async function (dispatch: AppDispatch) {
         try {
-            let objetoComentario = {comentario: comentario}
-
-            let json = await axios.put(`/api/blog/comentarios/${id}`, objetoComentario, {
+            let json = await axios.put(`/api/blog/comentarios/${idComentario}?comentario=${comentario}`, {}, {
                 headers: { authorization: token }
             });
             return dispatch({
@@ -163,6 +161,8 @@ export function crearComentario(
     token: string
 ) {
     return async function (dispatch: AppDispatch) {
+        console.log(data);
+
         try {
             let result = await axios.post("/api/blog/comentario", data, {
                 headers: { authorization: token },
