@@ -255,7 +255,6 @@ export default function Camping() {
       }
 
       if (finalPrice < 60000) {
-        setDiscount(finalPrice)
         setPrice((final * total) + validate.stay)
       }
     }
@@ -281,7 +280,6 @@ export default function Camping() {
 
       if (finalPrice < 60000) {
         setPrice((final * total) + validate.stay)
-        setDiscount(finalPrice)
       }
     }
 

@@ -22,13 +22,6 @@
     transition: .5s;
 }
 
-.ResumenReviews {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    width: 100%;
-    margin-top: 4rem;
-}
 
 
 /* .imagencita > .crop {
@@ -70,9 +63,9 @@
 
 .booking {
     width: 100%;
+    height: 40rem;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
@@ -81,18 +74,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+    width: 50%;
+    height: 100%;
     padding: 1rem;
-    /* padding-top: 1.7rem; */
 }
 
 .inputCont {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+    width: 50%;
+    height: 100%;
     /*     height: 27rem; */
-    padding: 0rem;
+
+}
+
+.paperContainer {
+    width: 95%;
+    height: 72%;
+    padding-top: 2rem;
+    /*     padding: 1.5rem;
+    margin-right: 1.5rem; */
 }
 
 
@@ -125,12 +127,7 @@
     text-shadow: 5px 2px 36px #070707;
 }
 
-.paperContainer {
-    width: 100%;
-    height: 100%;
-    padding: 1.5rem;
-    margin-right: 1.5rem;
-}
+
 
 .detalleReserva {
     display: flex;
@@ -182,7 +179,7 @@
 }
 
 .FechaEgreso {
-    margin-left: 2rem !important;
+    margin-left: 1rem !important;
 }
 
 .endcont {
@@ -197,7 +194,18 @@
     justify-content: center;
 }
 
+/* Zona resumen y reviews */
+.ResumenReviews {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 4rem;
+}
+
+
 .resume {
+    width: 50%;
     padding-top: 1rem;
     padding-left: 4rem;
     padding-right: 4rem;
@@ -205,6 +213,7 @@
 }
 
 .reviews {
+    width: 50%;
     margin-right: 2rem;
 }
 
@@ -270,28 +279,7 @@ svg.heart {
 }
 
 
-/* //RESPONSIVE */
 
-@media all and (max-width: 1280px) {
-    .booking {
-        flex-direction: row;
-    }
-}
-
-@media all and (max-width: 850px) {
-    .booking {
-        flex-direction: column;
-    }
-
-    .ResumenReviews {
-        flex-direction: column;
-    }
-}
-
-
-/* @media all and (max-width: 500px) */
-
-@media only screen and (max-device-width: 640px) {}
 
 .container22 {
     width: 25rem;
@@ -352,3 +340,78 @@ svg.heart {
 .buttonsub:hover {
     background-color: #45a049;
 }
+
+
+/* //RESPONSIVE */
+
+@media all and (max-width: 1280px) {
+    .booking {
+        flex-direction: row;
+
+    }
+}
+
+@media all and (max-width: 850px) {
+    .booking {
+        width: 100%;
+        height: 80rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .imageplace {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .inputCont {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        /*     height: 27rem; */
+
+    }
+
+    .paperContainer {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .ResumenReviews {
+        flex-direction: column;
+    }
+
+    .resume {
+        width: 100%;
+        padding-left: 0rem;
+        padding-right: 1rem;
+    }
+
+    .reviews {
+        width: 100%;
+        padding-top: 2rem;
+    }
+
+    .contResumen {
+        width: 100%;
+    }
+
+    .contResumenDecripHistoria {
+        width: 100%;
+        padding: 2rem;
+    }
+
+}
+
+
+/* @media all and (max-width: 500px) */
+
+@media only screen and (max-device-width: 640px) {}

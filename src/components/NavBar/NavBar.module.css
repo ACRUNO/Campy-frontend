@@ -1,5 +1,11 @@
 .links {
   text-decoration: none;
+  color: black;
+}
+
+.links:hover {
+  text-decoration: none;
+  color: var(--green)
 }
 
 button.active {
