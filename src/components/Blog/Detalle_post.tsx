@@ -14,10 +14,15 @@ import Detail from "./Detail";
 
 export default function Detalle() {
 
+    
     const params = useParams();
     const dispatch: AppDispatch = useDispatch();
-
+    const [editar, setEditar] = useState(false)
+    const [editarPost, setEditarPost] = useState(false)
     const [reload, setReload] = useState(0)
+
+    //
+    const [avisoComentario, setAvisoComentario] = useState(true)
 
     const post: {
         id: number,
@@ -35,18 +40,18 @@ export default function Detalle() {
         return () => {
             dispatch(limpiarDetalle())
         }
-    }, [dispatch, params.id, reload])
+    }, [dispatch, params.id, reload, editar])
 
 
     return (
         <Box>
             <Container maxWidth={false} sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
                 <Grid>
-                    <MainFeaturedPost />
+                    <MainFeaturedPost avisoComentario={avisoComentario} setAvisoComentario={setAvisoComentario} posts={[]} />
                     <Grid container columnSpacing={4} display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
                     </Grid>
                     <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{ mb: 4 }} >
-                        <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date(post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios} reload={reload} setReload={setReload} />
+                        <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date(post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios} reload={reload} setReload={setReload} editar={editar} setEditar={setEditar} editarPost={editarPost} setEditarPost={setEditarPost} />
                     </Grid>
                 </Grid>
             </Container>

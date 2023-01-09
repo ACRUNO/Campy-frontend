@@ -104,6 +104,8 @@ export type allPosts = {
   cant_comentarios: number;
   cant_visualizaciones: number;
   tipo: string;
+  comentarios_vistos: number;
+  UsuarioId: number;
 };
 
 export type FavoritesCampings = { id: number; nombre: string; imagen: string };
