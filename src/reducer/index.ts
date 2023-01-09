@@ -582,7 +582,7 @@ function rootReducer(state: any = initialState, action: any): any {
     case GET_MASRESERVADOS:
       return {
         ...state,
-        datos_graftop: action.payload,
+        datos_graftop: action.payload
       };
     case GET_USUARIOSCAMPY:
       let day: Date = new Date(2022, 11, 14);
