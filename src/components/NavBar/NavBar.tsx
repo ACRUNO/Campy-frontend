@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { useAuth0 } from "@auth0/auth0-react";
 import { logoutUser } from "../../actions/Login.action";
+import { useState } from 'react';
 
 const pages: string[] = ['camping', 'blog', 'map'];
 const rutes: string[] = ['booking', 'blog', 'map']
@@ -55,6 +56,7 @@ export default function NavBar() {
 
   //standar
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [isActive, setIsActive] = React.useState<string>("");
 
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -63,20 +65,24 @@ export default function NavBar() {
 
 
   const handleCloseNavMenu = () => {
+    document.documentElement.scrollTop = 0;
     setAnchorElNav(null);
   };
 
-
+  const handleClickLink = (page: string) => {
+    document.documentElement.scrollTop = 0
+    setIsActive(page);
+  }
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky" sx={{ top: 0, left: 0, height: '70px', justifyContent: 'center', zIndex: 9999999 }}>
       <Container maxWidth={false}>
         <Toolbar disableGutters>
 
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
 
           {/* LOGO CAMPY */}
-          <Link className={s.links} to='/'>
+          <Link className={s.links} to='/' onClick={() => setIsActive("")}>
             <Box
               component="img"
               sx={{
@@ -120,13 +126,16 @@ export default function NavBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page, i: number) => (
-                <Link onClick={() => document.documentElement.scrollTop = 0} className={s.links} to={`/${rutes[i]}`} key={rutes[i]}>
+              {pages.map((page: string, i: number) => (
+                <Link to={`/${rutes[i]}`} className={s.links} key={rutes[i]}>
 
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
+
                     <Typography
-                      sx={{ textAlign: 'left' }}>{page.toLocaleUpperCase()}</Typography>
+                      sx={{ textAlign: 'left' }}
+                    >{page.toLocaleUpperCase()}</Typography>
                   </MenuItem>
+
                 </Link>
               ))}
             </Menu>
@@ -141,12 +150,12 @@ export default function NavBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, px: 6, justifyContent: 'center' }}>
 
             {pages.map((page, i: number) => (
-              <Link onClick={() => document.documentElement.scrollTop = 0} className={s.links} to={`/${rutes[i]}`} key={rutes[i]}>
+              <Link onClick={() => handleClickLink(page)} className={s.links} to={`/${rutes[i]}`} key={rutes[i]}>
 
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
                   sx={{ my: 2, px: 3, color: 'black', display: 'block', fontSize: 'large' }}
+                  className={isActive === page ? s.active : ''}
                 >
                   {page}
                 </Button>

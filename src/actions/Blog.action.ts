@@ -118,9 +118,7 @@ export function modificarComentario(idComentario: any, token: string, comentario
 
     return async function (dispatch: AppDispatch) {
         try {
-            let objetoComentario = { comentario: comentario }
-
-            let json = await axios.put(`/api/blog/comentarios/${idComentario}`, objetoComentario, {
+            let json = await axios.put(`/api/blog/comentarios/${idComentario}?comentario=${comentario}`, {}, {
                 headers: { authorization: token }
             });
             return dispatch({

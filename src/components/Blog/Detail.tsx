@@ -85,6 +85,7 @@ export default function Detail(props: PostDetail) {
         setEditar(true)
     }
 
+
     const handleEditComentario = (e: React.ChangeEvent<unknown>, comentario: any) => {
         e.preventDefault();
         dispatch(modificarComentario(comentario.id, user.token, comentarioEditado))
@@ -103,16 +104,13 @@ export default function Detail(props: PostDetail) {
         setPostImagenesEditado([...postImagenesEditado, e.target.value])
     }
 
-    const handleModificacionImagenesPost = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        e.preventDefault();
-        setPostImagenesEditado([...postImagenesEditado, e.target.value])
-    }
-
     const handleEditPost = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
-        console.log(post.id)
-        dispatch(modificarPost(post.id, user.token, postEditado, input))
-        setEditar(false)
+        console.log(id)
+        dispatch(modificarPost(id, user.token, postEditado, input))
+        props.setReload(props.reload + 1)
+        setEditarPost(false)
+
     }
 
     return (
@@ -237,7 +235,9 @@ export default function Detail(props: PostDetail) {
                                                         width: 200
                                                     }}
                                                     alt="Logo"
-                                                    src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
+                                                    src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"}
+                                                /* defaultValue= */
+                                                />
                                             </Grid>
                                         ))}
                                         <Cloudinary setInput={setInput}></Cloudinary>

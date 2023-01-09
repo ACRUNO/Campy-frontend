@@ -19,7 +19,6 @@ export default function Detalle() {
     const dispatch: AppDispatch = useDispatch();
     const [reload, setReload] = useState(0)
 
-    //
     const [avisoComentario, setAvisoComentario] = useState(true)
 
 

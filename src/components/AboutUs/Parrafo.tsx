@@ -2,6 +2,8 @@ import React from 'react';
 import Style from './Parrafo.module.css';
 
 const FadeInParagraph: React.FC = () => {
+
+
     return (
         <p className={Style.fadeinparagraph}>
             Campy es un proyecto creado por alumnos del bootcamp  SoyHenry, en el cual se expone todo lo aprendido durante el mismo.

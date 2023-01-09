@@ -282,6 +282,7 @@ svg.heart {
     .booking {
         flex-direction: column;
     }
+
     .ResumenReviews {
         flex-direction: column;
     }
@@ -291,3 +292,63 @@ svg.heart {
 /* @media all and (max-width: 500px) */
 
 @media only screen and (max-device-width: 640px) {}
+
+.container22 {
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.label2 {
+    width: 1rem;
+}
+
+.label3 {
+    width: 20rem;
+    height: 8rem;
+}
+
+.label4 {
+    width: 20rem;
+}
+
+.buttonsub {
+    background-color: #4CAF50;
+    /* Verde */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+
+    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.buttonsub:hover {
+    background-color: #45a049;
+}
+
+
+.buttonsubd {
+    background-color: #b8b8b8;
+    /* Verde */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+
+    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.buttonsub:hover {
+    background-color: #45a049;
+}

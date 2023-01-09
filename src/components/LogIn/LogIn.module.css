@@ -1,0 +1,36 @@
+.eye-button {
+  position: absolute;
+  right: 10px;
+  top: calc(50% - 7.5px);
+  cursor: pointer;
+  fill: rgb(79, 79, 79);
+}
+
+a.click-aqui {
+  color: rgb(79, 79, 79);
+  cursor: pointer;
+}
+
+a.click-aqui:hover {
+  color: rgb(79, 79, 79);
+  font-family: inherit;
+}
+
+a.click-aqui:visited {
+  color: rgb(79, 79, 79);
+}
+
+form.forgotten-password-form {
+  min-width: 350px;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 15px;
+  border: 4px solid var(--light-green);
+}
+
+form.forgotten-password-form * {
+  margin: 5px 0;
+}
