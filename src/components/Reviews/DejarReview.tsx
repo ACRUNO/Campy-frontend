@@ -57,6 +57,8 @@ export function DejarReviews() {
         email: searchParams.get('xlr8')
     })
 
+    const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
+    const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
 
     let disabled = !(input.puntaje !== 0 && input.comentario.length > 5)
 
@@ -75,7 +77,7 @@ export function DejarReviews() {
         setEstrellasPuntadas(newValue);
         setInput({
             ...input,
-            puntaje: event.target.value,
+            puntaje: Number(newValue),
         })
     }
 
@@ -132,22 +134,20 @@ export function DejarReviews() {
                 </DialogContent>
             </Dialog>
 
-            <Box className={Style.all}>
-                <Box className={Style.portadacont}>
-                    <Box
-                        component="img"
-                        className={Style.imagencita}
-                        alt="Logo"
-                        src={Portada}
-                    />
-                    <Box className={Style.text}>
-                        <Typography variant="h1" color="primary">
-                            {nombre_camping}
-                        </Typography>
-                        <Box className={Style.rankingcont}>
-                            <Typography color="primary" component="legend">Ranking</Typography>
-                            <Rating name="read-only" value={estrellasCamping} readOnly />
-                        </Box>
+            <Box className={Style.portadacont}>
+                <Box
+                    component="img"
+                    className={Style.imagencita}
+                    alt="Logo"
+                    src={randomPhoto}
+                />
+                <Box className={Style.text}>
+                    <Typography variant="h1" color="primary">
+                        {nombre_camping}
+                    </Typography>
+                    <Box className={Style.rankingcont}>
+                        <Typography color="primary" component="legend">Puntuación  </Typography>
+                        <Rating name="read-only" value={estrellasCamping} readOnly />
                     </Box>
                 </Box>
             </Box>
@@ -171,12 +171,13 @@ export function DejarReviews() {
                 >
                     <Typography textAlign="center" variant='h2' fontWeight="bold" >Deja tu Reseña...</Typography>
                     <Box display='flex' flexDirection="column" sx={{ pt: 5 }}>
-                        <Typography alignItems="center" variant="h2" textAlign="center" component="legend">Puntuacion: </Typography>
+                        <Typography alignItems="center" variant="h3" textAlign="center" component="legend">Puntuacion: </Typography>
                         <Box alignItems="center" display="flex" sx={{ pl: 12 }}>
                             <Rating
                                 name="simple-controlled"
                                 size="large"
-                                value={estrellasPuntadas}
+                                defaultValue={0}
+                                value={estrellasPuntadas ? estrellasPuntadas : 0}
                                 getLabelText={getLabelText}
                                 onChange={handlePuntuacion}
                                 onChangeActive={(event, newHover) => {
@@ -189,7 +190,7 @@ export function DejarReviews() {
                             )}
                         </Box>
                     </Box>
-                    <Grid item xs={12} sx={{ pt: 3 }} display="flex" direction="column" justifyContent="center">
+                    <Grid container item xs={12} sx={{ pt: 3 }} display="flex" direction="column" justifyContent="center">
                         <TextField
                             color="secondary"
                             required

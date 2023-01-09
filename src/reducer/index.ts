@@ -48,7 +48,6 @@ import {
   REMOVE_FAVORITE_CAMPING,
 } from "../actions/User.action";
 import {
-  Bookings,
   Campings,
   FavoritesCampings,
   User,
@@ -78,6 +77,7 @@ import {
   /* GET_POST_IMAGENES, GET_POST_COMENTARIOS, */ CREATE_POST,
   CREATE_COMENTARIO,
   LIMPIAR_DETALLE,
+  MODIFICAR_COMENTARIO
 } from "../actions/Blog.action";
 import { POST_RESERV } from "../actions/Checkout.action";
 
@@ -89,7 +89,7 @@ const initialState: {
     done: boolean;
   };
   favoritesCampings: { favorites: FavoritesCampings[]; done: boolean };
-  userBookings: { bookings: Bookings[]; done: boolean };
+  userBookings: { bookings: Reservas[]; done: boolean };
   allProvincias: { id: number; nombre: string; imagen: string }[];
   allLocalidades: { id: number; nombre: string; imagen: string }[];
   allCampings: Campings[];
@@ -875,6 +875,10 @@ function rootReducer(state: any = initialState, action: any): any {
         ...state,
         post: {},
       };
+    case MODIFICAR_COMENTARIO:
+      return {
+        ...state
+      }
 
     default:
       return { ...state };

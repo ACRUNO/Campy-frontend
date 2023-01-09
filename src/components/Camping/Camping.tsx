@@ -355,7 +355,7 @@ export default function Camping() {
 
         {/* Portada */}
         <Box className={Style.portadacont}>
-          {console.log("hola")}
+         
           <Box
             component="img"
             className={Style.imagencita}
@@ -364,7 +364,7 @@ export default function Camping() {
           />
 
           <Box className={Style.text}>
-            <Typography variant="h1" color="primary">
+            <Typography variant="h2" color="primary">
               {camp.nombre_camping}
             </Typography>
             <Box className={Style.rankingcont}>
@@ -742,17 +742,16 @@ export default function Camping() {
 
 
 
+        {/* ZONA MUESTRA RESUMEN DESCRIP CAMPING Y PROV + REVIEWS */}
+        <Box className={Style.ResumenReviews}>
 
-        <Box className={Style.ReviewsMapa}>
+            <Box className={Style.resume}>
+              <Resume></Resume>
+            </Box>
 
-
-          <Box className={Style.resume}>
-            <Resume></Resume>
-          </Box>
-
-          <Box className={Style.reviews}>
-            <Reviews />
-          </Box>
+            <Box className={Style.reviews}>
+              <Reviews />
+            </Box>
 
         </Box>
 

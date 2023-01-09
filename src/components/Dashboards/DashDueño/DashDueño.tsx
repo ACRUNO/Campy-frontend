@@ -93,82 +93,82 @@ function DashboardContent() {
     setOpen(!open);
   };
 
-  const[misdatos, setMisdatos] = React.useState(true);
-  const[campings, setCampings] = React.useState(false);
-  
+  const [misdatos, setMisdatos] = React.useState(true);
+  const [campings, setCampings] = React.useState(false);
+
 
   return (
     //<ThemeProvider theme={mdTheme}>
-      <Box component= "div" sx={{ display: 'flex'}}>
-        <CssBaseline />
-        <AppBar position="fixed" sx={{mt:8}} open={open}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-              bgcolor: VERDE
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              noWrap
-              sx={{ flexGrow: 1, color: 'white' }}
-            >
-              Propietario
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-              bgcolor: VERDE_CLARO
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon sx={{fill: 'white'}} />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-            <ListItems setCampings={setCampings} setMisdatos={setMisdatos}  />
-        </Drawer>
-        <Box
-          component="main"
+    <Box component="div" sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" sx={{ mt: "70px" }} open={open}>
+        <Toolbar
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: 'calc(100vh - 64px)',
-            overflow: 'auto',
+            pr: '24px', // keep right padding when drawer closed
+            bgcolor: VERDE
           }}
         >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-                  {campings && <Campings />}
-                  {misdatos && <Misdatos/>}
-            </Grid>
-            {/* <Copyright sx={{ pt: 4 }} /> */}
-          </Container>
-        </Box>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleDrawer}
+            sx={{
+              marginRight: '36px',
+              ...(open && { display: 'none' }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component="h1"
+            variant="h6"
+            noWrap
+            sx={{ flexGrow: 1, color: 'white' }}
+          >
+            Propietario
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent" open={open}>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            px: [1],
+            bgcolor: VERDE_CLARO
+          }}
+        >
+          <IconButton onClick={toggleDrawer}>
+            <ChevronLeftIcon sx={{ fill: 'white' }} />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <ListItems setCampings={setCampings} setMisdatos={setMisdatos} />
+      </Drawer>
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: 'calc(100vh - 70px)',
+          overflow: 'auto',
+        }}
+      >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Grid container spacing={3}>
+            {campings && <Campings />}
+            {misdatos && <Misdatos />}
+          </Grid>
+          {/* <Copyright sx={{ pt: 4 }} /> */}
+        </Container>
       </Box>
+    </Box>
     //</ThemeProvider>
   );
 }

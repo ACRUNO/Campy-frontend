@@ -1,3 +1,8 @@
+.detailsComodidades {
+    display: flex;
+    padding: 3rem;
+}
+
 .imagencita {
     box-shadow: 2px 2px 10px 2px #000;
     width: 100%;
@@ -17,16 +22,13 @@
     transition: .5s;
 }
 
-.ReviewsMapa {
+.ResumenReviews {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
     width: 100%;
     margin-top: 4rem;
-
-
 }
-
 
 
 /* .imagencita > .crop {
@@ -40,16 +42,12 @@
     min-width: 100%;
 } */
 
-
 .portadacont {
-
     width: 100%;
-
     position: relative;
     display: inline-block;
     text-align: start;
 }
-
 
 .text {
     text-shadow: 5px 2px 36px #070707;
@@ -68,8 +66,9 @@
 }
 
 
-.booking {
+/* zona carrusel + formulario */
 
+.booking {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -77,6 +76,27 @@
     justify-content: center;
     align-items: center;
 }
+
+.imageplace {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 1rem;
+    /* padding-top: 1.7rem; */
+}
+
+.inputCont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    /*     height: 27rem; */
+    padding: 0rem;
+}
+
+
+/* FIN ona carrusel + formulario */
 
 .galery {
     margin-left: 1rem;
@@ -94,19 +114,9 @@
 .lugar {
     display: flex;
     justify-content: center;
-
     /* margin-top : .5rem;
     margin-left : 1rem; */
 }
-
-.imageplace {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45%;
-    padding-top: 1.7rem;
-}
-
 
 .rankingcont {
     display: flex;
@@ -122,14 +132,6 @@
     margin-right: 1.5rem;
 }
 
-.inputCont {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    height: 27rem;
-}
-
 .detalleReserva {
     display: flex;
     margin-top: 2rem;
@@ -139,7 +141,6 @@
 
 .itemReserva {
     padding-right: 1.5rem !important;
-
 }
 
 .btn1 {
@@ -161,13 +162,11 @@
 }
 
 .btn3 {
-
     display: flex;
     flex-direction: column;
     align-content: space-around;
     flex-wrap: wrap;
     justify-content: center;
-
 }
 
 .coti {
@@ -182,12 +181,9 @@
     justify-content: center;
 }
 
-
 .FechaEgreso {
     margin-left: 2rem !important;
 }
-
-
 
 .endcont {
     margin-top: 3rem;
@@ -199,12 +195,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
 }
 
-
 .resume {
-    margin-left: 2rem;
+    padding-top: 1rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-bottom: 1rem;
 }
 
 .reviews {
@@ -220,13 +217,10 @@
 
 .red:hover {
     background-color: rgba(255, 0, 0, 0.5);
-
 }
 
 .green:hover {
-
     background-color: rgba(13, 224, 94, 0.5);
-
 }
 
 .quini {
@@ -251,7 +245,6 @@ svg.heart {
     fill: #EB403A;
 }
 
-
 .card:hover {
     box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
 }
@@ -259,8 +252,6 @@ svg.heart {
 .paper {
     width: 40rem;
 }
-
-
 
 .boxizq {
     display: flex;
@@ -271,13 +262,36 @@ svg.heart {
     width: 25rem;
 }
 
-
 .container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 }
+
+
+/* //RESPONSIVE */
+
+@media all and (max-width: 1280px) {
+    .booking {
+        flex-direction: row;
+    }
+}
+
+@media all and (max-width: 850px) {
+    .booking {
+        flex-direction: column;
+    }
+
+    .ResumenReviews {
+        flex-direction: column;
+    }
+}
+
+
+/* @media all and (max-width: 500px) */
+
+@media only screen and (max-device-width: 640px) {}
 
 .container22 {
     width: 25rem;

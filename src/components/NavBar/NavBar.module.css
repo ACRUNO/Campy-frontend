@@ -1,4 +1,8 @@
+.links {
+  text-decoration: none;
+}
 
-.links{
-    text-decoration: none;
+button.active {
+  color: var(--green);
+  font-weight: bolder;
 }

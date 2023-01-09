@@ -1,0 +1,11 @@
+h6.administrador {
+  color: var(--purple);
+}
+
+h6.viajero {
+  color: var(--green);
+}
+
+h6.propietario {
+  color: var(--red);
+}
