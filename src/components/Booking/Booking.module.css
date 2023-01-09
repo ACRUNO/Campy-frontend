@@ -49,6 +49,9 @@
 
 
 
+
+
+
 .contenedor_gral {
     background-color: rgb(245, 245, 245);
 }
@@ -142,6 +145,10 @@
         display: grid;
     }
 
+    .paginado {
+        padding-top: 2rem;
+    }
+
 }
 
 /* @media all and (max-width: 500px) */
@@ -154,4 +161,5 @@
         display: grid;
 
     }
+
 }
