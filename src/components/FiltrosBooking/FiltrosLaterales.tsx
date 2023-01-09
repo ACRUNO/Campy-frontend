@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Typography, Slider, Switch, FormControlLabel, Checkbox, FormGroup, RadioGroup, Radio, Button } from '@mui/material';
 import { ChangeEvent, MouseEvent } from 'react'
-import { diasReservadosBooking, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
+import { diasReservadosBooking, FilterEgreso, FilterEgresoMap, FilterIngreso, FilterIngresoMap, FilterParcela, filtrosBooleanos, filtrosCombinados, filtrosPrecios, getAllCampings, getAllCategorias, getFiltersCamping, resetFiltros } from '../../actions/index'
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from '../../store/index';
 import { Campings } from '../../reducer/estados';
@@ -77,6 +77,10 @@ export default function FiltrosLaterales(props: Props) {
     const handleReset = (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(resetFiltros());
+        dispatch(FilterIngreso(null))
+        dispatch(FilterEgreso(null))
+        dispatch(FilterIngresoMap(null))
+        dispatch(FilterEgresoMap(null))
         setPrecioLocal([min, max])
         props.setCurrentPage(1)
         dispatch(diasReservadosBooking(0))
