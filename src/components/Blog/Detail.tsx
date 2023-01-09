@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
 import Cloudinary from "./Cloudinary";
+import formatDate from "../helpers/formatDate";
 
 interface PostDetail {
     reload: number,
@@ -107,8 +108,8 @@ export default function Detail(props: PostDetail) {
     const handleEditPost = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
         console.log(id)
-        dispatch(modificarPost(id, user.token, postEditado, input))
-        props.setReload(props.reload + 1)
+        dispatch(modificarPost(id, user.token, postEditado, input, () => { props.setReload(props.reload + 1); setInput({ imagenes: [] }) }))
+
         setEditarPost(false)
 
     }
@@ -135,7 +136,7 @@ export default function Detail(props: PostDetail) {
                             <Avatar src={post.foto} />
                             <Typography variant="h6" fontWeight="bolder" color="text.secondary" pl={1}>{post.username}</Typography>
                         </Grid>
-                        <Typography variant="subtitle1" color="text.secondary">{post.fecha}</Typography>
+                        <Typography variant="subtitle1" color="text.secondary">{formatDate(post.fecha)}</Typography>
                     </Grid>
 
                     <Typography variant="h6" pb={2} fontSize={18}>{post.texto}</Typography>

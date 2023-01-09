@@ -104,7 +104,7 @@ export default function Blog() {
           <Grid container columnSpacing={4} display="flex" justifyContent="space-between" sx={{ pb: 4 }} >
 
             <Grid item xs={6} md={9} >
-              <TextField id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small" onChange={(e) => handleChange(e)} />
+              <TextField color="success" id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small" onChange={(e) => handleChange(e)} />
             </Grid>
             <Grid item>
               <Button variant="contained" color="secondary" onClick={handleClick}>Crear nuevo POST</Button>

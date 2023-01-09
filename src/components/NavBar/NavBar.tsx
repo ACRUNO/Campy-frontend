@@ -25,7 +25,12 @@ import { logoutUser } from "../../actions/Login.action";
 import { useState } from 'react';
 
 const pages: string[] = ['camping', 'blog', 'map'];
-const rutes: string[] = ['booking', 'blog', 'map']
+const rutes: string[] = ['booking', 'blog', 'map'];
+const mapRutes = {
+  booking: 'camping',
+  blog: 'blog',
+  map: 'map'
+};
 const logo: string = "https://res.cloudinary.com/pfcampy/image/upload/v1670466096/logo_CAMPY_rjsp9a.png"
 
 export default function NavBar() {
@@ -53,13 +58,15 @@ export default function NavBar() {
     if (myValue === 'logout') handlerLogoutUser();
     else if (myValue === 'propietario') navigate('/create');
     else navigate('/dashboard');
+
+    setIsActive("");
   }
 
+  const currentActivePage = mapRutes[window.location.pathname.slice(1) as 'booking' | 'blog' | 'map'];
 
   //standar
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [isActive, setIsActive] = React.useState<string>("");
-
+  const [isActive, setIsActive] = React.useState<string>(currentActivePage || "");
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -75,6 +82,7 @@ export default function NavBar() {
     document.documentElement.scrollTop = 0
     setIsActive(page);
   }
+
 
   return (
     <AppBar position="sticky" sx={{ top: 0, left: 0, height: '70px', justifyContent: 'center', zIndex: 9999999 }}>

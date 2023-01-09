@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import Table from '@mui/material/Table';
+import { Replay as ReplayIcon } from '@mui/icons-material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -14,6 +15,7 @@ import { Bookings } from '../../../reducer/estados';
 import formatDate from '../../helpers/formatDate';
 import s from './Reservas.module.css';
 import DetalleReserva from '../DetalleReserva/DetalleReserva';
+import { VERDE, VERDE_CLARO, VERDE_OSCURO } from '../../helpers/colors';
 
 
 export default function Reservas() {
@@ -40,7 +42,7 @@ export default function Reservas() {
   return (
     <>
       <Grid item xs={12}>
-        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', position: 'relative' }}>
 
 
           <Title>Reservas</Title>
@@ -83,6 +85,19 @@ export default function Reservas() {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+          <ReplayIcon
+            sx={{
+              position: 'absolute',
+              top: 15,
+              right: 15,
+              cursor: 'pointer',
+              fontSize: "2rem",
+              fill: VERDE,
+              "&:hover": { fill: VERDE_OSCURO }
+            }}
+
+            onClick={() => dispatch(getUserBookings(id, token))}
           />
         </Paper>
       </Grid>
