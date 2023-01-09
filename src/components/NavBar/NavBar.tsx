@@ -62,7 +62,7 @@ export default function NavBar() {
 
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+    anchorElNav === null ? setAnchorElNav(event.currentTarget) : setAnchorElNav(null)
   };
 
 

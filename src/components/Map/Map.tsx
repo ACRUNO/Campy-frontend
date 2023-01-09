@@ -113,7 +113,7 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
 
   const handleButton = () => {
     popUpFilters === false ? SetPopUpFilters(true) : SetPopUpFilters(false);
-    filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false)
+    filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false);
   }
 
   /*   const handleZoomOut = () => {
