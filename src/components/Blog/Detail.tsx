@@ -31,6 +31,8 @@ interface PostDetail {
     setReload: React.Dispatch<React.SetStateAction<number>>
     editar: boolean,
     setEditar: React.Dispatch<React.SetStateAction<boolean>>
+    editarPost: boolean,
+    setEditarPost: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 let img: Array<string> = ["1", "2", "3"]
@@ -93,7 +95,7 @@ export default function Detail(props: PostDetail) {
         e.preventDefault();
         console.log(props.id)
         dispatch(modificarPost(props.id, user.token, postEditado, input))
-        props.setEditar(false)
+        props.setEditarPost(false)
     }
 
     return (
@@ -183,10 +185,10 @@ export default function Detail(props: PostDetail) {
                         </Grid>
                     ))}
                     {/* DIALOGO DE EDITAR POST */}
-                    {props.editar && <Dialog
+                    {props.editarPost && <Dialog
                         fullWidth
                         maxWidth="md"
-                        open={props.editar}>
+                        open={props.editarPost}>
                         <DialogTitle align='center'>Editar Post</DialogTitle>
                         <DialogContent >
                             <Grid container spacing={2} display="flex" flexDirection="column" alignItems="stretch" sx={{ mt: 1, pr: 2 }} >
