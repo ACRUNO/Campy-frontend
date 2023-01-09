@@ -13,16 +13,15 @@ import axios from 'axios';
 axios.defaults.baseURL = process.env.REACT_APP_API || 'http://localhost:3001';
 
 
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-     <Auth0Provider domain='dev-pxuenzxdcfyoadkw.us.auth0.com' clientId='MqHATjuTUW4q3hlJw9LgG4lYEh5nxXbu' redirectUri={process.env.REACT_APP_REDIRECT_AUTH0 || 'http://localhost:3000/login'}>
-      <Provider store={store}>    
+    <Auth0Provider domain='dev-pxuenzxdcfyoadkw.us.auth0.com' clientId='MqHATjuTUW4q3hlJw9LgG4lYEh5nxXbu' redirectUri={process.env.REACT_APP_REDIRECT_AUTH0 || 'http://localhost:3000/login'}>
+      <Provider store={store}>
         <BrowserRouter>
-            <App />
+          <App />
         </BrowserRouter>
       </Provider>
     </Auth0Provider>

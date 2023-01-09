@@ -1,6 +1,6 @@
 .reserve-container {
   position: absolute;
-  z-index: 9999;
+  z-index: 999;
 }
 
 th.table-head {
@@ -41,13 +41,4 @@ td.ver-detalle {
 
 td.ver-detalle:hover {
   color: var(--red);
-}
-
-svg.close-button {
-  font-size: 1.7rem;
-  position: absolute;
-  fill: var(--red);
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
 }

@@ -84,16 +84,16 @@ function DashboardContent() {
     setOpen(!open);
   };
 
-  const[misdatos, setMisdatos] = React.useState(true);
-  const[favoritos, setFavoritos] = React.useState(false);
-  const[reservas, setReservas] = React.useState(false);
-  
+  const [misdatos, setMisdatos] = React.useState(true);
+  const [favoritos, setFavoritos] = React.useState(false);
+  const [reservas, setReservas] = React.useState(false);
+
 
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box component= "div" sx={{ display: 'flex'}}>
+      <Box component="div" sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="fixed" sx={{mt:8}} open={open}>
+        <AppBar position="fixed" sx={{ mt: "70px" }} open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -134,11 +134,11 @@ function DashboardContent() {
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon sx={{fill: 'white'}} />
+              <ChevronLeftIcon sx={{ fill: 'white' }} />
             </IconButton>
           </Toolbar>
           <Divider />
-            <ListItems setReservas={setReservas} setMisdatos={setMisdatos} setFavoritos={setFavoritos}  />
+          <ListItems setReservas={setReservas} setMisdatos={setMisdatos} setFavoritos={setFavoritos} />
         </Drawer>
         <Box
           component="main"
@@ -148,16 +148,16 @@ function DashboardContent() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: 'calc(100vh - 64px)',
+            height: 'calc(100vh - 70px)',
             overflowY: 'auto',
           }}
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                  {favoritos && <Favoritos/>}
-                  {reservas && <Reservas/>}
-                  {misdatos && <Misdatos/>}
+              {favoritos && <Favoritos />}
+              {reservas && <Reservas />}
+              {misdatos && <Misdatos />}
 
             </Grid>
           </Container>
