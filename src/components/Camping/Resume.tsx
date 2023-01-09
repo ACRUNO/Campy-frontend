@@ -9,20 +9,20 @@ export default function Resume() {
 
     let camp = useSelector((state: any) => state.detailCamping)
 
- /*    let lugar = {
-        localidad: "Villa Patito",
-        provincia: "Mendoza"
-    } */
+    /*    let lugar = {
+           localidad: "Villa Patito",
+           provincia: "Mendoza"
+       } */
     let info = {
         localidad: camp?.descripcion_camping,
         provincia: camp?.descrip_historia,
     }
     return (
         <Box className={Style.contResumen} >
-            <Typography variant="h4" > Querés conocer más de {camp?.nombre_camping} y la prov. de {camp?.provincia} ? </Typography>
+            <Typography className={Style.tituloResume} sx={{ paddingRight: "4rem", paddingLeft: "4rem" }} variant="h4" component="h4"> Querés conocer más de {camp?.nombre_camping} y la prov. de {camp?.provincia} ? </Typography>
             <Box className={Style.contResumenDecripHistoria}>
-                <Typography sx={{ marginTop: 1 }} variant="body1">  {camp?.nombre_camping} {info.localidad} </Typography>
-                <Typography sx={{ marginTop: 1 }} variant="body1"> {info.provincia} </Typography>
+                <Typography sx={{ textAlign: "justify", marginTop: 1, paddingRight: "4rem", paddingLeft: "2rem" }} variant="body1">  {camp?.nombre_camping} {info.localidad} </Typography>
+                <Typography sx={{ textAlign: "justify", marginTop: 1, paddingRight: "4rem", paddingLeft: "2rem" }} variant="body1"> {info.provincia} </Typography>
             </Box>
         </Box >
     )
