@@ -144,7 +144,7 @@ const initialState: {
     habilitado: number;
   }[];
   datos_graftorta: { provincias: string; cant_campings: number }[];
-  datos_graftop: { nombre_camping: string; cant_reservas: number }[];
+  datos_graftop: { nombre_camping: string; cant_reservas: number, localidad: string, provincia: string, images: string }[];
   datos_grafusuarios: { users: number; created: string }[];
   datos_grafreservas: { reservas: number; total: number; created: string }[];
   linkMap: { lng: number; lat: number; zoom: number };
@@ -166,22 +166,22 @@ const initialState: {
   allPosts: allPosts[];
   postbuscados: allPosts[];
   post:
-    | {
-        id: number;
-        foto: string;
-        username: string;
-        fecha: string;
-        titulo: string;
-        texto: string;
-        imagenes: string[];
-        comentarios: {
-          foto: string;
-          username: string;
-          comentario: string;
-          createdAt: string;
-        }[];
-      }
-    | {};
+  | {
+    id: number;
+    foto: string;
+    username: string;
+    fecha: string;
+    titulo: string;
+    texto: string;
+    imagenes: string[];
+    comentarios: {
+      foto: string;
+      username: string;
+      comentario: string;
+      createdAt: string;
+    }[];
+  }
+  | {};
   diasReservadosBooking: number;
   postscomentados: allPosts[];
   postsvistos: allPosts[];
@@ -620,8 +620,8 @@ function rootReducer(state: any = initialState, action: any): any {
           new Date(a.createdAt).valueOf() > new Date(b.createdAt).valueOf()
             ? 1
             : new Date(b.createdAt).valueOf() > new Date(a.createdAt).valueOf()
-            ? -1
-            : 0
+              ? -1
+              : 0
       );
       console.log(ordenado);
       let dia: Date = new Date(2022, 11, 18);
@@ -786,8 +786,8 @@ function rootReducer(state: any = initialState, action: any): any {
           a.cant_visualizaciones < b.cant_visualizaciones
             ? 1
             : b.cant_visualizaciones < a.cant_visualizaciones
-            ? -1
-            : 0
+              ? -1
+              : 0
         )
         .slice(0, 4);
       let postscom = action.payload
@@ -796,8 +796,8 @@ function rootReducer(state: any = initialState, action: any): any {
           a.cant_comentarios < b.cant_comentarios
             ? 1
             : b.cant_comentarios < a.cant_comentarios
-            ? -1
-            : 0
+              ? -1
+              : 0
         )
         .slice(0, 4);
       let postsxfecha = action.payload
