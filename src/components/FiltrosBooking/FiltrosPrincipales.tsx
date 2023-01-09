@@ -83,8 +83,7 @@ export default function FiltrosPrincipales(props: Props) {
         const fecha_egreso: string | undefined = fechaEgreso
         dispatch(filtrosPrincipales(provincia, localidad, fecha_ingreso, fecha_egreso))
         props.setCurrentPage(1)
-        dispatch(diasReservadosBooking(diff / (1000 * 60 * 60 * 24)))
-
+        if (fechaIngreso && fechaEgreso) dispatch(diasReservadosBooking(diff / (1000 * 60 * 60 * 24)))
     }
 
 

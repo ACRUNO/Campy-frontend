@@ -72,11 +72,16 @@ export default function Camping() {
   let idReserva = useSelector((state: any) => state.idReserva);
 
 
-
   const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
 
 
-  const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+
+  const [randomPhoto, SetRandomPhoto] = React.useState(logInPhotos[Math.floor(Math.random() * logInPhotos.length)])
+
+
+
+
+
 
 
 
@@ -250,6 +255,7 @@ export default function Camping() {
       }
 
       if (finalPrice < 60000) {
+        setDiscount(finalPrice)
         setPrice((final * total) + validate.stay)
       }
     }
@@ -275,6 +281,7 @@ export default function Camping() {
 
       if (finalPrice < 60000) {
         setPrice((final * total) + validate.stay)
+        setDiscount(finalPrice)
       }
     }
 
@@ -353,7 +360,7 @@ export default function Camping() {
 
         {/* Portada */}
         <Box className={Style.portadacont}>
-          {console.log("hola")}
+
           <Box
             component="img"
             className={Style.imagencita}
@@ -362,7 +369,7 @@ export default function Camping() {
           />
 
           <Box className={Style.text}>
-            <Typography variant="h1" color="primary">
+            <Typography variant="h2" color="primary">
               {camp.nombre_camping}
             </Typography>
             <Box className={Style.rankingcont}>
@@ -740,9 +747,8 @@ export default function Camping() {
 
 
 
-
-        <Box className={Style.ReviewsMapa}>
-
+        {/* ZONA MUESTRA RESUMEN DESCRIP CAMPING Y PROV + REVIEWS */}
+        <Box className={Style.ResumenReviews}>
 
           <Box className={Style.resume}>
             <Resume></Resume>

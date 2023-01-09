@@ -22,4 +22,5 @@ svg.close-button {
 h5.title-reserva {
   text-decoration: underline;
   margin: 10px 0;
+  background-color: red;
 }
