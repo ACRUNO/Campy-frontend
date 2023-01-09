@@ -99,8 +99,8 @@ export default function Blog() {
             </Grid>
           </Grid>
           <Grid container spacing={4} md={false} display="flex" flexDirection="column" alignContent="center" sx={{ pb: 8 }} >
-            {currentPosts.map((p) => (
-              <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} />
+            {currentPosts.map((p, i: number) => (
+              <FeaturedPost key={i} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} tipo={p.tipo} />
             ))}
           </Grid>
         </main>

@@ -83,33 +83,34 @@ export const Campys = {
 };
 
 export type User = {
-  id: number,
-  nombre_completo: string,
-  email: string,
-  numero_celular: string | null,
-  dni: string | null,
-  direccion: string | null,
-  foto: string | null,
-  tipo: string,
-  token: string
-}
+  id: number;
+  nombre_completo: string;
+  email: string;
+  numero_celular: string | null;
+  dni: string | null;
+  direccion: string | null;
+  foto: string | null;
+  tipo: string;
+  token: string;
+};
 
 export type allPosts = {
-  id: number,
-  titulo: string,
-  foto: string,
-  username: string,
-  fecha: string,
-  texto: string,
-  cant_comentarios: number,
-  cant_visualizaciones: number
-}
-
+  id: number;
+  titulo: string;
+  foto: string;
+  username: string;
+  fecha: string;
+  texto: string;
+  cant_comentarios: number;
+  cant_visualizaciones: number;
+  tipo: string;
+};
 
 export type FavoritesCampings = { id: number; nombre: string; imagen: string };
 
 export type Bookings = {
   id: number;
+  fecha: string;
   fecha_desde_reserva: string;
   fecha_hasta_reserva: string;
   cant_noches: number;
@@ -118,6 +119,7 @@ export type Bookings = {
   email: string;
   nombre_camping: string;
   id_campings: number;
+  estado: string;
 };
 
 export type filterCamps = {
@@ -219,6 +221,7 @@ export interface PreInputsValues extends Inputs {
 
 export type Reservas = {
   id_reserva: number;
+  fecha: string;
   fecha_desde_reserva: string;
   fecha_hasta_reserva: string;
   cant_noches: number;
@@ -229,8 +232,8 @@ export type Reservas = {
   id_campings: number;
   nombre_camping: string;
   id_estado: string;
+  estado: string;
 };
-
 
 export type Reviews = {
   usuario: string | null;
@@ -238,4 +241,4 @@ export type Reviews = {
   puntaje: number | null;
   comentario: string;
   email: string | null;
-}
+};

@@ -10,7 +10,8 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import * as actions from "../../actions/Blog.action"
+import * as actions from "../../actions/Blog.action";
+import s from './FeaturedPost.module.css';
 
 interface FeaturedPostProps {
   id: number
@@ -20,7 +21,8 @@ interface FeaturedPostProps {
   title: string;
   username: string
   comentarios: number,
-  vistas: number
+  vistas: number,
+  tipo: string
 }
 
 export default function FeaturedPost(props: FeaturedPostProps) {
@@ -42,10 +44,15 @@ export default function FeaturedPost(props: FeaturedPostProps) {
               {props.title}
             </Typography>
 
-            <Grid display="flex" alignItems="center" >
+            <Grid sx={{ mb: 2, mt: 1 }} display="flex" alignItems="center" >
               <Typography variant="subtitle1" color="text.secondary" sx={{ mr: 1 }}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
               <Avatar sx={{ mr: 1 }} src={props.foto} />
-              <Typography variant="subtitle1" color="text.secondary">{props.username}</Typography>
+              <Typography sx={{ mb: 1.5 }} fontWeight="600" variant="subtitle1" color="text.secondary" position='relative'>
+                {props.username}
+                <Typography fontWeight="100" variant='subtitle2' sx={{
+                  position: 'absolute', top: 22, left: 0, opacity: .8
+                }} className={s[props.tipo]}>{props.tipo}</Typography>
+              </Typography>
             </Grid>
 
             <Typography sx={{ mb: 1, mt: 1 }} variant="subtitle1" paragraph>

@@ -48,7 +48,6 @@ import {
   REMOVE_FAVORITE_CAMPING,
 } from "../actions/User.action";
 import {
-  Bookings,
   Campings,
   FavoritesCampings,
   User,
@@ -88,7 +87,7 @@ const initialState: {
     done: boolean;
   };
   favoritesCampings: { favorites: FavoritesCampings[]; done: boolean };
-  userBookings: { bookings: Bookings[]; done: boolean };
+  userBookings: { bookings: Reservas[]; done: boolean };
   allProvincias: { id: number; nombre: string; imagen: string }[];
   allLocalidades: { id: number; nombre: string; imagen: string }[];
   allCampings: Campings[];

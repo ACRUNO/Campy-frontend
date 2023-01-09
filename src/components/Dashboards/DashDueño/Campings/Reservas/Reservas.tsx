@@ -7,7 +7,6 @@ import { Bookings } from '../../../../../reducer/estados';
 import { Cancel as CancelIcon } from '@mui/icons-material';
 import s from './Reservas.module.css';
 import axios from 'axios';
-import { keyStateBooking } from '../../../../../auxiliar';
 import { VERDE } from '../../../../helpers/colors';
 import { CircularProgress } from '@mui/material';
 import { confirmReserva } from '../../../../../actions/Owner.action';
@@ -92,10 +91,10 @@ export default function Reservas({ open, campingId, setOpenReserves }: Props) {
                           <TableCell className={s['table-row']}>{c.cant_noches}</TableCell>
                           <TableCell className={s['table-row']}>$ {c.total}</TableCell>
                           <TableCell
-                            className={`${s['table-row']} ${s[keyStateBooking[c.id_estado]]}`}
+                            className={`${s['table-row']} ${s[c.estado]}`}
                             align="right"
                           >
-                            {keyStateBooking[c.id_estado]}
+                            {c.estado}
                           </TableCell>
                           <TableCell
                             className={`${s['table-row']} ${s['ver-detalle']}`}

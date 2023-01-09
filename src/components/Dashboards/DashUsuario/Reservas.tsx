@@ -11,8 +11,8 @@ import { AppDispatch, RootState } from '../../../store/index';
 import TablePagination from '@mui/material/TablePagination';
 import { getUserBookings } from '../../../actions/User.action';
 import { Bookings } from '../../../reducer/estados';
-import { keyStateBooking } from '../../../auxiliar';
 import formatDate from '../../helpers/formatDate';
+import s from './Reservas.module.css';
 
 
 export default function Reservas() {
@@ -44,23 +44,25 @@ export default function Reservas() {
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Nombre Camping</TableCell>
-                <TableCell>Correo Propietario</TableCell>
-                <TableCell>Desde</TableCell>
-                <TableCell>Hasta</TableCell>
-                <TableCell>Total</TableCell>
-                <TableCell align="right">Estado</TableCell>
+                <TableCell className={s['table-head']}>Creado</TableCell>
+                <TableCell className={s['table-head']}>Nombre Camping</TableCell>
+                <TableCell className={s['table-head']}>Correo Propietario</TableCell>
+                <TableCell className={s['table-head']}>Desde</TableCell>
+                <TableCell className={s['table-head']}>Hasta</TableCell>
+                <TableCell className={s['table-head']}>Total</TableCell>
+                <TableCell className={s['table-head']} align="right">Estado</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((c: Bookings) => (
                 <TableRow key={c.id}>
-                  <TableCell>{c.nombre_camping}</TableCell>
-                  <TableCell>{c.email}</TableCell>
-                  <TableCell>{formatDate(c.fecha_desde_reserva)}</TableCell>
-                  <TableCell>{formatDate(c.fecha_hasta_reserva)}</TableCell>
-                  <TableCell>$ {c.total}</TableCell>
-                  <TableCell align="right">{keyStateBooking[c.id_estado]}</TableCell>
+                  <TableCell className={s['table-row']}>{formatDate(c.fecha)}</TableCell>
+                  <TableCell className={s['table-row']}>{c.nombre_camping}</TableCell>
+                  <TableCell className={s['table-row']}>{c.email}</TableCell>
+                  <TableCell className={s['table-row']}>{formatDate(c.fecha_desde_reserva)}</TableCell>
+                  <TableCell className={s['table-row']}>{formatDate(c.fecha_hasta_reserva)}</TableCell>
+                  <TableCell className={s['table-row']}>$ {c.total}</TableCell>
+                  <TableCell className={`${s['table-row']} ${s[c.estado]}`} align="right">{c.estado}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

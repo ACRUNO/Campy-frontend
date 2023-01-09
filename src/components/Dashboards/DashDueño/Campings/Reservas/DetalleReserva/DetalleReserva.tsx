@@ -7,13 +7,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../store';
 import { DetalleReserva as DetalleReservaType } from '../../../../../../auxiliar';
 
-type Props = { 
-  setOpenDetalleReserva: Dispatch<SetStateAction<{open: boolean, reservaId: number}>>;
+type Props = {
+  setOpenDetalleReserva: Dispatch<SetStateAction<{ open: boolean, reservaId: number }>>;
   open: boolean;
   reservaId: number;
 }
 
-export default function DetalleReserva({open, reservaId, setOpenDetalleReserva}: Props) {
+export default function DetalleReserva({ open, reservaId, setOpenDetalleReserva }: Props) {
   const { token } = useSelector((state: RootState) => state.user);
   const [reservas, setReservas] = useState<DetalleReservaType[]>([]);
 
@@ -23,16 +23,16 @@ export default function DetalleReserva({open, reservaId, setOpenDetalleReserva}:
         `/api/reservas/detalle/${reservaId}`,
         { headers: { authorization: token } }
       );
-        
+
       setReservas(data);
 
-    } catch(e: any) {
+    } catch (e: any) {
       console.log('ERROR', e)
     }
   }
 
   useEffect(() => {
-    if(reservaId) getDetalleReservaById();
+    if (reservaId) getDetalleReservaById();
 
     return () => setReservas([]);
   }, [open])
@@ -42,7 +42,7 @@ export default function DetalleReserva({open, reservaId, setOpenDetalleReserva}:
       {
         reservas.map((r: DetalleReservaType, i: number) => (
           <Box key={i} className={s['reserva-container']}>
-            <Typography 
+            <Typography
               variant='h5'
               fontWeight='bolder'
               className={s['title-reserva']}
@@ -51,11 +51,11 @@ export default function DetalleReserva({open, reservaId, setOpenDetalleReserva}:
             <Typography>Cantidad: <b>{r.cantidad}</b></Typography>
             <Typography>Subtotal: <b>$ {r.subtotal}</b></Typography>
           </Box>
-        )) 
+        ))
       }
-      <CancelIcon 
-        onClick={() => setOpenDetalleReserva({ open: false, reservaId: 0 })} 
-        className={s['close-button']} 
+      <CancelIcon
+        onClick={() => setOpenDetalleReserva({ open: false, reservaId: 0 })}
+        className={s['close-button']}
       />
     </Dialog>
   )
