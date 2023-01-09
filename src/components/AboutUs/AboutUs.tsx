@@ -8,37 +8,28 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Box } from '@mui/material';
 import Footer from '../Footer/Footer';
-import { redirect } from 'react-router-dom';
-import programador from "./programador.jpg"
-import Paper from '@mui/material/Paper';
-import { height } from '@mui/system';
+
 
 
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
+
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 
 import CardHeader from '@mui/material/CardHeader';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/StarBorder';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import FadeInParagraph from "./Parrafo"
 
 
 
-
-
-
 export default function Model3() {
-
+  const [open, setOpen] = React.useState(false);
+  let handleModal = () => {
+    setOpen(true)
+  }
   const tiers = [
     {
       title: 'Comodidades ',
@@ -121,7 +112,10 @@ export default function Model3() {
       id: agus,
       name: "Agustin Romero",
       position: "FullStack",
-      description: "asdsad asdasd asd sad sad sadsad asd asdsa das sadsadsadsad asd sadsaaaaaaaaaaaaaa sadsadsadsa      asfsdfdsfdsfdsf",
+      description1: "asdsad asdasd asd",
+      description2: "das sadsadsad",
+      description3: "das sadsadsad",
+      description4: "das sadsadsad",
       linkedin: "https://www.linkedin.com/in/agust%C3%ADn-romero-33919b24b/",
       github: "https://github.com/Nitsuga159"
     },
@@ -129,48 +123,60 @@ export default function Model3() {
       id: virgi,
       name: "Maria Virginia Juarez",
       position: "FullStack",
-      description: "asdsad asdasd asd sad sad sadsad asd asdsa das sadsadsadsad asd sadsaaaaaaaaaaaaaa sadsadsadsa      asfsdfdsfdsfdsf",
-      linkedin: "http://www.linkedin.com/in/maria-virginia-juarez",
+      description1: "Compromiso",
+      description2: "Proactividad",
+      description3: "Resolucion de problemas",
+      description4: "das sadsadsad", linkedin: "http://www.linkedin.com/in/maria-virginia-juarez",
       github: "https://github.com/VirJuarez"
     },
     {
       id: joaco,
       name: "Joaquin Delgado",
       position: "FullStack",
-      description: "asdsad asdasd asd sad sad sadsad asd asdsa das sadsadsadsad asd sadsaaaaaaaaaaaaaa sadsadsadsa      asfsdfdsfdsfdsf",
-      linkedin: "https://www.linkedin.com/in/joaquin-delgado-2702391b0/",
+      description1: "asdsad asdasd asd",
+      description2: "das sadsadsad",
+      description3: "das sadsadsad",
+      description4: "das sadsadsad", linkedin: "https://www.linkedin.com/in/joaquin-delgado-2702391b0/",
       github: "https://github.com/ACRUNO"
     },
     {
       id: agus,
       name: "Gabriela Carranza",
       position: "FullStack",
-      description: "asdsad asdasd asd sad sad sadsad asd asdsa das sadsadsadsad asd sadsaaaaaaaaaaaaaa sadsadsadsa      asfsdfdsfdsfdsf",
-      linkedin: "https://www.linkedin.com/in/gabrielacarranzasistemas",
+      description1: "asdsad asdasd asd",
+      description2: "das sadsadsad",
+      description3: "das sadsadsad",
+      description4: "das sadsadsad", linkedin: "https://www.linkedin.com/in/gabrielacarranzasistemas",
       github: "ponerooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
     },
     {
       id: august,
       name: "Augusto Gabriel Alvarez",
       position: "FullStack",
-      description: "asdsad asdasd asd sad sad sadsad asd asdsa das sadsadsadsad asd sadsaaaaaaaaaaaaaa sadsadsadsa      asfsdfdsfdsfdsf",
-      linkedin: "https://www.linkedin.com/in/augusto-gabriel-alvarez-360895240/",
+      description1: "asdsad asdasd asd",
+      description2: "das sadsadsad",
+      description3: "das sadsadsad",
+      description4: "das sadsadsad", linkedin: "https://www.linkedin.com/in/augusto-gabriel-alvarez-360895240/",
       github: "https://github.com/augusto2304"
     },
     {
       id: agus,
       name: "Santiago Pagnanelli",
       position: "FullStack",
-      description: "asdsad asdasd asd sad sad sadsad asd asdsa das sadsadsadsad asd sadsaaaaaaaaaaaaaa sadsadsadsa      asfsdfdsfdsfdsf",
-      linkedin: "https://www.linkedin.com/in/santiago-pagnanelli/",
+      description1: "asdsad asdasd asd",
+      description2: "das sadsadsad",
+      description3: "das sadsadsad",
+      description4: "das sadsadsad", linkedin: "https://www.linkedin.com/in/santiago-pagnanelli/",
       github: "https://github.com/SantiagoPag"
     },
     {
       id: agus,
       name: "Javier Montenegro",
       position: "FullStack",
-      description: "asdsad asdasd asd sad sad sadsad asd asdsa das sadsadsadsad asd sadsaaaaaaaaaaaaaa sadsadsadsa      asfsdfdsfdsfdsf",
-      linkedin: "https://www.linkedin.com/in/javier-leandro-montenegro/",
+      description1: "asdsad asdasd asd",
+      description2: "das sadsadsad",
+      description3: "das sadsadsad",
+      description4: "das sadsadsad", linkedin: "https://www.linkedin.com/in/javier-leandro-montenegro/",
       github: "https://github.com/javierleandromontenegro"
     },
   ]
@@ -255,11 +261,17 @@ export default function Model3() {
           {membersCampy.map((m: any) => {
             return (
               <div className={Style.member}>
-                <img className={Style.img} width={150} height={150} src={m.id} />
+                <img className={Style.img} width={130} height={130} src={m.id} />
                 <div className={Style.description}>
                   <h2>{m.name}</h2>
                   <h3>{m.position}</h3>
-                  <p>{m.description}</p>
+
+
+                  {/* <li>{m.description1}</li>
+                  <li>{m.description2}</li>
+                  <li>{m.description3}</li> */}
+                  {/* <li>{m.description4}</li> */}
+
                   <div className={Style.socialmedia}>
                     <a className={Style.eleA} href={m.linkedin} target="_blank" rel="noopener noreferrer">
 
@@ -275,9 +287,11 @@ export default function Model3() {
             )
           })}
 
-          <FadeInParagraph />
+
         </div>
       </Box>
+
+
       <Footer></Footer>
     </Box>
   );

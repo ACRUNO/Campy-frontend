@@ -9,6 +9,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     animation: fade-in 1s, slide-in 1s;
     transition: all 0.3s ease;
+    /* background-color: rgba(162, 153, 153, 0.394) */
 }
 
 @keyframes fade-in {
@@ -42,7 +43,7 @@
     left: 0;
     right: 0;
     height: 5px;
-    background-color: #d2d2d2;
+    background-color: #aba7a7;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease;
