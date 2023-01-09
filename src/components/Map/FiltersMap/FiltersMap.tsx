@@ -52,6 +52,10 @@ export default function FiltrosLaterales() {
         dispatch(getAllCampings())
     }, [dispatch])
 
+    useEffect(() => {
+        if (fechaIngreso && fechaEgreso) dispatch(diasReservadosBooking(diff / (1000 * 60 * 60 * 24)))
+    }, [fechaIngreso, fechaEgreso])
+
 
     const precioCamps = allCampings.map(c => c.precio)
 
@@ -96,6 +100,11 @@ export default function FiltrosLaterales() {
         e.preventDefault();
         dispatch(resetFiltros());
         setPrecioLocal([min, max])
+        dispatch(FilterIngreso(null))
+        dispatch(FilterEgreso(null))
+        dispatch(FilterIngresoMap(null))
+        dispatch(FilterEgresoMap(null))
+        dispatch(diasReservadosBooking(0))
 
     }
 
@@ -122,9 +131,6 @@ export default function FiltrosLaterales() {
     const handleIngresoMap = (e: Dayjs | null) => {
         dispatch(FilterIngreso(e))
         dispatch(FilterIngresoMap(e))
-
-
-
     }
 
     const handleEgresoMap = (e: Dayjs | null) => {
@@ -134,7 +140,6 @@ export default function FiltrosLaterales() {
 
     const handleButtonPrecio = () => {
         dispatch(filtrosPrecios('precio', precioLocal))
-        console.log(diff / (1000 * 60 * 60 * 24));
     }
 
 
