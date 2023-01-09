@@ -20,7 +20,8 @@ export default function Home() {
 
     const dispatch: AppDispatch = useDispatch()
     const allProvincias: { id: number, nombre: string, imagen: string }[] = useSelector((state: RootState) => state.allProvincias)
-    const datos_graftop: { nombre_camping: string, cant_reservas: number }[] = useSelector((state: RootState) => state.datos_graftop)?.slice(0, 5);
+    const datos_graftop: { nombre_camping: string, cant_reservas: number }[] = useSelector((state: RootState) => state.datos_graftop?.slice(0, 5));
+
 
     const navigate = useNavigate();
 
