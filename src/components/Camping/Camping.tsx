@@ -72,11 +72,16 @@ export default function Camping() {
   let idReserva = useSelector((state: any) => state.idReserva);
 
 
-
   const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
 
 
-  const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+
+  const [randomPhoto, SetRandomPhoto] = React.useState(logInPhotos[Math.floor(Math.random() * logInPhotos.length)])
+
+
+
+
+
 
 
 
@@ -353,7 +358,7 @@ export default function Camping() {
 
         {/* Portada */}
         <Box className={Style.portadacont}>
-         
+
           <Box
             component="img"
             className={Style.imagencita}
@@ -743,13 +748,13 @@ export default function Camping() {
         {/* ZONA MUESTRA RESUMEN DESCRIP CAMPING Y PROV + REVIEWS */}
         <Box className={Style.ResumenReviews}>
 
-            <Box className={Style.resume}>
-              <Resume></Resume>
-            </Box>
+          <Box className={Style.resume}>
+            <Resume></Resume>
+          </Box>
 
-            <Box className={Style.reviews}>
-              <Reviews />
-            </Box>
+          <Box className={Style.reviews}>
+            <Reviews />
+          </Box>
 
         </Box>
 
