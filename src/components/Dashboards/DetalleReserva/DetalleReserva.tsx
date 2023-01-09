@@ -4,8 +4,8 @@ import { Cancel as CancelIcon } from '@mui/icons-material';
 import s from './DetalleReserva.module.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../../store';
-import { DetalleReserva as DetalleReservaType } from '../../../../../../auxiliar';
+import { RootState } from '../../../store';
+import { DetalleReserva as DetalleReservaType } from '../../../auxiliar';
 
 type Props = {
   setOpenDetalleReserva: Dispatch<SetStateAction<{ open: boolean, reservaId: number }>>;

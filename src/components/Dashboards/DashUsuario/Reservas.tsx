@@ -13,6 +13,7 @@ import { getUserBookings } from '../../../actions/User.action';
 import { Bookings } from '../../../reducer/estados';
 import formatDate from '../../helpers/formatDate';
 import s from './Reservas.module.css';
+import DetalleReserva from '../DetalleReserva/DetalleReserva';
 
 
 export default function Reservas() {
@@ -22,6 +23,8 @@ export default function Reservas() {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [openDetalleReserva, setOpenDetalleReserva] =
+    useState({ open: false, reservaId: 0 })
 
   const handleChangePage = (event: unknown, newPage: number) => setPage(newPage);
 
@@ -51,6 +54,7 @@ export default function Reservas() {
                 <TableCell className={s['table-head']}>Hasta</TableCell>
                 <TableCell className={s['table-head']}>Total</TableCell>
                 <TableCell className={s['table-head']} align="right">Estado</TableCell>
+                <TableCell className={s['table-head']} align="right">Detalle</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -63,6 +67,10 @@ export default function Reservas() {
                   <TableCell className={s['table-row']}>{formatDate(c.fecha_hasta_reserva)}</TableCell>
                   <TableCell className={s['table-row']}>$ {c.total}</TableCell>
                   <TableCell className={`${s['table-row']} ${s[c.estado]}`} align="right">{c.estado}</TableCell>
+                  <TableCell
+                    className={`${s['table-row']} ${s['ver-detalle']}`}
+                    onClick={() => setOpenDetalleReserva({ open: true, reservaId: c.id })}
+                  >Ver</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -78,6 +86,11 @@ export default function Reservas() {
           />
         </Paper>
       </Grid>
+      <DetalleReserva
+        open={openDetalleReserva.open}
+        reservaId={openDetalleReserva.reservaId}
+        setOpenDetalleReserva={setOpenDetalleReserva}
+      />
     </>
   );
 }

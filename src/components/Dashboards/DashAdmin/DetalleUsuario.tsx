@@ -20,6 +20,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Title from './Title';
 import { cleanUsuarios_dash } from '../../../actions/Dash.admin.action';
 import formatDate from '../../helpers/formatDate';
+import DetalleReserva from '../DetalleReserva/DetalleReserva';
 import s from './DetalleUsuario.module.css';
 
 
@@ -34,13 +35,15 @@ export default function Detalle_usuario(props: Props) {
   const dispatch: AppDispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user)
   const { bookings, done } = useSelector((state: RootState) => state.userBookings)
+  const [openDetalleReserva, setOpenDetalleReserva] =
+    useState({ open: false, reservaId: 0 })
 
   const handleClose = () => {
     props.setopen(false);
   };
 
   useEffect(() => {
-    if (props.open) {
+    if (props.open && !done) {
       dispatch(getUserBookings(props.id, token))
     };
     return () => {
@@ -53,7 +56,7 @@ export default function Detalle_usuario(props: Props) {
     <React.Fragment>
       <Dialog
         fullWidth
-        maxWidth="md"
+        maxWidth="xl"
         open={props.open}
         onClose={handleClose}
       >
@@ -67,8 +70,10 @@ export default function Detalle_usuario(props: Props) {
                 <TableCell className={s['table-head']}>Correo Propietario</TableCell>
                 <TableCell className={s['table-head']}>Desde</TableCell>
                 <TableCell className={s['table-head']}>Hasta</TableCell>
+                <TableCell className={s['table-head']}>Noches</TableCell>
                 <TableCell className={s['table-head']}>Total</TableCell>
                 <TableCell className={s['table-head']} align="right">Estado</TableCell>
+                <TableCell className={s['table-head']} align="right">Detalle</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,8 +83,14 @@ export default function Detalle_usuario(props: Props) {
                   <TableCell className={s['table-row']}>{c.email}</TableCell>
                   <TableCell className={s['table-row']}>{formatDate(c.fecha_desde_reserva)}</TableCell>
                   <TableCell className={s['table-row']}>{formatDate(c.fecha_hasta_reserva)}</TableCell>
+                  <TableCell className={s['table-row']}>{c.cant_noches}</TableCell>
                   <TableCell className={s['table-row']}>$ {c.total}</TableCell>
-                  <TableCell className={`${s['table-row']} ${s['ver-detalle']}`} align="right">{c.estado}</TableCell>
+                  <TableCell className={`${s['table-row']} ${s[c.estado]}`} align="right">{c.estado}</TableCell>
+                  <TableCell
+                    align="right"
+                    className={`${s['table-row']} ${s['ver-detalle']}`}
+                    onClick={() => setOpenDetalleReserva({ open: true, reservaId: c.id })}
+                  >Ver</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -88,6 +99,11 @@ export default function Detalle_usuario(props: Props) {
         <DialogActions>
           <Button onClick={handleClose} variant="contained" color="secondary">Cerrar</Button>
         </DialogActions>
+        <DetalleReserva
+          open={openDetalleReserva.open}
+          reservaId={openDetalleReserva.reservaId}
+          setOpenDetalleReserva={setOpenDetalleReserva}
+        />
       </Dialog>
     </React.Fragment>
   );
