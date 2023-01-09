@@ -43,6 +43,7 @@ export function getMasreservados(): ThunkAction<void, RootState, unknown, AnyAct
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get('/api/campings/reservas');
+            console.log(json, 'aca esta el jsonnnnn');
             return dispatch({
                 type: GET_MASRESERVADOS,
                 payload: json.data
@@ -86,29 +87,29 @@ export function getReservasCampy(): ThunkAction<void, RootState, unknown, AnyAct
 
 ////////////////////////USUARIOS/////////////////////////////////////////////////
 
-export function cleanUsuarios_dash()  {
+export function cleanUsuarios_dash() {
     return ({
-        type: CLEAN_USUARIOS_DASH, 
+        type: CLEAN_USUARIOS_DASH,
     });
 }
 
-export function getUsuarios_byname(name:string){
-            return {
-                type: GET_USUARIOS_BYNAME,
-                payload: name
-            }
+export function getUsuarios_byname(name: string) {
+    return {
+        type: GET_USUARIOS_BYNAME,
+        payload: name
+    }
 }
 
 ////////////////////////CAMPINGS/////////////////////////////////////////////////
 
-export function getCampings_byname(name:string){
+export function getCampings_byname(name: string) {
     return {
         type: GET_CAMPINGS_BYNAME,
         payload: name
     }
 }
 
-export function getReservas_Camping(id:number): ThunkAction<void, RootState, unknown, AnyAction> {
+export function getReservas_Camping(id: number): ThunkAction<void, RootState, unknown, AnyAction> {
 
     return async function (dispatch: AppDispatch) {
         try {
@@ -123,9 +124,9 @@ export function getReservas_Camping(id:number): ThunkAction<void, RootState, unk
     }
 }
 
-export function cleanReservas_Camping()  {
+export function cleanReservas_Camping() {
     return ({
-        type: CLEAN_RESERVAS_CAMPING, 
+        type: CLEAN_RESERVAS_CAMPING,
     });
 }
 
