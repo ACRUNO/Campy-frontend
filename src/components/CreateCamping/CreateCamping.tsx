@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -56,12 +56,12 @@ function getStepContent(step: number, setInput: React.Dispatch<React.SetStateAct
 
 export default function Checkout({ preInputValues }: { preInputValues: PreInputsValues | null }) {
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const { tipo, id, token } = useSelector((state: RootState) => state.user)
+  const { tipo, id, token, numero_celular, dni, direccion } = useSelector((state: RootState) => state.user)
   const [alert, setAlert] = React.useState<AlertType>({
-    open: true,
-    title: 'Ser Propietario',
-    description: '¿Querés crear servicios de campings para viajeros? ¡Convertite en propietario creando al menos un camping!',
-    confirm: 'Crear Camping',
+    open: false,
+    title: '',
+    description: '',
+    confirm: '',
     type: 'person',
     navigateTo: null
   });
@@ -129,6 +129,26 @@ export default function Checkout({ preInputValues }: { preInputValues: PreInputs
     input.AbiertoPeriodoId === 0 ||
     input.PeriodoAguaCalienteId === 0 ||
     input.parcela_superficie === 0;
+
+  useEffect(() => {
+    if (!direccion || !numero_celular || !dni) return setAlert({
+      open: true,
+      title: 'AUTORIZACIÓN DENEGADA',
+      description: 'Debés tener todos tus datos de perfil cargados.',
+      confirm: 'Ir a cargarlos',
+      type: 'error',
+      navigateTo: '/dashboard'
+    })
+
+    if (process.env.REACT_APP_TIPO_USUARIO === tipo) setAlert({
+      open: true,
+      title: 'Ser Propietario',
+      description: '¿Querés crear servicios de campings para viajeros? ¡Convertite en propietario creando al menos un camping!',
+      confirm: 'Crear Camping',
+      type: 'person',
+      navigateTo: null
+    })
+  }, [])
 
 
   const handleNext = () => {
@@ -198,18 +218,15 @@ export default function Checkout({ preInputValues }: { preInputValues: PreInputs
               </Box>
             </React.Fragment>
           )}
-          {
-            process.env.REACT_APP_TIPO_USUARIO === tipo &&
-            <Alert
-              open={alert.open}
-              title={alert.title}
-              description={alert.description}
-              type='person'
-              confirm={alert.confirm}
-              setStateOpen={setAlert}
-              navigateTo={null}
-            />
-          }
+          <Alert
+            open={alert.open}
+            title={alert.title}
+            description={alert.description}
+            type={alert.type}
+            confirm={alert.confirm}
+            setStateOpen={setAlert}
+            navigateTo={alert.navigateTo}
+          />
         </Paper>
         <Copyright />
       </Container>

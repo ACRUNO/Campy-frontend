@@ -10,7 +10,7 @@ import axios from 'axios';
 import { VERDE } from '../../../../helpers/colors';
 import { CircularProgress } from '@mui/material';
 import { confirmReserva } from '../../../../../actions/Owner.action';
-import DetalleReserva from './DetalleReserva/DetalleReserva';
+import DetalleReserva from '../../../DetalleReserva/DetalleReserva';
 import formatDate from '../../../../helpers/formatDate';
 
 type Props = {
