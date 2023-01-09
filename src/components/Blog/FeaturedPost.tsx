@@ -39,6 +39,8 @@ export default function FeaturedPost(props: FeaturedPostProps) {
       let data: { visitas: number } = { visitas: props.vistas + 1 }
       dispatch(actions.visualizaciones(props.id, data, () => { navigate(`/blog/${props.id}`) }))
     }
+    else { navigate(`/blog/${props.id}`) }
+
 
   }
 
