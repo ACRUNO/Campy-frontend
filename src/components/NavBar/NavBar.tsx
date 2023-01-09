@@ -38,7 +38,9 @@ export default function NavBar() {
   const handlerLogoutUser = () => {
     localStorage.removeItem('token')
 
-    if (isAuthenticated) return logout();
+    if (isAuthenticated) return logout({
+      returnTo: process.env.REACT_APP_REDIRECT_AUTH0 || 'http://localhost:3000/login'
+    });
 
     dispatch(logoutUser());
 
