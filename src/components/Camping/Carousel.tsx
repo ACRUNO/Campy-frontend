@@ -34,7 +34,9 @@ export default function Carousel() {
     return () => { };
     resetTimeout();
   }, [index]);
+
   return (
+
     <div className={Style.slideshow}>
       {/* IMAGEN */}
       <div className={Style.slideshowSlider}

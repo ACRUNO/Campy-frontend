@@ -33,7 +33,7 @@ import { addFavoriteCamping } from '../../actions/User.action';
 import { Reviews } from '../Reviews/Reviews';
 import { postReserv } from '../../actions/Checkout.action';
 import { setdetailreserv } from '../../actions';
-import { userTypes } from '../../auxiliar';
+import { AlertType, userTypes } from '../../auxiliar';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
@@ -53,8 +53,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { cleanDetails } from '../../actions/index';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '../helpers/Alert';
 
 
 
@@ -72,11 +71,16 @@ export default function Camping() {
   let idReserva = useSelector((state: any) => state.idReserva);
 
 
-
   const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
 
 
-  const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.length)];
+
+  const [randomPhoto, SetRandomPhoto] = React.useState(logInPhotos[Math.floor(Math.random() * logInPhotos.length)])
+
+
+
+
+
 
 
 
@@ -93,6 +97,14 @@ export default function Camping() {
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
   const [price, setPrice] = React.useState(0)
+  const [alert, setAlert] = React.useState<AlertType>({
+    open: false,
+    title: '',
+    description: '',
+    confirm: '',
+    type: 'person',
+    navigateTo: null
+  });
   // const [value1, setValue1] = React.useState<Dayjs | null>(null);
   // const [value2, setValue2] = React.useState<Dayjs | null>(null);
   const [open, setOpen] = React.useState(false);
@@ -250,7 +262,6 @@ export default function Camping() {
       }
 
       if (finalPrice < 60000) {
-        setDiscount(finalPrice)
         setPrice((final * total) + validate.stay)
       }
     }
@@ -276,7 +287,6 @@ export default function Camping() {
 
       if (finalPrice < 60000) {
         setPrice((final * total) + validate.stay)
-        setDiscount(finalPrice)
       }
     }
 
@@ -290,6 +300,16 @@ export default function Camping() {
   });
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => async (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (!user || !user.direccion || !user.numero_celular || !user.dni)
+      return setAlert({
+        open: true,
+        title: 'AUTORIZACIÓN DENEGADA',
+        description: 'Debés tener todos tus datos de perfil cargados.',
+        confirm: 'Ir a cargarlos',
+        type: 'error',
+        navigateTo: '/dashboard'
+      })
+
     let ingreso1 = validate?.alldate
     let ingreso2 = validate?.alldate2
     let trailer = validate?.stay > 0 ? 1 : 0
@@ -347,7 +367,7 @@ export default function Camping() {
   // hasta ahi 
   return (
 
-    <Box sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
+    <Box sx={{ bgcolor: 'rgb(245, 245, 245)', margin: 0, padding: 0, width: "100vw" }}>
 
 
 
@@ -363,10 +383,11 @@ export default function Camping() {
             src={randomPhoto}
           />
 
-          <Box className={Style.text}>
-            <Typography variant="h2" color="primary">
+          <Box className={Style.textoBanner}>
+            <Typography variant="h2" color="primary" className={Style.texto}>
               {camp.nombre_camping}
             </Typography>
+
             <Box className={Style.rankingcont}>
               <Typography color="primary" component="legend">Puntuación  </Typography>
               <Rating name="read-only" value={value} readOnly />
@@ -477,7 +498,7 @@ export default function Camping() {
               </Box>
 
               <Box className={Style.detalleReserva}>
-                <FormControl className={Style.itemReserva}>
+                <FormControl className={Style.itemReserva} sx={{ marginBottom: "1rem" }}>
                   <InputLabel id="demo-simple-select-helper-label" color="secondary">Estadia</InputLabel>
                   <Select
 
@@ -504,7 +525,7 @@ export default function Camping() {
 
 
 
-                <FormControl className={Style.itemReserva}>
+                <FormControl className={Style.itemReserva} sx={{ marginBottom: "1rem" }}>
                   <InputLabel id="demo-simple-select-helper-label" color="secondary">Viajeros</InputLabel>
                   <Select
                     // onChange={(e) => { setTravellers(e.target.value as number) }}
@@ -530,7 +551,7 @@ export default function Camping() {
 
 
 
-                <FormControl className={Style.itemReserva}>
+                <FormControl className={Style.itemReserva} sx={{ marginBottom: "1rem" }}>
                   <InputLabel id="demo-simple-select-helper-label" color="secondary">Menores</InputLabel>
                   <Select
                     name="kids"
@@ -540,6 +561,7 @@ export default function Camping() {
                     id="demo-simple-select-helper"
                     label="estadia "
                     color="secondary"
+
                   >
                     <MenuItem value={0}>Sin menores</MenuItem>
                     <MenuItem value={1}>1 menor</MenuItem>
@@ -635,16 +657,16 @@ export default function Camping() {
               // onKeyDown={toggleDrawer('bottom', false)}
               >
 
-                <Box sx={{ width: 650 }}>
+                <Box className={Style.datosReserva}>
                   <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 100 }} aria-label="spanning table">
+                    <Table sx={{ minWidth: "6.25rem" }} aria-label="spanning table">
                       <TableHead>
                         <TableRow>
                           <TableCell sx={{ fontSize: 20, fontWeight: "bold" }} align="center" colSpan={4}>
                             Datos de la reserva con descuentos
                           </TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow >
                           <TableCell sx={{ fontSize: 17 }}>Fecha de inicio</TableCell>
                           <TableCell align="right"></TableCell>
                           <TableCell sx={{ fontSize: 17 }} align="right"> {validate?.alldate.slice(0, 10).replace("-", "/").replace("-", "/")} </TableCell>
@@ -681,7 +703,7 @@ export default function Camping() {
                   <List>
                     <Typography sx={{ marginTop: 1 }} variant="subtitle1" color="black"> <LocationOnIcon /> {camp.nombre_camping}  </Typography>
                     <Box className={Style.tresbox}>
-                      <ListItem sx={{ minWidth: 300, marginTop: 1 }}>
+                      <ListItem sx={{ minWidth: "18.75rem", marginTop: 1 }}>
                         <ListItemAvatar>
                           <Avatar>
                             <PersonAddAlt1Icon />
@@ -691,7 +713,7 @@ export default function Camping() {
                         <Divider variant="inset" component="li" />
                       </ListItem>
                       <Divider variant="inset" component="li" />
-                      <ListItem sx={{ minWidth: 300, marginTop: 1 }}>
+                      <ListItem sx={{ minWidth: "18.75rem", marginTop: 1 }}>
                         <ListItemAvatar>
                           <Avatar>
                             <ChildCareIcon />
@@ -701,7 +723,7 @@ export default function Camping() {
                         <Divider variant="inset" component="li" />
                       </ListItem>
                       <Divider variant="inset" component="li" />
-                      <ListItem sx={{ minWidth: 300, marginTop: 1 }}>
+                      <ListItem sx={{ minWidth: "18.75rem", marginTop: 1 }}>
                         <ListItemAvatar>
                           <Avatar>
                             <LocalShippingIcon />
@@ -714,7 +736,8 @@ export default function Camping() {
                   </List>
                 </Box>
                 <Box>
-                  <form action={`${'https://campy-backend.onrender.com' || 'http://localhost:3001'}/api/checkout`} method="post">
+                  <form action={`${process.env.REACT_APP_API || 'http://localhost:3001'}/api/checkout`} method="post">
+
                     <input type="hidden" name="price" value={price} />
                     <input type="hidden" name="mayores" value={validate.travellers} />
                     <input type="hidden" name="menores" value={validate.kids} />
@@ -724,7 +747,7 @@ export default function Camping() {
 
                     <input type="hidden" name="title" value={camp.nombre_camping} />
                     <input type="hidden" name="idm" value={idm} />
-                    <Button sx={{ maxWidth: 90, minHeight: 70, fontSize: 18 }} type="submit" autoFocus variant="contained" endIcon={<ShoppingCartIcon />} color="success" >
+                    <Button sx={{ maxWidth: "5.62rem", minHeight: "4.37rem", fontSize: 18 }} type="submit" autoFocus variant="contained" endIcon={<ShoppingCartIcon />} color="success" >
                       Pagar
                     </Button>
 
@@ -770,6 +793,15 @@ export default function Camping() {
       <Box className={Style.salidas}>
         <Salidas {...infoCards}></Salidas>
       </Box>
+      <Alert
+        open={alert.open}
+        title={alert.title}
+        description={alert.description}
+        type={alert.type}
+        confirm={alert.confirm}
+        setStateOpen={setAlert}
+        navigateTo={alert.navigateTo}
+      />
 
 
 

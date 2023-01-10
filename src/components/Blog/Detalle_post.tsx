@@ -14,33 +14,20 @@ import Detail from "./Detail";
 
 export default function Detalle() {
 
-    
+
     const params = useParams();
     const dispatch: AppDispatch = useDispatch();
-    const [editar, setEditar] = useState(false)
-    const [editarPost, setEditarPost] = useState(false)
     const [reload, setReload] = useState(0)
 
-    //
     const [avisoComentario, setAvisoComentario] = useState(true)
 
-    const post: {
-        id: number,
-        foto: string,
-        username: string,
-        fecha: string,
-        titulo: string,
-        texto: string,
-        imagenes: Array<string>,
-        comentarios: { id: number, username: string, foto: string, comentario: string, createdAt: string }[]
-    } = useSelector((state: RootState) => state.post)
 
     useEffect(() => {
         dispatch(getPostById(params.id));
         return () => {
             dispatch(limpiarDetalle())
         }
-    }, [dispatch, params.id, reload, editar])
+    }, [dispatch, params.id, reload])
 
 
     return (
@@ -51,7 +38,7 @@ export default function Detalle() {
                     <Grid container columnSpacing={4} display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
                     </Grid>
                     <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{ mb: 4 }} >
-                        <Detail key={post.titulo} id={post.id} foto={post.foto} fecha={new Date(post?.fecha).toLocaleDateString()} username={post.username} titulo={post.titulo} texto={post.texto} imagenes={post.imagenes} comentarios={post.comentarios} reload={reload} setReload={setReload} editar={editar} setEditar={setEditar} editarPost={editarPost} setEditarPost={setEditarPost} />
+                        <Detail reload={reload} setReload={setReload} />
                     </Grid>
                 </Grid>
             </Container>

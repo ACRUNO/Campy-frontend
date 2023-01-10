@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { GoogleMap, useLoadScript, MarkerF, Marker } from "@react-google-maps/api";
 import s from "./Map.module.css"
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 import MapCard from "./CardMap/CardMap"
@@ -65,9 +65,10 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
 
 
 
-  const params = useParams()
+  const location = useLocation();
   const dispatch: AppDispatch = useDispatch()
 
+  const campingIdMap = location.state?.campingId;
 
 
   const { result }: { result: Campings[] } = useSelector((state: RootState) => state.campings)
@@ -113,7 +114,7 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
 
   const handleButton = () => {
     popUpFilters === false ? SetPopUpFilters(true) : SetPopUpFilters(false);
-    filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false)
+    filtersArrow === false ? SetFiltersArrow(true) : SetFiltersArrow(false);
   }
 
   /*   const handleZoomOut = () => {
@@ -184,7 +185,7 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
               }}
               key={c.id}
               position={{ lat: +c.latitud, lng: +c.longitud }}
-              icon={iconImage1} />
+              icon={c.id === +campingIdMap ? iconImage2 : iconImage1} />
           )
         })
       }

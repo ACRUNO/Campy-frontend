@@ -25,9 +25,7 @@ import { DejarReviews } from './components/Reviews/DejarReview';
 
 
 
-
 function App() {
-
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 

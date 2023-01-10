@@ -69,9 +69,9 @@ export default function Salidas({ nombre_camping, imagenes, descripcion_camping 
           />
         </Box> */}
 
-      <Card sx={{ maxWidth: 450, height: 300 }} onClick={() => handleMap()} >
+      <Card sx={{ maxWidth: "28rem", height: "18.75rem", pb: "1rem" }} onClick={() => handleMap()} >
         <CardMedia
-          sx={{ height: 140 }}
+          sx={{ height: "8.75rem" }}
           image={mapss}
           title="Conocé la zona"
         />
