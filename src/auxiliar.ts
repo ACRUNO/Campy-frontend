@@ -48,7 +48,7 @@ export interface AlertType {
   description: string;
   confirm: string;
   type: "success" | "error" | "person";
-  navigateTo: string | null;
+  navigateTo: string | null | (() => void);
 }
 
 export interface AlertConfirmType {

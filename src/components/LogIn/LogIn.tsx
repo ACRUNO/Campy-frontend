@@ -42,7 +42,7 @@ const randomPhoto: string = logInPhotos[Math.floor(Math.random() * logInPhotos.l
 
 export default function SignIn() {
 
-  const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
+  const { loginWithRedirect, user, isAuthenticated, isLoading, logout } = useAuth0();
 
   const dispatch: AppDispatch = useDispatch();
   const globalUser = useSelector((state: RootState) => state.user);
@@ -100,7 +100,9 @@ export default function SignIn() {
     if (isAuthenticated && !isLoading) {
       const remember: boolean = Boolean(localStorage.getItem('remember'));
 
-      dispatch(loginUserWithGoogle(user, remember, setStateOpen));
+      dispatch(loginUserWithGoogle(user, remember, setStateOpen, () => logout({
+        returnTo: process.env.REACT_APP_REDIRECT_AUTH0 || 'http://localhost:3000/login'
+      })));
     }
   }, [isAuthenticated]);
 
