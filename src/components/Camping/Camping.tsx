@@ -350,7 +350,7 @@ export default function Camping() {
   // hasta ahi 
   return (
 
-    <Box sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
+    <Box sx={{ bgcolor: 'rgb(245, 245, 245)', margin: 0, padding: 0, width: "100vw" }}>
 
 
 
@@ -366,10 +366,11 @@ export default function Camping() {
             src={randomPhoto}
           />
 
-          <Box className={Style.text}>
-            <Typography variant="h2" color="primary">
+          <Box className={Style.textoBanner}>
+            <Typography variant="h2" color="primary" className={Style.texto}>
               {camp.nombre_camping}
             </Typography>
+
             <Box className={Style.rankingcont}>
               <Typography color="primary" component="legend">Puntuación  </Typography>
               <Rating name="read-only" value={value} readOnly />
@@ -480,7 +481,7 @@ export default function Camping() {
               </Box>
 
               <Box className={Style.detalleReserva}>
-                <FormControl className={Style.itemReserva}>
+                <FormControl className={Style.itemReserva} sx={{ marginBottom: "1rem" }}>
                   <InputLabel id="demo-simple-select-helper-label" color="secondary">Estadia</InputLabel>
                   <Select
 
@@ -507,7 +508,7 @@ export default function Camping() {
 
 
 
-                <FormControl className={Style.itemReserva}>
+                <FormControl className={Style.itemReserva} sx={{ marginBottom: "1rem" }}>
                   <InputLabel id="demo-simple-select-helper-label" color="secondary">Viajeros</InputLabel>
                   <Select
                     // onChange={(e) => { setTravellers(e.target.value as number) }}
@@ -533,7 +534,7 @@ export default function Camping() {
 
 
 
-                <FormControl className={Style.itemReserva}>
+                <FormControl className={Style.itemReserva} sx={{ marginBottom: "1rem" }}>
                   <InputLabel id="demo-simple-select-helper-label" color="secondary">Menores</InputLabel>
                   <Select
                     name="kids"
@@ -543,6 +544,7 @@ export default function Camping() {
                     id="demo-simple-select-helper"
                     label="estadia "
                     color="secondary"
+
                   >
                     <MenuItem value={0}>Sin menores</MenuItem>
                     <MenuItem value={1}>1 menor</MenuItem>
@@ -638,16 +640,16 @@ export default function Camping() {
               // onKeyDown={toggleDrawer('bottom', false)}
               >
 
-                <Box sx={{ width: 650 }}>
+                <Box className={Style.datosReserva}>
                   <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 100 }} aria-label="spanning table">
+                    <Table sx={{ minWidth: "6.25rem" }} aria-label="spanning table">
                       <TableHead>
                         <TableRow>
                           <TableCell sx={{ fontSize: 20, fontWeight: "bold" }} align="center" colSpan={4}>
                             Datos de la reserva con descuentos
                           </TableCell>
                         </TableRow>
-                        <TableRow>
+                        <TableRow >
                           <TableCell sx={{ fontSize: 17 }}>Fecha de inicio</TableCell>
                           <TableCell align="right"></TableCell>
                           <TableCell sx={{ fontSize: 17 }} align="right"> {validate?.alldate.slice(0, 10).replace("-", "/").replace("-", "/")} </TableCell>
@@ -684,7 +686,7 @@ export default function Camping() {
                   <List>
                     <Typography sx={{ marginTop: 1 }} variant="subtitle1" color="black"> <LocationOnIcon /> {camp.nombre_camping}  </Typography>
                     <Box className={Style.tresbox}>
-                      <ListItem sx={{ minWidth: 300, marginTop: 1 }}>
+                      <ListItem sx={{ minWidth: "18.75rem", marginTop: 1 }}>
                         <ListItemAvatar>
                           <Avatar>
                             <PersonAddAlt1Icon />
@@ -694,7 +696,7 @@ export default function Camping() {
                         <Divider variant="inset" component="li" />
                       </ListItem>
                       <Divider variant="inset" component="li" />
-                      <ListItem sx={{ minWidth: 300, marginTop: 1 }}>
+                      <ListItem sx={{ minWidth: "18.75rem", marginTop: 1 }}>
                         <ListItemAvatar>
                           <Avatar>
                             <ChildCareIcon />
@@ -704,7 +706,7 @@ export default function Camping() {
                         <Divider variant="inset" component="li" />
                       </ListItem>
                       <Divider variant="inset" component="li" />
-                      <ListItem sx={{ minWidth: 300, marginTop: 1 }}>
+                      <ListItem sx={{ minWidth: "18.75rem", marginTop: 1 }}>
                         <ListItemAvatar>
                           <Avatar>
                             <LocalShippingIcon />
@@ -727,7 +729,7 @@ export default function Camping() {
 
                     <input type="hidden" name="title" value={camp.nombre_camping} />
                     <input type="hidden" name="idm" value={idm} />
-                    <Button sx={{ maxWidth: 90, minHeight: 70, fontSize: 18 }} type="submit" autoFocus variant="contained" endIcon={<ShoppingCartIcon />} color="success" >
+                    <Button sx={{ maxWidth: "5.62rem", minHeight: "4.37rem", fontSize: 18 }} type="submit" autoFocus variant="contained" endIcon={<ShoppingCartIcon />} color="success" >
                       Pagar
                     </Button>
 
