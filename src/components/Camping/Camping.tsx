@@ -314,7 +314,7 @@ export default function Camping() {
     let ingreso2 = validate?.alldate2
     let trailer = validate?.stay > 0 ? 1 : 0
     await handleClickOpen()
-    console.log(detailReserv)
+
 
     if (open == false) { setPrice(0) }
 
