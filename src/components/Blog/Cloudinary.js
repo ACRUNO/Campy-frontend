@@ -40,12 +40,12 @@ class Cloudinary extends Component {
       (error, result) => {
         if (!error && result && result.event === "success") {
           //console.log("Done! Here is the image info: ", result.info);
-          document
-            .getElementById(this.state.id)
-            .setAttribute("src", result.info.secure_url);
-          this.setState({
-            id: (parseInt(this.state.id) + 1).toString()
-          })
+          // document
+          //   .getElementById(this.state.id)
+          //   .setAttribute("src", result.info.secure_url);
+          // this.setState({
+          //   id: (parseInt(this.state.id) + 1).toString()
+          // })
           //console.log(this.state)
           this.props.setInput((inputs) => {
             return {
