@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import {Button, Grid} from '@mui/material'
- 
+import { Button, Grid } from '@mui/material'
+
 
 class Cloudinary extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { id: "1"}
-    
+    this.state = { id: "1" }
+
   }
 
-  
+
   componentDidMount(props) {
-    const cloudName = "pfcampy"; 
+    const cloudName = "pfcampy";
     const uploadPreset = "pfhenry";
 
     // Remove the comments from the code below to add
@@ -39,16 +39,17 @@ class Cloudinary extends Component {
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          console.log("Done! Here is the image info: ", result.info);
-          document
-            .getElementById(this.state.id)
-            .setAttribute("src", result.info.secure_url);
-          this.setState({
-            id:(parseInt(this.state.id)+1).toString()})
-          console.log(this.state)
+          //console.log("Done! Here is the image info: ", result.info);
+          // document
+          //   .getElementById(this.state.id)
+          //   .setAttribute("src", result.info.secure_url);
+          // this.setState({
+          //   id: (parseInt(this.state.id) + 1).toString()
+          // })
+          //console.log(this.state)
           this.props.setInput((inputs) => {
             return {
-              ...inputs, 
+              ...inputs,
               imagenes: [...inputs.imagenes, result.info.secure_url]
             }
           })
@@ -67,9 +68,9 @@ class Cloudinary extends Component {
   render() {
     return (
       <Grid display="flex" justifyContent="center">
-      <Button id="upload_widget"  variant="contained">
-        Subir Imágenes
-      </Button>
+        <Button id="upload_widget" variant="contained">
+          Subir Imágenes
+        </Button>
       </Grid>
     );
   }

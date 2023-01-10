@@ -175,6 +175,7 @@ export default function Detail(props: PostDetail) {
     const handleEditPost = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
         // dispatch(modificarPost(id, user.token, postEditado, input, () => { props.setReload(props.reload + 1); setInput({ imagenes: [] }) }))
+
         setEditarPost(false)
         axios.put(
             `/api/blog/${id}?texto=${postEditado}&imagenes=${input.imagenes.length ? input.imagenes.join(",") : ""
@@ -220,7 +221,7 @@ export default function Detail(props: PostDetail) {
                 fullWidth
                 maxWidth="md"
                 open={openLoader}>
-                <DialogTitle align='center'>Subiendo Review...</DialogTitle>
+                <DialogTitle align='center'>Editando Post...</DialogTitle>
                 <DialogContent >
                     <Box
                         component="img"
