@@ -221,7 +221,7 @@ export default function Detail(props: PostDetail) {
                 fullWidth
                 maxWidth="md"
                 open={openLoader}>
-                <DialogTitle align='center'>Subiendo Review...</DialogTitle>
+                <DialogTitle align='center'>Editando Post...</DialogTitle>
                 <DialogContent >
                     <Box
                         component="img"
