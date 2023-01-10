@@ -139,23 +139,23 @@ export function Reviews() {
                         <Rating name="read-only" value={puntuacion} readOnly />
                         <Box display='flex' flexDirection='column' alignItems='center' p='2%' >
                             <Typography variant="h2">{puntuacion}.0</Typography>
-                            <Button sx={{ mb: '15%' }} onClick={handleOpen} color='secondary' variant='contained'>Mostrar Reseñas</Button>
+                            <Button className={Style.btnReviews} sx={{ mb: '15%' }} onClick={handleOpen} color='secondary' variant='contained'>Mostrar Reseñas</Button>
 
                         </Box>
                     </Box>
                 </Box>
-                <Box>
+                <Box className={Style.chart}>
                     <ComposedChart
                         layout="vertical"
                         width={300}
                         height={250}
                         data={grafic}
-                        margin={{
+                    /*     margin={{
                             top: 20,
                             right: 20,
                             bottom: 20,
                             left: 20
-                        }}
+                        }} */
                     >
                         {/* <CartesianGrid stroke="#f5f5f5" /> */}
                         <XAxis display="none" type="number" />

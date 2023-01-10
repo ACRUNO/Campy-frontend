@@ -42,7 +42,7 @@
     text-align: start;
 }
 
-.text {
+.textoBanner {
     text-shadow: 5px 2px 36px #070707;
     position: absolute;
     top: 30%;
@@ -76,7 +76,7 @@
     align-items: center;
     width: 50%;
     height: 100%;
-    padding: 1rem;
+
 }
 
 .inputCont {
@@ -91,7 +91,7 @@
 
 .paperContainer {
     width: 95%;
-    height: 72%;
+    height: 75%;
     padding-top: 2rem;
     /*     padding: 1.5rem;
     margin-right: 1.5rem; */
@@ -104,6 +104,11 @@
     margin-left: 1rem;
     width: 40rem;
     border-radius: 1%;
+}
+
+.datosReserva {
+    width: 40.60rem;
+
 }
 
 .all {
@@ -220,7 +225,7 @@
 .salidas {
     display: flex;
     justify-content: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
     padding-bottom: 3rem;
 }
 
@@ -262,6 +267,14 @@ svg.heart {
     width: 40rem;
 }
 
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .boxizq {
     display: flex;
     flex-direction: row;
@@ -269,13 +282,6 @@ svg.heart {
 
 .tresbox {
     width: 25rem;
-}
-
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
 }
 
 
@@ -367,7 +373,7 @@ svg.heart {
         justify-content: center;
         align-items: center;
         width: 100%;
-        padding: 1rem;
+
     }
 
     .inputCont {
@@ -382,6 +388,8 @@ svg.heart {
     .paperContainer {
         width: 100%;
         height: 100%;
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 
 
@@ -390,14 +398,30 @@ svg.heart {
     }
 
     .resume {
-        width: 100%;
-        padding-left: 0rem;
+        width: fit-content;
+        padding-left: 1rem;
         padding-right: 1rem;
+
+        /*         width: 50%;
+        padding-top: 1rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-bottom: 1rem; */
     }
 
     .reviews {
         width: 100%;
-        padding-top: 2rem;
+        /*    padding-top: 2rem;
+        padding-left: 3rem;
+        padding-right: 2rem;  */
+    }
+
+    .btnReviews {
+        display: none !important;
+    }
+
+    .chart {
+        display: none;
     }
 
     .contResumen {
@@ -406,8 +430,70 @@ svg.heart {
 
     .contResumenDecripHistoria {
         width: 100%;
-        padding: 2rem;
+        /* padding: 2rem; */
     }
+
+    .Fechas {
+        display: flex;
+        justify-content: center;
+        padding-right: 1rem;
+        width: 100%;
+
+    }
+
+
+
+    .coti {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .detalleReserva {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-top: 2rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        width: 100%;
+    }
+
+    .itemReserva {
+        width: 80%;
+    }
+
+    .textoBanner {
+        top: 15%;
+        margin-right: 1rem;
+    }
+
+    .detailsComodidades {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        background-color: #EB403A;
+    }
+
+    .boxizq {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .tresbox {
+        width: 25rem;
+    }
+
+    .datosReserva {
+        width: fit-content;
+    }
+
 
 }
 
