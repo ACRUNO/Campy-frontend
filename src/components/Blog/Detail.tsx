@@ -12,12 +12,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import { useParams } from "react-router-dom";
 import { deleteComentario, deletePost, modificarComentario, modificarPost } from "../../actions/Blog.action";
-import { userTypes } from "../../auxiliar";
+import { AlertConfirmType, userTypes } from "../../auxiliar";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
 import Cloudinary from "./Cloudinary";
 import formatDate from "../helpers/formatDate";
+import { AlertType } from "../../auxiliar";
+import axios from "axios";
+import Alert from "../helpers/Alert";
+import ConfirmAlert from '../helpers/ConfirmAlert';
+import { Cancel } from "@mui/icons-material";
+import { VERDE } from "../helpers/colors";
 
 interface PostDetail {
     reload: number,
@@ -49,6 +55,25 @@ export default function Detail(props: PostDetail) {
     } = useSelector((state: RootState) => state.post)
 
 
+    const [openLoader, setOpenLoader] = useState(false)
+    const [stateOpen, setStateOpen]: [stateOpen: AlertType, setStateOpen: Dispatch<SetStateAction<AlertType>>] = useState<AlertType>({
+        open: false,
+        title: '',
+        description: '',
+        confirm: '',
+        type: 'success',
+        navigateTo: null
+    });
+    const [stateAlertConfirm, setStateAlertConfirm] = useState<AlertConfirmType>(
+        {
+            open: false,
+            title: '',
+            description: '',
+            confirm: () => { },
+            denegate: () => { },
+        }
+    );
+
     const [comentarioEditar, setComentarioEditar] = useState({ id: 0, username: "", foto: "", comentario: "", createdAt: "" })
 
 
@@ -56,16 +81,36 @@ export default function Detail(props: PostDetail) {
         imagenes: []
     })
 
+    useEffect(() => {
+        setInput({
+            imagenes: post?.imagenes
+        })
+    }, [post])
+
     const handleDeleteComentario = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
-        dispatch(deleteComentario(id, user.token));
-        props.setReload(props.reload + 1)
+        (() => {
+            setStateAlertConfirm(() => ({
+                open: true,
+                title: 'ELIMINAR COMENTARIO',
+                description: 'Esta seguro que desea eliminar el comentario?',
+                confirm: () => { dispatch(deleteComentario(id, user.token)); props.setReload(props.reload + 1) },
+                denegate: () => { },
+            }))
+        })();
     }
 
     const handleDeletePost = (e: React.ChangeEvent<unknown>) => {
         e.preventDefault();
-        dispatch(deletePost(params.id, user.token));
-        navigate("/blog")
+        (() => {
+            setStateAlertConfirm(() => ({
+                open: true,
+                title: 'ELIMINAR POST',
+                description: 'Esta seguro que desea eliminar el post?',
+                confirm: () => { dispatch(deletePost(params.id, user.token)); navigate("/blog") },
+                denegate: () => { },
+            }))
+        })();
     }
 
     const handleClickOpenDialogoPost = (e: React.ChangeEvent<unknown>) => {
@@ -89,8 +134,30 @@ export default function Detail(props: PostDetail) {
 
     const handleEditComentario = (e: React.ChangeEvent<unknown>, comentario: any) => {
         e.preventDefault();
-        dispatch(modificarComentario(comentario.id, user.token, comentarioEditado))
+        // dispatch(modificarComentario(comentario.id, user.token, comentarioEditado))
         setEditar(false)
+        setOpenLoader(true)
+        axios.put(
+            `/api/blog/comentarios/${comentario.id}?comentario=${comentarioEditado}`,
+            {},
+            {
+                headers: { authorization: user.token },
+            }
+        ).then(() => setStateOpen(() => ({
+            open: true,
+            title: 'COMENTARIO EDITADO CON EXITO!',
+            description: 'Muchas gracias por aportar a esta hermosa comunidad.',
+            confirm: 'OK',
+            type: 'success',
+            navigateTo: null
+        }))).catch(({ response }) => setStateOpen(() => ({
+            open: true,
+            title: `ERROR: ${response.data.error}`,
+            description: response.data.message,
+            confirm: 'ok...',
+            type: 'error',
+            navigateTo: null
+        }))).finally(() => setOpenLoader(false));
         props.setReload(props.reload + 1)
     }
 
@@ -107,15 +174,69 @@ export default function Detail(props: PostDetail) {
 
     const handleEditPost = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
-        //console.log(id)
-        dispatch(modificarPost(id, user.token, postEditado, input, () => { props.setReload(props.reload + 1); setInput({ imagenes: [] }) }))
+        // dispatch(modificarPost(id, user.token, postEditado, input, () => { props.setReload(props.reload + 1); setInput({ imagenes: [] }) }))
 
         setEditarPost(false)
+        axios.put(
+            `/api/blog/${id}?texto=${postEditado}&imagenes=${input.imagenes.length ? input.imagenes.join(",") : ""
+            }`,
+            {},
+            {
+                headers: { authorization: user.token },
+            }
+        ).then(() => setStateOpen(() => ({
+            open: true,
+            title: 'POST EDITADO CON EXITO!',
+            description: 'Muchas gracias por aportar a esta hermosa comunidad.',
+            confirm: 'OK',
+            type: 'success',
+            navigateTo: null
+        }))).catch(({ response }) => setStateOpen(() => ({
+            open: true,
+            title: `ERROR: ${response.data.error}`,
+            description: response.data.message,
+            confirm: 'ok...',
+            type: 'error',
+            navigateTo: null
+        }))).finally(() => {
+            setOpenLoader(false);
+            props.setReload(props.reload + 1);
+            setInput({ imagenes: [] })
+        }
+        );
+    }
 
+    const removeImage = (index: number) => {
+        setInput((input: any) => {
+            return {
+                ...input,
+                imagenes: input.imagenes.filter((_: any, i: number) => i !== index)
+            }
+        })
     }
 
     return (
         <Grid item xs={12} md={6} width={750}>
+            <Dialog
+                fullWidth
+                maxWidth="md"
+                open={openLoader}>
+                <DialogTitle align='center'>Subiendo Review...</DialogTitle>
+                <DialogContent >
+                    <Box
+                        component="img"
+                        alt="imagen"
+                        src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            m: 'auto',
+                            width: 'fit-content',
+                        }}
+                    />
+                </DialogContent>
+            </Dialog>
+
             <Card sx={{ display: 'flex' }}>
                 <CardContent sx={{ flex: 1, width: 600 }}>
                     <Grid sx={{ display: 'flex', justifyContent: "space-between" }}>
@@ -139,7 +260,7 @@ export default function Detail(props: PostDetail) {
                         <Typography variant="subtitle1" color="text.secondary">{formatDate(post.fecha)}</Typography>
                     </Grid>
 
-                    <Typography variant="h6" pb={2} fontSize={18}>{post.texto}</Typography>
+                    <Typography variant="body1" pb={2} fontSize={18} paragraph>{post.texto}</Typography>
                     {post.imagenes?.map(e => (
                         <Box sx={{ width: '100%' }} pt={1} component="img" src={e}></Box>
                     ))}
@@ -224,8 +345,8 @@ export default function Detail(props: PostDetail) {
                                         defaultValue={post.texto}
                                     />
                                     <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
-                                        {img.map(m => (
-                                            <Grid item key={m}>
+                                        {img.map((m, i) => (
+                                            <Grid item key={m} position="relative">
                                                 <Box
                                                     id={m}
                                                     component="img"
@@ -236,9 +357,20 @@ export default function Detail(props: PostDetail) {
                                                         width: 200
                                                     }}
                                                     alt="Logo"
-                                                    src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"}
-                                                /* defaultValue= */
-                                                />
+                                                    src={input.imagenes[i] || "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
+                                                {input.imagenes[i] &&
+                                                    <Cancel
+                                                        sx={{
+                                                            fontSize: "1.5rem",
+                                                            position: "absolute",
+                                                            top: 5, right: 3,
+                                                            fill: VERDE, bgcolor: "white",
+                                                            borderRadius: "50%",
+                                                            cursor: "pointer"
+                                                        }}
+                                                        onClick={() => removeImage(i)}
+                                                    />
+                                                }
                                             </Grid>
                                         ))}
                                         <Cloudinary setInput={setInput}></Cloudinary>
@@ -253,6 +385,28 @@ export default function Detail(props: PostDetail) {
                     <CrearComentario id={Number(params.id)} reload={props.reload} setReload={props.setReload} />
                 </CardContent>
             </Card>
+
+            <ConfirmAlert
+                open={stateAlertConfirm.open}
+                confirm={stateAlertConfirm.confirm}
+                denegate={stateAlertConfirm.denegate}
+                title={stateAlertConfirm.title}
+                description={stateAlertConfirm.description}
+                setStateOpen={setStateAlertConfirm}
+            />
+            {
+                stateOpen.open &&
+                <Alert
+                    setStateOpen={setStateOpen}
+                    open={stateOpen.open}
+                    description={stateOpen.description}
+                    title={stateOpen.title}
+                    confirm={stateOpen.confirm}
+                    type={stateOpen.type}
+                    navigateTo={stateOpen.navigateTo}
+                />
+            }
+
         </Grid>
     )
 }
