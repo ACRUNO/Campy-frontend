@@ -13,7 +13,7 @@ export default function PaginadoBlog(props: Props) {
 
   const handleChange = (e: React.ChangeEvent<unknown>, page: number) => {
     props.setCurrentPage(page)
-    window.scroll({ top: 850 })
+    window.scroll({ top: 690 })
 
 
   }
