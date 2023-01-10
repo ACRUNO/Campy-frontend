@@ -313,8 +313,8 @@ export default function Camping() {
     let ingreso1 = validate?.alldate
     let ingreso2 = validate?.alldate2
     let trailer = validate?.stay > 0 ? 1 : 0
-    handleClickOpen()
-    console.log(detailReserv)
+    await handleClickOpen()
+
 
     if (open == false) { setPrice(0) }
 
@@ -350,7 +350,7 @@ export default function Camping() {
               return;
             }  */
 
-    setState({ ...state, 'bottom': open });
+    setState({ ...state, 'bottom': open })
     console.log(detailReserv.idRes)
   };
 
@@ -365,6 +365,7 @@ export default function Camping() {
     /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
   }
   // hasta ahi 
+
   return (
 
     <Box sx={{ bgcolor: 'rgb(245, 245, 245)', margin: 0, padding: 0, width: "100vw" }}>
