@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import s from './CardCamping.module.css'
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 type Props = {
     id: number,
@@ -20,7 +22,12 @@ export default function CardChica(props: Props) {
 
 
 
+    let navigate = useNavigate()
 
+    const handleNavigate = () => {
+        window.scrollTo(0, 0);
+        navigate(`/booking/camping/${props.id}`)
+    }
     const diasReservados: number = useSelector((state: RootState) => state.diasReservadosBooking)
 
     var precioTotal = props.precio * diasReservados
@@ -29,7 +36,7 @@ export default function CardChica(props: Props) {
 
     return (
 
-        <Link to={`/booking/camping/${props.id}`} style={{ textDecoration: 'none' }}>
+        <Box onClick={handleNavigate} style={{ textDecoration: 'none' }}>
             <Card className={s.cardChica} sx={{ bgcolor: 'd7d7d7' }} >
 
                 <CardMedia key={props.id} className={s.image} component="img" alt="Provincia" image={props.imagenes[0]}></CardMedia>
@@ -59,7 +66,7 @@ export default function CardChica(props: Props) {
                     </Box>
                 </CardContent>
             </Card>
-        </Link>
+        </Box >
 
     );
 }
