@@ -19,10 +19,10 @@ export default function Resume() {
     }
     return (
         <Box className={Style.contResumen} >
-            <Typography className={Style.tituloResume} sx={{ paddingRight: "4rem", paddingLeft: "4rem" }} variant="h4" component="h4"> Querés conocer más de {camp?.nombre_camping} y la prov. de {camp?.provincia} ? </Typography>
+            <Typography className={Style.tituloResume} sx={{ paddingRight: "0rem", paddingLeft: "0rem" }} variant="h4" component="h4"> Querés conocer más de {camp?.nombre_camping} y la prov. de {camp?.provincia} ? </Typography>
             <Box className={Style.contResumenDecripHistoria}>
-                <Typography sx={{ textAlign: "justify", marginTop: 1, paddingRight: "4rem", paddingLeft: "2rem" }} variant="body1">  {camp?.nombre_camping} {info.localidad} </Typography>
-                <Typography sx={{ textAlign: "justify", marginTop: 1, paddingRight: "4rem", paddingLeft: "2rem" }} variant="body1"> {info.provincia} </Typography>
+                <Typography sx={{ textAlign: "justify", marginTop: 1, paddingRight: "0rem", paddingLeft: "0rem" }} variant="body1">  {camp?.nombre_camping} {info.localidad} </Typography>
+                <Typography sx={{ textAlign: "justify", marginTop: 1, paddingRight: "0rem", paddingLeft: "0rem" }} variant="body1"> {info.provincia} </Typography>
             </Box>
         </Box >
     )

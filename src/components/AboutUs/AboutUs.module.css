@@ -1,61 +1,79 @@
  .model3algoooooooooooo {
-
      background-color: rgb(245, 245, 245);
-
-
  }
-
+ 
+ .listaAbout {
+     list-style: none;
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start;
+     margin: 0px;
+     padding-top: 0.5rem;
+     /*  width: 7rem; */
+ }
+ 
+ li {
+     text-align: left !important;
+     font-size: small;
+     margin: 0px;
+ }
+ 
+ .listaDetalle {
+     text-align: left !important;
+     font-size: small;
+     margin: 0px;
+ }
+ 
  .modeltitle {
      margin: 0px;
      padding: 2rem;
  }
-
+ 
  .allcont {
      display: flex;
      flex-direction: column;
      align-items: center;
  }
-
+ 
  .eleA {
      text-decoration: none;
      color: white;
  }
-
+ 
  A:link {
      text-decoration: none
  }
-
+ 
  A:visited {
      color: white;
      font-family: arial;
      text-decoration: none
  }
-
+ 
  A:hover {
      color: white;
      font-family: arial;
      text-decoration: none
  }
-
+ 
  * {
      outline: none !important;
  }
-
+ 
  *:focus {
      outline: none !important;
  }
-
+ 
  textarea:focus,
  input:focus {
      outline: none !important;
  }
-
+ 
  a {
      text-decoration: none !important;
      outline: none !important;
  }
-
-
+ 
  .boxx {
      background-color: rgb(245, 245, 245);
      width: 100vw;
@@ -64,16 +82,15 @@
      flex-direction: column;
      align-items: center;
  }
-
+ 
  .members {
      padding: 20px;
-
      display: flex;
      justify-content: center;
      flex-direction: row;
      flex-wrap: wrap;
  }
-
+ 
  .member {
      margin: 1rem;
      box-shadow: 2px 2px 10px 0px rgb(0 0 0 / 75%);
@@ -91,9 +108,7 @@
      position: relative;
      cursor: pointer;
  }
-
-
-
+ 
  .member::after {
      position: absolute;
      top: 0;
@@ -104,9 +119,8 @@
      transition: all 1s;
      background: rgb(224, 219, 219);
      border-top-left-radius: 015px;
-
  }
-
+ 
  .member::before {
      position: absolute;
      top: 0;
@@ -118,7 +132,7 @@
      background: rgb(224, 219, 219);
      border-top-right-radius: 15px;
  }
-
+ 
  .divider {
      width: 75px;
      height: 4px;
@@ -126,22 +140,21 @@
      position: relative;
      margin: 2rem;
  }
-
+ 
  .img {
      border-radius: 50%;
      transition: all 1s;
  }
-
+ 
  .description {
      width: 17.8rem;
-
  }
-
+ 
  .description h2 {
      color: rgb(3, 3, 3);
      text-align: center;
  }
-
+ 
  .description h3 {
      font-family: 'Poppins', sans-serif;
      text-align: center;
@@ -149,7 +162,7 @@
      font-weight: 600;
      font-size: 18px;
  }
-
+ 
  .description p {
      color: rgb(3, 3, 3);
      text-align: center;
@@ -158,7 +171,7 @@
      animation: fade-in 1s, slide-in 1s;
      transition: all 0.3s ease;
  }
-
+ 
  .description li {
      color: rgb(3, 3, 3);
      text-align: center;
@@ -167,7 +180,7 @@
      transition: all 0.3s ease;
      /* padding: 0 15px; */
  }
-
+ 
  .socialmedia {
      position: absolute;
      background-color: rgb(224, 219, 219);
@@ -183,110 +196,94 @@
      border-radius: 0 0 15px 15px;
      color: rgb(12, 12, 12);
  }
-
+ 
  .description .socialmedia svg {
      font-size: 30px;
      transition: all 1s;
      color: rgb(12, 12, 12)
  }
-
+ 
  .member:hover .socialmedia {
      width: 100%;
      opacity: 1;
  }
-
+ 
  .member:hover {
      background-color: rgba(255, 248, 248, 0.704);
      transform: scale(1.1);
      border-radius: 15px;
-
  }
-
+ 
  .member:hover .img {
      transform: scale(1.1);
      border: 2px rgb(85, 85, 85);
  }
-
+ 
  .description .socialmedia svg:hover {
      transform: scale(1.1);
      color: #285430;
  }
-
- .ul {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     width: 7rem;
- }
-
+ 
  .member:hover::before {
      width: 50%;
  }
-
+ 
  .member:hover::after {
      width: 50%;
  }
-
+ 
  .descrip {
      margin-left: 8rem;
      margin-right: 8rem;
  }
-
-
-
-
+ 
  .cardcontainer {
      max-width: 345px;
      margin: auto;
      transition: 0.3s;
      box-shadow: 0 8px 40px -12px rgba(0, 0, 0, 0.3);
  }
-
+ 
  .cardcontainer:hover {
      box-shadow: 0 16px 70px -12.125px rgba(0, 0, 0, 0.3);
  }
-
+ 
  .cardheading {
      font-weight: bold;
  }
-
+ 
  .carddescription {
      line-height: 1.8;
  }
-
-
-
+ 
  .fadeinparagraph {
      animation: fade-in 1s, slide-in 1s;
      transition: transform 0.9s ease;
  }
-
+ 
  @keyframes fade-in {
      from {
          opacity: 0;
      }
-
      to {
          opacity: 1;
      }
  }
-
+ 
  @keyframes slide-in {
      from {
          transform: translateX(-100%);
      }
-
      to {
          transform: translateX(0);
      }
  }
-
+ 
  .fadeinparagraph:hover {
      transform: scale(1.1);
      transition: transform 0.9s ease;
-
  }
-
+ 
  .fadeinparagraph:after {
      content: '';
      position: absolute;
@@ -297,14 +294,13 @@
      background-color: #aba7a7;
      transform: scaleX(0);
      transform-origin: right;
-
  }
-
+ 
  .fadeinparagraph:hover:after {
      transform: scaleX(1);
      transition: transform 0.9s ease;
  }
-
+ 
  .container22 {
      width: 50rem;
      display: flex;

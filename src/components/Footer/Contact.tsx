@@ -155,7 +155,7 @@ const Contact: React.FC = () => {
             > Contacto
             </Typography>
             <Dialog
-
+                className={Style.height}
                 maxWidth={false}
                 open={open}
                 onClose={handleClose}

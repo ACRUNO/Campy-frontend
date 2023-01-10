@@ -87,6 +87,12 @@ export default function Detail(props: PostDetail) {
         })
     }, [post])
 
+    let boton = !(
+        // post.texto?.length > 0 &&
+        postEditado.length > 0 &&
+        input.imagenes?.length > 0
+    )
+
     const handleDeleteComentario = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
         (() => {
@@ -221,7 +227,7 @@ export default function Detail(props: PostDetail) {
                 fullWidth
                 maxWidth="md"
                 open={openLoader}>
-                <DialogTitle align='center'>Subiendo Review...</DialogTitle>
+                <DialogTitle align='center'>Editando Post...</DialogTitle>
                 <DialogContent >
                     <Box
                         component="img"
@@ -348,7 +354,6 @@ export default function Detail(props: PostDetail) {
                                         {img.map((m, i) => (
                                             <Grid item key={m} position="relative">
                                                 <Box
-                                                    id={m}
                                                     component="img"
                                                     sx={{
                                                         ml: "1%",
@@ -376,7 +381,7 @@ export default function Detail(props: PostDetail) {
                                         <Cloudinary setInput={setInput}></Cloudinary>
                                     </Grid>
                                     <Grid display="flex" justifyContent="flex-end" sx={{ mt: 1 }}>
-                                        <Button onClick={(error) => handleEditPost(error, post.id)} color="success" variant='contained' id='Editar' sx={{ mt: 1 }} value="Editar comentario">Enviar</Button>
+                                        <Button disabled={boton} onClick={(error) => handleEditPost(error, post.id)} color="success" variant='contained' id='Editar' sx={{ mt: 1 }} value="Editar comentario">Enviar</Button>
                                     </Grid>
                                 </Grid>
                             </Grid>
