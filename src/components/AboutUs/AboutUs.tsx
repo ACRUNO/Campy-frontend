@@ -189,7 +189,7 @@ export default function Model3() {
           <h1>¿ Que es <Box component="img" className={logo} alt="Logo" src={logo} /> ? </h1>
 
           <Container maxWidth="md" component="main">
-            <Grid container spacing={5} alignItems="flex-end">
+            <Grid container display="flex" spacing={5} alignItems="flex-end" >
               {tiers.map((tier) => (
                 // Enterprise card is full width at sm breakpoint
                 <Grid
@@ -198,6 +198,8 @@ export default function Model3() {
                   xs={12}
                   sm={tier.title === 'Enterprise' ? 12 : 6}
                   md={4}
+                  display="flex"
+                  justifyContent="center"
                 >
                   <Card className={Style.fadeinparagraph} sx={{ width: "18rem" }} >
                     <CardHeader
@@ -245,50 +247,55 @@ export default function Model3() {
               ))}
             </Grid>
           </Container>
-          <FadeInParagraph></FadeInParagraph>
+          <Grid xs={12}
+          >
+            <FadeInParagraph></FadeInParagraph>
+          </Grid>
           {/* <h4 className={Style.descrip}> Campy es un proyecto creado por alumnos del bootcamp  SoyHenry, en el cual se expone todo lo aprendido durante el mismo.
             Es una Aplicacion Orientada a los viajes y aventuras de Camping en la cual se pueden realizar reservas, conectar con nuevos lugares y con gente que tienen el mismo amor por la naturaleza y el turismo. </h4> */}
-          <Box sx={{ display: "flex", flexDirection: "row", width: "100vw", justifyContent: "space-evenly" }}>
-
-
-          </Box>
+          {/* <Box sx={{ display: "flex", flexDirection: "row", width: "100vw", justifyContent: "space-evenly" }}>
+          </Box> */}
           <div className={Style.divider}></div>
-
-
         </Box>
-        <h1 className={Style.modeltitle}>  <Box component="img" className={logo} alt="Logo" src={logo} /> Team </h1>
-        <div className={Style.members}>
-          {membersCampy.map((m: any) => {
-            return (
-              <div className={Style.member}>
-                <img className={Style.img} width={130} height={130} src={m.id} />
-                <div className={Style.description}>
-                  <h2>{m.name}</h2>
-                  <h3>{m.position}</h3>
 
 
-                  {/* <li>{m.description1}</li>
+        <Grid>
+          <Grid display="flex" justifyContent="center">
+            <h1 className={Style.modeltitle}>  <Box component="img" className={logo} alt="Logo" src={logo} /> Team </h1>
+          </Grid>
+          <div className={Style.members}>
+            {membersCampy.map((m: any) => {
+              return (
+                <div className={Style.member}>
+                  <img className={Style.img} width={130} height={130} src={m.id} />
+                  <div className={Style.description}>
+                    <h2>{m.name}</h2>
+                    <h3>{m.position}</h3>
+
+
+                    {/* <li>{m.description1}</li>
                   <li>{m.description2}</li>
                   <li>{m.description3}</li> */}
-                  {/* <li>{m.description4}</li> */}
+                    {/* <li>{m.description4}</li> */}
 
-                  <div className={Style.socialmedia}>
-                    <a className={Style.eleA} href={m.linkedin} target="_blank" rel="noopener noreferrer">
+                    <div className={Style.socialmedia}>
+                      <a className={Style.eleA} href={m.linkedin} target="_blank" rel="noopener noreferrer">
 
-                      <LinkedInIcon />
-                    </a>
-                    <a className={Style.eleA} href={m.github} target="_blank" rel="noopener noreferrer">
+                        <LinkedInIcon />
+                      </a>
+                      <a className={Style.eleA} href={m.github} target="_blank" rel="noopener noreferrer">
 
-                      <GitHubIcon />
-                    </a>
+                        <GitHubIcon />
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
 
 
-        </div>
+          </div>
+        </Grid>
       </Box>
 
 

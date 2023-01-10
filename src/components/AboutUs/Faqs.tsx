@@ -143,6 +143,7 @@ export default function ScrollDialog() {
                 scroll={scroll}
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
+                sx={{ mt: "2.5rem" }}
             >
                 <DialogTitle id="scroll-dialog-title">Preguntas frequentes</DialogTitle>
                 <DialogContent dividers={scroll === 'paper'}>
@@ -150,13 +151,14 @@ export default function ScrollDialog() {
                         id="scroll-dialog-description"
                         ref={descriptionElementRef}
                         tabIndex={-1}
+                        sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}
                     >
                         {faqs?.map((faqs: { pregunta: string, respuesta: string, id: number }) => {
                             return (
 
 
 
-                                <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb: 2, mr: 5, height: "fit-content", width: "100%", p: 1, boxShadow: 3, justifyContent: "center" }}>
+                                <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb: 2, height: "fit-content", width: "100%", p: 1, boxShadow: 3, justifyContent: "center" }}>
 
                                     <Box >
                                         <CardContent sx={{ display: 'flex', flexDirection: 'column', p: 0, m: 0 }}>

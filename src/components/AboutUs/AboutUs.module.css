@@ -59,8 +59,6 @@
  .boxx {
      background-color: rgb(245, 245, 245);
      width: 100vw;
-     height: 100vh;
-
      display: flex;
      justify-content: flex-start;
      flex-direction: column;
@@ -124,9 +122,9 @@
  .divider {
      width: 75px;
      height: 4px;
-     background-color: #272c60;
+     background-color: #285430;
      position: relative;
-     margin: 20px auto 60px;
+     margin: 2rem;
  }
 
  .img {
@@ -147,7 +145,7 @@
  .description h3 {
      font-family: 'Poppins', sans-serif;
      text-align: center;
-     color: #F21B3F;
+     color: #285430;
      font-weight: 600;
      font-size: 18px;
  }
