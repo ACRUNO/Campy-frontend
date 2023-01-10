@@ -16,6 +16,13 @@ td.table-row {
 
 td.Pendiente {
   color: #5481d0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+td.Pendiente:hover {
+  color: #32548e;
+  text-shadow: 1px 0 #32548e;
 }
 
 td.Rechazada {
