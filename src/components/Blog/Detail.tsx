@@ -139,7 +139,7 @@ export default function Detail(props: PostDetail) {
                         <Typography variant="subtitle1" color="text.secondary">{formatDate(post.fecha)}</Typography>
                     </Grid>
 
-                    <Typography variant="h6" pb={2} fontSize={18}>{post.texto}</Typography>
+                    <Typography variant="body1" pb={2} fontSize={18} paragraph>{post.texto}</Typography>
                     {post.imagenes?.map(e => (
                         <Box sx={{ width: '100%' }} pt={1} component="img" src={e}></Box>
                     ))}

@@ -736,7 +736,8 @@ export default function Camping() {
                   </List>
                 </Box>
                 <Box>
-                  <form action={`${'https://campy-backend.onrender.com' || 'http://localhost:3001'}/api/checkout`} method="post">
+                  <form action={`${process.env.REACT_APP_API || 'http://localhost:3001'}/api/checkout`} method="post">
+
                     <input type="hidden" name="price" value={price} />
                     <input type="hidden" name="mayores" value={validate.travellers} />
                     <input type="hidden" name="menores" value={validate.kids} />
