@@ -42,20 +42,26 @@ export default function Card_chica(props: FeaturedPostProps) {
   }
 
   return (
-    <Grid item xs={12} md={3} onClick={() => handleClick()} display="flex"  >
+    <Grid item xs={6} md={2.6} onClick={() => handleClick()} display="flex" justifyContent="center" sx={{ mx: 2 }} >
       <CardActionArea component="a" href="#" sx={{ "&:hover": { boxShadow: "0px 4px 8px rgba(50, 50, 50, 1)" } }}>
-        <Card sx={{ display: "flex", height: "10rem" }}>
-          <CardContent sx={{ flex: 2, height: "6rem" }}>
-            <Typography component="h2" variant="h5" align="center">{props.title}</Typography>
-            <Grid display="flex" flexDirection="row" alignItems="center" justifyContent="center" justifyItems="flex-end">
-              <Typography variant="subtitle1" color="text.secondary" sx={{ mr: 1, p: 0, mb: 0 }}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
+        <Card sx={{ display: "flex", height: "8rem", mb: 0, alignItems: "space-around" }}>
+          <CardContent sx={{ flex: 3, height: "7rem" }}>
+            <Typography component="h2" variant="subtitle1" align="center">{props.title}</Typography>
+            {/* <Grid display="flex" flexDirection="row" alignItems="center" justifyContent="center" justifyItems="flex-end">
+              <Typography variant="body2" color="text.secondary" sx={{ mr: 0.4, p: 0, mb: 0 }}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
               <Avatar src={props.foto} />
-            </Grid>
-            <Grid display="flex" alignItems="center" sx={{ mt: 1 }}>
-              <Typography sx={{ mr: 1 }}>{props.comentarios}</Typography>
-              <ChatBubbleOutlineIcon></ChatBubbleOutlineIcon>
-              <Typography sx={{ ml: 2, mr: 1 }}>{props.vistas}</Typography>
-              <VisibilityIcon />
+            </Grid> */}
+            <Grid container display="flex" alignContent="flex-end" justifyContent="space-between" sx={{ mt: 0.5 }}>
+              <Grid item display="flex" alignItems="center" justifyContent="center">
+                <Typography sx={{ mr: 1 }}>{props.comentarios}</Typography>
+                <ChatBubbleOutlineIcon fontSize='small'></ChatBubbleOutlineIcon>
+                <Typography sx={{ ml: 2, mr: 1 }}>{props.vistas}</Typography>
+                <VisibilityIcon fontSize='small' />
+              </Grid>
+              <Grid item display="flex" alignItems="center" justifyContent="center">
+                <Typography variant="body2" color="text.secondary" sx={{ mr: 0.4, p: 0, mb: 0 }}>{new Date(props.date).toLocaleDateString("en-GB")} - </Typography>
+                <Avatar src={props.foto} />
+              </Grid>
             </Grid>
           </CardContent>
         </Card>

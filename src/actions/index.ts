@@ -568,7 +568,9 @@ export function LinkMap(
         type: LINK_MAP,
         payload: details.data,
       });
-      navigate("/map");
+      navigate("/map", {
+        state: { campingId: id },
+      });
     } catch (error: any) {
       console.log(error.message);
     }

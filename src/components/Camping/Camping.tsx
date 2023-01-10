@@ -33,7 +33,7 @@ import { addFavoriteCamping } from '../../actions/User.action';
 import { Reviews } from '../Reviews/Reviews';
 import { postReserv } from '../../actions/Checkout.action';
 import { setdetailreserv } from '../../actions';
-import { userTypes } from '../../auxiliar';
+import { AlertType, userTypes } from '../../auxiliar';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
@@ -53,8 +53,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { cleanDetails } from '../../actions/index';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '../helpers/Alert';
 
 
 
@@ -98,6 +97,14 @@ export default function Camping() {
   const [value, setValue] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
   const [price, setPrice] = React.useState(0)
+  const [alert, setAlert] = React.useState<AlertType>({
+    open: false,
+    title: '',
+    description: '',
+    confirm: '',
+    type: 'person',
+    navigateTo: null
+  });
   // const [value1, setValue1] = React.useState<Dayjs | null>(null);
   // const [value2, setValue2] = React.useState<Dayjs | null>(null);
   const [open, setOpen] = React.useState(false);
@@ -293,6 +300,16 @@ export default function Camping() {
   });
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => async (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (!user || !user.direccion || !user.numero_celular || !user.dni)
+      return setAlert({
+        open: true,
+        title: 'AUTORIZACIÓN DENEGADA',
+        description: 'Debés tener todos tus datos de perfil cargados.',
+        confirm: 'Ir a cargarlos',
+        type: 'error',
+        navigateTo: '/dashboard'
+      })
+
     let ingreso1 = validate?.alldate
     let ingreso2 = validate?.alldate2
     let trailer = validate?.stay > 0 ? 1 : 0
@@ -717,7 +734,8 @@ export default function Camping() {
                   </List>
                 </Box>
                 <Box>
-                  <form action={`${'https://campy-backend.onrender.com' || 'http://localhost:3001'}/api/checkout`} method="post">
+                  <form action={`${process.env.REACT_APP_API || 'http://localhost:3001'}/api/checkout`} method="post">
+
                     <input type="hidden" name="price" value={price} />
                     <input type="hidden" name="mayores" value={validate.travellers} />
                     <input type="hidden" name="menores" value={validate.kids} />
@@ -773,6 +791,15 @@ export default function Camping() {
       <Box className={Style.salidas}>
         <Salidas {...infoCards}></Salidas>
       </Box>
+      <Alert
+        open={alert.open}
+        title={alert.title}
+        description={alert.description}
+        type={alert.type}
+        confirm={alert.confirm}
+        setStateOpen={setAlert}
+        navigateTo={alert.navigateTo}
+      />
 
 
 

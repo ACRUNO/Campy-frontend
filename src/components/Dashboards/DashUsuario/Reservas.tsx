@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import Table from '@mui/material/Table';
+import { Replay as ReplayIcon } from '@mui/icons-material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -14,6 +15,11 @@ import { Bookings } from '../../../reducer/estados';
 import formatDate from '../../helpers/formatDate';
 import s from './Reservas.module.css';
 import DetalleReserva from '../DetalleReserva/DetalleReserva';
+import { VERDE, VERDE_CLARO, VERDE_OSCURO } from '../../helpers/colors';
+import Alert from '../../helpers/ConfirmAlert';
+import { AlertConfirmType, keyStateBooking } from '../../../auxiliar';
+import FormMercadoPago from './FormMercadoPago';
+import axios from 'axios';
 
 
 export default function Reservas() {
@@ -24,7 +30,14 @@ export default function Reservas() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openDetalleReserva, setOpenDetalleReserva] =
-    useState({ open: false, reservaId: 0 })
+    useState({ open: false, reservaId: 0 });
+  const [confirmAlert, setConfirmAlert] = useState<AlertConfirmType>({
+    open: false,
+    title: "CONTINUAR EL PAGO DE RESERVA",
+    description: "¿Deseas continuar con el pago de la reserva a través de Mercado Pago?",
+    confirm: () => { },
+    denegate: () => { }
+  });
 
   const handleChangePage = (event: unknown, newPage: number) => setPage(newPage);
 
@@ -40,7 +53,7 @@ export default function Reservas() {
   return (
     <>
       <Grid item xs={12}>
-        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', position: 'relative' }}>
 
 
           <Title>Reservas</Title>
@@ -66,7 +79,15 @@ export default function Reservas() {
                   <TableCell className={s['table-row']}>{formatDate(c.fecha_desde_reserva)}</TableCell>
                   <TableCell className={s['table-row']}>{formatDate(c.fecha_hasta_reserva)}</TableCell>
                   <TableCell className={s['table-row']}>$ {c.total}</TableCell>
-                  <TableCell className={`${s['table-row']} ${s[c.estado]}`} align="right">{c.estado}</TableCell>
+                  <TableCell
+                    className={`${s['table-row']} ${s[c.estado]}`}
+                    align="right"
+                    onClick={
+                      keyStateBooking[c.id_estado] === "Pendiente"
+                        ? () => setConfirmAlert(prev => ({ ...prev, open: true, confirm: () => FormMercadoPago(c.total, c.fecha_desde_reserva, c.fecha_hasta_reserva, c.id, c.nombre_camping) }))
+                        : undefined
+                    }
+                  >{c.estado}</TableCell>
                   <TableCell
                     className={`${s['table-row']} ${s['ver-detalle']}`}
                     onClick={() => setOpenDetalleReserva({ open: true, reservaId: c.id })}
@@ -84,12 +105,33 @@ export default function Reservas() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
+          <ReplayIcon
+            sx={{
+              position: 'absolute',
+              top: 15,
+              right: 15,
+              cursor: 'pointer',
+              fontSize: "2rem",
+              fill: VERDE,
+              "&:hover": { fill: VERDE_OSCURO }
+            }}
+
+            onClick={() => dispatch(getUserBookings(id, token))}
+          />
         </Paper>
       </Grid>
       <DetalleReserva
         open={openDetalleReserva.open}
         reservaId={openDetalleReserva.reservaId}
         setOpenDetalleReserva={setOpenDetalleReserva}
+      />
+      <Alert
+        open={confirmAlert.open}
+        title={confirmAlert.title}
+        description={confirmAlert.description}
+        confirm={confirmAlert.confirm}
+        denegate={confirmAlert.denegate}
+        setStateOpen={setConfirmAlert}
       />
     </>
   );

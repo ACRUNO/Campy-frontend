@@ -68,7 +68,8 @@ export function loginUserWithToken(
 export function loginUserWithGoogle(
   data: User | undefined,
   remember: boolean,
-  setStateOpen: Dispatch<SetStateAction<AlertType>>
+  setStateOpen: Dispatch<SetStateAction<AlertType>>,
+  logoutCallback: () => void
 ): ThunkAction<void, RootState, unknown, AnyAction> {
   return async function (dispatch: AppDispatch) {
     try {
@@ -90,7 +91,7 @@ export function loginUserWithGoogle(
           description: error.response.data.message,
           confirm: "ok...",
           type: "error",
-          navigateTo: null,
+          navigateTo: () => logoutCallback(),
         }));
 
       console.log(error);
