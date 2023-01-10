@@ -144,7 +144,7 @@ const initialState: {
     habilitado: number;
   }[];
   datos_graftorta: { provincias: string; cant_campings: number }[];
-  datos_graftop: { nombre_camping: string; cant_reservas: number, localidad: string, provincia: string, images: string }[];
+  datos_graftop: { id: number, nombre_camping: string; cant_reservas: number, localidad: string, provincia: string, images: string }[];
   datos_grafusuarios: { users: number; created: string }[];
   datos_grafreservas: { reservas: number; total: number; created: string }[];
   linkMap: { lng: number; lat: number; zoom: number };
