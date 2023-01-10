@@ -136,7 +136,7 @@ export default function ScrollDialog() {
             > Preguntas frequentes
             </Typography>
             <Dialog
-
+                className={Style.height}
                 maxWidth={false}
                 open={open}
                 onClose={handleClose}

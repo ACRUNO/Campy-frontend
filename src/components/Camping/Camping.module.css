@@ -352,3 +352,10 @@ svg.heart {
 .buttonsub:hover {
     background-color: #45a049;
 }
+
+
+.height {
+    margin-top: 5rem;
+    max-height: calc(100% - 5rem);
+    ;
+}

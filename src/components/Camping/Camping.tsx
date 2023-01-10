@@ -355,7 +355,7 @@ export default function Camping() {
 
         {/* Portada */}
         <Box className={Style.portadacont}>
-         
+
           <Box
             component="img"
             className={Style.imagencita}
@@ -745,13 +745,13 @@ export default function Camping() {
         {/* ZONA MUESTRA RESUMEN DESCRIP CAMPING Y PROV + REVIEWS */}
         <Box className={Style.ResumenReviews}>
 
-            <Box className={Style.resume}>
-              <Resume></Resume>
-            </Box>
+          <Box className={Style.resume}>
+            <Resume></Resume>
+          </Box>
 
-            <Box className={Style.reviews}>
-              <Reviews />
-            </Box>
+          <Box className={Style.reviews}>
+            <Reviews />
+          </Box>
 
         </Box>
 

@@ -5,6 +5,7 @@ import Rating from '@mui/material/Rating';
 import Style from "./CardCamping.module.css"
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   id: number,
@@ -24,11 +25,15 @@ export default function CardCamping(props: Props) {
   const diasReservados: number = useSelector((state: RootState) => state.diasReservadosBooking)
 
   var precioTotal = props.precio * diasReservados
-
+  let navigate = useNavigate()
+  const handleNavigate = () => {
+    window.scrollTo(0, 0);
+    navigate(`/booking/camping/${props.id}`)
+  }
 
   return (
 
-    <Link to={`/booking/camping/${props.id}`} style={{ textDecoration: 'none' }}>
+    <Box onClick={handleNavigate} style={{ textDecoration: 'none' }}>
       <Card className={Style.card} sx={{ display: 'flex', mt: 2, mb: 2, height: 200, width: "97%", p: 1, boxShadow: 3, justifyContent: "space-around" }}>
 
         <CardMedia
@@ -83,7 +88,7 @@ export default function CardCamping(props: Props) {
         </Box>
 
       </Card>
-    </Link>
+    </Box>
 
   )
 }
