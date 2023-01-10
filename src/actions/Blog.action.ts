@@ -32,7 +32,7 @@ export function getAll_posts(): ThunkAction<
         payload: json.data,
       });
     } catch (error) {
-      console.log(error);
+      return (error);
     }
   };
 }
@@ -101,8 +101,7 @@ export function modificarPost(
       console.log(imagenes);
 
       let json = await axios.put(
-        `/api/blog/${id}?texto=${texto}&imagenes=${
-          imagenes.imagenes.length ? imagenes.imagenes.join(",") : ""
+        `/api/blog/${id}?texto=${texto}&imagenes=${imagenes.imagenes.length ? imagenes.imagenes.join(",") : ""
         }`,
         {},
         {
@@ -154,17 +153,18 @@ export function crearPost(
     imagenes: string[];
     usuarioId: number;
   },
-  token: string
+  token: string, navigate: () => void
 ) {
   return async function (dispatch: AppDispatch) {
     try {
       let result = await axios.post("/api/blog/create", data, {
         headers: { authorization: token },
       });
-      return dispatch({
+      dispatch({
         type: CREATE_POST,
         payload: result.data,
       });
+      navigate()
     } catch (error: any) {
       console.log(error);
     }

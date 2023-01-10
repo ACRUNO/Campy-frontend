@@ -107,7 +107,7 @@ export default function Detail(props: PostDetail) {
 
     const handleEditPost = (e: React.ChangeEvent<unknown>, id: number) => {
         e.preventDefault();
-        console.log(id)
+        //console.log(id)
         dispatch(modificarPost(id, user.token, postEditado, input, () => { props.setReload(props.reload + 1); setInput({ imagenes: [] }) }))
 
         setEditarPost(false)
