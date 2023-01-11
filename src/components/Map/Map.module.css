@@ -106,3 +106,8 @@ li {
     font-size: 110%;
     text-align: center;
 }
+
+
+@media screen and (max-width:1300px) {}
+
+@media screen and (max-width:325px) {}
