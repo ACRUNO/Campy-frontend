@@ -6,7 +6,6 @@ div.detalle-reserva-container {
 
 div.reserva-container {
   width: 400px;
-
   margin: 10px 0;
 }
 
@@ -22,4 +21,15 @@ svg.close-button {
 h5.title-reserva {
   text-decoration: underline;
   margin: 10px 0;
+}
+
+@media screen and (max-width: 500px) {
+  div.reserva-container {
+    width: 200px;
+    margin: 10px 0;
+  }
+
+  svg.close-button {
+    font-size: 1.3rem;
+  }
 }

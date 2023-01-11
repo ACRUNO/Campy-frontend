@@ -160,11 +160,11 @@ export default function Misdatos() {
                 </>}
               </div>
           }
-          <Typography sx={{ textAlign: 'center', m: '10px 0' }} variant='h5' fontWeight='bolder'>{user.username.toUpperCase()}</Typography>
-          <Typography sx={{ textAlign: 'center', m: '10px 0' }} variant='h6'>Email: {user.email}</Typography>
-          <Typography sx={{ textAlign: 'center', m: '10px 0' }} variant='h6'>Número: {user.numero_celular || 'Sin definir'}</Typography>
-          <Typography sx={{ textAlign: 'center', m: '10px 0' }} variant='h6'>Dirección: {user.direccion || 'Sin definir'}</Typography>
-          <Typography sx={{ textAlign: 'center', m: '10px 0', mb: 6 }} variant='h6'>Dni: {user.dni || 'Sin definir'}</Typography>
+          <Typography className={s['dato']} sx={{ textAlign: 'center', m: '10px 0' }} variant='h5' fontWeight='bolder'>{user.username.toUpperCase()}</Typography>
+          <Typography className={s['dato']} sx={{ textAlign: 'center', m: '10px 0' }} variant='h6'>Email: {user.email}</Typography>
+          <Typography className={s['dato']} sx={{ textAlign: 'center', m: '10px 0' }} variant='h6'>Número: {user.numero_celular || 'Sin definir'}</Typography>
+          <Typography className={s['dato']} sx={{ textAlign: 'center', m: '10px 0' }} variant='h6'>Dirección: {user.direccion || 'Sin definir'}</Typography>
+          <Typography className={s['dato']} sx={{ textAlign: 'center', m: '10px 0', mb: 6 }} variant='h6'>Dni: {user.dni || 'Sin definir'}</Typography>
           <Title>Modificar Datos</Title>
           <Box onSubmit={handleSubmitForm} component="form" id='form-datos' sx={{ width: '100%' }}>
             <TextField

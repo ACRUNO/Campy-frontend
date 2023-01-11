@@ -24,6 +24,7 @@ import Alert from "../helpers/Alert";
 import ConfirmAlert from '../helpers/ConfirmAlert';
 import { Cancel } from "@mui/icons-material";
 import { VERDE } from "../helpers/colors";
+import MakeParagraph from "./MakeParagraph";
 
 interface PostDetail {
     reload: number,
@@ -184,7 +185,7 @@ export default function Detail(props: PostDetail) {
 
         setEditarPost(false)
         axios.put(
-            `/api/blog/${id}?texto=${postEditado}&imagenes=${input.imagenes.length ? input.imagenes.join(",") : ""
+            `/api/blog/${id}?texto=${postEditado.split("\n").join("%5Cn")}&imagenes=${input.imagenes.length ? input.imagenes.join(",") : ""
             }`,
             {},
             {
@@ -266,7 +267,7 @@ export default function Detail(props: PostDetail) {
                         <Typography variant="subtitle1" color="text.secondary">{formatDate(post.fecha)}</Typography>
                     </Grid>
 
-                    <Typography variant="body1" pb={2} fontSize={18} paragraph>{post.texto}</Typography>
+                    {MakeParagraph(post.texto, true)}
                     {post.imagenes?.map(e => (
                         <Box sx={{ width: '100%' }} pt={1} component="img" src={e}></Box>
                     ))}
@@ -285,7 +286,7 @@ export default function Detail(props: PostDetail) {
                                     </Grid>
                                     <Typography variant="subtitle1" color="text.secondary" textAlign="right">{new Date(e.createdAt).toLocaleDateString()}</Typography>
                                 </Grid>
-                                <Typography pt={2}>{e.comentario}</Typography>
+                                {MakeParagraph(e.comentario, false)}
                                 <Grid display="flex" justifyContent="flex-end">
 
                                     {user && user.username === e.username &&

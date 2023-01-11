@@ -24,6 +24,7 @@ import Favoritos from './Favoritos';
 import { VERDE, VERDE_OSCURO } from '../../helpers/colors';
 import { RootState } from '../../../store';
 import { useSelector } from 'react-redux';
+import s from './DashUsuario.module.css';
 
 const drawerWidth: number = 240;
 
@@ -78,7 +79,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(window.innerWidth > 600);
   const { username } = useSelector((state: RootState) => state.user);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -118,6 +119,7 @@ function DashboardContent() {
               color="inherit"
               noWrap
               sx={{ flexGrow: 1 }}
+              className={s.title}
             >
               Viajero: {username.toUpperCase()}
             </Typography>
