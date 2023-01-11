@@ -223,15 +223,17 @@ export function visualizaciones(
 } */
 
 export function cambiarComentariosVistos(
-  id: number
+  id: number,
+  callback: () => void
 ): ThunkAction<void, RootState, unknown, AnyAction> {
   return async function (dispatch: AppDispatch) {
     try {
       let json = await axios.put(`/api/blog/comentarios/vistos/${id}`);
-      return dispatch({
+      dispatch({
         type: COMENT_VISTOS,
         payload: json.data,
       });
+      callback();
     } catch (error) {
       console.log(error);
     }
