@@ -401,7 +401,7 @@ function rootReducer(state: any = initialState, action: any): any {
           (r: number) => r !== action.payload.value
         );
       }
-      console.log(state.filtrosBooking);
+
 
       return {
         ...state,
@@ -611,7 +611,6 @@ function rootReducer(state: any = initialState, action: any): any {
       };
 
     case GET_RESERVASCAMPY:
-      console.log(action.payload);
       let ordenado = action.payload.sort(
         (
           a: { createdAt: string; total: number },
@@ -623,7 +622,6 @@ function rootReducer(state: any = initialState, action: any): any {
               ? -1
               : 0
       );
-      console.log(ordenado);
       let dia: Date = new Date(2022, 11, 18);
       let r: number = 0;
       let t: number = 0;

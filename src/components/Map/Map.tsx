@@ -119,7 +119,6 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
 
   /*   const handleZoomOut = () => {
       dispatch(zoomOutMap())
-      console.log(linkMap)
     }
    */
 

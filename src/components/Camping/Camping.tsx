@@ -181,7 +181,6 @@ export default function Camping() {
     else {
       setValidate({ ...validate, [e.target.name]: e.target.value })
     }
-    console.log(validate)
   }
 
   let trueValid = () => {
@@ -200,7 +199,6 @@ export default function Camping() {
     let ingreso2 = validate?.alldate2.slice(0, 10).replace("-", "/").replace("-", "/")
     let trailer = validate?.stay > 0 ? 1 : 0
 
-    console.log(ingreso1)
 
     let data = {
       "fecha_desde_reserva": ingreso1,
@@ -262,6 +260,7 @@ export default function Camping() {
       }
 
       if (finalPrice < 60000) {
+        setDiscount(finalPrice)
         setPrice((final * total) + validate.stay)
       }
     }
@@ -286,6 +285,7 @@ export default function Camping() {
       }
 
       if (finalPrice < 60000) {
+        setDiscount(finalPrice)
         setPrice((final * total) + validate.stay)
       }
     }
@@ -351,7 +351,7 @@ export default function Camping() {
             }  */
 
     setState({ ...state, 'bottom': open })
-    console.log(detailReserv.idRes)
+
   };
 
   const handleIngresoCamping = (e: Dayjs | null) => {

@@ -49,7 +49,6 @@ export default function Footer() {
 
   let handleContact = async () => {
     let roberto = await sendEmailContact(maileo)
-    console.log(roberto)
   }
 
   return (

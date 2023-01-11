@@ -98,7 +98,7 @@ export function modificarPost(
 ): ThunkAction<void, RootState, unknown, AnyAction> {
   return async function (dispatch: AppDispatch) {
     try {
-      console.log(imagenes);
+
 
       let json = await axios.put(
         `/api/blog/${id}?texto=${texto}&imagenes=${imagenes.imagenes.length ? imagenes.imagenes.join(",") : ""
