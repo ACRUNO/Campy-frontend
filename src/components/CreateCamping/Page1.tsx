@@ -9,6 +9,7 @@ import { getProvincias, getAllCategorias, getAllLocalidades } from "../../action
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Inputs } from '../../reducer/estados';
 import MapCreate from './CreateMap';
+import CreateOrUpdateMap from '../Skeletons/CreateOrUpdateMap';
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
@@ -86,7 +87,7 @@ export default function Page1({ setInput, input }: InputProps) {
   }, [provincia])
 
   if (!allProvincias.length || !allCategorias.length || (provincia && !allLocalidades.length))
-    return <div>cargando</div>
+    return <CreateOrUpdateMap />
 
   return (
     <React.Fragment>

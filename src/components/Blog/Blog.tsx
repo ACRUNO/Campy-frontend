@@ -17,6 +17,7 @@ import Card_chica from "./Card_chica";
 import { allPosts } from "../../reducer/estados";
 import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
 import { sign } from "crypto";
+import { VERDE, VERDE_CLARO, VERDE_OSCURO } from "../helpers/colors";
 
 
 
@@ -78,7 +79,7 @@ export default function Blog() {
         <main>
           <MainFeaturedPost avisoComentario={avisoComentario} setAvisoComentario={setAvisoComentario} posts={userPosts_nc} />
           <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ mb: 1, backgroundColor: '#D8E3C5', borderStyle: "double", borderColor: "#273115", borderRadius: 1.5 }}>
-            <Typography component="h2" variant="h5" sx={{ mb: 1, pl: 3, pt: 1, textShadow: "5px 2px 36px #070707" }}><strong>Lo más comentado</strong></Typography>
+            <Typography component="h2" variant="h5" sx={{ mb: 1, pl: 3, pt: 1, textShadow: `2px 1px 2px ${VERDE}`, color: VERDE_OSCURO }}><strong>Lo más comentado</strong></Typography>
             <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 2, pl: 1, pr: 1 }} >
               {user && postsComent?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} />
@@ -90,7 +91,7 @@ export default function Blog() {
           </Grid>
 
           <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ mb: 1, backgroundColor: '#D8E3C5', borderStyle: "double", borderColor: "#273115", borderRadius: 1.5 }}>
-            <Typography component="h2" variant="h5" sx={{ mb: 1, pl: 3, pt: 1, textShadow: "5px 2px 36px #070707" }}><strong>Lo más visto</strong></Typography>
+            <Typography component="h2" variant="h5" sx={{ mb: 1, pl: 3, pt: 1, textShadow: `2px 1px 2px ${VERDE}`, color: VERDE_OSCURO }}><strong>Lo más visto</strong></Typography>
             <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 2, pl: 1, pr: 1 }} >
               {user && postsVistos?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} />

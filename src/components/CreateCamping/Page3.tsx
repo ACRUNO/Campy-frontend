@@ -9,6 +9,7 @@ import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAbierto } from '../../actions';
 import { Cancel } from '@mui/icons-material';
 import { VERDE } from '../helpers/colors';
+import CreateOrUpdateMap from '../Skeletons/CreateOrUpdateMap';
 
 
 interface InputProps {
@@ -91,7 +92,7 @@ export default function Page3({ setInput, input }: InputProps) {
   }
 
 
-  if (!allPeriodoAbierto.length) return <div>cargando periodo abierto</div>
+  if (!allPeriodoAbierto.length) return <CreateOrUpdateMap />
 
   return (
     <React.Fragment>

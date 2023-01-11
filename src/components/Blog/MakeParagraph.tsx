@@ -5,7 +5,7 @@ export default function MakeParagraph(text: string, isPost: boolean = false) {
 
   return text.split("\n").filter((paragraph: string) => paragraph).map((paragraph: string, i: number) => (
     isPost ? <Typography variant="body1"
-      pb={2}
+      pb={!i ? 2 : 0}
       fontSize={18}
       paragraph
       sx={{ wordWrap: "break-word", wordBreak: "break-all" }}>
