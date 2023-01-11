@@ -1,0 +1,39 @@
+.filtersMap {
+    border-radius: 1px;
+    background-color: white;
+    height: 44rem;
+    overflow-y: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+    box-shadow: 0 0 6px rgb(0 0 0 / 50%);
+}
+
+
+
+@media screen and (max-width:1300px) {
+    .filtersMap {
+        height: 39rem;
+    }
+
+    @media all and (max-width: 850px) {
+        .filtersMap {
+            height: 49rem;
+        }
+    }
+
+    @media screen and (max-width:420px) {
+        .filtersMap {
+            height: 42.5rem;
+        }
+    }
+
+    @media screen and (max-width:325px) {
+        .filtersMap {
+            height: 21rem;
+            width: 10rem;
+        }
+    }
+
+
+}

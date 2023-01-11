@@ -13,13 +13,13 @@ export default function Carrousel() {
 
     return (
 
-        <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ backgroundColor: "#E3E1E1", borderRadius: 1.5 }}>
+        <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ backgroundColor: "#E3E1E1", borderRadius: 1.5, overflowX: "hidden" }}>
             <Typography component="h4" variant="h4" sx={{ pl: 4, pt: 2, fontWeight: "bolder", color: "#242424" }}>Campings más reservados</Typography>
-            <Grid container justifyContent="center" display="flex" flexDirection="row" alignContent="center" sx={{ pb: 4, pl: 1, pr: 1 }} >
+            <Box className={s.contenedorCardChica} id={"Scroll"} width="100%" display="flex" flexDirection="row" alignContent="center" sx={{ pb: 4, pl: 1, pr: 1, overflowX: "auto", scrollBehavior: "smooth" }} >
                 {datos_graftop?.map((p) =>
                     <Link to={`/booking/camping/${p.id}`} style={{ textDecoration: 'none' }}>
-                        <Grid item sx={{ marginRight: "1rem" }}>
-                            <Card className={s.cardChica} sx={{ bgcolor: 'd7d7d7', width: "22rem", height: "22rem" }}>
+                        <Grid className={s.GridCardChica} item>
+                            <Card className={s.cardChica1} sx={{ bgcolor: 'd7d7d7' }}>
                                 <Paper sx={{
                                     width: "22rem",
                                     height: "14rem",
@@ -46,7 +46,7 @@ export default function Carrousel() {
                     </Link>
                 )}
 
-            </Grid>
+            </Box>
 
             <ListItem divider></ListItem>
         </Grid >
