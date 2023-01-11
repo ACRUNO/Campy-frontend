@@ -11,7 +11,7 @@ export default function Banner() {
             <Box position="absolute" color="primary.light" justifyContent='center' alignItems='center' width="100%" >
                 <Typography className={s.titulo} component="h1" variant="h2"
                     display='flex' justifyContent='center' alignItems='center' sx={{ textShadow: "5px 3px 6px #070707" }}>DESCUBRE ARGENTINA</Typography>
-                <Typography className={s.subtitulo} sx={{ textShadow: "2px 2px 2px #070707" }} component="h5" variant="h5" display='flex' justifyContent='center' textAlign='center' >Reserva el camping perfecto para tu próxima aventura y unete a nuestra comunidad de viajeros  </Typography>
+                <Typography className={s.subtitulo} sx={{ textShadow: "2px 2px 2px #070707" }} component="h5" variant="h5" display='flex' justifyContent='center' textAlign='center' >Reserva el camping perfecto para tu próxima aventura y unite a nuestra comunidad de viajeros  </Typography>
                 <Typography className={s.subtitulo} sx={{ textShadow: "2px 2px 2px #070707" }} component="h5" variant="h5" display='flex' justifyContent='center' textAlign='center' >Planifica tu viaje, la naturaleza te espera.</Typography>
                 {/*                 <Typography className={s.subtitulo} component="h6" variant="h6" display='flex' justifyContent='center' textAlign='center' >Encuentra el camping perfecto para tu próximo viaje,la naturaleza te espera.</Typography>
                 <Typography className={s.subtitulo} component="h6" variant="h6" display='flex' justifyContent='center' textAlign='center' >Únete a nuestra Comunidad de viajeros y planifica tu aventura.</Typography> */}
