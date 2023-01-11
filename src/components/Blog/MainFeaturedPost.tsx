@@ -12,6 +12,7 @@ import { AppDispatch } from '../../store';
 import * as actions from "../../actions/Blog.action"
 import { useNavigate } from 'react-router-dom';
 import NotificationImportantIcon from '@mui/icons-material/NotificationImportant';
+import s from './MainFeaturedPost.module.css';
 
 
 const logInPhotos: string[] = ["https://res.cloudinary.com/pfcampy/image/upload/v1670536275/Fotos/Jujuy.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536434/Fotos/LaPampa.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536537/Fotos/Corrientes.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536684/Fotos/SanJuan.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670535617/Fotos/Tierradelfuego.jpg", "https://res.cloudinary.com/pfcampy/image/upload/v1670536350/Fotos/SantaCruz.jpg"]
@@ -29,8 +30,8 @@ export default function MainFeaturedPost(props: Props) {
   const dispatch: AppDispatch = useDispatch()
 
   const handleClick = (id: number) => {
-    dispatch(actions.cambiarComentariosVistos(id))
-    setTimeout(() => { navigate(`/blog/${id}`) }, 100)
+    dispatch(actions.cambiarComentariosVistos(id, () => { navigate(`/blog/${id}`) }))
+
   }
 
 
@@ -69,10 +70,15 @@ export default function MainFeaturedPost(props: Props) {
               pr: { md: 0 },
             }}
           >
-            <Typography component="h1" variant="h3" color="inherit" sx={{ textShadow: "5px 2px 36px #070707" }} >
+            <Typography
+              component="h1"
+              variant="h3"
+              color="inherit" sx={{ textShadow: "5px 2px 36px #070707" }}
+              className={s.title}
+            >
               Bienvenidos al blog de Campy
             </Typography>
-            <Typography variant="h5" color="inherit" paragraph>
+            <Typography className={s.subtitle} color="inherit" paragraph >
               Un espacio para compartir con la comunidad experiencias y recomendaciones sobre el mundo del camping
             </Typography>
           </Box>

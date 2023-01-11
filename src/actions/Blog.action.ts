@@ -32,7 +32,7 @@ export function getAll_posts(): ThunkAction<
         payload: json.data,
       });
     } catch (error) {
-      return (error);
+      return error;
     }
   };
 }
@@ -98,10 +98,9 @@ export function modificarPost(
 ): ThunkAction<void, RootState, unknown, AnyAction> {
   return async function (dispatch: AppDispatch) {
     try {
-
-
       let json = await axios.put(
-        `/api/blog/${id}?texto=${texto}&imagenes=${imagenes.imagenes.length ? imagenes.imagenes.join(",") : ""
+        `/api/blog/${id}?texto=${texto}&imagenes=${
+          imagenes.imagenes.length ? imagenes.imagenes.join(",") : ""
         }`,
         {},
         {
@@ -153,7 +152,8 @@ export function crearPost(
     imagenes: string[];
     usuarioId: number;
   },
-  token: string, navigate: () => void
+  token: string,
+  navigate: () => void
 ) {
   return async function (dispatch: AppDispatch) {
     try {
@@ -164,7 +164,7 @@ export function crearPost(
         type: CREATE_POST,
         payload: result.data,
       });
-      navigate()
+      navigate();
     } catch (error: any) {
       console.log(error);
     }
@@ -223,15 +223,18 @@ export function visualizaciones(
 } */
 
 export function cambiarComentariosVistos(
-  id: number
+  id: number,
+  callback: () => void
 ): ThunkAction<void, RootState, unknown, AnyAction> {
   return async function (dispatch: AppDispatch) {
     try {
       let json = await axios.put(`/api/blog/comentarios/vistos/${id}`);
-      return dispatch({
+      dispatch({
         type: COMENT_VISTOS,
         payload: json.data,
       });
+
+      callback();
     } catch (error) {
       console.log(error);
     }

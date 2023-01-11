@@ -1,0 +1,17 @@
+h1.title {
+  font-size: 3rem;
+}
+
+p.subtitle {
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 400px) {
+  h1.title {
+    font-size: 1.5rem;
+  }
+
+  p.subtitle {
+    font-size: 1rem;
+  }
+}

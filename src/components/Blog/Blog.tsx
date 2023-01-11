@@ -12,12 +12,10 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import PaginadoBlog from "./Paginado";
-import { Dialog, DialogContent, DialogTitle, Divider, Typography } from "@mui/material";
+import { Box, Dialog, DialogContent, DialogTitle, Divider, Typography } from "@mui/material";
 import Card_chica from "./Card_chica";
 import { allPosts } from "../../reducer/estados";
-import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
-import { sign } from "crypto";
-import { VERDE, VERDE_CLARO, VERDE_OSCURO } from "../helpers/colors";
+import s from './Blog.module.css';
 
 
 
@@ -78,30 +76,41 @@ export default function Blog() {
       <Container maxWidth={false} sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
         <main>
           <MainFeaturedPost avisoComentario={avisoComentario} setAvisoComentario={setAvisoComentario} posts={userPosts_nc} />
-          <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ pb: 1, backgroundColor: "#E3E1E1", borderRadius: "5px 5px 0px 0px" }}>
+          <Grid container display="flex" flexDirection="column" alignContent="space-evenly" sx={{ pb: 1, backgroundColor: "#E3E1E1", borderRadius: "5px 5px 0px 0px" }}>
             <Typography component="h2" variant="h5" sx={{ mb: 2, pl: 3, pt: 3 }}><strong>Lo más comentado</strong></Typography>
-            <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 3, pl: 1, pr: 1 }} >
+            <Box
+              width="100%"
+              display="flex"
+              flexDirection="row"
+              sx={{ pb: 3, overflowX: 'auto' }}
+              className={s.comentariosVistos}
+            >
               {user && postsComent?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} />
               ))}
               {user === null && postsComent?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={0} />
               ))}
-            </Grid>
+            </Box>
           </Grid>
 
           <Divider variant="fullWidth" />
 
           <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ mb: 1, backgroundColor: "#E3E1E1", borderRadius: "0px 0px 5px 5px" }}>
             <Typography component="h2" variant="h5" sx={{ mb: 2, pl: 3, pt: 3 }}><strong>Lo más visto</strong></Typography>
-            <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 5, pl: 1, pr: 1 }} >
-              {user && postsVistos?.map((p) => (
-                <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} />
-              ))}
+            <Box
+              width="100%"
+              display="flex"
+              flexDirection="row"
+              sx={{ pb: 3, overflowX: 'auto' }}
+              className={s.comentariosVistos}
+            >              {user && postsVistos?.map((p) => (
+              <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} />
+            ))}
               {user === null && postsVistos?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={0} />
               ))}
-            </Grid>
+            </Box>
           </Grid>
 
 
