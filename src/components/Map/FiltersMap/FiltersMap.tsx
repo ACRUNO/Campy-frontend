@@ -147,7 +147,7 @@ export default function FiltrosLaterales() {
 
     return (
 
-        <Box sx={{ borderRadius: 1, backgroundColor: "white", height: "43.5rem", overflowY: "auto", pl: 3, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
+        <Box sx={{ borderRadius: 1, backgroundColor: "white", height: "28rem", overflowY: "auto", pl: 3, pr: 4, pb: "2.5rem", boxShadow: "0 0 6px rgb(0 0 0 / 50%)" }}>
             < Typography variant="h6" sx={{ paddingTop: "1.5rem", fontSize: "800", mb: "0.5rem" }}> Filtros:</Typography >
             <Button
                 onClick={handleReset}
