@@ -136,9 +136,11 @@ export default function Camping() {
     }
   }, [dispatch, params.id])
 
-  setTimeout(function () {
+  useEffect(() => {
     setValue(camp.puntuacion_promedio)
-  }, 500); //try to resolve better
+  }, [camp.puntuacion_promedio])
+
+
 
 
 

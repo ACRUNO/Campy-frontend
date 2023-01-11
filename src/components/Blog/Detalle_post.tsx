@@ -37,7 +37,7 @@ export default function Detalle() {
                     <MainFeaturedPost avisoComentario={avisoComentario} setAvisoComentario={setAvisoComentario} posts={[]} />
                     <Grid container columnSpacing={4} display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
                     </Grid>
-                    <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{ mb: 4 }} >
+                    <Grid container spacing={4} display="flex" flexDirection="column" alignContent="center" sx={{ pb: 8 }} >
                         <Detail reload={reload} setReload={setReload} />
                     </Grid>
                 </Grid>

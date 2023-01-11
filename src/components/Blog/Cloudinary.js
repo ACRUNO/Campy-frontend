@@ -46,7 +46,7 @@ class Cloudinary extends Component {
           // this.setState({
           //   id: (parseInt(this.state.id) + 1).toString()
           // })
-          //console.log(this.state)
+          // console.log(this.state)
           this.props.setInput((inputs) => {
             return {
               ...inputs,

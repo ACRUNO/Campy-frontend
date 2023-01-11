@@ -44,7 +44,7 @@ export default function Blog() {
   const indexLastPost: number = currentPage * postsxPage;
   const indexFirstPost: number = indexLastPost - postsxPage;
   const currentPosts: allPosts[] = allPosts.slice(indexFirstPost, indexLastPost)
-  
+
 
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {

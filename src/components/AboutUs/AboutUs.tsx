@@ -3,7 +3,9 @@ import agus from "./agus.png";
 import agus1 from "./agus1.png"
 import joaco from './joaco.png';
 import virgi from './virgi.jpeg';
-import august from './augusto.jpeg'
+import august from './augusto.jpeg';
+import gaby from './gaby.png';
+import santi from './santi.png';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -23,6 +25,7 @@ import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import FadeInParagraph from "./Parrafo"
+import { padding } from '@mui/system';
 
 
 
@@ -98,16 +101,6 @@ export default function Model3() {
 
 
 
-
-
-
-
-
-
-
-
-
-
   const membersCampy: any = [
     {
       id: agus1,
@@ -141,14 +134,14 @@ export default function Model3() {
       github: "https://github.com/ACRUNO"
     },
     {
-      id: agus,
+      id: gaby,
       name: "Gabriela Carranza",
       position: "FullStack",
       description1: "asdsad asdasd asd",
       description2: "das sadsadsad",
       description3: "das sadsadsad",
       description4: "das sadsadsad", linkedin: "https://www.linkedin.com/in/gabrielacarranzasistemas",
-      github: "ponerooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+      github: "https://github.com/GabrielaCarranza"
     },
     {
       id: august,
@@ -161,7 +154,7 @@ export default function Model3() {
       github: "https://github.com/augusto2304"
     },
     {
-      id: agus,
+      id: santi,
       name: "Santiago Pagnanelli",
       position: "FullStack",
       description1: "asdsad asdasd asd",
@@ -202,7 +195,7 @@ export default function Model3() {
                   display="flex"
                   justifyContent="center"
                 >
-                  <Card className={Style.fadeinparagraph} sx={{ width: "18rem" }} >
+                  <Card className={Style.fadeinparagraph} sx={{ width: "25rem" }} >
                     <CardHeader
                       title={tier.title}
                       subheader={tier.subheader}
@@ -218,7 +211,7 @@ export default function Model3() {
                             : theme.palette.grey[700],
                       }}
                     />
-                    <CardContent>
+                    <CardContent >
                       <Box
                         sx={{
                           display: 'flex',
@@ -229,11 +222,12 @@ export default function Model3() {
                       >
 
                       </Box>
-                      <ul>
+                      <ul className={Style.listaAbout}>
                         {tier.description.map((line) => (
                           <Typography
                             component="li"
-                            variant="subtitle1"
+                            /* variant="subtitle1" */
+                            className={Style.listaDetalle}
                             align="center"
                             key={line}
                           >
@@ -248,6 +242,7 @@ export default function Model3() {
               ))}
             </Grid>
           </Container>
+
           <Grid xs={12}
           >
             <FadeInParagraph></FadeInParagraph>

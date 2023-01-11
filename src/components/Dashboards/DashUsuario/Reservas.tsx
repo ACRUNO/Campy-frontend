@@ -53,9 +53,11 @@ export default function Reservas() {
   return (
     <>
       <Grid item xs={12}>
-        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-
-
+        <Paper
+          sx={{
+            p: 2, display: 'flex', flexDirection: 'column',
+            position: 'relative', overflowX: 'auto'
+          }}>
           <Title>Reservas</Title>
           <Table size="small">
             <TableHead>
@@ -89,6 +91,7 @@ export default function Reservas() {
                     }
                   >{c.estado}</TableCell>
                   <TableCell
+                    align="right"
                     className={`${s['table-row']} ${s['ver-detalle']}`}
                     onClick={() => setOpenDetalleReserva({ open: true, reservaId: c.id })}
                   >Ver</TableCell>
