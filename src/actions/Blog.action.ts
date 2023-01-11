@@ -176,7 +176,6 @@ export function crearComentario(
   token: string
 ) {
   return async function (dispatch: AppDispatch) {
-    console.log(data);
 
     try {
       let result = await axios.post("/api/blog/comentario", data, {
