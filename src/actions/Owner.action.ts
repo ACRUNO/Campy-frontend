@@ -9,11 +9,11 @@ export const DISABLE_OWNER_CAMPING = 'DISABLE_OWNER_CAMPING';
 export const CONFIRM_RESERVE = 'CONFIRM_RESERVE';
 
 export function disableOwnerCamping(
-    campingId: string,
-    authorization: string,
-    setStateAlert: Dispatch<SetStateAction<AlertType>>
-  ): ThunkAction<void, RootState, unknown, AnyAction> {
-  return async function(dispatch: AppDispatch) {
+  campingId: string,
+  authorization: string,
+  setStateAlert: Dispatch<SetStateAction<AlertType>>
+): ThunkAction<void, RootState, unknown, AnyAction> {
+  return async function (dispatch: AppDispatch) {
     try {
       const json = await axios.put(`/api/campings/inhabilitar/${campingId}`, {}, {
         headers: { authorization }
@@ -24,15 +24,15 @@ export function disableOwnerCamping(
         payload: json.data
       })
       setStateAlert((prev) => ({
-          ...prev,
-          open: true,
-          title: 'Deshabilitación exitosa',
-          description: 'Ya no se podrá tener acceso a este servicio de camping. Si cree que hubo un error mande un mail a campyargentina@gmail.com.',
-          type: 'success'
+        ...prev,
+        open: true,
+        title: 'Deshabilitación exitosa',
+        description: 'Ya no se podrá tener acceso a este servicio de camping. Si cree que hubo un error mande un mail a campyargentina@gmail.com.',
+        type: 'success'
       }));
 
-    } catch(e: any) {
-      if(e.response)
+    } catch (e: any) {
+      if (e.response)
         setStateAlert((prev) => ({
           ...prev,
           open: true,
@@ -52,17 +52,17 @@ export async function confirmReserva(
   authorization: string,
   getOwnerBookings: () => {}
 ) {
-    try {
-      const newEstado: string = data.currentTarget.dataset.myValue;
-      console.log(reservaId, newEstado)
-      await axios.put(
-        `/api/reservas/${reservaId}`,
-        { newEstado },
-        { headers: { authorization } }
-      );
+  try {
+    const newEstado: string = data.currentTarget.dataset.myValue;
 
-      getOwnerBookings();
-    } catch(e: any) {
-      console.log('ERROR', e)
-    }
+    await axios.put(
+      `/api/reservas/${reservaId}`,
+      { newEstado },
+      { headers: { authorization } }
+    );
+
+    getOwnerBookings();
+  } catch (e: any) {
+    console.log('ERROR', e)
+  }
 }

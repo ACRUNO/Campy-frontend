@@ -47,9 +47,10 @@ export default function Home() {
         <>
             <Banner />
             <Filters />
-            <Box>
-                <Carrousel />
-            </Box>
+
+            <Carrousel />
+
+
             <Box sx={{ p: '80px 0 150px', bgcolor: 'rgb(245, 245, 245)' }} >
                 <Box className={s.grid} >
                     {
@@ -60,7 +61,7 @@ export default function Home() {
                             :
                             allProvincias?.map((e: { id: number, nombre: string, imagen: string }) => {
                                 return (
-                                    <Grid item className={s.item} sm={12} md={6} lg={4} xl={3} key={e.id}>
+                                    <Grid item className={s.item} sm={12} md={6} lg={3} xl={3} key={e.id}>
 
                                         <Box onClick={(event: MouseEvent<HTMLElement>) => handleClick(e.id)} sx={{ cursor: "pointer" }}>
 

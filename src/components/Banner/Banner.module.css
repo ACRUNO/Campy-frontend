@@ -3,15 +3,15 @@
     width: 100vw;
 }
 
-.titulo {
-    font-size: 9rem;
+h1.titulo {
+    font-size: 5rem;
     letter-spacing: 25;
-    font-weight: 900;
     padding-right: 2rem;
     padding-left: 2rem;
+    text-align: center;
 }
 
-.subtitulo {
+h5.subtitulo {
     padding-right: 4rem;
     padding-left: 4rem;
 }
@@ -22,4 +22,14 @@
 
 @media all and (max-width: 850px) {}
 
-@media only screen and (max-device-width: 640px) {}
+@media only screen and (max-device-width: 640px) {
+    h1.titulo {
+        font-size: 3rem;
+    }
+
+    h5.subtitulo {
+        font-size: 0.8rem;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+    }
+}

@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import PaginadoBlog from "./Paginado";
-import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Divider, Typography } from "@mui/material";
 import Card_chica from "./Card_chica";
 import { allPosts } from "../../reducer/estados";
 import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
@@ -78,9 +78,9 @@ export default function Blog() {
       <Container maxWidth={false} sx={{ bgcolor: 'rgb(245, 245, 245)' }}>
         <main>
           <MainFeaturedPost avisoComentario={avisoComentario} setAvisoComentario={setAvisoComentario} posts={userPosts_nc} />
-          <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ mb: 1, backgroundColor: '#D8E3C5', borderStyle: "double", borderColor: "#273115", borderRadius: 1.5 }}>
-            <Typography component="h2" variant="h5" sx={{ mb: 1, pl: 3, pt: 1, textShadow: `2px 1px 2px ${VERDE}`, color: VERDE_OSCURO }}><strong>Lo más comentado</strong></Typography>
-            <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 2, pl: 1, pr: 1 }} >
+          <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ pb: 1, backgroundColor: "#E3E1E1", borderRadius: "5px 5px 0px 0px" }}>
+            <Typography component="h2" variant="h5" sx={{ mb: 2, pl: 3, pt: 3 }}><strong>Lo más comentado</strong></Typography>
+            <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 3, pl: 1, pr: 1 }} >
               {user && postsComent?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} />
               ))}
@@ -90,9 +90,11 @@ export default function Blog() {
             </Grid>
           </Grid>
 
-          <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ mb: 1, backgroundColor: '#D8E3C5', borderStyle: "double", borderColor: "#273115", borderRadius: 1.5 }}>
-            <Typography component="h2" variant="h5" sx={{ mb: 1, pl: 3, pt: 1, textShadow: `2px 1px 2px ${VERDE}`, color: VERDE_OSCURO }}><strong>Lo más visto</strong></Typography>
-            <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 2, pl: 1, pr: 1 }} >
+          <Divider variant="fullWidth" />
+
+          <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ mb: 1, backgroundColor: "#E3E1E1", borderRadius: "0px 0px 5px 5px" }}>
+            <Typography component="h2" variant="h5" sx={{ mb: 2, pl: 3, pt: 3 }}><strong>Lo más visto</strong></Typography>
+            <Grid container spacing={2} display="flex" flexDirection="row" alignContent="center" justifyContent="center" sx={{ pb: 5, pl: 1, pr: 1 }} >
               {user && postsVistos?.map((p) => (
                 <Card_chica key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} />
               ))}
@@ -103,7 +105,7 @@ export default function Blog() {
           </Grid>
 
 
-          <Grid container columnSpacing={4} display="flex" justifyContent="center" sx={{ pb: 4, pt: 2 }} >
+          <Grid container columnSpacing={4} display="flex" justifyContent="center" sx={{ pb: 5, pt: 2 }} >
 
             <Grid item xs={6} md={8.3} >
               <TextField color="success" id="outlined-basic" label="Buscar..." variant="outlined" fullWidth size="small" onChange={(e) => handleChange(e)} />
