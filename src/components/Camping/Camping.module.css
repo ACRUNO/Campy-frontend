@@ -145,6 +145,10 @@
     padding-right: 1.5rem !important;
 }
 
+div.btnGenerarCotizacion {
+    display: none;
+}
+
 .btn1 {
     margin-bottom: 2rem;
     display: flex;
@@ -153,6 +157,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    margin-top: 1rem;
 }
 
 .btn2 {
@@ -169,6 +174,8 @@
     align-content: space-around;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 0.5rem;
+    width: 50%;
 }
 
 .coti {
@@ -358,7 +365,10 @@ svg.heart {
 @media all and (max-width: 1280px) {
     .booking {
         flex-direction: row;
+    }
 
+    .btn3 {
+        width: 70%;
     }
 }
 

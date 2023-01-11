@@ -577,12 +577,10 @@ export default function Camping() {
                 </FormControl>
               </Box>
 
-              <Box className={Style.btn2} >
+              <Box /* className={Style.btn2} */ className={price > 0 ? Style.btnGenerarCotizacion : Style.btn2}>
 
 
                 <Stack direction="row" spacing={2}>
-
-
 
                   {price == 0 ? trueValid() ? <Button size='large' disabled onClick={handleCotizacion} variant="contained" color="secondary">
 
@@ -603,7 +601,7 @@ export default function Camping() {
                     <Typography variant="subtitle1"> Precio valido hasta el {now}  a las 24:00Hs</Typography>
 
 
-                    <Stack className={Style.btn3} direction="row" spacing={1}>
+                    <Stack className={Style.btn3} direction="column" spacing={1}>
 
 
                       {/* <Button sx={{ minWidth: 250, minHeight: 70, fontSize: 25 ,}}  onClick={handleClickOpen} variant="contained" color="secondary">
