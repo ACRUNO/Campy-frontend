@@ -21,32 +21,32 @@ export default function Favoritos() {
 
   const { token }: { token: string, id: number } = useSelector((state: RootState) => state.user);
 
-  const handleClick = (e: any, campingId: number) => 
-    !(e.target.closest('svg')) 
+  const handleClick = (e: any, campingId: number) =>
+    !(e.target.closest('svg'))
       ? navigate(`/booking/camping/${campingId}`)
       : dispatch(removeFavoriteCamping(campingId, token))
-  
+
 
   return (
     <>
       <Grid item xs={12}>
-        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', overflowX: 'hidden' }}>
           <Title>Mis Campings Favoritos</Title>
           <Box className={s['cards-container']}>
             {
               favorites.map((camping, i) => (
-                  <Card className={s['card-container']} key={i}
-                        onClick={(e: MouseEvent<EventTarget>) => handleClick(e, camping.id)}>
-                    <CardMedia className={s['card-image']} component="img" alt="Provincia" image={camping.imagen} />
-                    <Typography
-                      className={s['card-title']}
-                      align="center"
-                      variant="h4"
-                    >{camping.nombre}</Typography>
-                    <ClearIcon
-                      className={s['card-remove-icon']}
-                    />
-                  </Card>
+                <Card className={s['card-container']} key={i}
+                  onClick={(e: MouseEvent<EventTarget>) => handleClick(e, camping.id)}>
+                  <CardMedia className={s['card-image']} component="img" alt="Provincia" image={camping.imagen} />
+                  <Typography
+                    className={s['card-title']}
+                    align="center"
+                    variant="h4"
+                  >{camping.nombre}</Typography>
+                  <ClearIcon
+                    className={s['card-remove-icon']}
+                  />
+                </Card>
               ))
             }
           </Box>

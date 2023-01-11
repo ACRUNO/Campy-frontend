@@ -326,6 +326,11 @@ svg.heart {
     background-color: #45a049;
 }
 
+.height {
+    margin-top: 5rem;
+    max-height: calc(100% - 5rem);
+    ;
+}
 
 .buttonsubd {
     background-color: #b8b8b8;

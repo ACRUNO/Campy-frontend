@@ -136,9 +136,11 @@ export default function Camping() {
     }
   }, [dispatch, params.id])
 
-  setTimeout(function () {
+  useEffect(() => {
     setValue(camp.puntuacion_promedio)
-  }, 500); //try to resolve better
+  }, [camp.puntuacion_promedio])
+
+
 
 
 
@@ -181,7 +183,6 @@ export default function Camping() {
     else {
       setValidate({ ...validate, [e.target.name]: e.target.value })
     }
-    console.log(validate)
   }
 
   let trueValid = () => {
@@ -200,7 +201,6 @@ export default function Camping() {
     let ingreso2 = validate?.alldate2.slice(0, 10).replace("-", "/").replace("-", "/")
     let trailer = validate?.stay > 0 ? 1 : 0
 
-    console.log(ingreso1)
 
     let data = {
       "fecha_desde_reserva": ingreso1,
@@ -262,6 +262,7 @@ export default function Camping() {
       }
 
       if (finalPrice < 60000) {
+        setDiscount(finalPrice)
         setPrice((final * total) + validate.stay)
       }
     }
@@ -286,6 +287,7 @@ export default function Camping() {
       }
 
       if (finalPrice < 60000) {
+        setDiscount(finalPrice)
         setPrice((final * total) + validate.stay)
       }
     }
@@ -313,8 +315,8 @@ export default function Camping() {
     let ingreso1 = validate?.alldate
     let ingreso2 = validate?.alldate2
     let trailer = validate?.stay > 0 ? 1 : 0
-    handleClickOpen()
-    console.log(detailReserv)
+    await handleClickOpen()
+
 
     if (open == false) { setPrice(0) }
 
@@ -350,8 +352,8 @@ export default function Camping() {
               return;
             }  */
 
-    setState({ ...state, 'bottom': open });
-    console.log(detailReserv.idRes)
+    setState({ ...state, 'bottom': open })
+
   };
 
   const handleIngresoCamping = (e: Dayjs | null) => {
@@ -365,6 +367,7 @@ export default function Camping() {
     /* dispatch(FilterEgreso(e?.toDate().toLocaleDateString().split('/').reverse().join('/'))) */
   }
   // hasta ahi 
+
   return (
 
     <Box sx={{ bgcolor: 'rgb(245, 245, 245)', margin: 0, padding: 0, width: "100vw" }}>

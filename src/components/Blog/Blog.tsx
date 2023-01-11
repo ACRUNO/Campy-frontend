@@ -46,6 +46,7 @@ export default function Blog() {
   const currentPosts: allPosts[] = allPosts.slice(indexFirstPost, indexLastPost)
 
 
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     e.preventDefault();
     setCurrentPage(1)
@@ -112,10 +113,10 @@ export default function Blog() {
           </Grid>
           <Grid container spacing={4} md={false} display="flex" flexDirection="column" alignContent="center" sx={{ pb: 8 }} >
             {user && currentPosts.map((p) => (
-              <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} tipo={p.tipo} />
+              <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={user.id} tipo={p.tipo} imagenes={p.imagenes} />
             ))}
             {user === null && currentPosts.map((p) => (
-              <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={0} tipo={p.tipo} />
+              <FeaturedPost key={p.titulo} id={p.id} title={p.titulo} description={p.texto} date={p.fecha} username={p.username} foto={p.foto} comentarios={p.cant_comentarios} vistas={p.cant_visualizaciones} userId={p.UsuarioId} userNow={0} tipo={p.tipo} imagenes={p.imagenes} />
             ))}
           </Grid>
         </main>

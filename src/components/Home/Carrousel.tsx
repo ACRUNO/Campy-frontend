@@ -1,11 +1,12 @@
 import { Box, Card, CardContent, CardMedia, Divider, Grid, ListItem, Paper, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { RootState } from "../../store";
 import s from '../CardCamping/CardCamping.module.css'
 
 
 export default function Carrousel() {
-    const datos_graftop: { nombre_camping: string; cant_reservas: number, localidad: string, provincia: string, images: string }[] = useSelector((state: RootState) => state.datos_graftop?.slice(0, 5));
+    const datos_graftop: { id: number, nombre_camping: string; cant_reservas: number, localidad: string, provincia: string, images: string }[] = useSelector((state: RootState) => state.datos_graftop?.slice(0, 5));
 
     return (
         <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ backgroundColor: "#eeeeee", borderRadius: 1.5 }}>
@@ -36,15 +37,15 @@ export default function Carrousel() {
                                 <Typography gutterBottom align="right" variant="subtitle1">{p.localidad},{p.provincia}</Typography>
                             </CardContent>
 
-                        </Card>
-                    </Grid>
-                    //</Link>
+                            </Card>
+                        </Grid>
+                    </Link>
                 )}
 
             </Grid>
 
             <ListItem divider></ListItem>
-        </Grid>
+        </Grid >
 
 
     )
