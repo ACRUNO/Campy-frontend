@@ -13,8 +13,8 @@ export default function Carrousel() {
 
     return (
 
-        <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ backgroundColor: "#eeeeee", borderRadius: 1.5 }}>
-            <Typography component="h4" variant="h4" sx={{ pl: 4, pt: 2, fontWeight: "bolder" }}>Campings más reservados</Typography>
+        <Grid container display="flex" flexDirection="column" alignContent="space-around" sx={{ backgroundColor: "#E3E1E1", borderRadius: 1.5 }}>
+            <Typography component="h4" variant="h4" sx={{ pl: 4, pt: 2, fontWeight: "bolder", color: "#242424" }}>Campings más reservados</Typography>
             <Grid container justifyContent="center" display="flex" flexDirection="row" alignContent="center" sx={{ pb: 4, pl: 1, pr: 1 }} >
                 {datos_graftop?.map((p) =>
                     <Link to={`/booking/camping/${p.id}`} style={{ textDecoration: 'none' }}>
