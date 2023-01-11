@@ -32,7 +32,7 @@ export default function Card_chica(props: FeaturedPostProps) {
 
   const handleClick = () => {
 
-    if (props.userNow === props.userId) { dispatch(actions.cambiarComentariosVistos(props.id)) }
+    if (props.userNow === props.userId) { dispatch(actions.cambiarComentariosVistos(props.id, () => { })) }
     if (props.userNow !== props.userId) {
       let data: { visitas: number } = { visitas: props.vistas + 1 }
       dispatch(actions.visualizaciones(props.id, data, () => { navigate(`/blog/${props.id}`) }))
@@ -43,7 +43,7 @@ export default function Card_chica(props: FeaturedPostProps) {
 
   return (
     <Grid item xs={6} md={2.6} onClick={() => handleClick()} display="flex" justifyContent="center" sx={{ mx: 2 }} >
-      <CardActionArea component="a" href="#" sx={{ "&:hover": { boxShadow: "0px 4px 8px rgba(50, 50, 50, 1)" } }}>
+      <CardActionArea disabled={true} component="a" href="#" sx={{ "&:hover": { boxShadow: "0px 4px 8px rgba(50, 50, 50, 1)" } }}>
         <Card sx={{ display: "flex", height: "8rem", mb: 0, alignItems: "space-around" }}>
           <CardContent sx={{ flex: 3, height: "7rem" }}>
             <Typography component="h2" variant="subtitle1" align="center">{props.title}</Typography>

@@ -29,8 +29,7 @@ export default function MainFeaturedPost(props: Props) {
   const dispatch: AppDispatch = useDispatch()
 
   const handleClick = (id: number) => {
-    dispatch(actions.cambiarComentariosVistos(id))
-    setTimeout(() => { navigate(`/blog/${id}`) }, 100)
+    dispatch(actions.cambiarComentariosVistos(id, () => { navigate(`/blog/${id}`) }))
   }
 
 
