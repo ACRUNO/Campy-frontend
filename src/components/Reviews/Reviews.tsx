@@ -69,7 +69,7 @@ export function Reviews() {
     const nombre = useSelector((state: RootState) => state.detailCamping.nombre_camping);
     const [puntuacion, setPuntuacion] = React.useState(0);
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => { setOpen(true); console.log(reviews); console.log(uno) }
+    const handleOpen = () => { setOpen(true) }
     const handleClose = () => setOpen(false);
 
     var uno: any = []

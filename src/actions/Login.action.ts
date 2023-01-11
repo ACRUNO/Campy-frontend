@@ -73,7 +73,7 @@ export function loginUserWithGoogle(
 ): ThunkAction<void, RootState, unknown, AnyAction> {
   return async function (dispatch: AppDispatch) {
     try {
-      console.log(process.env.REACT_APP_API_KEY);
+
       let result = await axios.post("/api/login/google", {
         ...data,
         apikey: process.env.REACT_APP_API_KEY,
