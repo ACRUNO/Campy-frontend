@@ -133,6 +133,7 @@ export default function NavBar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
+                zIndex: 9999999,
                 display: { xs: 'block', md: 'none' },
               }}
             >

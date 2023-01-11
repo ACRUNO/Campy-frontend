@@ -1,7 +1,8 @@
 import Style from './AboutUs.module.css'
 import agus from "./agus.png";
+import agus1 from "./agus1.png"
 import joaco from './joaco.png';
-import virgi from './virgi.png';
+import virgi from './virgi.jpeg';
 import august from './augusto.jpeg';
 import gaby from './gaby.png';
 import santi from './santi.png';
@@ -10,8 +11,8 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Box } from '@mui/material';
 import Footer from '../Footer/Footer';
+import javi from './javi.jpg'
 
- 
 
 import * as React from 'react';
 
@@ -102,7 +103,7 @@ export default function Model3() {
 
   const membersCampy: any = [
     {
-      id: agus,
+      id: agus1,
       name: "Agustin Romero",
       position: "FullStack",
       description1: "asdsad asdasd asd",
@@ -163,7 +164,7 @@ export default function Model3() {
       github: "https://github.com/SantiagoPag"
     },
     {
-      id: agus,
+      id: javi,
       name: "Javier Montenegro",
       position: "FullStack",
       description1: "asdsad asdasd asd",
@@ -227,7 +228,7 @@ export default function Model3() {
                             component="li"
                             /* variant="subtitle1" */
                             className={Style.listaDetalle}
-                            align="center"                            
+                            align="center"
                             key={line}
                           >
                             {line}

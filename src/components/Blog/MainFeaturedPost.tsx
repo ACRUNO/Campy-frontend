@@ -90,7 +90,7 @@ export default function MainFeaturedPost(props: Props) {
               }}
             >
               <Grid container display="flex" flexDirection="column" alignItems="center" sx={{ p: 1, maxWidth: "fit-content", borderStyle: "solid", borderColor: "white", borderRadius: 1.5 }}>
-                <Paper sx={{ backgroundColor: "white", opacity: 0.75, p: 3 }}>
+                <Paper sx={{ backgroundColor: "white", opacity: 0.75, p: 3, height: "6rem", overflowY: "auto" }}>
                   <Grid item display="flex" alignItems="center" >
                     <NotificationImportantIcon color="error" fontSize='large' />
                     <Typography>Tenes comentarios sin leer de tus posts:</Typography>

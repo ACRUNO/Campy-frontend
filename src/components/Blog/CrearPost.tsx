@@ -5,6 +5,8 @@ import { AppDispatch, RootState } from '../../store/index';
 import * as actions from "../../actions/Blog.action"
 import { useNavigate } from 'react-router-dom';
 import Cloudinary from './Cloudinary';
+import { Cancel } from '@mui/icons-material';
+import { VERDE } from '../helpers/colors';
 
 
 
@@ -16,7 +18,8 @@ export default function CrearPost() {
   const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
-  const [boton, setBoton] = React.useState(true)
+  // const [boton, setBoton] = React.useState(true)
+  const [checked, setChecked] = React.useState(false)
 
   const [input, setInput] = React.useState<{ titulo: string, texto: string, imagenes: string[], usuarioId: number }>({
     titulo: '',
@@ -25,6 +28,12 @@ export default function CrearPost() {
     usuarioId: 0
   })
 
+  let boton = !(
+    input.texto.length > 0 &&
+    input.titulo.length > 0 &&
+    input.imagenes.length > 0 &&
+    checked
+  )
 
 
   const handleChangeTitulo = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -56,9 +65,16 @@ export default function CrearPost() {
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (input.texto.length > 0 && input.titulo.length > 0 && e.target.checked === true) {
-      setBoton(false)
-    }
+    setChecked(e.target.checked)
+  }
+
+  const removeImage = (index: number) => {
+    setInput((input: any) => {
+      return {
+        ...input,
+        imagenes: input.imagenes.filter((_: any, i: number) => i !== index)
+      }
+    })
   }
 
 
@@ -114,10 +130,9 @@ export default function CrearPost() {
 
       </Grid>
       <Grid container columnSpacing={2} justifyContent="center" sx={{ mt: 4, ml: 0 }}>
-        {img.map(m => (
-          <Grid item key={m}>
+        {img.map((m, i) => (
+          <Grid position='relative' item key={m}>
             <Box
-              id={m}
               component="img"
               sx={{
                 ml: "1%",
@@ -126,7 +141,20 @@ export default function CrearPost() {
                 width: 200
               }}
               alt="Logo"
-              src={"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
+              src={input.imagenes[i] || "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1022px-Placeholder_view_vector.svg.png"} />
+            {input.imagenes[i] &&
+              <Cancel
+                sx={{
+                  fontSize: "1.5rem",
+                  position: "absolute",
+                  top: 5, right: 3,
+                  fill: VERDE, bgcolor: "white",
+                  borderRadius: "50%",
+                  cursor: "pointer"
+                }}
+                onClick={() => removeImage(i)}
+              />
+            }
           </Grid>
         ))}
       </Grid>

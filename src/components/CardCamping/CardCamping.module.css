@@ -2,6 +2,35 @@
     box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
 }
 
+.cardChica {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    margin-top: 1.2rem;
+}
+
+.cardChica1 {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    margin-top: 1.2rem;
+    width: 19rem;
+    height: 20rem;
+}
+
+
+
+.cardChica:hover {
+    box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
+}
+
+.cardChica1:hover {
+    box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
+}
+
+.GridCardChica {
+    margin-left: 4rem !important;
+}
+
+
 
 
 
@@ -9,9 +38,11 @@
 
 /* //RESPONSIVE */
 
-@media all and (max-width: 1000px) {
-    .card {
-        background-color: greenyellow;
+@media all and (max-width: 1300px) {
+
+    .cardChica1 {
+        width: 22rem;
+        height: 20rem;
     }
 
 }
@@ -28,6 +59,15 @@
     }
 
     .cardChica:hover {
+        box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
+    }
+
+    .cardChica1 {
+        width: 18rem;
+        height: 21.5rem;
+    }
+
+    .cardChica1:hover {
         box-shadow: 0px 4px 8px rgba(50, 50, 50, 1)
     }
 
@@ -50,6 +90,25 @@
         font-weight: 700 !important;
     }
 
+    .GridCardChica {
+        margin-left: 3rem !important;
+    }
 
+    .cardChica1 {
+        width: 20rem;
+        height: 21.5rem;
+    }
+
+
+    @media only screen and (max-device-width : 325px) {
+        .GridCardChica {
+            margin-left: 1rem !important;
+        }
+
+        .cardChica1 {
+            width: 18rem;
+            height: 21.5rem;
+        }
+    }
 
 }

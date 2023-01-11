@@ -43,10 +43,13 @@ export function getMasreservados(): ThunkAction<void, RootState, unknown, AnyAct
     return async function (dispatch: AppDispatch) {
         try {
             var json = await axios.get('/api/campings/reservas');
+            console.log(json.data);
+
             return dispatch({
                 type: GET_MASRESERVADOS,
                 payload: json.data
             })
+
         } catch (error) {
             console.log(error);
         }
