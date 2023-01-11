@@ -50,6 +50,7 @@ export default function Home() {
             <Box>
                 <Carrousel />
             </Box>
+
             <Box sx={{ p: '80px 0 150px', bgcolor: 'rgb(245, 245, 245)' }} >
                 <Box className={s.grid} >
                     {
