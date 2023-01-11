@@ -19,3 +19,17 @@ div.map-container {
 #tidio-chat-iframe {
   bottom: 0 !important;
 }
+
+@media all and (max-width: 850px) {
+
+  #tidio-chat-iframe {
+    transform: scale(0.9) !important;
+    right: -10px !important;
+    bottom: -10px !important;
+
+  }
+
+
+
+
+}

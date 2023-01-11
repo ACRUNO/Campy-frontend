@@ -5,6 +5,7 @@ import Style from './Carousel.module.css'
 import foto2 from './portada.jpg'
 import foto3 from './comilona.webp' */
 import { useSelector } from "react-redux";
+import { Box } from "@mui/system";
 
 
 export default function Carousel() {
@@ -37,25 +38,26 @@ export default function Carousel() {
 
   return (
 
-    <div className={Style.slideshow}>
-      {/* IMAGEN */}
-      <div className={Style.slideshowSlider}
-        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
-        {colors?.map((backgroundColor: any, index: any) => (
-          <img className={Style.slide} key={index} src={backgroundColor} />
-        ))}
-      </div>
-      <div className={Style.slideshowDots}>
-        {colors?.map((_: any, idx: any | number | ((prevState: number) => number) | null | undefined) => (
-          <div key={idx}
-            className={`${Style.slideshowDot}${index === idx ? " active" : ""}`}
-            onClick={() => {
-              setIndex(idx);
-            }}></div>
-        ))}
-      </div>
-    </div>
-
-
+    <Box>
+      {colors?.length == 1 ? <img src={colors} className={Style.slide} /> :
+        <div className={Style.slideshow}>
+          {/* IMAGEN */}
+          <div className={Style.slideshowSlider}
+            style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
+            {colors?.map((backgroundColor: any, index: any) => (
+              <img className={Style.slide} key={index} src={backgroundColor} />
+            ))}
+          </div>
+          <div className={Style.slideshowDots}>
+            {colors?.map((_: any, idx: any | number | ((prevState: number) => number) | null | undefined) => (
+              <div key={idx}
+                className={`${Style.slideshowDot}${index === idx ? " active" : ""}`}
+                onClick={() => {
+                  setIndex(idx);
+                }}></div>
+            ))}
+          </div>
+        </div>}
+    </Box>
   );
 }

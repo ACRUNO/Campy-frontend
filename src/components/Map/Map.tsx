@@ -102,6 +102,7 @@ function Map({ center, zoomMap, linkMap }: mapProps) {
   const [popUpFilters, SetPopUpFilters] = useState<boolean>(false);
   const [filtersArrow, SetFiltersArrow] = useState<boolean>(false);
   const [markers, setMarkers] = useState<any>({});
+
   function handleMarker(c: any) {
 
     c.id !== cardInfoo.id ?
