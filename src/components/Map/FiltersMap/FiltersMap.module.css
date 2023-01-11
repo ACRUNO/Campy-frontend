@@ -13,7 +13,7 @@
 
 @media screen and (max-width:1300px) {
     .filtersMap {
-        height: 39rem;
+        height: 33rem;
     }
 
     @media all and (max-width: 850px) {

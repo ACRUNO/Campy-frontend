@@ -133,7 +133,7 @@ export default function ScrollDialog() {
             <Typography sx={{ cursor: "pointer" }}
                 onClick={handleClickOpen('paper')}
                 variant="h5" component="h6" textAlign='center'
-            > Preguntas frequentes
+            > Preguntas frecuentes
             </Typography>
             <Dialog
                 className={Style.height}
@@ -145,7 +145,7 @@ export default function ScrollDialog() {
                 aria-describedby="scroll-dialog-description"
                 sx={{ mt: "2.5rem" }}
             >
-                <DialogTitle id="scroll-dialog-title">Preguntas frequentes</DialogTitle>
+                <DialogTitle id="scroll-dialog-title">Preguntas frecuentes</DialogTitle>
                 <DialogContent dividers={scroll === 'paper'}>
                     <DialogContentText
                         id="scroll-dialog-description"

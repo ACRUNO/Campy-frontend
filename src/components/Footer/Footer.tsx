@@ -68,7 +68,7 @@ export default function Footer() {
           <Typography sx={{ cursor: "pointer" }}
             onClick={handleAbout}
             variant="h5" component="h6" textAlign='center'
-          > Quienes Somos
+          > ¿Quienes Somos?
           </Typography>
         </Grid>
 
