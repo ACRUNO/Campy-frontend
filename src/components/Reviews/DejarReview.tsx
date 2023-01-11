@@ -113,7 +113,7 @@ export function DejarReviews() {
 
 
     return (
-        <Grid sx={{ height: "100vh", bgcolor: 'rgb(245, 245, 245)' }}>
+        <Grid sx={{ height: "100%", bgcolor: 'rgb(245, 245, 245)', pb: "20rem" }}>
             <Dialog
                 fullWidth
                 maxWidth="md"
