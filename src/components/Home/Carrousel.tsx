@@ -8,8 +8,6 @@ import s from '../CardCamping/CardCamping.module.css'
 export default function Carrousel() {
     const datos_graftop: { id: number, nombre_camping: string; cant_reservas: number, localidad: string, provincia: string, images: string }[] = useSelector((state: RootState) => state.datos_graftop?.slice(0, 5));
 
-    console.log(datos_graftop);
-
 
     return (
 

@@ -9,7 +9,7 @@ import { Inputs } from '../../reducer/estados';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAgua } from '../../actions';
-import CreateOrUpdateMap from '../Skeletons/CreateOrUpdateMap';
+import Loader from '../helpers/Loader';
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
@@ -57,7 +57,6 @@ export default function Page2({ setInput, input }: InputProps) {
     })
   };
 
-  if (!allPeriodoAgua.length) return <CreateOrUpdateMap />
 
   return (
     <React.Fragment>
@@ -201,6 +200,8 @@ export default function Page2({ setInput, input }: InputProps) {
         />
 
       </Grid>
+
+      <Loader open={!allPeriodoAgua.length} ></Loader>
     </React.Fragment>
   );
 }

@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from '../../store';
 import { getPeriodoAbierto } from '../../actions';
 import { Cancel } from '@mui/icons-material';
 import { VERDE } from '../helpers/colors';
-import CreateOrUpdateMap from '../Skeletons/CreateOrUpdateMap';
+import Loader from '../helpers/Loader';
 
 
 interface InputProps {
@@ -92,7 +92,6 @@ export default function Page3({ setInput, input }: InputProps) {
   }
 
 
-  if (!allPeriodoAbierto.length) return <CreateOrUpdateMap />
 
   return (
     <React.Fragment>
@@ -193,6 +192,8 @@ export default function Page3({ setInput, input }: InputProps) {
         <Cloudinary setInput={setInput}></Cloudinary>
 
       </Grid>
+
+      <Loader open={!allPeriodoAbierto.length} ></Loader>
 
     </React.Fragment>
 

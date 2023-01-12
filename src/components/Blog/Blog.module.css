@@ -1,0 +1,49 @@
+.comentariosVistos {
+  justify-content: space-evenly;
+}
+
+.comentariosVistos::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.comentariosVistos::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+.comentariosVistos:hover::-webkit-scrollbar {
+  background-color: rgb(186, 186, 186);
+  opacity: 1;
+}
+
+.comentariosVistos:hover::-webkit-scrollbar-thumb {
+  background-color: rgb(78, 78, 78);
+}
+
+@media screen and (max-width: 1300px) {
+  .comentariosVistos {
+    justify-content: flex-start;
+  }
+
+  .comentariosVistos > div {
+    margin-left: 3rem;
+    width: 250px;
+  }
+
+  .comentariosVistos > div:last-child {
+    margin-right: 3rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .comentariosVistos > div {
+    margin-left: 0.6rem;
+    width: 250px;
+  }
+
+  .comentariosVistos > div:last-child {
+    margin-right: 0.6rem;
+  }
+}

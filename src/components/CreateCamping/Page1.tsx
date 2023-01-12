@@ -9,7 +9,7 @@ import { getProvincias, getAllCategorias, getAllLocalidades } from "../../action
 import { SelectChangeEvent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Inputs } from '../../reducer/estados';
 import MapCreate from './CreateMap';
-import CreateOrUpdateMap from '../Skeletons/CreateOrUpdateMap';
+import Loader from '../helpers/Loader';
 
 interface InputProps {
   setInput: React.Dispatch<React.SetStateAction<Inputs>>,
@@ -85,9 +85,6 @@ export default function Page1({ setInput, input }: InputProps) {
   useEffect(() => {
     if (provincia) dispatch(getAllLocalidades(provincia))
   }, [provincia])
-
-  if (!allProvincias.length || !allCategorias.length || (provincia && !allLocalidades.length))
-    return <CreateOrUpdateMap />
 
   return (
     <React.Fragment>
@@ -232,6 +229,8 @@ export default function Page1({ setInput, input }: InputProps) {
           />
         </Grid>
       </Grid>
+
+      <Loader open={!allProvincias.length || !allCategorias.length || (Boolean(provincia) && !allLocalidades.length)} ></Loader>
     </React.Fragment>
   );
 }

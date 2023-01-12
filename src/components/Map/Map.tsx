@@ -14,6 +14,7 @@ import { getFiltersCamping, popUpCard, setCardInfo, zoomOutMap } from "../../act
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Badge, Typography } from "@mui/material";
+import Loader from "../helpers/Loader";
 
 
 
@@ -49,7 +50,7 @@ export default function Mapa() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLEMAPS_API_KEY as string
   });
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <Loader open={true}></Loader>;
   return <Map center={center} zoomMap={zoomMap} linkMap={linkMap} />
 }
 
