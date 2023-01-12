@@ -25,6 +25,7 @@ import ConfirmAlert from '../helpers/ConfirmAlert';
 import { Cancel } from "@mui/icons-material";
 import { VERDE } from "../helpers/colors";
 import MakeParagraph from "./MakeParagraph";
+import Loader from "../helpers/Loader";
 
 interface PostDetail {
     reload: number,
@@ -222,6 +223,9 @@ export default function Detail(props: PostDetail) {
         })
     }
 
+
+
+
     return (
         <Grid item xs={12} md={6} width={750}>
             <Dialog
@@ -412,6 +416,9 @@ export default function Detail(props: PostDetail) {
                     navigateTo={stateOpen.navigateTo}
                 />
             }
+
+
+            <Loader open={!post.id} ></Loader>
 
         </Grid>
     )
