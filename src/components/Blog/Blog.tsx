@@ -17,6 +17,7 @@ import Card_chica from "./Card_chica";
 import { allPosts } from "../../reducer/estados";
 import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
 import { sign } from "crypto";
+import Loader from "../helpers/Loader";
 
 
 
@@ -30,6 +31,8 @@ export default function Blog() {
   const allPosts: allPosts[] = useSelector((state: RootState) => state.postbuscados)
   const postsVistos: allPosts[] = useSelector((state: RootState) => state.postsvistos)
   const postsComent: allPosts[] = useSelector((state: RootState) => state.postscomentados)
+
+
 
   const [avisoComentario, setAvisoComentario] = useState(false)
   let userPosts = user ? allPosts.filter(a => a.UsuarioId === user.id) : []
@@ -71,6 +74,9 @@ export default function Blog() {
   useEffect(() => {
     dispatch(actions.getAll_posts())
   }, [dispatch])
+
+
+
 
   return (
     <React.Fragment>
@@ -145,7 +151,10 @@ export default function Blog() {
           <Button variant="contained" color="secondary" onClick={(e) => handleSesion(e)}>Iniciar sesión</Button>
         </DialogContent>
       </Dialog>
+
+      <Loader open={!allPosts.length} ></Loader>
     </React.Fragment>
+
   );
 }
 

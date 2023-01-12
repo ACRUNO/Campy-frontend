@@ -21,6 +21,7 @@ import { getUserFavoriteCampings } from './actions/User.action';
 import AboutUs from './components/AboutUs/AboutUs'
 import UpdateCamping from './components/Dashboards/DashDueño/UpdateCamping';
 import { DejarReviews } from './components/Reviews/DejarReview';
+import Loader from './components/helpers/Loader';
 
 
 
@@ -50,8 +51,8 @@ function App() {
           <Route path="/login" element={<LogIn />} />
           <Route path="/map" element={<Mapa />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/create" element={user ? <CreateCamping preInputValues={null} /> : <div>a esperar chaval</div>} />
-          <Route path="/update" element={user ? <UpdateCamping /> : <div>a esperar chaval</div>} />
+          <Route path="/create" element={user ? <CreateCamping preInputValues={null} /> : <Loader open={true} ></Loader>} />
+          <Route path="/update" element={user ? <UpdateCamping /> : <Loader open={true} ></Loader>} />
           <Route path="/about" />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/blog/:id" element={<Detalle />} />
